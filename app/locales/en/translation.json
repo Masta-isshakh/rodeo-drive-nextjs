@@ -1,0 +1,173 @@
+{
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "admin": "Admin",
+    "login": "Login",
+    "offers": "Offers"
+  },
+  "home": {
+    "hero_title": "Experience the Ultimate in Car Care",
+    "hero_subtitle": "Premium Detailing & Protection Services"
+  },
+
+  "service": {
+    "section_title": "Our Premium Services",
+
+    "polish_title": "Professional Polish",
+    "polish_desc": "High-quality polishing for long-lasting shine.",
+
+    "ceramic_title": "Ceramic Coating",
+    "ceramic_desc": "Premium protection with advanced ceramic technology.",
+
+    "protection_title": "Body Protection",
+    "protection_desc": "Top-tier protection for body paint and finishes.",
+
+    "wrap_title": "Color Wrap",
+    "wrap_desc": "Custom protective wrap with premium color options."
+  },
+
+  "stats": {
+    "brand_number": "#1",
+    "brand_label": "Brand in Car Care",
+
+    "locations_number": "400+",
+    "locations_label": "Worldwide Locations",
+
+    "vehicles_number": "25M+",
+    "vehicles_label": "Vehicles Protected",
+
+    "years_number": "65+",
+    "years_label": "Years Experience"
+  },
+
+  "why": {
+    "title": "Why Choose Rodeo Drive?",
+
+    "protection_title": "Superior Protection",
+    "protection_desc": "Top-grade materials and coating technologies engineered for Qatar’s climate.",
+
+    "finish_title": "Showroom Finish",
+    "finish_desc": "Premium detailing that restores clarity, depth, and long-lasting brilliance.",
+
+    "tech_title": "Certified Technicians",
+    "tech_desc": "Services performed by trained experts ensuring perfect finish and durability."
+  },
+
+  "commit": {
+    "title": "Committed to Excellence",
+    "description": "We combine precision, innovation, and passion to deliver unmatched car care quality.",
+
+    "point1": "Premium Materials",
+    "point2": "Long-Term Durability",
+    "point3": "100% Satisfaction Guarantee"
+  },
+
+  "social": {
+    "title": "Connect with Us",
+    "subtitle": "Follow us for updates, promotions, and car care tips."
+  },
+
+  "cta": {
+    "title": "Ready to Transform Your Vehicle?",
+    "subtitle": "Contact us now and experience Qatar’s premium car-care standards.",
+    "button": "Book an Appointment"
+  },
+
+  "footer": {
+    "rights": "All Rights Reserved"
+  },
+  "services": {
+    "page_title": "Our Services",
+    "intro": "We provide a full range of premium car care services.",
+    "list": {
+      "polish": "Polish",
+      "ceramic_coating": "Ceramic Coating",
+      "protection": "Protection",
+      "color_protection": "Color Protection",
+      "rubberized_paint": "Rubberized Paint",
+      "smart_repair": "Smart Repair",
+      "paintless_dent_repair": "Paintless Dent Repair",
+      "paintless_dent_adjustment": "Paintless Dent Adjustment",
+      "protective_wrap": "Protective Wrap Color Change",
+      "rubberized_paint_color_change": "Rubberized Paint Color Change",
+      "interior_polishing": "Interior Polishing",
+      "exterior_polishing": "Exterior Polishing",
+      "nano_rims": "Nano Ceramic Coating for Rims",
+      "nano_body": "Nano Ceramic Coating for the Body",
+      "nano_leather": "Nano Leather Protection",
+      "front_windshield": "Front Windshield Protection",
+      "black_edition": "Black Edition Vehicle Conversion",
+      "defender_custom": "Defender Customization (On request)",
+      "car_accessories_painting": "Car Accessories Painting"
+    },
+    "book": "Request a Quote"
+  },
+"about": {
+  "title": "About Rodeo Drive Car Care",
+  "subtitle": "Premium Car Detailing & Protection Services",
+
+  "vision_title": "Our Vision",
+  "vision_text": "To be Qatar's most trusted and innovative car care brand.",
+
+  "mission_title": "Our Mission",
+  "mission_text": "To provide premium detailing and protection using advanced technology.",
+
+  "story_title": "Our Story",
+  "story_text": "Founded with passion for perfection, Rodeo Drive has grown into a trusted name.",
+
+  "values_title": "Our Core Values",
+
+  "values": {
+    "integrity": {
+      "title": "Integrity",
+      "text": "We operate with transparency and honesty in every service."
+    },
+    "excellence": {
+      "title": "Excellence",
+      "text": "We deliver perfection in every detail."
+    },
+    "customer": {
+      "title": "Customer Focus",
+      "text": "Our clients are our top priority; satisfaction guaranteed."
+    },
+    "innovation": {
+      "title": "Innovation",
+      "text": "We use cutting-edge technology for advanced car protection."
+    }
+  },
+
+  "team_title": "Meet Our Experts",
+  "team_text": "Our certified technicians deliver professional results.",
+
+  "team": {
+    "member1": { "name": "John Doe", "role": "Head of Detailing" },
+    "member2": { "name": "Jane Smith", "role": "Lead Technician" },
+    "member3": { "name": "Ali Ahmed", "role": "Ceramic Specialist" }
+  },
+
+  "cta_title": "Experience Premium Car Care Today",
+  "cta_text": "Join hundreds of satisfied clients who trust Rodeo Drive.",
+  "cta_btn": "Book an Appointment",
+
+  "footer": "© 2025 Rodeo Drive — All Rights Reserved"
+},
+
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Send us a message or reach us via WhatsApp / Call",
+    "form_title": "Send a Message",
+    "name": "Your Name",
+    "phone": "Phone",
+    "message": "Your Message",
+    "send": "Send",
+    "whatsapp": "WhatsApp",
+    "call": "Call Us"
+  },
+  "admin": {
+    "title": "Admin — Messages",
+    "no_messages": "No messages yet"
+  }
+}
