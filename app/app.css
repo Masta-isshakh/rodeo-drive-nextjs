@@ -214,7 +214,7 @@ header.menu-open .menu-toggle span:nth-child(3) {
 /* ========================================= */
 
 #services {
-  padding: 140px 40px;
+  padding: 40px 40px;
   background: radial-gradient(
       circle at top,
       rgba(255, 255, 255, 0.04),
@@ -225,24 +225,49 @@ header.menu-open .menu-toggle span:nth-child(3) {
 }
 
 /* ---------- TITLE ---------- */
-.section-title {
+
+/* ---------- SERVICES TITLE (CENTERED & LUXURY ANIMATED) ---------- */
+#services-title {
   text-align: center;
   font-size: 44px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin-bottom: 90px;
+  margin-bottom: 40px;
   position: relative;
+  color: #ffffff;
+
+  /* Animation luxe */
+  opacity: 0;
+  transform: translateY(28px);
+  animation: servicesTitleReveal 0.9s ease-out forwards;
 }
 
-.section-title::after {
+#services-title::after {
   content: "";
   display: block;
   width: 90px;
   height: 3px;
-  margin: 22px auto 0;
+  margin: 12px auto 0;
   background: linear-gradient(90deg, transparent, #e60000, transparent);
+
+  opacity: 0;
+  animation: servicesLineReveal 0.8s ease forwards;
+  animation-delay: 0.35s;
 }
 
+/* Animations */
+@keyframes servicesTitleReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes servicesLineReveal {
+  to {
+    opacity: 1;
+  }
+}
 /* ---------- GRID ---------- */
 .services-container {
   max-width: 1280px;

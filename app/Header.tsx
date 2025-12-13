@@ -14,7 +14,7 @@ export default function Header() {
   const switchLang = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
     i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = newLang === "ar" ? "ltr" : "rtl";
   };
 
   return (

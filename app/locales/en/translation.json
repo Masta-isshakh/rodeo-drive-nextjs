@@ -1,173 +1,173 @@
 {
   "navbar": {
-    "home": "Home",
-    "services": "Services",
-    "about": "About",
-    "contact": "Contact",
-    "admin": "Admin",
-    "login": "Login",
-    "offers": "Offers"
+    "home": "الرئيسية",
+    "services": "خدماتنا",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "admin": "لوحة الإدارة",
+    "login": "تسجيل الدخول",
+    "offers": "العروض"
   },
   "home": {
-    "hero_title": "Experience the Ultimate in Car Care",
-    "hero_subtitle": "Premium Detailing & Protection Services"
+    "hero_title": "اختبر أعلى مستويات العناية بالسيارات",
+    "hero_subtitle": "خدمات فاخرة للتلميع والحماية"
   },
 
   "service": {
-    "section_title": "Our Premium Services",
+    "section_title": "خدماتنا المميزة",
 
-    "polish_title": "Professional Polish",
-    "polish_desc": "High-quality polishing for long-lasting shine.",
+    "polish_title": "تلميع احترافي",
+    "polish_desc": "تلميع عالي الجودة يمنح سيارتك لمعاناً يدوم طويلاً.",
 
-    "ceramic_title": "Ceramic Coating",
-    "ceramic_desc": "Premium protection with advanced ceramic technology.",
+    "ceramic_title": "طلاء السيراميك",
+    "ceramic_desc": "حماية متميزة بتقنية السيراميك المتقدمة.",
 
-    "protection_title": "Body Protection",
-    "protection_desc": "Top-tier protection for body paint and finishes.",
+    "protection_title": "حماية هيكل السيارة",
+    "protection_desc": "أعلى مستويات الحماية لطلاء الهيكل والتشطيبات.",
 
-    "wrap_title": "Color Wrap",
-    "wrap_desc": "Custom protective wrap with premium color options."
+    "wrap_title": "تغليف وتغيير لون السيارة",
+    "wrap_desc": "تغليف مخصص مع خيارات ألوان فاخرة."
   },
 
   "stats": {
     "brand_number": "#1",
-    "brand_label": "Brand in Car Care",
+    "brand_label": "العلامة الأولى في مجال العناية بالسيارات",
 
     "locations_number": "400+",
-    "locations_label": "Worldwide Locations",
+    "locations_label": "فروع حول العالم",
 
     "vehicles_number": "25M+",
-    "vehicles_label": "Vehicles Protected",
+    "vehicles_label": "مركبات تمت حمايتها",
 
     "years_number": "65+",
-    "years_label": "Years Experience"
+    "years_label": "سنوات من الخبرة"
   },
 
   "why": {
-    "title": "Why Choose Rodeo Drive?",
+    "title": "لماذا تختار روديو درايف؟",
 
-    "protection_title": "Superior Protection",
-    "protection_desc": "Top-grade materials and coating technologies engineered for Qatar’s climate.",
+    "protection_title": "حماية فائقة",
+    "protection_desc": "مواد عالية الجودة وتقنيات طلاء متطورة مصممة لظروف مناخ قطر.",
 
-    "finish_title": "Showroom Finish",
-    "finish_desc": "Premium detailing that restores clarity, depth, and long-lasting brilliance.",
+    "finish_title": "لمسة نهائية بمعايير صالة العرض",
+    "finish_desc": "تلميع احترافي يعيد اللمعان والوضوح والعمق بشكل يدوم طويلاً.",
 
-    "tech_title": "Certified Technicians",
-    "tech_desc": "Services performed by trained experts ensuring perfect finish and durability."
+    "tech_title": "فنيون معتمدون",
+    "tech_desc": "جميع الخدمات تُنفّذ بواسطة خبراء محترفين لضمان أعلى جودة ومتانة."
   },
 
   "commit": {
-    "title": "Committed to Excellence",
-    "description": "We combine precision, innovation, and passion to deliver unmatched car care quality.",
+    "title": "ملتزمون بالتميز",
+    "description": "في روديو درايف، نمزج بين الدقة والابتكار والشغف لنقدم مستوى لا يُضاهى من العناية بالسيارات.",
 
-    "point1": "Premium Materials",
-    "point2": "Long-Term Durability",
-    "point3": "100% Satisfaction Guarantee"
+    "point1": "مواد فاخرة",
+    "point2": "متانة طويلة الأمد",
+    "point3": "ضمان رضا 100%"
   },
 
   "social": {
-    "title": "Connect with Us",
-    "subtitle": "Follow us for updates, promotions, and car care tips."
+    "title": "تواصل معنا",
+    "subtitle": "تابعنا للحصول على آخر العروض والتحديثات ونصائح العناية بالسيارات."
   },
 
   "cta": {
-    "title": "Ready to Transform Your Vehicle?",
-    "subtitle": "Contact us now and experience Qatar’s premium car-care standards.",
-    "button": "Book an Appointment"
+    "title": "جاهز لتحويل سيارتك؟",
+    "subtitle": "اتصل بنا الآن واستمتع بأعلى معايير العناية بالسيارات في قطر.",
+    "button": "احجز موعداً"
   },
 
   "footer": {
-    "rights": "All Rights Reserved"
+    "rights": "جميع الحقوق محفوظة"
   },
   "services": {
-    "page_title": "Our Services",
-    "intro": "We provide a full range of premium car care services.",
+    "page_title": "خدماتنا",
+    "intro": "نقدّم مجموعة كاملة من خدمات العناية بالسيارات الرفيعة.",
     "list": {
-      "polish": "Polish",
-      "ceramic_coating": "Ceramic Coating",
-      "protection": "Protection",
-      "color_protection": "Color Protection",
-      "rubberized_paint": "Rubberized Paint",
-      "smart_repair": "Smart Repair",
-      "paintless_dent_repair": "Paintless Dent Repair",
-      "paintless_dent_adjustment": "Paintless Dent Adjustment",
-      "protective_wrap": "Protective Wrap Color Change",
-      "rubberized_paint_color_change": "Rubberized Paint Color Change",
-      "interior_polishing": "Interior Polishing",
-      "exterior_polishing": "Exterior Polishing",
-      "nano_rims": "Nano Ceramic Coating for Rims",
-      "nano_body": "Nano Ceramic Coating for the Body",
-      "nano_leather": "Nano Leather Protection",
-      "front_windshield": "Front Windshield Protection",
-      "black_edition": "Black Edition Vehicle Conversion",
-      "defender_custom": "Defender Customization (On request)",
-      "car_accessories_painting": "Car Accessories Painting"
+      "polish": "تلميع",
+      "ceramic_coating": "عازل سيراميك",
+      "protection": "حماية",
+      "color_protection": "حماية اللون",
+      "rubberized_paint": "صبغ مطاطي",
+      "smart_repair": "سمارت ريبير",
+      "paintless_dent_repair": "تصليح ضربات بدون صبغ",
+      "paintless_dent_adjustment": "تعديل خفسات بدون صبغ",
+      "protective_wrap": "تغيير لون بلفاف حماية",
+      "rubberized_paint_color_change": "تغيير لون الصبغ المطاطي",
+      "interior_polishing": "بوليش داخلي",
+      "exterior_polishing": "بوليش خارجي",
+      "nano_rims": "نانو سيراميك للرنجات",
+      "nano_body": "نانو سيراميك للبدي",
+      "nano_leather": "حماية جلد بالنانو",
+      "front_windshield": "حماية القزاز الأمامي",
+      "black_edition": "تحويل بلاك إدشن",
+      "defender_custom": "تعديل ديفندر (حسب الطلب)",
+      "car_accessories_painting": "صبغ إكسسوارات السيارات"
     },
-    "book": "Request a Quote"
+    "book": "اطلب عرض سعر"
   },
 "about": {
-  "title": "About Rodeo Drive Car Care",
-  "subtitle": "Premium Car Detailing & Protection Services",
+  "title": "حول روديو درايف لخدمات العناية بالسيارات",
+  "subtitle": "خدمات فاخرة للتلميع والحماية",
 
-  "vision_title": "Our Vision",
-  "vision_text": "To be Qatar's most trusted and innovative car care brand.",
+  "vision_title": "رؤيتنا",
+  "vision_text": "أن نكون العلامة الأكثر ثقة وابتكاراً في مجال العناية بالسيارات في قطر.",
 
-  "mission_title": "Our Mission",
-  "mission_text": "To provide premium detailing and protection using advanced technology.",
+  "mission_title": "مهمتنا",
+  "mission_text": "تقديم خدمات تلميع وحماية عالية الجودة باستخدام أحدث التقنيات.",
 
-  "story_title": "Our Story",
-  "story_text": "Founded with passion for perfection, Rodeo Drive has grown into a trusted name.",
+  "story_title": "قصتنا",
+  "story_text": "بدأنا بشغف نحو التميز، وتطورنا لنصبح اسماً موثوقاً في عالم العناية بالسيارات.",
 
-  "values_title": "Our Core Values",
+  "values_title": "قيمنا الأساسية",
 
   "values": {
     "integrity": {
-      "title": "Integrity",
-      "text": "We operate with transparency and honesty in every service."
+      "title": "النزاهة",
+      "text": "نلتزم بالشفافية والصدق في كل خدمة نقدمها."
     },
     "excellence": {
-      "title": "Excellence",
-      "text": "We deliver perfection in every detail."
+      "title": "التميز",
+      "text": "نسعى للكمال في كل التفاصيل وكل مرة."
     },
     "customer": {
-      "title": "Customer Focus",
-      "text": "Our clients are our top priority; satisfaction guaranteed."
+      "title": "رضا العملاء",
+      "text": "عملاؤنا هم أولويتنا القصوى، رضاهم مضمون."
     },
     "innovation": {
-      "title": "Innovation",
-      "text": "We use cutting-edge technology for advanced car protection."
+      "title": "الابتكار",
+      "text": "نستخدم أحدث التقنيات لضمان حماية متقدمة للمركبات."
     }
   },
 
-  "team_title": "Meet Our Experts",
-  "team_text": "Our certified technicians deliver professional results.",
+  "team_title": "فريق الخبراء",
+  "team_text": "فنّيون معتمدون يقدمون أعلى مستوى من الجودة.",
 
   "team": {
-    "member1": { "name": "John Doe", "role": "Head of Detailing" },
-    "member2": { "name": "Jane Smith", "role": "Lead Technician" },
-    "member3": { "name": "Ali Ahmed", "role": "Ceramic Specialist" }
+    "member1": { "name": "جون دو", "role": "رئيس قسم التلميع" },
+    "member2": { "name": "جين سميث", "role": "الفني الرئيسي" },
+    "member3": { "name": "علي أحمد", "role": "خبير السيراميك" }
   },
 
-  "cta_title": "Experience Premium Car Care Today",
-  "cta_text": "Join hundreds of satisfied clients who trust Rodeo Drive.",
-  "cta_btn": "Book an Appointment",
+  "cta_title": "اختبر العناية الفاخرة بسيارتك اليوم",
+  "cta_text": "انضم إلى مئات العملاء الذين يثقون بخدمات روديو درايف.",
+  "cta_btn": "احجز موعداً",
 
-  "footer": "© 2025 Rodeo Drive — All Rights Reserved"
+  "footer": "© 2025 روديو درايف — جميع الحقوق محفوظة"
 },
 
   "contact": {
-    "title": "Contact Us",
-    "subtitle": "Send us a message or reach us via WhatsApp / Call",
-    "form_title": "Send a Message",
-    "name": "Your Name",
-    "phone": "Phone",
-    "message": "Your Message",
-    "send": "Send",
-    "whatsapp": "WhatsApp",
-    "call": "Call Us"
+    "title": "اتصل بنا",
+    "subtitle": "أرسل لنا رسالة أو تواصل عبر واتساب / مكالمة",
+    "form_title": "أرسل رسالة",
+    "name": "الاسم",
+    "phone": "الهاتف",
+    "message": "رسالتك",
+    "send": "إرسال",
+    "whatsapp": "واتساب",
+    "call": "اتصل بنا"
   },
   "admin": {
-    "title": "Admin — Messages",
-    "no_messages": "No messages yet"
+    "title": "لوحة الإدارة — الرسائل",
+    "no_messages": "لا توجد رسائل حتى الآن"
   }
 }

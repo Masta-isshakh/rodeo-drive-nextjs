@@ -1,10 +1,12 @@
 "use client";
-
 import { useEffect } from "react";
 import "./globals.css";
 import "./app.css";
 import Header from "./Header";
 import i18n from "./i18n";
+import "./auth-theme.css";
+import '@aws-amplify/ui-react/styles.css';
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -16,11 +18,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang={i18n.language} dir={i18n.language === "ar" ? "rtl" : "ltr"}>
       <head>
-        <title>
-          {i18n.language === "ar"
-            ? "روديو درايف — خدمات السيارات"
-            : "Rodeo Drive | Car Services"}
-        </title>
                 <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -28,6 +25,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        <title>
+          {i18n.language === "ar"
+            ? "روديو درايف — خدمات السيارات"
+            : "Rodeo Drive | Car Services"}
+        </title>
+
         <meta
           name="description"
           content={
