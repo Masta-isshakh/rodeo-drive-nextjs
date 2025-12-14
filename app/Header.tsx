@@ -16,7 +16,7 @@ export default function Header() {
   useEffect(() => {
     if (!i18n.language) i18n.changeLanguage("en");
     document.documentElement.lang = i18n.language;
-    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = i18n.language === "ar" ? "ltr" : "ltr";
 
     getCurrentUser()
       .then(setUser)
@@ -27,7 +27,7 @@ export default function Header() {
     const newLang = i18n.language === "en" ? "ar" : "en";
     i18n.changeLanguage(newLang);
     document.documentElement.lang = newLang;
-    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = newLang === "ar" ? "ltr" : "ltr";
   };
 
   const logout = async () => {
