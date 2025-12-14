@@ -683,3 +683,69 @@ header.menu-open .menu-toggle span:nth-child(3) {
   background: rgba(255,255,255,0.2);
   transform: scale(1.15);
 }
+
+/* =========================
+   FOOTER — LUXURY STYLE
+========================= */
+
+.site-footer {
+  background: linear-gradient(180deg, #050505, #0c0c0c);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* TEXT */
+.footer-text {
+  font-size: 14px;
+  color: #bdbdbd;
+  letter-spacing: 0.4px;
+  line-height: 1.8;
+  position: relative;
+  padding-top: 12px;
+}
+
+/* Accent line animation */
+.footer-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e60000, transparent);
+  opacity: 0.7;
+}
+
+/* Brand highlight */
+.footer-text strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Hover subtle effect */
+.site-footer:hover .footer-text {
+  color: #ffffff;
+  transition: color 0.4s ease;
+}
+
+/* RTL SUPPORT */
+html[dir="rtl"] .footer-text {
+  letter-spacing: 0.2px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .footer-text {
+    font-size: 13px;
+  }
+}

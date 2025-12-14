@@ -1,5 +1,7 @@
 import HomePageClient from "./home/page";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+
 
 export const metadata: Metadata = {
   title: "Rodeo Drive | Luxury Car Services in Doha",
@@ -29,6 +31,8 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+
   // Composant serveur → juste rendu statique / SEO optimisé
   return <HomePageClient />;
+  
 }

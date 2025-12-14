@@ -76,6 +76,11 @@ export default function HomePageClient() {
               <h3>{t("service.wrap_title")}</h3>
               <p>{t("service.wrap_desc")}</p>
             </div>
+            <div className="service-card">
+              <img src="https://tse4.mm.bing.net/th/id/OIP.gOW0BT-Rf59F9NM6b6xAxwHaEK?pid=Api&P=0&h=220" alt="Car wrapping and color change service" />
+              <h3>{t("service.wrap_title")}</h3>
+              <p>{t("service.wrap_desc")}</p>
+            </div>
           </div>
         </section>
 
@@ -149,9 +154,14 @@ export default function HomePageClient() {
         </section>
 
         {/* Footer */}
-        <footer role="contentinfo">
-          <p>© 2025 Rodeo Drive — {t("footer.rights")}</p>
-        </footer>
+<footer className="site-footer" role="contentinfo">
+  <div className="footer-inner">
+    <p className="footer-text">
+      © 2025 <strong>Rodeo Drive</strong> — {t("footer.rights")}
+    </p>
+  </div>
+</footer>
+
       </main>
     </>
   );
