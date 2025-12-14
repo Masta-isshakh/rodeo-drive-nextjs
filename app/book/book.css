@@ -1,0 +1,89 @@
+.appointment-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.appointment-container h1 {
+  text-align: center;
+  color: #0077cc;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  animation: fadeInDown 1s ease;
+}
+
+.success-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 6px;
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.appointment-form input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.appointment-form input:focus {
+  outline: none;
+  border-color: #0077cc;
+  box-shadow: 0 0 5px rgba(0,119,204,0.5);
+}
+
+.appointment-form button {
+  padding: 12px;
+  background-color: #0077cc;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.appointment-form button:hover {
+  background-color: #005fa3;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 576px) {
+  .appointment-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .appointment-form input {
+    font-size: 14px;
+  }
+
+  .appointment-form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

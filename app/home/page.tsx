@@ -150,7 +150,7 @@ export default function HomePageClient() {
         <section className="cta-section" aria-labelledby="cta-title">
           <h2 id="cta-title">{t("cta.title")}</h2>
           <p>{t("cta.subtitle")}</p>
-          <a className="cta-btn" href="#contact">{t("cta.button")}</a>
+          <a className="cta-btn" href="/book">{t("cta.button")}</a>
         </section>
 
         {/* Footer */}
