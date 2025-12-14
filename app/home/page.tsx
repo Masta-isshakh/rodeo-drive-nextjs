@@ -41,16 +41,25 @@ export default function HomePageClient() {
       <main>
         {/* HERO */}
         <section className="video-carousel" aria-label="Hero section">
-          <video
-            src="https://mastatiktok.s3.us-east-1.amazonaws.com/video.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster="https://mastatiktok.s3.us-east-1.amazonaws.com/video-poster.jpg"
-            title={t("home.hero_title")}
-          />
+  <video
+    src="https://mastatiktok.s3.us-east-1.amazonaws.com/video.mp4"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="auto"
+    poster="https://mastatiktok.s3.us-east-1.amazonaws.com/video-poster.jpg"
+    title={t("home.hero_title")}
+    className="hero-video"
+    onCanPlay={() => {
+      const video = document.querySelector(".hero-video") as HTMLVideoElement;
+      if (video && video.paused) {
+        video.play().catch(() => {
+          console.warn("Video autoplay blocked, will play on user interaction");
+        });
+      }
+    }}
+  />
           <div className="carousel-text">
             <h1>{t("home.hero_title")}</h1>
             <p>{t("home.hero_subtitle")}</p>
