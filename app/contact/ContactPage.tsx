@@ -60,13 +60,16 @@ export default function ContactPageClient() {
 
       <div className="contact-options">
         <a
-          href="https://wa.me/974XXXXXXXX"
+          href="https://wa.me/97455708226"
           target="_blank"
           rel="noreferrer"
+          className="whatsapp-btn"
         >
           {t("contact.whatsapp")}
         </a>
-        <a href="tel:+974XXXXXXXX">{t("contact.call")}</a>
+        <a href="tel:+97455708226" className="call-btn">
+          {t("contact.call")}
+        </a>
       </div>
 
       <div className="chat-box">

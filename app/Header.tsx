@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import i18n from "./i18n";
@@ -11,29 +11,49 @@ export default function Header() {
   const router = useRouter();
   const { t } = useTranslation();
 
+  /* 🔹 English by default */
+  useEffect(() => {
+    if (!i18n.language || i18n.language === "dev") {
+      i18n.changeLanguage("en");
+    }
+
+    document.documentElement.lang = i18n.language;
+    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
+  }, []);
+
+  /* 🔹 Language switch */
   const switchLang = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
+
     i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === "ar" ? "ltr" : "rtl";
+    document.documentElement.lang = newLang;
+    document.documentElement.dir = newLang === "ar" ? "ltr" : "ltr";
   };
 
   return (
-    <header className={menuOpen ? "menu-open" : ""}>
-      <div className="logo">
+    <header
+      className={`main-header ${
+        i18n.language === "ar" ? "ltr" : "ltr"
+      } ${menuOpen ? "menu-open" : ""}`}
+    >
+      {/* LOGO → HOME */}
+      <Link href="/home" className="logo">
         <img
           src="https://mastatiktok.s3.us-east-1.amazonaws.com/logo.jpeg"
           alt="Rodeo Drive Logo"
           className="logo-img"
         />
         <span>Rodeo Drive</span>
-      </div>
+      </Link>
 
+      {/* MOBILE TOGGLE */}
       <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
         <span />
         <span />
         <span />
       </div>
 
+      {/* NAV */}
       <nav className="nav-links">
         <Link href="/home">{t("navbar.home")}</Link>
         <Link href="/services">{t("navbar.services")}</Link>
