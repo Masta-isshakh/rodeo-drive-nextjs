@@ -1,7 +1,7 @@
 // lib/sendAppointmentEmail.ts
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-const ses = new SESClient({ region: "us-east-1" }); // Remplace par ta région SES
+const ses = new SESClient({ region: "ap-southeast-1" }); // Remplace par ta région SES
 
 export interface Appointment {
   name: string;
