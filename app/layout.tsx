@@ -6,6 +6,8 @@ import Header from "./Header";
 import i18n from "./i18n";
 import "./auth-theme.css";
 import '@aws-amplify/ui-react/styles.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

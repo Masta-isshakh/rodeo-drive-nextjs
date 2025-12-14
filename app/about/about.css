@@ -30,7 +30,7 @@ p {
 .about-hero {
   position: relative;
   height: 60vh;
-  background: url("https://c.pxhere.com/images/7b/45/car_mercedes_slk_auto_transport_design_transportation_luxury-1382702.jpg!d") center/cover no-repeat fixed;
+  background: url("https://c.pxhere.com/images/7b/45/car_mercedes_slk_auto_transport_design_transportation_luxury-1382702.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;

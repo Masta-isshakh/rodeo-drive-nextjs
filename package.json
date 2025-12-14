@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.5.5",
+    "@fortawesome/fontawesome-free": "^7.1.0",
     "aws-amplify": "^6.6.6",
     "baseline-browser-mapping": "^2.9.7",
     "caniuse-lite": "^1.0.30001760",
