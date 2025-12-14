@@ -30,6 +30,13 @@ export default function BookAppointment() {
         date: form.date,
         time: form.time,
       });
+
+          await fetch("/api/sendAppointmentEmail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
       setSuccess(true);
       setForm({ name: "", email: "", phone: "", date: "", time: "" });
     } catch (err) {
