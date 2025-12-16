@@ -29,7 +29,7 @@ export default function HomePageClient() {
   return (
     <>
       <Head>
-        <title>Rodeo Drive | Premium Car Care in Doha</title>
+        <title>Rodeo mahamad hago Drive | Premium Car Care in Doha</title>
         <meta name="description" content="Discover Rodeo Drive premium car services in Doha: polishing, ceramic coating, PPF, nano protection, customization and luxury automotive care." />
         <meta name="keywords" content="car services Doha, ceramic coating Qatar, car polishing Doha, PPF protection, luxury car detailing Qatar" />
         <meta property="og:title" content="Rodeo Drive | Premium Automotive Services" />
