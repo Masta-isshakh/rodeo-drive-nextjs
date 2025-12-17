@@ -12,6 +12,7 @@
     "hero_title": "Experience the Ultimate in Car Care",
     "hero_subtitle": "Premium Detailing & Protection Services"
   },
+  
 
   "service": {
     "section_title": "Our Premium Services",
@@ -80,6 +81,12 @@
     "rights": "All Rights Reserved"
   },
   "services": {
+        "polishing": "Polishing",
+    "ceramic": "Ceramic Coating",
+    "ppf": "Paint Protection Film",
+    "wrapping": "Car Wrapping",
+    "interior": "Interior Care",
+    "smart": "Smart Repair",
     "page_title": "Our Services",
     "intro": "We provide a full range of premium car care services.",
     "list": {

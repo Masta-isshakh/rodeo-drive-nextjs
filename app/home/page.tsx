@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import Head from "next/head";
+import BackgroundVideo from "next-video/background-video";
 
 Amplify.configure(outputs);
 const client = generateClient<Schema>();
@@ -15,6 +16,7 @@ export default function HomePageClient() {
   const { t } = useTranslation();
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
+  // Observe Amplify Todo model
   useEffect(() => {
     const sub = client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
@@ -26,79 +28,70 @@ export default function HomePageClient() {
     client.models.Todo.create({ content: window.prompt("Todo content") });
   };
 
+  // Scroll reveal
+  useEffect(() => {
+    const revealElements = document.querySelectorAll(
+      ".reveal, .service-card, .why-card, .stat-card"
+    );
+    const handleScroll = () => {
+      revealElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) el.classList.add("active");
+      });
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Rodeo mahamad hago Drive | Premium Car Care in Doha</title>
-        <meta name="description" content="Discover Rodeo Drive premium car services in Doha: polishing, ceramic coating, PPF, nano protection, customization and luxury automotive care." />
-        <meta name="keywords" content="car services Doha, ceramic coating Qatar, car polishing Doha, PPF protection, luxury car detailing Qatar" />
-        <meta property="og:title" content="Rodeo Drive | Premium Automotive Services" />
-        <meta property="og:description" content="Luxury car care and protection services in Doha, Qatar." />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="/images/og-image.jpg" />
+        <title>Rodeo Drive | Premium Car Care in Doha</title>
+        <meta
+          name="description"
+          content="Discover Rodeo Drive premium car services in Doha: polishing, ceramic coating, PPF, nano protection, customization and luxury automotive care."
+        />
       </Head>
 
       <main>
-        {/* HERO */}
-        <section className="video-carousel" aria-label="Hero section">
-  <video
-    src="https://mastatiktok.s3.us-east-1.amazonaws.com/video.mp4"
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="auto"
-    poster="https://mastatiktok.s3.us-east-1.amazonaws.com/video-poster.jpg"
-    title={t("home.hero_title")}
-    className="hero-video"
-    onCanPlay={() => {
-      const video = document.querySelector(".hero-video") as HTMLVideoElement;
-      if (video && video.paused) {
-        video.play().catch(() => {
-          console.warn("Video autoplay blocked, will play on user interaction");
-        });
-      }
-    }}
-  />
-          <div className="carousel-text">
+        {/* -------------------- HERO VIDEO CINEMATIC -------------------- */}
+        <section className="video-carousel">
+          <BackgroundVideo
+            src="https://mastatiktok.s3.us-east-1.amazonaws.com/video3.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="bg-video"
+          />
+          <div className="video-overlay"></div>
+          <div className="carousel-text reveal">
             <h1>{t("home.hero_title")}</h1>
             <p>{t("home.hero_subtitle")}</p>
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* -------------------- SERVICES -------------------- */}
         <section id="services" aria-labelledby="services-title">
           <h2 id="services-title">{t("service.section_title")}</h2>
           <div className="services-container">
-            <div className="service-card">
-              <img src="https://tse3.mm.bing.net/th/id/OIP.o60kfs4J-ssRbF-SAmM3dAHaEK?pid=Api&P=0&h=220" alt="Professional car polish service in Doha" />
-              <h3>{t("service.polish_title")}</h3>
-              <p>{t("service.polish_desc")}</p>
-            </div>
-            <div className="service-card">
-              <img src="https://tse4.mm.bing.net/th/id/OIP.CIac5BAbYhrvBddLTcoNxAHaEW?pid=Api&P=0&h=220" alt="Car protection service in Doha" />
-              <h3>{t("service.protection_title")}</h3>
-              <p>{t("service.protection_desc")}</p>
-            </div>
-            <div className="service-card">
-              <img src="https://tse4.mm.bing.net/th/id/OIP.gOW0BT-Rf59F9NM6b6xAxwHaEK?pid=Api&P=0&h=220" alt="Car wrapping and color change service" />
-              <h3>{t("service.wrap_title")}</h3>
-              <p>{t("service.wrap_desc")}</p>
-            </div>
-            <div className="service-card">
-              <img src="https://tse4.mm.bing.net/th/id/OIP.gOW0BT-Rf59F9NM6b6xAxwHaEK?pid=Api&P=0&h=220" alt="Car wrapping and color change service" />
-              <h3>{t("service.wrap_title")}</h3>
-              <p>{t("service.wrap_desc")}</p>
-            </div>
+            {["polish", "protection", "wrap"].map((service, i) => (
+              <div className="service-card reveal" key={i}>
+                <img src={`/images/${service}.jpg`} alt={`${service} service`} />
+                <h3>{t(`service.${service}_title`)}</h3>
+                <p>{t(`service.${service}_desc`)}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="stats-section" aria-label="Company statistics">
-          <div className="stats-overlay" aria-hidden="true"></div>
+        {/* -------------------- STATS -------------------- */}
+        <section className="stats-section">
+          <div className="stats-overlay"></div>
           <div className="stats-container">
             {["brand", "locations", "vehicles", "years"].map((key) => (
-              <div className="stat-card" key={key}>
+              <div className="stat-card reveal" key={key}>
                 <span className="stat-number">{t(`stats.${key}_number`)}</span>
                 <span className="stat-label">{t(`stats.${key}_label`)}</span>
               </div>
@@ -106,33 +99,24 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* Why Choose Us */}
-        <section className="why-section" aria-labelledby="why-title">
-          <h2 id="why-title">{t("why.title")}</h2>
+        {/* -------------------- WHY CHOOSE US -------------------- */}
+        <section className="why-section">
           <div className="why-grid">
-            <div className="why-card">
-              <i className="icon fas fa-shield-alt" aria-hidden="true"></i>
-              <h3>{t("why.protection_title")}</h3>
-              <p>{t("why.protection_desc")}</p>
-            </div>
-            <div className="why-card">
-              <i className="icon fas fa-car" aria-hidden="true"></i>
-              <h3>{t("why.finish_title")}</h3>
-              <p>{t("why.finish_desc")}</p>
-            </div>
-            <div className="why-card">
-              <i className="icon fas fa-tools" aria-hidden="true"></i>
-              <h3>{t("why.tech_title")}</h3>
-              <p>{t("why.tech_desc")}</p>
-            </div>
+            {["protection", "finish", "tech"].map((item, i) => (
+              <div className="why-card reveal" key={i}>
+                <i className={`icon fas fa-${item === "tech" ? "tools" : item}`} />
+                <h3>{t(`why.${item}_title`)}</h3>
+                <p>{t(`why.${item}_desc`)}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Commitment Section */}
-        <section className="commit-section" aria-labelledby="commit-title">
-          <div className="commit-overlay" aria-hidden="true"></div>
-          <div className="commit-content">
-            <h2 id="commit-title">{t("commit.title")}</h2>
+        {/* -------------------- COMMITMENT -------------------- */}
+        <section className="commit-section">
+          <div className="commit-overlay"></div>
+          <div className="commit-content reveal">
+            <h2>{t("commit.title")}</h2>
             <p>{t("commit.description")}</p>
             <ul className="commit-points">
               <li>{t("commit.point1")}</li>
@@ -142,35 +126,32 @@ export default function HomePageClient() {
           </div>
         </section>
 
-
-        <section className="social-section" aria-labelledby="social-title">
-          <h2 id="social-title">{t("social.title")}</h2>
+        {/* -------------------- SOCIAL -------------------- */}
+        <section className="social-section">
+          <h2>{t("social.title")}</h2>
           <p>{t("social.subtitle")}</p>
           <div className="social-icons">
-            <a href="#" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a href="#" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-            <a href="#" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-            <a href="#" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="YouTube"><i className="fab fa-youtube"></i></a>
+            {["facebook-f","instagram","twitter","linkedin-in","youtube"].map((icon, i) => (
+              <a key={i} href="#" aria-label={icon}><i className={`fab fa-${icon}`}></i></a>
+            ))}
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="cta-section" aria-labelledby="cta-title">
-          <h2 id="cta-title">{t("cta.title")}</h2>
+        {/* -------------------- CTA -------------------- */}
+        <section className="cta-section">
+          <h2>{t("cta.title")}</h2>
           <p>{t("cta.subtitle")}</p>
           <a className="cta-btn" href="/book">{t("cta.button")}</a>
         </section>
 
-        {/* Footer */}
-<footer className="site-footer" role="contentinfo">
-  <div className="footer-inner">
-    <p className="footer-text">
-      © 2025 <strong>Rodeo Drive</strong> — {t("footer.rights")}
-    </p>
-  </div>
-</footer>
-
+        {/* -------------------- FOOTER -------------------- */}
+        <footer className="site-footer">
+          <div className="footer-inner">
+            <p className="footer-text">
+              © 2025 <strong>Rodeo Drive</strong> — {t("footer.rights")}
+            </p>
+          </div>
+        </footer>
       </main>
     </>
   );
