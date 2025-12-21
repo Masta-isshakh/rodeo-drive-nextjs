@@ -1,17 +1,17 @@
-/* ------------------------------ */
-/* GLOBAL RESET + BODY */
-/* ------------------------------ */
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-  background-color: #1a1414;
-  color: #222;
-  box-sizing: border-box;
+:root {
+  --page-bg: #776f6f;
 }
+
+html,
+body {
+  background-color: var(--page-bg);
+  min-height: 100%;
+}
+
+main {
+  background-color: var(--page-bg);
+}
+
 /* ================= NAVBAR PREMIUM ================= */
 .main-header {
   position: fixed;
@@ -182,6 +182,8 @@ body, html {
   height: 90vh; /* Full screen */
   overflow: hidden;
   background: #000;
+    background-color: #a69461;
+
 }
 
 /* Wrapper BackgroundVideo */
@@ -206,6 +208,7 @@ body, html {
 .video-overlay {
   position: absolute;
   inset: 0;
+  
   z-index: 2;
   background:
     radial-gradient(
@@ -294,13 +297,15 @@ body, html {
 /* TITRE FLOTTANT */
 #services-title.floating-title {
   text-align: center;
+    background-color: #a69461;
+
   font-size: 54px;
   font-weight: 700;
   letter-spacing: 1.5px;
   color: rgba(0, 0, 0, 0.45);
   position: absolute;
   width: 100%;
-  top: -30px;
+
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
@@ -310,6 +315,8 @@ body, html {
 
 #services-title::after {
   content: "";
+    background-color: #a69461;
+
   display: block;
   width: 220px;
   height: 3px;
@@ -821,4 +828,13 @@ html[dir="rtl"] .footer-text {
   .footer-text {
     font-size: 13px;
   }
+}
+section,
+.stats-section,
+.why-section,
+.commit-section,
+.social-section,
+.cta-section,
+.site-footer {
+  background-color: var(--page-bg);
 }

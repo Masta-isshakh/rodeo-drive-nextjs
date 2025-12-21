@@ -1,5 +1,5 @@
 export const servicesData: Record<string, any> = {
-  polish: {
+  polishing: {
     title: "Car Polishing",
     description:
       "High-end machine polishing restoring gloss and eliminating paint imperfections.",
