@@ -8,7 +8,7 @@ body, html {
   max-width: 100%;
   overflow-x: hidden;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #1a1414;
   color: #222;
   box-sizing: border-box;
 }
@@ -288,6 +288,7 @@ body, html {
 
 #services {
   position: relative;
+  background-color: #a69461;
 }
 
 /* TITRE FLOTTANT */
@@ -296,10 +297,10 @@ body, html {
   font-size: 54px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(0, 0, 0, 0.45);
   position: absolute;
   width: 100%;
-  top: -90px;
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
@@ -310,9 +311,9 @@ body, html {
 #services-title::after {
   content: "";
   display: block;
-  width: 120px;
+  width: 220px;
   height: 3px;
-  margin: 18px auto 0;
+  margin: 8px auto 0;
   background: linear-gradient(90deg, transparent, #e60000, transparent);
   opacity: 0;
   animation: servicesLineReveal 1s ease forwards;

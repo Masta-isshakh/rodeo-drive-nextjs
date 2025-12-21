@@ -79,42 +79,42 @@ export default function HomePageClient() {
 
 {/* -------------------- SERVICES -------------------- */}
 <section id="services" aria-labelledby="services-title">
-  {/* TITRE semi-transparent flottant */}
+  {/* TITRE flottant */}
   <h2 id="services-title" className="floating-title">
     {t("service.section_title")}
   </h2>
 
-  {/* Container des cartes services */}
-<div className="services-container">
-  {[
-    "polish",
-    "protection",
-    "wrap",
-    "interior",
-    "smart",
-    "ppf",
-  ].map((service, i) => (
-    <a
-      key={i}
-      href={`/services/${service}`}
-      className="service-card"
-    >
-      <div className="service-image">
-        <img
-          src={`/images/services/${service}.png`}
-          alt={service}
-        />
-        <div className="service-hover">
-          <span>{t("service.view_details")}</span>
+  <div className="services-container">
+    {[
+      { slug: "polish", key: "polishing" },
+      { slug: "protection", key: "ppf" },
+      { slug: "wrap", key: "wrapping" },
+      { slug: "interior", key: "interior" },
+      { slug: "smart", key: "smart" },
+      { slug: "ppf", key: "ppf" }
+    ].map((service, i) => (
+      <a
+        key={i}
+        href={`/services/${service.slug}`}
+        className="service-card"
+      >
+        <div className="service-image">
+          <img
+            src={`/images/${service.slug}.png`}
+            alt={t(`services.${service.key}`)}
+          />
+
+          <div className="service-hover">
+            <span>{t("service.view_details")}</span>
+          </div>
         </div>
-      </div>
 
-      <h3>{t(`services.${service}`)}</h3>
-    </a>
-  ))}
-</div>
-
+        <h3>{t(`services.${service.key}`)}</h3>
+      </a>
+    ))}
+  </div>
 </section>
+
 
 
 

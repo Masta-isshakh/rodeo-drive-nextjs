@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./globals.css";
 import "./app.css";
 import Header from "./Header";
@@ -11,6 +11,19 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  
+    const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      setProgress(scrolled);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  
   useEffect(() => {
     // Définir la langue et la direction du document pour SEO et RTL
     document.documentElement.lang = i18n.language;
@@ -53,6 +66,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property="og:type" content="website" />
       </head>
       <body>
+                <div className="scroll-progress" style={{ width: `${progress}%` }} />
+
         <Header />
         <main>{children}</main>
       </body>

@@ -119,22 +119,22 @@ export default function Header() {
           </button>
 
           <div className={`services-dropdown ${servicesOpen ? "show" : ""}`}>
-            <Link href="/services/polishing" onClick={closeAll}>
+            <Link href="/services/polish" onClick={closeAll}>
               {t("services.polishing")}
             </Link>
-            <Link href="/services/ceramic" onClick={closeAll}>
+            <Link href="/services/protection" onClick={closeAll}>
               {t("services.ceramic")}
             </Link>
             <Link href="/services/ppf" onClick={closeAll}>
               {t("services.ppf")}
             </Link>
-            <Link href="/services/wrapping" onClick={closeAll}>
+            <Link href="/services/wrap" onClick={closeAll}>
               {t("services.wrapping")}
             </Link>
             <Link href="/services/interior" onClick={closeAll}>
               {t("services.interior")}
             </Link>
-            <Link href="/services/smart-repair" onClick={closeAll}>
+            <Link href="/services/smart" onClick={closeAll}>
               {t("services.smart")}
             </Link>
           </div>

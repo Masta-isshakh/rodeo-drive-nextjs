@@ -76,3 +76,13 @@ a {
     transform: translateY(0);
   }
 }
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #a69461, #fff);
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
