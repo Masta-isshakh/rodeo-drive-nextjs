@@ -63,12 +63,6 @@ export default function Header() {
     document.documentElement.dir = "ltr";
   };
 
-  const logout = async () => {
-    await signOut();
-    setMenuOpen(false);
-    setServicesOpen(false);
-    router.push("/home");
-  };
 
   const closeAll = () => {
     setMenuOpen(false);
@@ -148,21 +142,6 @@ export default function Header() {
           {i18n.language === "en" ? "EN" : "AR"}
         </button>
 
-        {user ? (
-          <button className="login-btn" onClick={logout}>
-            Logout
-          </button>
-        ) : (
-          <button
-            className="login-btn"
-            onClick={() => {
-              closeAll();
-              router.push("/login");
-            }}
-          >
-            {t("navbar.login")}
-          </button>
-        )}
       </nav>
     </header>
   );
