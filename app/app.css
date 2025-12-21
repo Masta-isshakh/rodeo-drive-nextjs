@@ -172,51 +172,80 @@ body, html {
     padding-left: 12px;
   }
 }
+/* ============================= */
+/* HERO BACKGROUND VIDEO FULLSCREEN */
+/* ============================= */
 
-
-
-/* ------------------------------ */
-/* VIDEO CAROUSEL */
-/* ------------------------------ */
 .video-carousel {
-  width: 100%;
-  height: 450px;
-  overflow: hidden;
   position: relative;
+  width: 100%;
+  height: 90vh; /* Full screen */
+  overflow: hidden;
   background: #000;
 }
 
-.video-carousel video {
+/* Wrapper BackgroundVideo */
+.video-carousel .bg-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5;
-
-  
+  height: 90%;
+  z-index: 1;
 }
 
+/* Video interne */
+.video-carousel .bg-video video {
+  width: 100%;
+  height: 90%;
+  object-fit: cover; /* Remplit tout l'écran */
+  transform: scale(1.08);
+  animation: slowZoom 20s ease-in-out infinite; /* zoom lent et fluide */
+}
+
+/* Overlay cinematic */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 70%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1)
+    );
+}
+
+/* Texte hero */
 .carousel-text {
   position: absolute;
+  z-index: 3;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
   text-align: center;
-  z-index: 10;
-  animation: fadeIn 1.8s ease;
+  color: #fff;
+  animation: fadeUp 1.8s ease forwards;
 }
 
 .carousel-text h1 {
-  font-size: 42px;
-  font-weight: bold;
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .carousel-text p {
-  font-size: 18px;
-  margin-top: 10px;
+  margin-top: 16px;
+  font-size: 22px;
+  opacity: 0.95;
 }
 
-@keyframes fadeIn {
+/* Animations */
+@keyframes fadeUp {
   from {
     opacity: 0;
     transform: translate(-50%, -45%);
@@ -227,166 +256,124 @@ body, html {
   }
 }
 
-
-/* ========================================= */
-/* SERVICES SECTION — ULTRA LUXURY EDITION   */
-/* ========================================= */
-
-#services {
-  padding: 40px 40px;
-  background: radial-gradient(
-      circle at top,
-      rgba(255, 255, 255, 0.04),
-      transparent 60%
-    ),
-    linear-gradient(180deg, #070707 0%, #0f0f0f 100%);
-  color: #ffffff;
+@keyframes slowZoom {
+  0% { transform: scale(1.05); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1.05); }
 }
 
-/* ---------- TITLE ---------- */
+/* Responsive */
+@media (max-width: 1200px) {
+  .carousel-text h1 { font-size: 48px; }
+  .carousel-text p { font-size: 20px; }
+}
+
+@media (max-width: 768px) {
+  .carousel-text h1 { font-size: 36px; }
+  .carousel-text p { font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+  .carousel-text h1 { font-size: 28px; }
+  .carousel-text p { font-size: 14px; }
+}
 
 /* ---------- SERVICES TITLE (CENTERED & LUXURY ANIMATED) ---------- */
-#services-title {
+/* ======================= */
+/* SERVICES SECTION PREMIUM */
+/* ======================= */
+/* ============================= */
+/* SERVICES SECTION */
+/* ============================= */
+
+#services {
+  position: relative;
+}
+
+/* TITRE FLOTTANT */
+#services-title.floating-title {
   text-align: center;
-  font-size: 44px;
+  font-size: 54px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  margin-bottom: 40px;
-  position: relative;
-  color: #ffffff;
-
-  /* Animation luxe */
-  opacity: 0;
-  transform: translateY(28px);
-  animation: servicesTitleReveal 0.9s ease-out forwards;
+  color: rgba(255, 255, 255, 0.45);
+  position: absolute;
+  width: 100%;
+  top: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+  animation: servicesTitleReveal 1s ease forwards;
 }
 
 #services-title::after {
   content: "";
   display: block;
-  width: 90px;
+  width: 120px;
   height: 3px;
-  margin: 12px auto 0;
+  margin: 18px auto 0;
   background: linear-gradient(90deg, transparent, #e60000, transparent);
-
   opacity: 0;
-  animation: servicesLineReveal 0.8s ease forwards;
-  animation-delay: 0.35s;
+  animation: servicesLineReveal 1s ease forwards;
+  animation-delay: 0.4s;
 }
 
-/* Animations */
 @keyframes servicesTitleReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60px);
+  }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -90px);
   }
 }
 
 @keyframes servicesLineReveal {
-  to {
-    opacity: 1;
-  }
+  to { opacity: 1; }
 }
+
 /* ---------- GRID ---------- */
 .services-container {
   max-width: 1280px;
-  margin: auto;
+  margin: 240px auto 100px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 50px;
-  align-items: stretch;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
+  position: relative;
+  z-index: 3;
 }
 
 /* ---------- CARD ---------- */
 .service-card {
+  display: block;
+  text-decoration: none;
+  border-radius: 24px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.02)
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.02)
   );
-  backdrop-filter: blur(12px);
-  border-radius: 22px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.8),
+    inset 0 1px 0 rgba(255,255,255,0.08);
   overflow: hidden;
   text-align: center;
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
   position: relative;
-}
-
-/* Luxury border glow */
-.service-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  padding: 1px;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(230, 0, 0, 0.7),
-    transparent
-  );
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
+  transform: translateY(40px);
   opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.service-card:hover::before {
-  opacity: 1;
-}
-
-.service-card:hover {
-  transform: translateY(-16px) scale(1.01);
-  box-shadow:
-    0 45px 90px rgba(0, 0, 0, 0.9),
-    0 0 40px rgba(230, 0, 0, 0.15);
-}
-
-/* ---------- IMAGE ---------- */
-.service-card img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  transition: transform 0.7s ease, filter 0.7s ease;
-}
-
-.service-card:hover img {
-  transform: scale(1.15);
-  filter: brightness(1.08) contrast(1.05);
-}
-
-/* ---------- TEXT ---------- */
-.service-card h3 {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 26px 0 12px;
-  letter-spacing: 0.5px;
-}
-
-.service-card p {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #d0d0d0;
-  padding: 0 28px 36px;
-  max-width: 90%;
-  margin: auto;
-}
-
-/* ---------- ENTRANCE ANIMATION ---------- */
-.service-card {
-  opacity: 0;
-  transform: translateY(50px);
   animation: luxuryFadeUp 1s ease forwards;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 .service-card:nth-child(1) { animation-delay: 0.15s; }
 .service-card:nth-child(2) { animation-delay: 0.35s; }
 .service-card:nth-child(3) { animation-delay: 0.55s; }
+.service-card:nth-child(4) { animation-delay: 0.75s; }
+.service-card:nth-child(5) { animation-delay: 0.95s; }
+.service-card:nth-child(6) { animation-delay: 1.15s; }
 
 @keyframes luxuryFadeUp {
   to {
@@ -394,23 +381,91 @@ body, html {
     transform: translateY(0);
   }
 }
+.service-image {
+  height: 240px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,0.05),
+    rgba(0,0,0,0.85)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.service-image img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  transition: transform 0.6s ease;
+}
+
+/* Hover layer */
+.service-hover {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.4s ease;
+}
+
+.service-hover span {
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transform: translateY(10px);
+  transition: 0.4s ease;
+}
+
+.service-card:hover .service-hover {
+  opacity: 1;
+}
+
+.service-card:hover .service-hover span {
+  transform: translateY(0);
+}
+
+.service-card:hover img {
+  transform: scale(1.08);
+}
+/* ---------- TEXT ---------- */
+.service-card h3 {
+  margin-top: 26px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.service-card p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #d0d0d0;
+  padding: 14px 32px 38px;
+}
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-  #services {
-    padding: 90px 20px;
+  .services-container {
+    grid-template-columns: 1fr;
+    margin-top: 200px;
+    gap: 32px;
   }
 
-  .section-title {
-    font-size: 34px;
+  #services-title.floating-title {
+    font-size: 38px;
+    top: -65px;
   }
 
-  .service-card img {
+  .service-image {
     height: 200px;
   }
 }
-
-
 
 /* ------------------------------ */
 /* STATS SECTION - ORIGINAL DESIGN */

@@ -56,35 +56,67 @@ export default function HomePageClient() {
 
       <main>
         {/* -------------------- HERO VIDEO CINEMATIC -------------------- */}
-        <section className="video-carousel">
-          <BackgroundVideo
-            src="https://mastatiktok.s3.us-east-1.amazonaws.com/video3.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="bg-video"
-          />
-          <div className="video-overlay"></div>
-          <div className="carousel-text reveal">
-            <h1>{t("home.hero_title")}</h1>
-            <p>{t("home.hero_subtitle")}</p>
-          </div>
-        </section>
+<section className="video-carousel">
+  <BackgroundVideo
+    src="https://mastatiktok.s3.us-east-1.amazonaws.com/video.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="bg-video"
+  />
+  
+  {/* Overlay pour style cinematic */}
+  <div className="video-overlay"></div>
 
-        {/* -------------------- SERVICES -------------------- */}
-        <section id="services" aria-labelledby="services-title">
-          <h2 id="services-title">{t("service.section_title")}</h2>
-          <div className="services-container">
-            {["polish", "protection", "wrap"].map((service, i) => (
-              <div className="service-card reveal" key={i}>
-                <img src={`/images/${service}.jpg`} alt={`${service} service`} />
-                <h3>{t(`service.${service}_title`)}</h3>
-                <p>{t(`service.${service}_desc`)}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+  {/* Texte au-dessus de la vidéo */}
+  <div className="carousel-text reveal">
+    <h1>{t("home.hero_title")}</h1>
+    <p>{t("home.hero_subtitle")}</p>
+  </div>
+</section>
+
+
+{/* -------------------- SERVICES -------------------- */}
+<section id="services" aria-labelledby="services-title">
+  {/* TITRE semi-transparent flottant */}
+  <h2 id="services-title" className="floating-title">
+    {t("service.section_title")}
+  </h2>
+
+  {/* Container des cartes services */}
+<div className="services-container">
+  {[
+    "polish",
+    "protection",
+    "wrap",
+    "interior",
+    "smart",
+    "ppf",
+  ].map((service, i) => (
+    <a
+      key={i}
+      href={`/services/${service}`}
+      className="service-card"
+    >
+      <div className="service-image">
+        <img
+          src={`/images/services/${service}.png`}
+          alt={service}
+        />
+        <div className="service-hover">
+          <span>{t("service.view_details")}</span>
+        </div>
+      </div>
+
+      <h3>{t(`services.${service}`)}</h3>
+    </a>
+  ))}
+</div>
+
+</section>
+
+
 
         {/* -------------------- STATS -------------------- */}
         <section className="stats-section">
