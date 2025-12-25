@@ -31,6 +31,52 @@ main {
   backdrop-filter: blur(16px);
 }
 
+
+/* LTR */
+html.ltr .main-header {
+  flex-direction: row;
+}
+
+html.ltr .logo {
+  order: 1;
+}
+
+html.ltr .nav-links {
+  order: 2;
+}
+
+/* RTL */
+html.rtl .main-header {
+  flex-direction: row;
+}
+
+html.rtl .logo {
+  order: 2; /* moves logo to the RIGHT */
+}
+
+html.rtl .nav-links {
+  order: 1;
+}
+
+/* TEXT DIRECTION */
+html.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+html.ltr {
+  direction: ltr;
+  text-align: left;
+}
+html.rtl * {
+  text-align: left;
+}
+
+html.ltr * {
+  text-align: right;
+}
+
+
 .logo {
   display: flex;
   align-items: center;

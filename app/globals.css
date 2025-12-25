@@ -96,6 +96,3 @@ body.ltr {
   direction: ltr;
   text-align: left;
 }
-body.rtl .main-header {
-  flex-direction: row-reverse;
-}

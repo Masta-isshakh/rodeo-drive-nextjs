@@ -23,8 +23,6 @@ export default function Header() {
     if (!i18n.language) i18n.changeLanguage("en");
 
     // 🔒 FORCER LE DOCUMENT EN LTR (CRITIQUE)
-    document.documentElement.lang = i18n.language;
-    document.documentElement.dir = "ltr";
 
     getCurrentUser()
       .then(setUser)

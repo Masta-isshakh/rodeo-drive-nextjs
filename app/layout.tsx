@@ -27,24 +27,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }, []);
   
   useEffect(() => {
-    const updateDir = (lang: string) => {
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-      document.body.className = lang === "ar" ? "rtl" : "ltr";
-      forceUpdate(v => v + 1); // force re-render propre
+    const applyLang = (lang: string) => {
+      const html = document.documentElement;
+
+      html.lang = lang;
+      html.classList.remove("rtl", "ltr");
+      html.classList.add(lang === "ar" ? "rtl" : "ltr");
     };
 
-    updateDir(i18n.language);
-
-    i18n.on("languageChanged", updateDir);
+    applyLang(i18n.language);
+    i18n.on("languageChanged", applyLang);
 
     return () => {
-      i18n.off("languageChanged", updateDir);
+      i18n.off("languageChanged", applyLang);
     };
-  }, [])
+  }, []);
+
 
   return (
-    <html lang={i18n.language} dir={i18n.language === "ar" ? "rtl" : "ltr"}>
+    <html>
       <head>
                 <link
           rel="stylesheet"

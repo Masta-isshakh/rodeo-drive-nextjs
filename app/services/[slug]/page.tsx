@@ -47,7 +47,7 @@ export default function ServicePage() {
         <section className="service-hero">
           <video
             className="hero-video"
-            src="/videos/service-bg.mp4"
+            src="https://elements.envato.com/luxury-sport-car-GBPRVWQ"
             autoPlay
             muted
             loop
