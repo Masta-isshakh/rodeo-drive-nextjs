@@ -82,7 +82,7 @@ export default function Header() {
           alt="Rodeo Drive Logo"
           className="logo-img"
         />
-        <span>Rodeo Drive</span>
+        <span>Rodeo  Drive</span>
       </Link>
 
       {/* MOBILE TOGGLE */}
