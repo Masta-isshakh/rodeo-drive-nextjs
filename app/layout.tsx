@@ -13,6 +13,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   
     const [progress, setProgress] = useState(0);
+      const [, forceUpdate] = useState(0);
+
 
   useEffect(() => {
     const onScroll = () => {
@@ -25,10 +27,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }, []);
   
   useEffect(() => {
-    // Définir la langue et la direction du document pour SEO et RTL
-    document.documentElement.lang = i18n.language;
-    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
-  }, []);
+    const updateDir = (lang: string) => {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.body.className = lang === "ar" ? "rtl" : "ltr";
+      forceUpdate(v => v + 1); // force re-render propre
+    };
+
+    updateDir(i18n.language);
+
+    i18n.on("languageChanged", updateDir);
+
+    return () => {
+      i18n.off("languageChanged", updateDir);
+    };
+  }, [])
 
   return (
     <html lang={i18n.language} dir={i18n.language === "ar" ? "rtl" : "ltr"}>

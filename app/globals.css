@@ -86,3 +86,16 @@ a {
   z-index: 9999;
   transition: width 0.1s linear;
 }
+
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body.ltr {
+  direction: ltr;
+  text-align: left;
+}
+body.rtl .main-header {
+  flex-direction: row-reverse;
+}

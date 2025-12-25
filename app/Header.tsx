@@ -58,9 +58,6 @@ const switchLang = async () => {
   const newLang = i18n.language === "en" ? "ar" : "en";
   await i18n.changeLanguage(newLang);
 
-  document.documentElement.lang = newLang;
-  document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-
   window.location.reload();
 };
 
@@ -74,7 +71,6 @@ const switchLang = async () => {
   return (
 <header
   ref={headerRef}
-  dir={i18n.language === "ar" ? "rtl" : "ltr"}
   className={`main-header ${scrolled ? "scrolled" : ""}`}
 >
 
