@@ -80,7 +80,16 @@
   },
 
   "footer": {
-    "rights": "All Rights Reserved"
+        "brandName": "MyCompany",
+    "description": "Premium digital services designed to elevate your business and accelerate growth.",
+    "company": "Company",
+    "about": "About us",
+    "services": "Services",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "email": "Email",
+    "phone": "Phone",
+    "rights": "All rights reserved."
   },
   "services": {
         "polishing": "Polishing",
@@ -180,41 +189,59 @@
     "no_messages": "No messages yet"
   },
 "services_details": {
-  "polish": {
+  "polishing": {
     "title": "Professional Polishing",
     "description": "Multi-stage paint correction and polishing to restore deep gloss, remove swirl marks, and enhance the vehicle’s finish.",
+            "book":"book now",
     "seo_title": "Professional Car Polishing in Qatar",
-    "seo_description": "Premium car polishing service in Qatar delivering deep shine and flawless paint correction."
+    "seo_description": "Premium car polishing service in Qatar delivering deep shine and flawless paint correction.",
+            "book_service":"book now"
+
   },
   "protection": {
     "title": "Ceramic Coating",
     "description": "Advanced nano-ceramic coating that protects your vehicle against heat, UV rays, dirt, and environmental damage.",
+                "book":"book now",
     "seo_title": "Ceramic Coating Protection in Qatar",
-    "seo_description": "Long-lasting ceramic coating to protect your car’s paint and maintain showroom finish."
+    "seo_description": "Long-lasting ceramic coating to protect your car’s paint and maintain showroom finish.",
+        "book_service":"book now"
+
   },
   "ppf": {
     "title": "Paint Protection Film (PPF)",
     "description": "Invisible high-performance protection film shielding your car from scratches, stone chips, and road debris.",
+                "book":"book now",
     "seo_title": "Paint Protection Film in Qatar",
-    "seo_description": "Premium PPF solutions offering maximum protection for luxury vehicles."
+    "seo_description": "Premium PPF solutions offering maximum protection for luxury vehicles.",
+            "book_service":"book now"
+
   },
   "wrap": {
     "title": "Car Wrapping",
     "description": "Custom vehicle wrapping with premium materials for color change and paint protection.",
+                "book":"book now",
     "seo_title": "Car Wrapping Services in Qatar",
-    "seo_description": "Luxury car wrapping solutions with premium finishes and protection."
+    "seo_description": "Luxury car wrapping solutions with premium finishes and protection.",
+            "book_service":"book now"
+
   },
   "interior": {
     "title": "Interior Care",
     "description": "Deep interior cleaning and protection for leather, fabric, and all interior surfaces.",
+                "book":"book now",
     "seo_title": "Interior Car Detailing in Qatar",
-    "seo_description": "Professional interior car care services ensuring cleanliness and long-term protection."
+    "seo_description": "Professional interior car care services ensuring cleanliness and long-term protection.",
+            "book_service":"book now"
+
   },
   "smart": {
     "title": "Smart Repair",
     "description": "Precision smart repair solutions for dents, scratches, and minor damages without repainting.",
+                "book":"book now",
     "seo_title": "Smart Repair Services in Qatar",
-    "seo_description": "Advanced smart repair solutions for fast and seamless vehicle restoration."
+    "seo_description": "Advanced smart repair solutions for fast and seamless vehicle restoration.",
+            "book_service":"book now"
+
   }
 }
 

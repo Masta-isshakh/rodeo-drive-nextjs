@@ -3,7 +3,7 @@ export const servicesData: Record<string, any> = {
     title: "Car Polishing",
     description:
       "High-end machine polishing restoring gloss and eliminating paint imperfections.",
-    image: "/images/polish.png",
+    image: "/images/polishing.png",
     keywords: "car polishing Doha, paint correction Qatar",
   },
   protection: {

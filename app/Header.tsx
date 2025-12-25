@@ -54,14 +54,16 @@ export default function Header() {
   }, []);
 
   /* ---------------- ACTIONS ---------------- */
-  const switchLang = () => {
-    const newLang = i18n.language === "en" ? "ar" : "en";
-    i18n.changeLanguage(newLang);
+const switchLang = async () => {
+  const newLang = i18n.language === "en" ? "ar" : "en";
+  await i18n.changeLanguage(newLang);
 
-    // 🔒 ON GARDE LTR MÊME EN ARABE
-    document.documentElement.lang = newLang;
-    document.documentElement.dir = "ltr";
-  };
+  document.documentElement.lang = newLang;
+  document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
+
+  window.location.reload();
+};
+
 
 
   const closeAll = () => {
@@ -70,11 +72,12 @@ export default function Header() {
   };
 
   return (
-    <header
-      ref={headerRef}
-      dir="ltr"
-      className={`main-header ${scrolled ? "scrolled" : ""}`}
-    >
+<header
+  ref={headerRef}
+  dir={i18n.language === "ar" ? "rtl" : "ltr"}
+  className={`main-header ${scrolled ? "scrolled" : ""}`}
+>
+
       {/* LOGO TOUJOURS À GAUCHE */}
       <Link href="/home" className="logo" onClick={closeAll}>
         <img
@@ -82,7 +85,7 @@ export default function Header() {
           alt="Rodeo Drive Logo"
           className="logo-img"
         />
-        <span>Rodeo  Drive</span>
+        <span>Rodeo Drive</span>
       </Link>
 
       {/* MOBILE TOGGLE */}
@@ -113,7 +116,7 @@ export default function Header() {
           </button>
 
           <div className={`services-dropdown ${servicesOpen ? "show" : ""}`}>
-            <Link href="/services/polish" onClick={closeAll}>
+            <Link href="/services/polishing" onClick={closeAll}>
               {t("services.polishing")}
             </Link>
             <Link href="/services/protection" onClick={closeAll}>

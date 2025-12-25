@@ -5,7 +5,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import { useTranslation } from "react-i18next";
 import { Amplify } from "aws-amplify";
-import outputs from "@/amplify_outputs.json";
+import outputs from "../../amplify_outputs (2).json";
 import Head from "next/head";
 import BackgroundVideo from "next-video/background-video";
 
@@ -86,7 +86,7 @@ export default function HomePageClient() {
 
   <div className="services-container">
     {[
-      { slug: "polish", key: "polishing" },
+      { slug: "polishing", key: "polishing" },
       { slug: "protection", key: "ppf" },
       { slug: "wrap", key: "wrapping" },
       { slug: "interior", key: "interior" },
@@ -158,6 +158,14 @@ export default function HomePageClient() {
           </div>
         </section>
 
+
+                {/* -------------------- CTA -------------------- */}
+        <section className="cta-section">
+          <h2>{t("cta.title")}</h2>
+          <p>{t("cta.subtitle")}</p>
+          <a className="cta-btn" href="/book">{t("cta.button")}</a>
+        </section>
+
         {/* -------------------- SOCIAL -------------------- */}
         <section className="social-section">
           <h2>{t("social.title")}</h2>
@@ -169,12 +177,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* -------------------- CTA -------------------- */}
-        <section className="cta-section">
-          <h2>{t("cta.title")}</h2>
-          <p>{t("cta.subtitle")}</p>
-          <a className="cta-btn" href="/book">{t("cta.button")}</a>
-        </section>
+
 
         {/* -------------------- FOOTER -------------------- */}
         <footer className="site-footer">
