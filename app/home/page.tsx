@@ -5,7 +5,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import { useTranslation } from "react-i18next";
 import { Amplify } from "aws-amplify";
-import outputs from "../../amplify_outputs (2).json";
+import outputs from "../../amplify_outputs.json";
 import Head from "next/head";
 import BackgroundVideo from "next-video/background-video";
 
