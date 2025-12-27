@@ -1,193 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-import { useTranslation } from "react-i18next";
-import { Amplify } from "aws-amplify";
-import outputs from "../../amplify_outputs.json";
-import Head from "next/head";
-import BackgroundVideo from "next-video/background-video";
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollVideo from "./ScrollVideo";
+import WebGLBackground from "./WebGLBackground";
+import StorySection from "./StorySection";
+import Car3D from "./Car3D";
 
-Amplify.configure(outputs);
-const client = generateClient<Schema>();
+gsap.registerPlugin(ScrollTrigger);
 
-export default function HomePageClient() {
-  const { t } = useTranslation();
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  // Observe Amplify Todo model
+export default function Page() {
   useEffect(() => {
-    const sub = client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".story",
+        start: "top center",
+        end: "bottom top",
+        scrub: 1,
+      },
     });
-    return () => sub.unsubscribe();
-  }, []);
 
-  const createTodo = () => {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  };
-
-  // Scroll reveal
-  useEffect(() => {
-    const revealElements = document.querySelectorAll(
-      ".reveal, .service-card, .why-card, .stat-card"
-    );
-    const handleScroll = () => {
-      revealElements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) el.classList.add("active");
-      });
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    tl.from(".story h2", { y: 100, opacity: 0 })
+      .from(".story p", { y: 60, opacity: 0 }, "-=0.4");
   }, []);
 
   return (
     <>
-      <Head>
-        <title>Rodeo Drive | Premium Car  Care in Doha</title>
-        <meta
-          name="description"
-          content="Discover Rodeo Drive premium car services in Doha: polishing, ceramic coating, PPF, nano protection, customization and luxury automotive care."
-        />
-      </Head>
+      <section className="hero">
+        <h1>RODEO DRIVE</h1>
+        <p>Luxury Automotive Experience</p>
+      </section>
 
-      <main>
-        {/* -------------------- HERO VIDEO CINEMATIC -------------------- */}
-<section className="video-carousel">
-  <BackgroundVideo
-    src="https://mastatiktok.s3.us-east-1.amazonaws.com/video.mp4"
-    autoPlay
-    muted
-    loop
-    playsInline
-    className="bg-video"
-  />
-  
-  {/* Overlay pour style cinematic */}
-  <div className="video-overlay"></div>
+      <div className="story">
+        <h2>Precision Engineering</h2>
+        <p>Crafted for perfection.</p>
+      </div>
+      <WebGLBackground />
 
-  {/* Texte au-dessus de la vidéo */}
-  <div className="carousel-text reveal">
-    <h1>{t("home.hero_title")}</h1>
-    <p>{t("home.hero_subtitle")}</p>
-  </div>
-</section>
+      <StorySection />
+      <ScrollVideo />
 
+      <Car3D />
 
-{/* -------------------- SERVICES -------------------- */}
-<section id="services" aria-labelledby="services-title">
-  {/* TITRE flottant */}
-  <h2 id="services-title" className="floating-title">
-    {t("service.section_title")}
-  </h2>
-
-  <div className="services-container">
-    {[
-      { slug: "polishing", key: "polishing" },
-      { slug: "protection", key: "ppf" },
-      { slug: "wrap", key: "wrapping" },
-      { slug: "interior", key: "interior" },
-      { slug: "smart", key: "smart" },
-      { slug: "ppf", key: "ppf" }
-    ].map((service, i) => (
-      <a
-        key={i}
-        href={`/services/${service.slug}`}
-        className="service-card"
-      >
-        <div className="service-image">
-          <img
-            src={`/images/${service.slug}.png`}
-            alt={t(`services.${service.key}`)}
-          />
-
-          <div className="service-hover">
-            <span>{t("service.view_details")}</span>
-          </div>
-        </div>
-
-        <h3>{t(`services.${service.key}`)}</h3>
-      </a>
-    ))}
-  </div>
-</section>
-
-
-
-
-        {/* -------------------- STATS -------------------- */}
-        <section className="stats-section">
-          <div className="stats-overlay"></div>
-          <div className="stats-container">
-            {["brand", "locations", "vehicles", "years"].map((key) => (
-              <div className="stat-card reveal" key={key}>
-                <span className="stat-number">{t(`stats.${key}_number`)}</span>
-                <span className="stat-label">{t(`stats.${key}_label`)}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* -------------------- WHY CHOOSE US -------------------- */}
-        <section className="why-section">
-          <div className="why-grid">
-            {["protection", "finish", "tech"].map((item, i) => (
-              <div className="why-card reveal" key={i}>
-                <i className={`icon fas fa-${item === "tech" ? "tools" : item}`} />
-                <h3>{t(`why.${item}_title`)}</h3>
-                <p>{t(`why.${item}_desc`)}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* -------------------- COMMITMENT -------------------- */}
-        <section className="commit-section">
-          <div className="commit-overlay"></div>
-          <div className="commit-content reveal">
-            <h2>{t("commit.title")}</h2>
-            <p>{t("commit.description")}</p>
-            <ul className="commit-points">
-              <li>{t("commit.point1")}</li>
-              <li>{t("commit.point2")}</li>
-              <li>{t("commit.point3")}</li>
-            </ul>
-          </div>
-        </section>
-
-
-                {/* -------------------- CTA -------------------- */}
-        <section className="cta-section">
-          <h2>{t("cta.title")}</h2>
-          <p>{t("cta.subtitle")}</p>
-          <a className="cta-btn" href="/book">{t("cta.button")}</a>
-        </section>
-
-        {/* -------------------- SOCIAL -------------------- */}
-        <section className="social-section">
-          <h2>{t("social.title")}</h2>
-          <p>{t("social.subtitle")}</p>
-          <div className="social-icons">
-            {["facebook-f","instagram","twitter","linkedin-in","youtube"].map((icon, i) => (
-              <a key={i} href="#" aria-label={icon}><i className={`fab fa-${icon}`}></i></a>
-            ))}
-          </div>
-        </section>
-
-
-
-        {/* -------------------- FOOTER -------------------- */}
-        <footer className="site-footer">
-          <div className="footer-inner">
-            <p className="footer-text">
-              © 2025 <strong>Rodeo Drive</strong> — {t("footer.rights")}
-            </p>
-          </div>
-        </footer>
-      </main>
+      <footer className="footer">
+        © 2025 Rodeo Drive — All Rights Reserved
+      </footer>
     </>
   );
 }

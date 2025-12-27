@@ -6,7 +6,7 @@ import "./services.css";
 
 // Images des services
 const serviceImages: Record<string, string> = {
-  polish: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=60",
+  polishing: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=60",
   ceramic_coating: "https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?auto=format&fit=crop&w=1200&q=60",
   protection: "https://images.unsplash.com/photo-1549921296-3f9a3f1f8a9f?auto=format&fit=crop&w=1200&q=60",
   color_protection: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=60",
