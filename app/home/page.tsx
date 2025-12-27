@@ -3,49 +3,62 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import ScrollVideo from "./ScrollVideo";
 import WebGLBackground from "./WebGLBackground";
-import StorySection from "./StorySection";
-import Car3D from "./Car3D";
+
+import StoryChapter from "./StoryChapter";
+import HeroScrollVideo from "./HeroScrollVideo";
+import CinematicGallery from "./CinematiqueGallery";
+import HeroBackgroundVideo from "./BackgroundVideo";
+import ServicesSection from "./ServicesSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".story",
-        start: "top center",
-        end: "bottom top",
-        scrub: 1,
-      },
+    gsap.utils.toArray(".reveal").forEach((el: any) => {
+      gsap.fromTo(
+        el,
+        { y: 120, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.4,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+          },
+        }
+      );
     });
-
-    tl.from(".story h2", { y: 100, opacity: 0 })
-      .from(".story p", { y: 60, opacity: 0 }, "-=0.4");
   }, []);
 
   return (
     <>
-      <section className="hero">
-        <h1>RODEO DRIVE</h1>
-        <p>Luxury Automotive Experience</p>
-      </section>
-
-      <div className="story">
-        <h2>Precision Engineering</h2>
-        <p>Crafted for perfection.</p>
+      {/* BACKGROUND FIXE GLOBAL */}
+      <div className="global-bg">
+        <div className="bg-image" />
+        <div className="bg-overlay" />
+        <div className="bg-grain" />
       </div>
-      <WebGLBackground />
 
-      <StorySection />
-      <ScrollVideo />
+      {/* CONTENU */}
+      <main className="page-content">
 
-      <Car3D />
+        <HeroBackgroundVideo />
 
-      <footer className="footer">
-        © 2025 Rodeo Drive — All Rights Reserved
-      </footer>
+                <ServicesSection />
+
+        <CinematicGallery />
+        <HeroScrollVideo />
+        <StoryChapter />
+        <ScrollVideo />
+        <footer className="footer">
+          © 2025 Rodeo Drive — All Rights Reserved
+        </footer>
+      </main>
     </>
   );
 }

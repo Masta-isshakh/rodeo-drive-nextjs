@@ -1,6 +1,8 @@
 :root {
-  --page-bg: #c2c2c2;
+  --page-bg-color: #e6e6e6;
+  --page-bg-image: url("https://media.istockphoto.com/id/170450723/photo/a-silver-sports-car-on-black-tile-floor.jpg?s=612x612&w=0&k=20&c=B5BRnhnYzfOf2BE4301r8S7h56GshGUMVAy8QnoKP0Y=");
 }
+
 
 html,
 body {
@@ -10,6 +12,53 @@ body {
 
 main {
   background-color: var(--page-bg);
+}
+
+/* ===============================
+   GLOBAL CINEMATIC BACKGROUND
+================================ */
+.global-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-image {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://media.istockphoto.com/id/1185460602/photo/3d-illustration-of-generic-red-sedan-car-front-side-view.jpg?s=612x612&w=is&k=20&c=lDxcKz82HuMaChY-zHXPO_c5MViOdUZMYGAvIWCtHTs=");
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  transform: scale(1.08);
+  filter: brightness(0.55) contrast(1.15) saturate(1.1);
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,0.05), transparent 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.4), rgba(0,0,0,0.95));
+}
+
+.bg-grain {
+  position: absolute;
+  inset: -200%;
+  opacity: 0.05;
+  animation: grainMove 8s steps(10) infinite;
+}
+
+@keyframes grainMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-10%, -10%); }
+}
+
+/* CONTENU */
+.page-content {
+  position: relative;
+  z-index: 2;
 }
 
 /* ================= NAVBAR PREMIUM ================= */
@@ -263,8 +312,22 @@ body {
 /* HERO */
 .hero {
   height: 100vh;
-  position: relative;
-  overflow: hidden;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(64px, 8vw, 140px);
+  letter-spacing: 10px;
+  font-weight: 900;
+}
+
+.hero p {
+  margin-top: 20px;
+  font-size: 20px;
+  letter-spacing: 3px;
+  opacity: 0.85;
 }
 
 .hero video {
@@ -354,9 +417,12 @@ body {
   place-content: center;
   text-align: center;
 }
-
 .video-section {
-  height: 200vh;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #000;
 }
 
 .video-section video {
@@ -367,6 +433,100 @@ body {
   object-fit: cover;
 }
 
+/* =========================
+   OVERLAY
+========================= */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.08),
+      transparent 60%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.85)
+    );
+  pointer-events: none;
+}
+
+/* =========================
+   GLOW FX
+========================= */
+.video-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 80, 0, 0.25),
+    transparent 60%
+  );
+  z-index: 1;
+  opacity: 0;
+  filter: blur(120px);
+  transform: scale(1);
+  pointer-events: none;
+}
+
+/* =========================
+   TEXT CONTENT
+========================= */
+.video-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  color: #fff;
+}
+
+.video-title {
+  font-size: clamp(48px, 6vw, 104px);
+  font-weight: 900;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  background: linear-gradient(90deg, #ff3c00, #ffb347);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform-origin: center;
+}
+
+.video-subtitle {
+  max-width: 680px;
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.6;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  background: linear-gradient(90deg, #ffffff, #cccccc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+  .video-title {
+    letter-spacing: 4px;
+    font-size: 36px;
+  }
+
+  .video-subtitle {
+    font-size: 16px;
+  }
+}
+
 
 
 .footer {
@@ -374,3 +534,293 @@ body {
   text-align: center;
   color: #777;
 }
+
+video,
+canvas {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+.cinematic-section {
+  position: relative;
+  height: 5000px; /* très longue section pour scroll cinematic */
+  background: #0b0b0b;
+  overflow: hidden;
+  perspective: 2000px;
+}
+
+.cinematic-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05), rgba(0,0,0,0.85));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cinematic-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+  text-shadow: 0 0 40px rgba(255,255,255,0.2);
+}
+
+.cinematic-title {
+  font-size: clamp(48px, 6vw, 120px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(90deg, #ff3c00, #ffb347);
+  -webkit-text-fill-color: transparent;
+}
+
+.cinematic-subtitle {
+  font-size: clamp(18px, 2vw, 32px);
+  margin-top: 20px;
+  background: linear-gradient(90deg, #ffffff, #cccccc);
+  -webkit-text-fill-color: transparent;
+}
+
+.cinematic-car {
+  position: absolute;
+  width: 60%;
+  max-width: 900px;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  top: 50%;
+  transform-style: preserve-3d;
+  z-index: 5;
+  will-change: transform, opacity;
+  border-radius: 16px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+}
+
+.car-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+.car-section canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+
+
+.bg-video {
+  position: fixed;   /* fixe la vidéo à l'écran */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* remplir l'écran sans déformation */
+  z-index: -1;       /* derrière tout le contenu */
+  filter: brightness(0.7); /* optionnel : assombrir légèrement pour le texte */
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  z-index: 1;
+  position: relative;
+  background-color: #ccc;
+}
+
+.hero h1 {
+  font-size: 88px;
+  letter-spacing: 6px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 26px;
+  opacity: 0.9;
+}
+.hero-wrapper {
+  position: relative;
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+/* Overlay animé */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Texte */
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+  color: #fff;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.hero-text h1 {
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 900;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ff3c00, #ffb347);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text p {
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.6;
+  opacity: 0.9;
+  background: linear-gradient(90deg, #ffffff, #cccccc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.webgl-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: #0b0b0b;
+}
+/* =========================
+   SERVICES SECTION
+========================= */
+
+.services-section {
+  min-height: 160vh;
+  padding: 180px 8vw;
+  position: relative;
+  z-index: 2;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 120px;
+}
+
+.services-header h2 {
+  font-size: clamp(48px, 6vw, 96px);
+  letter-spacing: 6px;
+  margin-bottom: 20px;
+}
+
+.services-header p {
+  font-size: 20px;
+  opacity: 0.75;
+}
+
+/* GRID */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  perspective: 1200px;
+}
+
+/* CARD */
+.service-card {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* IMAGE */
+.service-media {
+  height: 360px;
+  overflow: hidden;
+}
+
+.service-media img {
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  transform: translateZ(40px);
+}
+
+/* CONTENT */
+.service-content {
+  padding: 32px;
+  transform: translateZ(60px);
+}
+
+.service-content h3 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.service-content p {
+  font-size: 16px;
+  opacity: 0.75;
+}
+
+/* GLOW */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 80, 0, 0.25),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: 0.6s;
+}
+
+.service-card:hover::after {
+  opacity: 1;
+}
+.service-card.active {
+  transform: scale(1.08) translateZ(80px);
+  box-shadow: 0 40px 120px rgba(255,80,0,0.35);
+}
+img, video, canvas {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .service-media {
+    height: 260px;
+  }
+}
+
+
