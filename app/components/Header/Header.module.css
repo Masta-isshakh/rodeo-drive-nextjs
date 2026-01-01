@@ -1,0 +1,520 @@
+/* ===============================
+   HEADER — Premium Glass Responsive
+   =============================== */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  width: 100%;
+  padding: 14px 0;
+  transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease, border-color 0.35s ease;
+  border-bottom: 1px solid rgba(192, 192, 192, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Transparent = true glass */
+.transparent {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 25, 41, 0.35) 0%,
+    rgba(10, 25, 41, 0.12) 70%,
+    rgba(10, 25, 41, 0.02) 100%
+  );
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* Solid on scroll */
+.solid {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 25, 41, 0.92) 0%,
+    rgba(10, 25, 41, 0.98) 100%
+  );
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(192, 192, 192, 0.18);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 35px rgba(192, 192, 192, 0.08);
+}
+
+.headerContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(14px, 2vw, 28px);
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(10px, 2vw, 28px);
+}
+
+/* ===============================
+   LOGO (Animated)
+   =============================== */
+
+.logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-primary-silver);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+}
+
+.logo:hover {
+  transform: translateY(-1px);
+}
+
+.logoImage {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  box-shadow: 0 10px 35px rgba(0,0,0,0.45), 0 0 0 2px rgba(192,192,192,0.22);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1.15) contrast(1.1);
+  transform: scale(1.03);
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.logo:hover .logoImage {
+  transform: scale(1.06) rotateZ(2deg);
+  box-shadow: 0 14px 45px rgba(0,0,0,0.55), 0 0 0 2px rgba(192,192,192,0.38), 0 0 30px rgba(192,192,192,0.20);
+}
+
+.logo:hover .logoImg {
+  transform: scale(1.08);
+  filter: brightness(1.25) contrast(1.18);
+}
+
+.logoText {
+  font-size: clamp(14px, 1.2vw, 18px);
+  line-height: 1;
+  color: var(--color-primary-silver);
+}
+
+/* Ring glow behind logo */
+.logoRing {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 68px;
+  height: 68px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(192,192,192,0.20), rgba(192,192,192,0.00) 62%);
+  filter: blur(2px);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: ringPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.70; }
+  50% { transform: translateY(-50%) scale(1.08); opacity: 0.95; }
+}
+
+/* Sheen sweep */
+.logoSheen {
+  position: absolute;
+  inset: -10px -40px -10px -40px;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.22) 45%, transparent 60%);
+  transform: translateX(-60%);
+  opacity: 0.0;
+}
+
+.logo:hover .logoSheen {
+  opacity: 1;
+  animation: sheen 0.9s ease forwards;
+}
+
+@keyframes sheen {
+  to { transform: translateX(60%); }
+}
+
+/* ===============================
+   NAV
+   =============================== */
+
+.nav {
+  min-width: 0;
+  justify-self: center;
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 22px);
+  min-width: 0;
+}
+
+.navLink {
+  color: rgba(255,255,255,0.92);
+  font-weight: var(--font-weight-medium);
+  font-size: clamp(12px, 1vw, 14px);
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-silver);
+  transition: width 0.25s ease;
+}
+
+.navLink:hover {
+  color: var(--color-primary-silver);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.activeNavLink {
+  color: var(--color-primary-silver);
+}
+
+.activeNavLink::after {
+  width: 100%;
+}
+
+/* ===============================
+   ACTIONS
+   =============================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+  flex-shrink: 0;
+}
+
+.languageSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(192,192,192,0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.langButton {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.95);
+  font-weight: var(--font-weight-medium);
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.langButton:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+.langButton.active {
+  background: var(--gradient-silver);
+  color: var(--color-secondary-navy);
+  box-shadow: 0 2px 10px rgba(192, 192, 192, 0.25);
+}
+
+.ctaButton {
+  background: var(--gradient-silver);
+  color: var(--color-secondary-navy);
+  font-weight: var(--font-weight-bold);
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(192, 192, 192, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(192, 192, 192, 0.32);
+}
+
+.whatsappButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #25D366;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsappButton:hover {
+  transform: translateY(-1px) scale(1.06);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35), 0 0 18px rgba(37,211,102,0.30);
+}
+
+/* Mobile button */
+.mobileMenuToggle {
+  display: none;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(192,192,192,0.18);
+  color: rgba(255,255,255,0.95);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.mobileMenuToggle:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.09);
+}
+
+/* ===============================
+   MOBILE NAV
+   =============================== */
+
+.mobileOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: calc(var(--z-sticky) + 1);
+}
+
+.mobileOverlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileNav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(380px, 92vw);
+  transform: translateX(110%);
+  transition: transform 0.35s ease;
+  z-index: calc(var(--z-sticky) + 2);
+
+  background: linear-gradient(180deg, rgba(10, 25, 41, 0.98) 0%, rgba(10, 25, 41, 1) 100%);
+  border-left: 1px solid rgba(192,192,192,0.18);
+  box-shadow: -18px 0 60px rgba(0,0,0,0.55);
+  overflow-y: auto;
+}
+
+.mobileNav.open {
+  transform: translateX(0);
+}
+
+.mobileNavContent {
+  padding: 22px;
+}
+
+.mobileTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.mobileBrand {
+  color: var(--color-primary-silver);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.mobileNavClose {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(192,192,192,0.18);
+  color: rgba(255,255,255,0.95);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.mobileNavList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mobileNavLink {
+  display: block;
+  padding: 14px 12px;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.92);
+  border: 1px solid rgba(192,192,192,0.10);
+  background: rgba(255,255,255,0.03);
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.mobileNavLink:hover {
+  transform: translateX(4px);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(192,192,192,0.18);
+}
+
+.mobileActions {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.mobileCta {
+  width: 100%;
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: var(--gradient-silver);
+  color: var(--color-secondary-navy);
+  font-weight: var(--font-weight-bold);
+}
+
+.mobileWhatsapp {
+  width: 100%;
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: rgba(37, 211, 102, 0.15);
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  color: white;
+}
+
+.mobileLangRow {
+  display: inline-flex;
+  gap: 6px;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+/* RTL */
+[dir="rtl"] .headerContainer {
+  direction: rtl;
+}
+
+[dir="rtl"] .mobileNav {
+  right: auto;
+  left: 0;
+  transform: translateX(-110%);
+}
+
+[dir="rtl"] .mobileNav.open {
+  transform: translateX(0);
+}
+
+[dir="rtl"] .mobileNavLink:hover {
+  transform: translateX(-4px);
+}
+
+/* ===============================
+   RESPONSIVE BREAKPOINTS
+   =============================== */
+
+/* Reduce density earlier to prevent overflow */
+@media (max-width: 1180px) {
+  .ctaButton {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+/* Tablet: hide CTA earlier if needed */
+@media (max-width: 1024px) {
+  .ctaButton {
+    display: none;
+  }
+}
+
+/* Mobile: move to burger */
+@media (max-width: 900px) {
+  .nav {
+    display: none;
+  }
+
+  .mobileMenuToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logoImage {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logoRing {
+    width: 62px;
+    height: 62px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .logoText {
+    display: none;
+  }
+
+  .languageSwitch {
+    display: none;
+  }
+
+  .whatsappButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mobileMenuToggle {
+    width: 40px;
+    height: 40px;
+  }
+}

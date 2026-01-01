@@ -1,0 +1,220 @@
+/* Process Section - 4-Step Timeline */
+
+.processSection {
+  padding: var(--spacing-4xl) 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 25, 41, 1) 0%,
+    rgba(10, 25, 41, 0.98) 50%,
+    rgba(10, 25, 41, 0.95) 100%
+  );
+  color: var(--color-primary-silver);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top animated border */
+.processSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-silver);
+  background-size: 200% 100%;
+  animation: borderFlow 3s linear infinite;
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
+}
+
+/* Animated light rays */
+.processSection::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(192, 192, 192, 0.03) 0%, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes borderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Floating Car Decoration */
+.floatingProcessCar {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 480px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.floatingProcessCar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(4px) brightness(0.5);
+  border-radius: 35px;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.6);
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  position: relative;
+  z-index: 2;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+  transform-style: preserve-3d;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-h2);
+  color: var(--color-white);
+  margin-bottom: var(--spacing-md);
+}
+
+.sectionSubtitle {
+  font-size: var(--font-size-body-lg);
+  color: var(--color-primary-silver-light);
+}
+
+.timeline {
+  position: relative;
+  padding: var(--spacing-xl) 0;
+}
+
+/* Timeline Line - GSAP draw animation */
+.timelineLine {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(192, 192, 192, 0.2);
+  /* GSAP: Draw animation from left to right on scroll */
+}
+
+.timelineLine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--gradient-silver);
+  /* GSAP: Animate width from 0 to 100% */
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  position: relative;
+  z-index: 1;
+  perspective: 1000px;
+}
+
+.step {
+  text-align: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+  /* GSAP will handle animation */
+}
+
+.stepNumber {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--spacing-lg);
+  background: var(--gradient-silver);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-secondary-navy);
+  box-shadow: var(--shadow-silver-glow);
+  position: relative;
+  /* GSAP: Scale animation */
+}
+
+.stepNumber::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary-silver);
+  opacity: 0.3;
+}
+
+.stepTitle {
+  font-size: var(--font-size-h5);
+  color: var(--color-white);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.stepDescription {
+  font-size: var(--font-size-body);
+  color: var(--color-primary-silver-light);
+  line-height: var(--line-height-relaxed);
+}
+
+.stepIcon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+@media (max-width: 1024px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+  }
+
+  .timelineLine {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .processSection {
+    padding: var(--spacing-3xl) 0;
+  }
+
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .stepNumber {
+    width: 70px;
+    height: 70px;
+    font-size: var(--font-size-h4);
+  }
+}

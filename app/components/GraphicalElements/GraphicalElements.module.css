@@ -1,0 +1,163 @@
+/* ============================================
+   GRAPHICAL ELEMENTS
+   Decorative animated shapes throughout the site
+   ============================================ */
+
+.graphicalElements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Animated Circles */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.circle1 {
+  width: 200px;
+  height: 200px;
+  top: 20%;
+  right: 10%;
+  border-color: rgba(192, 192, 192, 0.2);
+  animation-delay: 0s;
+}
+
+.circle2 {
+  width: 300px;
+  height: 300px;
+  bottom: 30%;
+  left: 5%;
+  border-color: rgba(107, 15, 26, 0.2);
+  animation-delay: 1s;
+}
+
+.circle3 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  right: 30%;
+  border-color: rgba(192, 192, 192, 0.15);
+  animation-delay: 2s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+/* Animated Lines */
+.line {
+  position: absolute;
+  height: 2px;
+  width: 300px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(192, 192, 192, 0.3) 50%,
+    transparent 100%
+  );
+  animation: lineFlow 8s ease-in-out infinite;
+}
+
+.line1 {
+  top: 40%;
+  left: -100px;
+  transform: rotate(-15deg);
+  animation-delay: 0s;
+}
+
+.line2 {
+  bottom: 25%;
+  right: -100px;
+  transform: rotate(15deg);
+  animation-delay: 2s;
+}
+
+@keyframes lineFlow {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Dots Grid */
+.dotsGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  padding: 5%;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(
+    circle,
+    rgba(192, 192, 192, 0.4) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+.dot:nth-child(odd) {
+  animation-delay: 0.5s;
+  background: radial-gradient(
+    circle,
+    rgba(107, 15, 26, 0.3) 0%,
+    transparent 70%
+  );
+}
+
+.dot:nth-child(3n) {
+  animation-delay: 1s;
+}
+
+.dot:nth-child(5n) {
+  animation-delay: 1.5s;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(0.5);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .circle,
+  .line {
+    display: none;
+  }
+  
+  .dotsGrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

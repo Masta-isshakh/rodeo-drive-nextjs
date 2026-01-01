@@ -1,0 +1,654 @@
+/* ============================================
+   HERO VIDEO SECTION
+   Full-width cinematic video background
+   Enhanced with graphical animations & luxury effects
+   ============================================ */
+
+.heroVideo {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animated Glow Orbs */
+.glowOrbsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.glowOrb {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(192, 192, 192, 0.3) 0%,
+    rgba(107, 15, 26, 0.2) 50%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  animation: orbFloat linear infinite;
+  opacity: 0;
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-100px, -100vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Animated Lines */
+.animatedLinesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.animatedLine {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(192, 192, 192, 0.6) 50%,
+    transparent 100%
+  );
+  animation: linefall linear infinite;
+  opacity: 0;
+}
+
+@keyframes linefall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Animated particles background */
+.heroVideo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(107, 15, 26, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(192, 192, 192, 0.1) 0%, transparent 50%);
+  animation: particleFloat 15s ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Animated border effect */
+.heroVideo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 3px solid transparent;
+  background: linear-gradient(45deg, 
+    var(--color-primary-silver), 
+    var(--color-accent-burgundy), 
+    var(--color-secondary-navy), 
+    var(--color-primary-silver)
+  ) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.4;
+  animation: borderRotate 8s linear infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  33% {
+    transform: translate(40px, -40px) scale(1.15);
+    opacity: 1;
+  }
+  66% {
+    transform: translate(-30px, 30px) scale(0.95);
+    opacity: 0.9;
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Video Background */
+.videoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.videoElement {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7) contrast(1.1);
+}
+
+.videoFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 3D Car Labels */
+.carLabel {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(192, 192, 192, 0.2);
+  color: var(--color-white);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(192, 192, 192, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.floatingCar1:hover .carLabel,
+.floatingCar2:hover .carLabel {
+  opacity: 1;
+}
+
+/* Floating 3D Car Images - Enhanced */
+.floatingCar1,
+.floatingCar2 {
+  position: absolute;
+  z-index: 1;
+  pointer-events: auto;
+  opacity: 0;
+  will-change: transform, opacity;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.floatingCar1 {
+  top: 15%;
+  left: 5%;
+  width: 500px;
+  height: 300px;
+}
+
+.floatingCar2 {
+  bottom: 10%;
+  right: 8%;
+  width: 450px;
+  height: 270px;
+}
+
+.floatingCar1:hover,
+.floatingCar2:hover {
+  transform: scale(1.05) rotateY(5deg);
+  z-index: 10;
+}
+
+.floatingCar1 img,
+.floatingCar2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(1px) brightness(0.8);
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(192, 192, 192, 0.2),
+    inset 0 0 30px rgba(107, 15, 26, 0.3);
+  border: 2px solid rgba(192, 192, 192, 0.3);
+  transition: all 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.floatingCar1:hover img,
+.floatingCar2:hover img {
+  filter: blur(0px) brightness(1);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(192, 192, 192, 0.4),
+    0 0 80px rgba(107, 15, 26, 0.3);
+  border-color: var(--color-primary-silver);
+}
+
+/* Shimmer effect on 3D cars */
+.floatingCar1::before,
+.floatingCar2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(192, 192, 192, 0.3),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+  z-index: 1;
+  border-radius: 20px;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
+}
+
+/* Dark Cinematic Overlay */
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 25, 41, 0.7) 0%,
+    rgba(107, 15, 26, 0.3) 50%,
+    rgba(10, 25, 41, 0.8) 100%
+  );
+  z-index: 1;
+  opacity: 0;
+}
+
+/* Content Container */
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  padding: 0 var(--spacing-lg);
+  text-align: center;
+  color: var(--color-white);
+}
+
+/* Headline with gradient animation */
+.heroTitle {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  background: linear-gradient(
+    135deg,
+    var(--color-white) 0%,
+    var(--color-primary-silver) 50%,
+    var(--color-accent-burgundy-light) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradient 5s ease infinite;
+  margin-bottom: var(--spacing-md);
+  opacity: 1;
+  position: relative;
+}
+
+.heroTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 2px;
+  background: var(--gradient-silver);
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
+}
+
+@keyframes textGradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.heroTitleLine {
+  display: block;
+}
+
+.heroSubtitle {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-light);
+  color: var(--color-primary-silver);
+  margin-bottom: var(--spacing-lg);
+  opacity: 0;
+}
+
+/* Tagline with pulsing effect */
+.heroTagline {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-primary-silver-light);
+  margin-bottom: var(--spacing-md);
+  text-transform: uppercase;
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-lg);
+  animation: taglinePulse 3s ease-in-out infinite;
+}
+
+@keyframes taglinePulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(192, 192, 192, 0.8), 0 0 30px rgba(192, 192, 192, 0.4);
+  }
+}
+
+.heroTagline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid var(--color-accent-burgundy);
+  border-radius: var(--radius-full);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Description */
+.heroDescription {
+  font-size: var(--font-size-body-lg);
+  line-height: var(--line-height-relaxed);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto var(--spacing-xl);
+  opacity: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* CTA Buttons with enhanced animations */
+.heroActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  opacity: 1;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-width: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaPrimary {
+  background: var(--gradient-silver);
+  color: var(--color-secondary-navy);
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaPrimary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ctaPrimary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.ctaPrimary:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-silver-glow);
+}
+
+.ctaSecondary {
+  background: transparent;
+  color: var(--color-white);
+  border: 2px solid var(--color-accent-burgundy);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.ctaSecondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(107, 15, 26, 0.5),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.ctaSecondary:hover::before {
+  left: 100%;
+}
+
+.ctaSecondary:hover {
+  background: rgba(107, 15, 26, 0.3);
+  border-color: var(--color-accent-burgundy-light);
+  transform: translateY(-4px);
+}
+
+/* Scroll Indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: var(--spacing-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-primary-silver);
+  font-size: var(--font-size-body-sm);
+  cursor: pointer;
+  opacity: 1;
+}
+
+.scrollIcon {
+  font-size: 24px;
+  animation: arrowBounce 2s infinite;
+}
+
+@keyframes arrowBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .heroVideo {
+    min-height: 600px;
+  }
+
+  .floatingCar1,
+  .floatingCar2 {
+    width: 350px;
+    height: 210px;
+  }
+
+  .heroTitle {
+    font-size: 3.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 2.5rem;
+  }
+
+  .heroTagline {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroVideo {
+    height: 100vh;
+    min-height: 600px;
+  }
+
+  .heroContent {
+    padding: 0 var(--spacing-md);
+  }
+
+  .floatingCar1,
+  .floatingCar2 {
+    display: none; /* Hide floating cars on mobile */
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .heroSubtitle {
+    font-size: 2rem;
+  }
+
+  .heroTagline {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .heroDescription {
+    font-size: var(--font-size-body);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .heroActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .scrollIndicator {
+    bottom: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.75rem;
+  }
+
+  .heroTagline {
+    font-size: 1rem;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .heroContent {
+  direction: rtl;
+}
