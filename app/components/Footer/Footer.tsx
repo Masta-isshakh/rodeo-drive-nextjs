@@ -83,8 +83,8 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   // Mets tes vraies infos ici (ou remplace par traduction si tu veux)
-  const phone = '+974 1234 5678';
-  const email = 'info@rodeo-drive.qa';
+  const phone = '+974 5000 0748';
+  const email = 'info@rodeo-drive.me';
 
   return (
     <footer className={styles.footer} ref={footerRef}>

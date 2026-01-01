@@ -133,7 +133,7 @@ export default function Header() {
             <span className={styles.logoRing} aria-hidden="true" />
             <span className={styles.logoImage}>
               <img
-                src="https://images.unsplash.com/photo-1760553120916-a4ef1cb739bf?auto=format&fit=crop&w=256&q=80"
+                src="/logo.jpeg"
                 alt="Rodeo Drive Logo"
                 className={styles.logoImg}
                 loading="eager"
