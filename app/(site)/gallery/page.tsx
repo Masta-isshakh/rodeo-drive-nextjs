@@ -10,6 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Filter = "all" | "detailing" | "ceramic" | "interior" | "ppf";
 
+function safeText(value: unknown, fallback: string) {
+  return typeof value === "string" && value.trim() ? value : fallback;
+}
+
 export default function GalleryPage() {
   const { language, t } = useI18n();
 
@@ -17,10 +21,60 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const rootRef = useRef<HTMLElement>(null);
+  const videoCarouselRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const galleryGridRef = useRef<HTMLDivElement>(null);
   const beforeAfterRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+
+  // --- VIDEO CAROUSEL (6 vidéos) ---
+  const videoItems = useMemo(
+    () => [
+      { id: 1, src: "/video1.mp4", poster: "/videos/poster-1.jpg" },
+      { id: 2, src: "/video1.mp4", poster: "/videos/poster-2.jpg" },
+      { id: 3, src: "/video1.mp4", poster: "/videos/poster-3.jpg" },
+      { id: 4, src: "/video1.mp4", poster: "/videos/poster-4.jpg" },
+      { id: 5, src: "/video1.mp4", poster: "/videos/poster-5.jpg" },
+      { id: 6, src: "/video1.mp4", poster: "/videos/poster-6.jpg" },
+    ],
+    []
+  );
+
+  // Traductions safe (aucune erreur si la clé manque)
+  const labels = useMemo(() => {
+    const gallery = (t as any)?.gallery ?? {};
+    const beforeAfter = (t as any)?.beforeAfter ?? {};
+    const galleryPage = (t as any)?.galleryPage ?? {};
+    const nav = (t as any)?.nav ?? {};
+    const cinematic = (t as any)?.cinematicShowcase ?? {};
+    const about = (t as any)?.aboutPage ?? {};
+    const services = (t as any)?.services ?? {};
+
+    return {
+      galleryTitle: safeText(gallery.title, language === "en" ? "Gallery" : "المعرض"),
+      gallerySubtitle: safeText(gallery.subtitle, language === "en" ? "Our recent work and transformations" : "أعمالنا والتحولات"),
+      carsDetailedLabel: safeText(cinematic.carsDetailedLabel, language === "en" ? "Cars detailed" : "سيارات تم تفصيلها"),
+      filterCeramic: safeText(galleryPage.filterCeramic, language === "en" ? "Ceramic projects" : "مشاريع سيراميك"),
+      filterProtection: safeText(galleryPage.filterProtection, language === "en" ? "Protection installs" : "تركيبات حماية"),
+      satisfaction: safeText(about.stats4Label, language === "en" ? "Satisfaction" : "رضا العملاء"),
+      beforeAfterTitle: safeText(beforeAfter.title, language === "en" ? "Before / After" : "قبل / بعد"),
+      beforeLabel: safeText(beforeAfter.before, language === "en" ? "Before" : "قبل"),
+      afterLabel: safeText(beforeAfter.after, language === "en" ? "After" : "بعد"),
+      beforeAfterDesc: safeText(galleryPage.description, language === "en" ? "Real transformations by our team." : "تحولات حقيقية من فريقنا."),
+      featured: safeText(galleryPage.featured, language === "en" ? "Featured Work" : "أعمال مختارة"),
+      filterAll: safeText(galleryPage.filterAll, language === "en" ? "All" : "الكل"),
+      filterInterior: safeText(galleryPage.filterInterior, language === "en" ? "Interior" : "الداخلية"),
+      detailingLabel: safeText(services?.categories?.detailing, language === "en" ? "Detailing" : "تفصيل"),
+      ceramicLabel: safeText(services?.list?.ceramicCoating, language === "en" ? "Ceramic" : "سيراميك"),
+      ppfLabel: safeText(services?.list?.paintProtection, "PPF"),
+      viewDetails: language === "en" ? "View Details" : "عرض التفاصيل",
+      ctaTitle: safeText((t as any)?.finalCta?.title, language === "en" ? "Ready to protect your car?" : "جاهز لحماية سيارتك؟"),
+      ctaSubtitle: safeText(galleryPage.description, language === "en" ? "Contact us for a tailored quote." : "تواصل معنا للحصول على عرض سعر."),
+      bookNow: safeText(nav.bookNow, language === "en" ? "Book Now" : "احجز الآن"),
+      videosTitle: safeText(galleryPage.videosTitle, language === "en" ? "Video Gallery" : "معرض الفيديو"),
+      videosSubtitle: safeText(galleryPage.videosSubtitle, language === "en" ? "Highlights from our latest work" : "لقطات من أحدث أعمالنا"),
+    };
+  }, [t, language]);
 
   const galleryItems = useMemo(
     () => [
@@ -91,6 +145,7 @@ export default function GalleryPage() {
     [language]
   );
 
+  // --- Before/After: 6 comparaisons ---
   const beforeAfterComparisons = useMemo(
     () => [
       {
@@ -114,6 +169,27 @@ export default function GalleryPage() {
         title: language === "en" ? "PPF Installation" : "تركيب PPF",
         description: language === "en" ? "Full body PPF with flawless application" : "PPF كامل بتطبيق مثالي",
       },
+      {
+        id: 4,
+        before: "https://images.unsplash.com/photo-1511910849309-0dffb878356d?auto=format&fit=crop&w=1200&q=80",
+        after: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80",
+        title: language === "en" ? "Deep Gloss Enhancement" : "تعزيز اللمعان العميق",
+        description: language === "en" ? "Polish + gloss boost for mirror finish" : "تلميع + تعزيز لمعان",
+      },
+      {
+        id: 5,
+        before: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1200&q=80",
+        after: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1200&q=80",
+        title: language === "en" ? "Wheel & Trim Revival" : "تجديد الجنط والزوائد",
+        description: language === "en" ? "Restoration of wheels, trims, and plastics" : "ترميم الجنط والقطع البلاستيكية",
+      },
+      {
+        id: 6,
+        before: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
+        after: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1200&q=80",
+        title: language === "en" ? "Showroom Finish" : "نتيجة صالة عرض",
+        description: language === "en" ? "Complete exterior + interior refresh" : "تفصيل خارجي وداخلي كامل",
+      },
     ],
     [language]
   );
@@ -123,15 +199,80 @@ export default function GalleryPage() {
     return galleryItems.filter((i) => i.category === activeFilter);
   }, [galleryItems, activeFilter]);
 
+  // --- Autoplay vidéos: tentative play + fallback interaction ---
+  useEffect(() => {
+    const section = videoCarouselRef.current;
+    if (!section) return;
+
+    const videos = Array.from(section.querySelectorAll("video"));
+    if (!videos.length) return;
+
+    videos.forEach((v) => {
+      v.muted = true;
+      v.playsInline = true;
+      v.loop = true;
+      v.preload = "metadata";
+    });
+
+    const tryPlayAll = async () => {
+      for (const v of videos) {
+        try {
+          await v.play();
+        } catch {
+          // Autoplay peut être bloqué; fallback ci-dessous
+        }
+      }
+    };
+
+    tryPlayAll();
+
+    const onFirstGesture = () => {
+      tryPlayAll();
+      window.removeEventListener("click", onFirstGesture);
+      window.removeEventListener("touchstart", onFirstGesture);
+    };
+
+    window.addEventListener("click", onFirstGesture);
+    window.addEventListener("touchstart", onFirstGesture, { passive: true });
+
+    return () => {
+      window.removeEventListener("click", onFirstGesture);
+      window.removeEventListener("touchstart", onFirstGesture);
+    };
+  }, [language]);
+
+  // --- Animations GSAP existantes + animation pour carousel vidéo ---
   useEffect(() => {
     if (!rootRef.current) return;
 
     const ctx = gsap.context(() => {
+      // Video carousel (entrée légère)
+      if (videoCarouselRef.current) {
+        const slides = videoCarouselRef.current.querySelectorAll(`.${styles.videoSlide}`);
+        gsap.fromTo(
+          slides,
+          { opacity: 0, y: 20, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: { trigger: videoCarouselRef.current, start: "top 85%" },
+          }
+        );
+      }
+
       // Hero
       if (heroRef.current) {
         const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
         if (heroContent) {
-          gsap.fromTo(heroContent, { opacity: 0, y: 80, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: "power3.out", delay: 0.12 });
+          gsap.fromTo(
+            heroContent,
+            { opacity: 0, y: 80, scale: 0.95 },
+            { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: "power3.out", delay: 0.12 }
+          );
         }
       }
 
@@ -202,7 +343,7 @@ export default function GalleryPage() {
             duration: 0.6,
             stagger: 0.06,
             ease: "power2.out",
-            scrollTrigger: { trigger: filterButtons[0].parentElement, start: "top 88%" },
+            scrollTrigger: { trigger: (filterButtons[0] as HTMLElement).parentElement, start: "top 88%" },
           }
         );
       }
@@ -212,6 +353,7 @@ export default function GalleryPage() {
     return () => ctx.revert();
   }, [language]);
 
+  // Re-anime items lors du changement de filtre
   useEffect(() => {
     if (!galleryGridRef.current) return;
 
@@ -225,12 +367,38 @@ export default function GalleryPage() {
 
   return (
     <main className={styles.galleryPage} ref={rootRef}>
+      {/* VIDEO CAROUSEL (juste sous la navbar) */}
+      <section className={styles.videoCarouselSection} ref={videoCarouselRef} aria-label="Video carousel">
+        <div className={styles.videoCarouselHeader}>
+          <h2 className={styles.videoCarouselTitle}>{labels.videosTitle}</h2>
+          <p className={styles.videoCarouselSubtitle}>{labels.videosSubtitle}</p>
+        </div>
+
+        <div className={styles.videoTrack} role="list">
+          {videoItems.map((v) => (
+            <div className={styles.videoSlide} key={v.id} role="listitem">
+              <div className={styles.videoFrame}>
+                <video
+                  className={styles.video}
+                  src={v.src}
+                  poster={v.poster}
+                  muted
+                  playsInline
+                  loop
+                  preload="metadata"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Hero */}
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <h1 className={styles.title}>{t.gallery?.title ?? (language === "en" ? "Gallery" : "المعرض")}</h1>
-          <p className={styles.subtitle}>{t.gallery?.subtitle ?? (language === "en" ? "Our recent work and transformations" : "أعمالنا والتحولات")}</p>
+          <h1 className={styles.title}>{labels.galleryTitle}</h1>
+          <p className={styles.subtitle}>{labels.gallerySubtitle}</p>
 
           <div className={styles.heroDecoration}>
             <div className={styles.decorLine} />
@@ -246,19 +414,19 @@ export default function GalleryPage() {
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
               <div className={styles.statNumber} data-target="850">0</div>
-              <div className={styles.statLabel}>{t.cinematicShowcase?.carsDetailedLabel ?? (language === "en" ? "Cars detailed" : "سيارات تم تفصيلها")}</div>
+              <div className={styles.statLabel}>{labels.carsDetailedLabel}</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statNumber} data-target="500">0</div>
-              <div className={styles.statLabel}>{t.galleryPage?.filterCeramic ?? (language === "en" ? "Ceramic projects" : "مشاريع سيراميك")}</div>
+              <div className={styles.statLabel}>{labels.filterCeramic}</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statNumber} data-target="300">0</div>
-              <div className={styles.statLabel}>{t.galleryPage?.filterProtection ?? (language === "en" ? "Protection installs" : "تركيبات حماية")}</div>
+              <div className={styles.statLabel}>{labels.filterProtection}</div>
             </div>
             <div className={styles.statCard}>
               <div className={styles.statNumber} data-target="98">0</div>
-              <div className={styles.statLabel}>{(t.aboutPage?.stats4Label ?? (language === "en" ? "Satisfaction" : "رضا العملاء"))} %</div>
+              <div className={styles.statLabel}>{labels.satisfaction} %</div>
             </div>
           </div>
         </div>
@@ -267,16 +435,16 @@ export default function GalleryPage() {
       {/* Before/After */}
       <section className={styles.beforeAfterSection} ref={beforeAfterRef}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>{t.beforeAfter?.title ?? (language === "en" ? "Before / After" : "قبل / بعد")}</h2>
-          <p className={styles.sectionSubtitle}>{t.galleryPage?.description ?? (language === "en" ? "Real transformations by our team." : "تحولات حقيقية من فريقنا.")}</p>
+          <h2 className={styles.sectionTitle}>{labels.beforeAfterTitle}</h2>
+          <p className={styles.sectionSubtitle}>{labels.beforeAfterDesc}</p>
 
           <div className={styles.comparisonsGrid}>
             {beforeAfterComparisons.map((comparison) => (
               <div key={comparison.id} className={styles.comparisonCard}>
                 <div className={styles.comparisonImages}>
                   <div className={styles.imageWrapper}>
-                    <img src={comparison.before} alt="Before" className={styles.comparisonImage} />
-                    <span className={styles.imageLabel}>{t.beforeAfter?.before ?? (language === "en" ? "Before" : "قبل")}</span>
+                    <img src={comparison.before} alt={labels.beforeLabel} className={styles.comparisonImage} />
+                    <span className={styles.imageLabel}>{labels.beforeLabel}</span>
                   </div>
 
                   <div className={styles.divider}>
@@ -286,8 +454,8 @@ export default function GalleryPage() {
                   </div>
 
                   <div className={styles.imageWrapper}>
-                    <img src={comparison.after} alt="After" className={styles.comparisonImage} />
-                    <span className={styles.imageLabel}>{t.beforeAfter?.after ?? (language === "en" ? "After" : "بعد")}</span>
+                    <img src={comparison.after} alt={labels.afterLabel} className={styles.comparisonImage} />
+                    <span className={styles.imageLabel}>{labels.afterLabel}</span>
                   </div>
                 </div>
 
@@ -304,23 +472,23 @@ export default function GalleryPage() {
       {/* Gallery */}
       <section className={styles.gallerySection}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>{t.galleryPage?.featured ?? (language === "en" ? "Featured Work" : "أعمال مختارة")}</h2>
+          <h2 className={styles.sectionTitle}>{labels.featured}</h2>
 
           <div className={styles.filterButtons}>
             <button className={`${styles.filterButton} ${activeFilter === "all" ? styles.active : ""}`} onClick={() => setActiveFilter("all")} type="button">
-              {t.galleryPage?.filterAll ?? (language === "en" ? "All" : "الكل")}
+              {labels.filterAll}
             </button>
             <button className={`${styles.filterButton} ${activeFilter === "detailing" ? styles.active : ""}`} onClick={() => setActiveFilter("detailing")} type="button">
-              {t.services?.categories?.detailing ?? (language === "en" ? "Detailing" : "تفصيل")}
+              {labels.detailingLabel}
             </button>
             <button className={`${styles.filterButton} ${activeFilter === "ceramic" ? styles.active : ""}`} onClick={() => setActiveFilter("ceramic")} type="button">
-              {t.services?.list?.ceramicCoating ?? (language === "en" ? "Ceramic" : "سيراميك")}
+              {labels.ceramicLabel}
             </button>
             <button className={`${styles.filterButton} ${activeFilter === "interior" ? styles.active : ""}`} onClick={() => setActiveFilter("interior")} type="button">
-              {t.galleryPage?.filterInterior ?? (language === "en" ? "Interior" : "الداخلية")}
+              {labels.filterInterior}
             </button>
             <button className={`${styles.filterButton} ${activeFilter === "ppf" ? styles.active : ""}`} onClick={() => setActiveFilter("ppf")} type="button">
-              {t.services?.list?.paintProtection ?? (language === "en" ? "PPF" : "PPF")}
+              {labels.ppfLabel}
             </button>
           </div>
 
@@ -333,7 +501,7 @@ export default function GalleryPage() {
                     <div className={styles.overlayContent}>
                       <h3 className={styles.imageTitle}>{item.title}</h3>
                       <p className={styles.imageDescription}>{item.description}</p>
-                      <span className={styles.viewButton}>{language === "en" ? "View Details" : "عرض التفاصيل"}</span>
+                      <span className={styles.viewButton}>{labels.viewDetails}</span>
                     </div>
                   </div>
                 </div>
@@ -347,10 +515,10 @@ export default function GalleryPage() {
       <section className={styles.ctaSection}>
         <div className={styles.container}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>{t.finalCta?.title ?? (language === "en" ? "Ready to protect your car?" : "جاهز لحماية سيارتك؟")}</h2>
-            <p className={styles.ctaSubtitle}>{t.galleryPage?.description ?? (language === "en" ? "Contact us for a tailored quote." : "تواصل معنا للحصول على عرض سعر.")}</p>
+            <h2 className={styles.ctaTitle}>{labels.ctaTitle}</h2>
+            <p className={styles.ctaSubtitle}>{labels.ctaSubtitle}</p>
             <button className={styles.ctaButton} type="button">
-              {t.nav?.bookNow ?? (language === "en" ? "Book Now" : "احجز الآن")}
+              {labels.bookNow}
             </button>
           </div>
         </div>
