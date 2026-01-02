@@ -1,236 +1,188 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import styles from './Floating3DCars.module.css';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import styles from "./Floating3DCars.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type CarConfig = {
+  // entrée
+  from: gsap.TweenVars;
+  // rotation au scroll (valeurs cibles)
+  toScroll: gsap.TweenVars;
+  // floating idle
+  float: gsap.TweenVars;
+};
+
 export default function Floating3DCars() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const car1Ref = useRef<HTMLDivElement>(null);
   const car2Ref = useRef<HTMLDivElement>(null);
   const car3Ref = useRef<HTMLDivElement>(null);
   const car4Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Car 1 - Top Left - Smooth 360° Y-axis rotation on scroll
-    if (car1Ref.current) {
-      gsap.fromTo(
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const cars = [
         car1Ref.current,
-        { opacity: 0, scale: 0.8, rotateY: -90 },
-        {
-          opacity: 1,
-          scale: 1,
-          rotateY: 0,
-          duration: 2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: car1Ref.current,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-
-      // Continuous scroll-based rotation
-      gsap.to(car1Ref.current, {
-        rotateY: 360,
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: '+=2000',
-          scrub: 3,
-        }
-      });
-
-      // Gentle floating animation
-      gsap.to(car1Ref.current, {
-        y: '-=20',
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
-
-    // Car 2 - Top Right - Reverse rotation
-    if (car2Ref.current) {
-      gsap.fromTo(
         car2Ref.current,
-        { opacity: 0, scale: 0.8, rotateY: 90 },
-        {
-          opacity: 1,
-          scale: 1,
-          rotateY: 0,
-          duration: 2,
-          delay: 0.2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: car2Ref.current,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-
-      // Reverse rotation on scroll
-      gsap.to(car2Ref.current, {
-        rotateY: -360,
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: '+=2000',
-          scrub: 3,
-        }
-      });
-
-      // Gentle floating animation
-      gsap.to(car2Ref.current, {
-        y: '+=25',
-        duration: 4.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
-
-    // Car 3 - Middle Left - Multi-axis rotation
-    if (car3Ref.current) {
-      gsap.fromTo(
         car3Ref.current,
-        { opacity: 0, scale: 0.7, rotateY: -45, rotateX: -30 },
-        {
-          opacity: 1,
-          scale: 1,
-          rotateY: 0,
-          rotateX: 0,
-          duration: 2.5,
-          delay: 0.4,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: car3Ref.current,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-
-      // Smooth Y-axis rotation on scroll
-      gsap.to(car3Ref.current, {
-        rotateY: 360,
-        rotateX: 15,
-        scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: '+=3000',
-          scrub: 2.5,
-        }
-      });
-
-      // Gentle floating with slight tilt
-      gsap.to(car3Ref.current, {
-        y: '-=30',
-        rotateZ: '+=3',
-        duration: 5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
-
-    // Car 4 - Bottom Right - Slow elegant rotation
-    if (car4Ref.current) {
-      gsap.fromTo(
         car4Ref.current,
-        { opacity: 0, scale: 0.7, rotateY: 45, rotateZ: 15 },
+      ].filter(Boolean) as HTMLDivElement[];
+
+      // (optionnel) mieux pour les transforms 3D
+      cars.forEach((el) => {
+        gsap.set(el, { transformPerspective: 2000, transformStyle: "preserve-3d" });
+      });
+
+      // Config par carte (mêmes effets que toi, mais propres)
+      const configs: CarConfig[] = [
+        // Car 1 - Top Left
         {
-          opacity: 1,
-          scale: 1,
-          rotateY: 0,
-          rotateZ: 0,
-          duration: 2.5,
-          delay: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: car4Ref.current,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse'
+          from: { opacity: 0, scale: 0.85, rotateY: -90, x: -40 },
+          toScroll: { rotateY: 360 },
+          float: { y: "-=18", duration: 4.2, ease: "sine.inOut", yoyo: true, repeat: -1 },
+        },
+        // Car 2 - Top Right
+        {
+          from: { opacity: 0, scale: 0.85, rotateY: 90, x: 40 },
+          toScroll: { rotateY: -360 },
+          float: { y: "+=22", duration: 4.7, ease: "sine.inOut", yoyo: true, repeat: -1 },
+        },
+        // Car 3 - Middle Left
+        {
+          from: { opacity: 0, scale: 0.8, rotateY: -45, rotateX: -25, y: 30 },
+          toScroll: { rotateY: 360, rotateX: 12 },
+          float: { y: "-=26", rotateZ: "+=2.5", duration: 5.2, ease: "sine.inOut", yoyo: true, repeat: -1 },
+        },
+        // Car 4 - Bottom Right
+        {
+          from: { opacity: 0, scale: 0.8, rotateY: 45, rotateZ: 12, y: -20 },
+          toScroll: { rotateY: -360, rotateZ: 8 },
+          float: { y: "+=18", rotateZ: "-=2", duration: 5.6, ease: "sine.inOut", yoyo: true, repeat: -1 },
+        },
+      ];
+
+      // 1) Animations d’entrée (ScrollTrigger individuel par carte)
+      cars.forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          configs[i].from,
+          {
+            opacity: 1,
+            scale: 1,
+            x: 0,
+            y: 0,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+            duration: 1.4,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 92%",
+              toggleActions: "play none none reverse",
+            },
           }
-        }
-      );
+        );
+      });
 
-      // Elegant rotation on scroll
-      gsap.to(car4Ref.current, {
-        rotateY: -360,
-        rotateZ: 10,
+      // 2) UN SEUL ScrollTrigger global pour la rotation (plus stable)
+      const rotTl = gsap.timeline({
         scrollTrigger: {
-          trigger: document.body,
-          start: 'top top',
-          end: '+=3500',
-          scrub: 2,
-        }
+          trigger: document.documentElement,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2.5,
+        },
       });
 
-      // Gentle floating
-      gsap.to(car4Ref.current, {
-        y: '+=20',
-        rotateZ: '-=2',
-        duration: 5.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
+      cars.forEach((el, i) => {
+        rotTl.to(
+          el,
+          {
+            ...configs[i].toScroll,
+            ease: "none",
+          },
+          0
+        );
       });
-    }
+
+      // 3) Floating idle (sans ScrollTrigger)
+      cars.forEach((el, i) => {
+        gsap.to(el, {
+          ...configs[i].float,
+        });
+      });
+    }, containerRef);
+
+    return () => {
+      ctx.revert();
+      // nettoyage extra si HMR / dev strict
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
   }, []);
 
   return (
-    <div className={styles.floating3DCarsContainer}>
-      {/* Car 1 - Top Left Area */}
-      <div className={styles.floatingCar} style={{ top: '15vh', left: '3%' }} ref={car1Ref}>
+    <div className={styles.floating3DCarsContainer} ref={containerRef} aria-hidden="true">
+      {/* Car 1 */}
+      <div className={styles.floatingCar} style={{ top: "15vh", left: "3%" }} ref={car1Ref}>
         <div className={styles.carWrapper}>
-          <img 
-            src="https://images.unsplash.com/photo-1742056024244-02a093dae0b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcG9ydHMlMjBjYXJ8ZW58MXx8fHwxNzY3MTEzNzg4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+          <img
+            src="https://images.unsplash.com/photo-1742056024244-02a093dae0b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
             alt=""
             className={styles.carImage}
+            loading="eager"
+            draggable={false}
           />
-          <div className={styles.carGlow}></div>
+          <div className={styles.carGlow} />
         </div>
       </div>
 
-      {/* Car 2 - Top Right Area */}
-      <div className={styles.floatingCar} style={{ top: '20vh', right: '5%' }} ref={car2Ref}>
+      {/* Car 2 */}
+      <div className={styles.floatingCar} style={{ top: "20vh", right: "5%" }} ref={car2Ref}>
         <div className={styles.carWrapper}>
-          <img 
-            src="https://images.unsplash.com/photo-1585601265915-f45bd0d42357?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBjYXIlMjBtb3Rpb258ZW58MXx8fHwxNzY3MTEzNzg5fDA&ixlib=rb-4.1.0&q=80&w=1080"
+          <img
+            src="https://images.unsplash.com/photo-1585601265915-f45bd0d42357?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
             alt=""
             className={styles.carImage}
+            loading="lazy"
+            draggable={false}
           />
-          <div className={styles.carGlow}></div>
+          <div className={styles.carGlow} />
         </div>
       </div>
 
-      {/* Car 3 - Middle Left Area */}
-      <div className={styles.floatingCar} style={{ top: '50vh', left: '2%' }} ref={car3Ref}>
+      {/* Car 3 */}
+      <div className={styles.floatingCar} style={{ top: "50vh", left: "2%" }} ref={car3Ref}>
         <div className={styles.carWrapper}>
-          <img 
-            src="https://images.unsplash.com/photo-1599912027667-755b68b4dd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjcwNDI0NjB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+          <img
+            src="https://images.unsplash.com/photo-1599912027667-755b68b4dd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
             alt=""
             className={styles.carImage}
+            loading="lazy"
+            draggable={false}
           />
-          <div className={styles.carGlow}></div>
+          <div className={styles.carGlow} />
         </div>
       </div>
 
-      {/* Car 4 - Bottom Right Area */}
-      <div className={styles.floatingCar} style={{ bottom: '15vh', right: '4%' }} ref={car4Ref}>
+      {/* Car 4 */}
+      <div className={styles.floatingCar} style={{ bottom: "15vh", right: "4%" }} ref={car4Ref}>
         <div className={styles.carWrapper}>
-          <img 
-            src="https://images.unsplash.com/photo-1758216383800-7023ee8ed42b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NjcxNTEwMTl8MA&ixlib=rb-4.1.0&q=80&w=1080"
+          <img
+            src="https://images.unsplash.com/photo-1758216383800-7023ee8ed42b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
             alt=""
             className={styles.carImage}
+            loading="lazy"
+            draggable={false}
           />
-          <div className={styles.carGlow}></div>
+          <div className={styles.carGlow} />
         </div>
       </div>
     </div>

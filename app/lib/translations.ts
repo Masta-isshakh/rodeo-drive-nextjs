@@ -15,7 +15,7 @@ export const translations = {
     },
     // Hero Section
     hero: {
-      title: 'Luxury Car Detailing',
+      title: 'Car Care Center',
       subtitle: 'in Doha',
       tagline: 'Precision. Protection. Performance.',
       description: 'Experience unparalleled automotive care for your luxury vehicle',

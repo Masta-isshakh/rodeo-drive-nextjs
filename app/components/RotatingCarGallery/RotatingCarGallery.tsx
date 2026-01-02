@@ -1,381 +1,208 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import styles from './RotatingCarGallery.module.css';
-import { getTranslation, Language } from '../../lib/translations';
+import { useEffect, useMemo, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import styles from "./RotatingCarGallery.module.css";
+import { useI18n } from "../../lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface RotatingCarGalleryProps {
-  language: Language;
-}
+type CarItem = {
+  img: string;
+  title: string;
+  desc: string;
+};
 
-export default function RotatingCarGallery({ language }: RotatingCarGalleryProps) {
+export default function RotatingCarGallery() {
+  const { t } = useI18n();
+
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const car1Ref = useRef<HTMLDivElement>(null);
-  const car2Ref = useRef<HTMLDivElement>(null);
-  const car3Ref = useRef<HTMLDivElement>(null);
-  const car4Ref = useRef<HTMLDivElement>(null);
-  const car5Ref = useRef<HTMLDivElement>(null);
-  const car6Ref = useRef<HTMLDivElement>(null);
-  const t = getTranslation(language);
+
+  // refs des cartes
+  const carRefs = useRef<Array<HTMLDivElement | null>>([]);
+  carRefs.current = [];
+
+  const setCarRef = (el: HTMLDivElement | null) => {
+    if (!el) return;
+    if (!carRefs.current.includes(el)) carRefs.current.push(el);
+  };
+
+  const cars: CarItem[] = useMemo(() => {
+    const rg = (t as any)?.rotatingGallery ?? {};
+    return [
+      {
+        img: "/cleaningafter.JPG",
+        title: rg.car1Title ?? "Elite Performance",
+        desc: rg.car1Desc ?? "Premium sports excellence",
+      },
+      {
+        img: "menu.JPG",
+        title: rg.car2Title ?? "Executive Class",
+        desc: rg.car2Desc ?? "Sophisticated elegance",
+      },
+      {
+        img: "/rotatingcargalley.png",
+        title: rg.car3Title ?? "Ultra Luxury",
+        desc: rg.car3Desc ?? "Unparalleled craftsmanship",
+      },
+      {
+        img: "/rotatingcargallery.png",
+        title: rg.car4Title ?? "Classic Elegance",
+        desc: rg.car4Desc ?? "Timeless beauty",
+      },
+      {
+        img: "/rotatingcargallery2.png",
+        title: rg.car5Title ?? "Performance Icon",
+        desc: rg.car5Desc ?? "Racing heritage",
+      },
+      {
+        img: "https://images.unsplash.com/photo-1649136378672-b965cb9935d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+        title: rg.car6Title ?? "Supercar Dream",
+        desc: rg.car6Desc ?? "Ultimate aspiration",
+      },
+    ];
+  }, [t]);
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    // Title animation with 3D effect
-    gsap.fromTo(
-      titleRef.current,
-      { 
-        opacity: 0, 
-        y: 100, 
-        rotateX: -45,
-        scale: 0.8
-      },
-      {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        scale: 1,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+    const ctx = gsap.context(() => {
+      // évite des valeurs 3D sans perspective
+      gsap.set(sectionRef.current!, { perspective: 2000 });
+
+      // Animation titre
+      if (titleRef.current) {
+        gsap.fromTo(
+          titleRef.current,
+          { opacity: 0, y: 80, rotateX: -35, transformOrigin: "50% 50%" },
+          {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            duration: 1.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: titleRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
       }
-    );
 
-    // Subtitle animation
-    gsap.fromTo(
-      subtitleRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        delay: 0.3,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: subtitleRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
+      // Animation sous-titre
+      if (subtitleRef.current) {
+        gsap.fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 35 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: subtitleRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
       }
-    );
 
-    // Car 1 - 360° Y-axis rotation
-    const car1Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: car1Ref.current,
-        start: 'top 75%',
-        end: 'top 25%',
-        scrub: 2,
-      }
-    });
+      const cards = carRefs.current.filter(Boolean) as HTMLDivElement[];
 
-    car1Timeline
-      .fromTo(
-        car1Ref.current,
-        { 
-          opacity: 0, 
-          x: -400, 
-          rotateY: -180,
-          scale: 0.3
-        },
-        { 
-          opacity: 1, 
-          x: 0, 
-          rotateY: 360,
-          scale: 1,
-          ease: 'power2.out'
+      // Animations par carte (variation par index)
+      cards.forEach((card, i) => {
+        const fromVars: gsap.TweenVars = {
+          opacity: 0,
+          scale: 0.8,
+        };
+
+        // petites variations selon i
+        if (i % 3 === 0) {
+          fromVars.x = -180;
+          fromVars.rotateY = -90;
+        } else if (i % 3 === 1) {
+          fromVars.x = 180;
+          fromVars.rotateZ = 12;
+        } else {
+          fromVars.y = 120;
+          fromVars.rotateX = 40;
         }
-      );
 
-    // Car 2 - 360° Z-axis rotation with flip
-    const car2Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: car2Ref.current,
-        start: 'top 75%',
-        end: 'top 25%',
-        scrub: 2,
-      }
-    });
+        gsap.fromTo(
+          card,
+          fromVars,
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+            scale: 1,
+            duration: 1.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 80%",
+              end: "top 35%",
+              scrub: 1.5,
+            },
+          }
+        );
 
-    car2Timeline
-      .fromTo(
-        car2Ref.current,
-        { 
-          opacity: 0, 
-          x: 400, 
-          rotateZ: 180,
-          scale: 0.3
-        },
-        { 
-          opacity: 1, 
-          x: 0, 
-          rotateZ: 0,
-          scale: 1,
-          ease: 'power2.out'
-        }
-      );
-
-    // Car 3 - Multi-axis rotation
-    const car3Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: car3Ref.current,
-        start: 'top 75%',
-        end: 'top 25%',
-        scrub: 2,
-      }
-    });
-
-    car3Timeline
-      .fromTo(
-        car3Ref.current,
-        { 
-          opacity: 0, 
-          y: 300, 
-          rotateY: 180,
-          rotateX: 90,
-          scale: 0.2
-        },
-        { 
-          opacity: 1, 
-          y: 0, 
-          rotateY: 0,
-          rotateX: 0,
-          scale: 1,
-          ease: 'power2.out'
-        }
-      );
-
-    // Car 4 - Barrel roll effect
-    const car4Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: car4Ref.current,
-        start: 'top 75%',
-        end: 'top 25%',
-        scrub: 2,
-      }
-    });
-
-    car4Timeline
-      .fromTo(
-        car4Ref.current,
-        { 
-          opacity: 0, 
-          x: -400,
-          y: -200,
-          rotateZ: -360,
-          scale: 0.3
-        },
-        { 
-          opacity: 1, 
-          x: 0,
-          y: 0,
-          rotateZ: 0,
-          scale: 1,
-          ease: 'power2.out'
-        }
-      );
-
-    // Car 5 - Spiral rotation
-    const car5Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: car5Ref.current,
-        start: 'top 75%',
-        end: 'top 25%',
-        scrub: 2,
-      }
-    });
-
-    car5Timeline
-      .fromTo(
-        car5Ref.current,
-        { 
-          opacity: 0, 
-          x: 400,
-          y: 200,
-          rotateY: -540,
-          rotateZ: 180,
-          scale: 0.2
-        },
-        { 
-          opacity: 1, 
-          x: 0,
-          y: 0,
-          rotateY: 0,
-          rotateZ: 0,
-          scale: 1,
-          ease: 'power2.out'
-        }
-      );
-
-    // Car 6 - Double flip
-    const car6Timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: car6Ref.current,
-        start: 'top 75%',
-        end: 'top 25%',
-        scrub: 2,
-      }
-    });
-
-    car6Timeline
-      .fromTo(
-        car6Ref.current,
-        { 
-          opacity: 0, 
-          y: -300,
-          rotateX: 720,
-          rotateY: 360,
-          scale: 0.2
-        },
-        { 
-          opacity: 1, 
-          y: 0,
-          rotateX: 0,
-          rotateY: 0,
-          scale: 1,
-          ease: 'power2.out'
-        }
-      );
-
-    // Continuous hover animations
-    const carRefs = [car1Ref, car2Ref, car3Ref, car4Ref, car5Ref, car6Ref];
-    
-    carRefs.forEach((carRef, index) => {
-      gsap.to(carRef.current, {
-        y: '+=20',
-        rotateZ: index % 2 === 0 ? '+=3' : '-=3',
-        duration: 3 + index * 0.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: index * 0.2
+        // léger "float" permanent (sans casser le scrollTrigger)
+        gsap.to(card, {
+          y: "+=10",
+          duration: 3.2 + i * 0.25,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: i * 0.12,
+        });
       });
-    });
+    }, sectionRef);
 
-  }, []);
+    return () => {
+      ctx.revert();
+      // nettoyage extra (utile si hot-reload)
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
+  }, [cars]);
 
   return (
     <section className={styles.gallery} ref={sectionRef}>
       <div className={styles.container}>
         <h2 className={styles.title} ref={titleRef}>
-          {t.rotatingGallery.title}
+          {(t as any)?.rotatingGallery?.title ?? "Luxury Fleet Showcase"}
         </h2>
         <p className={styles.subtitle} ref={subtitleRef}>
-          {t.rotatingGallery.subtitle}
+          {(t as any)?.rotatingGallery?.subtitle ?? "Experience automotive excellence through dynamic perspectives"}
         </p>
 
         <div className={styles.grid}>
-          {/* Car 1 */}
-          <div className={styles.carCard} ref={car1Ref}>
-            <div className={styles.carImageWrapper}>
-              <img 
-                src="https://images.unsplash.com/photo-1742056024244-02a093dae0b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcG9ydHMlMjBjYXJ8ZW58MXx8fHwxNjcxMTM3ODh8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt={t.rotatingGallery.car1Title}
-                className={styles.carImage}
-                loading="eager"
-              />
-              <div className={styles.overlay}></div>
-            </div>
-            <div className={styles.carInfo}>
-              <h3>{t.rotatingGallery.car1Title}</h3>
-              <p>{t.rotatingGallery.car1Desc}</p>
-            </div>
-          </div>
+          {cars.map((car, idx) => (
+            <div className={styles.carCard} ref={setCarRef} key={idx}>
+              <div className={styles.carImageWrapper}>
+                <img
+                  src={car.img}
+                  alt={car.title}
+                  className={styles.carImage}
+                  loading={idx < 2 ? "eager" : "lazy"}
+                />
+                <div className={styles.overlay} />
+              </div>
 
-          {/* Car 2 */}
-          <div className={styles.carCard} ref={car2Ref}>
-            <div className={styles.carImageWrapper}>
-              <img 
-                src="https://images.unsplash.com/photo-1758216383800-7023ee8ed42b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NjcxNTEwMTl8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt={t.rotatingGallery.car2Title}
-                className={styles.carImage}
-                loading="eager"
-              />
-              <div className={styles.overlay}></div>
+              <div className={styles.carInfo}>
+                <h3>{car.title}</h3>
+                <p>{car.desc}</p>
+              </div>
             </div>
-            <div className={styles.carInfo}>
-              <h3>{t.rotatingGallery.car2Title}</h3>
-              <p>{t.rotatingGallery.car2Desc}</p>
-            </div>
-          </div>
-
-          {/* Car 3 */}
-          <div className={styles.carCard} ref={car3Ref}>
-            <div className={styles.carImageWrapper}>
-              <img 
-                src="https://images.unsplash.com/photo-1599912027667-755b68b4dd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjcxNDk4OTV8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt={t.rotatingGallery.car3Title}
-                className={styles.carImage}
-                loading="eager"
-              />
-              <div className={styles.overlay}></div>
-            </div>
-            <div className={styles.carInfo}>
-              <h3>{t.rotatingGallery.car3Title}</h3>
-              <p>{t.rotatingGallery.car3Desc}</p>
-            </div>
-          </div>
-
-          {/* Car 4 */}
-          <div className={styles.carCard} ref={car4Ref}>
-            <div className={styles.carImageWrapper}>
-              <img 
-                src="https://images.unsplash.com/photo-1747414632749-6c8b14ba30fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXYlMjBjYXJ8ZW58MXx8fHwxNzY3MDkwNzExfDA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt={t.rotatingGallery.car4Title}
-                className={styles.carImage}
-                loading="eager"
-              />
-              <div className={styles.overlay}></div>
-            </div>
-            <div className={styles.carInfo}>
-              <h3>{t.rotatingGallery.car4Title}</h3>
-              <p>{t.rotatingGallery.car4Desc}</p>
-            </div>
-          </div>
-
-          {/* Car 5 */}
-          <div className={styles.carCard} ref={car5Ref}>
-            <div className={styles.carImageWrapper}>
-              <img 
-                src="https://images.unsplash.com/photo-1661311928926-180711852306?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXBlcmNhcnxlbnwxfHx8fDE3NjcxMTI0NDJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt={t.rotatingGallery.car5Title}
-                className={styles.carImage}
-                loading="eager"
-              />
-              <div className={styles.overlay}></div>
-            </div>
-            <div className={styles.carInfo}>
-              <h3>{t.rotatingGallery.car5Title}</h3>
-              <p>{t.rotatingGallery.car5Desc}</p>
-            </div>
-          </div>
-
-          {/* Car 6 */}
-          <div className={styles.carCard} ref={car6Ref}>
-            <div className={styles.carImageWrapper}>
-              <img 
-                src="https://images.unsplash.com/photo-1649136378672-b965cb9935d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjb252ZXJ0aWJsZSUyMGNhcnxlbnwxfHx8fDE3NjcxMTI5OTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt={t.rotatingGallery.car6Title}
-                className={styles.carImage}
-                loading="eager"
-              />
-              <div className={styles.overlay}></div>
-            </div>
-            <div className={styles.carInfo}>
-              <h3>{t.rotatingGallery.car6Title}</h3>
-              <p>{t.rotatingGallery.car6Desc}</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

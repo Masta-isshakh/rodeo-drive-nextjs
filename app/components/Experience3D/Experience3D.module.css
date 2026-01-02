@@ -1,241 +1,157 @@
-/* 3D Car Experience Section - Placeholder for Three.js */
-
+/* Section SANS CADRE */
 .experienceSection {
+  position: relative;
   padding: var(--spacing-4xl) 0;
-  background: linear-gradient(
-    180deg,
-    var(--color-off-white) 0%,
-    rgba(10, 25, 41, 0.03) 50%,
-    var(--color-white) 100%
-  );
-  position: relative;
+  background: transparent; /* pas de cadre, pas de box */
   overflow: hidden;
 }
 
-/* Animated geometric shapes */
-.experienceSection::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background-image: 
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 50px,
-      rgba(192, 192, 192, 0.03) 50px,
-      rgba(192, 192, 192, 0.03) 100px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 50px,
-      rgba(107, 15, 26, 0.02) 50px,
-      rgba(107, 15, 26, 0.02) 100px
-    );
-  animation: geometricRotate 60s linear infinite;
-  z-index: 0;
-}
-
-@keyframes geometricRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
-  position: relative;
-  z-index: 2;
-}
-
-/* Floating 3D Car Decorations */
-.floating3DCar1,
-.floating3DCar2 {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  will-change: transform, opacity;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-}
-
-.floating3DCar1 {
-  top: 10%;
-  left: -5%;
-  width: 600px;
-  height: 360px;
-}
-
-.floating3DCar2 {
-  bottom: 15%;
-  right: -8%;
-  width: 550px;
-  height: 330px;
-}
-
-.floating3DCar1 img,
-.floating3DCar2 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(2.5px) brightness(0.65);
-  border-radius: 25px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
-  transform-style: preserve-3d;
-}
-
-.sectionHeader {
+.header {
   text-align: center;
-  margin-bottom: var(--spacing-3xl);
-  transform-style: preserve-3d;
-}
-
-.sectionTitle {
-  font-size: var(--font-size-h2);
-  color: var(--color-secondary-navy);
-  margin-bottom: var(--spacing-md);
-}
-
-.sectionSubtitle {
-  font-size: var(--font-size-body-lg);
-  color: var(--color-charcoal);
-  opacity: 0.8;
-}
-
-.experienceContainer {
-  background: var(--color-secondary-navy);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-xl);
-  min-height: 600px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.viewer3D {
-  width: 100%;
-  height: 600px;
-  background: radial-gradient(circle at center, var(--color-secondary-navy-light) 0%, var(--color-secondary-navy) 100%);
-  position: relative;
-  transform-style: preserve-3d;
-  /* Three.js canvas will be inserted here */
-}
-
-.placeholderContent {
-  text-align: center;
-  color: var(--color-white);
-  padding: var(--spacing-3xl);
-}
-
-.placeholderIcon {
-  font-size: 120px;
-  margin-bottom: var(--spacing-lg);
-  display: block;
-  opacity: 0.6;
-}
-
-.placeholderTitle {
-  font-size: var(--font-size-h3);
-  color: var(--color-white);
-  margin-bottom: var(--spacing-md);
-}
-
-.placeholderText {
-  font-size: var(--font-size-body-lg);
-  color: var(--color-primary-silver-light);
   margin-bottom: var(--spacing-xl);
+  padding: 0 var(--spacing-lg);
 }
 
-.viewerControls {
-  position: absolute;
-  bottom: var(--spacing-xl);
-  left: 50%;
-  transform: translateX(-50%);
+.title {
+  font-size: var(--font-size-h2);
+  color: var(--color-primary-silver);
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: var(--spacing-xs);
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 860px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Carousel */
+.carousel {
+  width: 100%;
+}
+
+.track {
   display: flex;
-  align-items: center;
   gap: var(--spacing-lg);
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  padding: var(--spacing-md) var(--spacing-xl);
-  border-radius: var(--radius-full);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 0 var(--spacing-lg);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
-.rotateHint {
-  color: var(--color-primary-silver-light);
-  font-size: var(--font-size-body-sm);
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Slide */
+.slide {
+  flex: 0 0 78%;
+  max-width: 78%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 1024px) {
+  .slide {
+    flex: 0 0 46%;
+    max-width: 46%;
+  }
+}
+
+/* Canvas wrapper (pas un cadre: juste un arrondi clean) */
+.canvasWrap {
+  width: 100%;
+  height: 340px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(10, 25, 41, 0.35); /* léger pour le contraste */
+  border: 1px solid rgba(192, 192, 192, 0.12);
+}
+
+@media (max-width: 768px) {
+  .canvasWrap {
+    height: 280px;
+  }
+}
+
+.slideCaption {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 4px 0 4px;
 }
 
-.colorDots {
+.carName {
+  font-weight: 800;
+  color: var(--color-primary-silver);
+  letter-spacing: 1px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Dots */
+.dots {
+  margin-top: var(--spacing-md);
   display: flex;
-  gap: var(--spacing-sm);
+  justify-content: center;
+  gap: 10px;
 }
 
-.colorDot {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid var(--color-white);
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(192, 192, 192, 0.35);
+  background: rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.colorDot:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+.dotActive {
+  background: rgba(192, 192, 192, 0.78);
+  transform: scale(1.25);
+}
+
+/* Button */
+.buttonRow {
+  margin-top: var(--spacing-xl);
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--spacing-lg);
 }
 
 .exploreButton {
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
   background: var(--gradient-silver);
   color: var(--color-secondary-navy);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-body-lg);
-  padding: var(--spacing-md) var(--spacing-2xl);
-  border: none;
-  border-radius: var(--radius-full);
+  font-weight: 800;
   cursor: pointer;
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 30px rgba(192, 192, 192, 0.25);
+  transition: transform 0.2s ease;
 }
 
 .exploreButton:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-silver-glow);
 }
 
-@media (max-width: 768px) {
-  .experienceSection {
-    padding: var(--spacing-3xl) 0;
-  }
-
-  .container {
-    padding: 0 var(--spacing-md);
-  }
-
-  .viewer3D {
-    height: 400px;
-  }
-
-  .placeholderIcon {
-    font-size: 80px;
-  }
-
-  .viewerControls {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-  }
+/* RTL safe */
+[dir="rtl"] .track {
+  direction: rtl;
 }

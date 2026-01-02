@@ -31,25 +31,25 @@ export default function ServicesHighlight() {
         icon: "✨",
         title: t.services.list.ceramicCoating,
         description: t.services.descriptions.ceramicCoatingDesc ?? t.services.descriptions.ceramicCoating,
-        image: "https://images.unsplash.com/photo-1687845541910-8987370a8225?auto=format&fit=crop&w=1600&q=80",
+        image: "/NANO/IMG_0555.jpg",
       },
       {
         icon: "🛡️",
         title: t.services.list.paintProtection,
         description: t.services.descriptions.paintProtectionDesc ?? t.services.descriptions.paintProtection,
-        image: "https://images.unsplash.com/photo-1606235994317-b517abfd89cf?auto=format&fit=crop&w=1600&q=80",
+        image: "/PFF/C0094T01.JPG",
       },
       {
         icon: "💎",
         title: t.services.list.polish,
         description: t.services.descriptions.polishDesc ?? t.services.descriptions.polish,
-        image: "https://images.unsplash.com/photo-1730068001928-f0983eb1ce94?auto=format&fit=crop&w=1600&q=80",
+        image: "/polish.JPG",
       },
       {
         icon: "🖤",
         title: t.services.list.blackEdition,
         description: t.services.descriptions.blackEditionDesc ?? t.services.descriptions.blackEdition,
-        image: "https://images.unsplash.com/photo-1708441434479-c765f26d9f54?auto=format&fit=crop&w=1600&q=80",
+        image: "/lamborghini.JPG",
       },
       {
         icon: "🔧",
@@ -61,7 +61,7 @@ export default function ServicesHighlight() {
         icon: "🪑",
         title: t.services.list.nanoLeather,
         description: t.services.descriptions.nanoLeatherDesc ?? t.services.descriptions.nanoLeather,
-        image: "https://images.unsplash.com/photo-1660320593205-2994d5dcdc67?auto=format&fit=crop&w=1600&q=80",
+        image: "/NANO/IMG_0539.jpg",
       },
     ],
     [t]

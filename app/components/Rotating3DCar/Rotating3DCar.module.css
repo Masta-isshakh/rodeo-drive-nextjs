@@ -65,7 +65,7 @@
 .carWrapper {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: min(600px, 70vh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,13 +76,31 @@
   position: relative;
   width: 900px;
   height: 550px;
+    --z: 500px; /* fallback, sera remplacé par JS */
+
   transform-style: preserve-3d;
   transform: rotateY(0deg);
   will-change: transform;
   filter: drop-shadow(0 0 80px rgba(192, 192, 192, 0.4));
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .carImage,
+  .carLabel,
+  .titleGradient,
+  .scanLine,
+  .backgroundGrid {
+    animation: none !important;
+  }
+}
+
+
 .carImage {
+    position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -96,7 +114,10 @@
     inset 0 0 0 3px rgba(192, 192, 192, 0.4);
   animation: metallicPulse 4s ease-in-out infinite;
   transition: all 0.5s ease;
+  backface-visibility: visible;
+
 }
+
 
 .carImage::before {
   content: '';
@@ -135,6 +156,11 @@
   pointer-events: none;
   z-index: 2;
 }
+.carCard {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
 
 .carImage img {
   width: 100%;

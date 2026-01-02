@@ -1,246 +1,190 @@
 'use client';
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import dynamic from 'next/dynamic';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useI18n } from '../../lib/i18n';
 import styles from './Experience3D.module.css';
-import { getTranslation, Language } from '../../lib/translations';
 
-gsap.registerPlugin(ScrollTrigger);
+const CarCanvas = dynamic(() => import('./CarCanva'), { ssr: false });
 
-interface Experience3DProps {
-  language: Language;
+function safeText(value: unknown, fallback: string) {
+  return typeof value === 'string' && value.trim() ? value : fallback;
 }
 
-export default function Experience3D({ language }: Experience3DProps) {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const car3DRef = useRef<HTMLDivElement>(null);
-  const car3D2Ref = useRef<HTMLDivElement>(null);
-  const placeholderRef = useRef<HTMLDivElement>(null);
-  const t = getTranslation(language);
+export default function Experience3D() {
+  const { t } = useI18n();
 
+  const labels = useMemo(() => {
+    const ex = (t as any)?.experience3d ?? {};
+    const cars = ex?.cars ?? {};
+    return {
+      title: safeText(ex.title, '3D Experience'),
+      subtitle: safeText(ex.subtitle, 'Explore Every Angle'),
+      rotateHint: safeText(ex.rotateHint, 'Drag to rotate'),
+      explorePackages: safeText(ex.explorePackages, 'Explore Packages'),
+      cars: [
+        safeText(cars.car1, 'Car 1'),
+        safeText(cars.car2, 'Car 2'),
+        safeText(cars.car3, 'Car 3'),
+        safeText(cars.car4, 'Car 4'),
+      ],
+    };
+  }, [t]);
+
+  // Mets tes vrais fichiers dans /public
+  const models = useMemo(
+    () => [
+      { name: labels.cars[0], url: '/rollscar.glb' },
+      { name: labels.cars[1], url: '/lamborghini.glb' },
+      { name: labels.cars[2], url: '/merce.glb' },
+      { name: labels.cars[3], url: '/bmw.glb' },
+    ],
+    [labels.cars]
+  );
+
+  // Autoplay settings
+  const AUTOPLAY_MS = 666600;
+  const PAUSE_AFTER_INTERACTION_MS = 5000;
+
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const pauseTimerRef = useRef<number | null>(null);
+  const autoplayRef = useRef<number | null>(null);
+
+  const goTo = (index: number, reason: 'auto' | 'user' = 'user') => {
+    const clamped = ((index % models.length) + models.length) % models.length;
+    setActive(clamped);
+
+    // scroll horizontal vers la slide
+    const track = trackRef.current;
+    if (track) {
+      const slide = track.querySelector<HTMLElement>(`[data-slide="${clamped}"]`);
+      if (slide) {
+        slide.scrollIntoView({ behavior: reason === 'auto' ? 'smooth' : 'smooth', inline: 'start', block: 'nearest' });
+      }
+    }
+
+    // Pause après interaction utilisateur (évite conflits)
+    if (reason === 'user') {
+      setIsPaused(true);
+      if (pauseTimerRef.current) window.clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = window.setTimeout(() => setIsPaused(false), PAUSE_AFTER_INTERACTION_MS);
+    }
+  };
+
+  // Autoplay loop
   useEffect(() => {
-    // Animate header with 3D rotation
-    gsap.fromTo(
-      headerRef.current,
-      { opacity: 0, y: 80, rotateX: -20 },
-      {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: headerRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
+    if (isPaused) return;
 
-    // Animate 3D viewer with enhanced scale and rotation effect
-    gsap.fromTo(
-      viewerRef.current,
-      { opacity: 0, scale: 0.85, rotateY: -20 },
-      {
-        opacity: 1,
-        scale: 1,
-        rotateY: 0,
-        duration: 1.4,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: viewerRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
+    autoplayRef.current = window.setInterval(() => {
+      goTo(active + 1, 'auto');
+    }, AUTOPLAY_MS);
 
-    // Animate placeholder content with stagger
-    if (placeholderRef.current) {
-      const elements = placeholderRef.current.children;
-      gsap.fromTo(
-        elements,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: placeholderRef.current,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse'
+    return () => {
+      if (autoplayRef.current) window.clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, isPaused]);
+
+  // Pause au hover (desktop)
+  const onMouseEnter = () => setIsPaused(true);
+  const onMouseLeave = () => setIsPaused(false);
+
+  // Sync active index si l’utilisateur scrolle manuellement
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let raf = 0;
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
+        if (!slides.length) return;
+
+        const trackRect = track.getBoundingClientRect();
+        const centerX = trackRect.left + trackRect.width / 2;
+
+        let bestIndex = 0;
+        let bestDist = Number.POSITIVE_INFINITY;
+
+        slides.forEach((el, idx) => {
+          const r = el.getBoundingClientRect();
+          const elCenter = r.left + r.width / 2;
+          const dist = Math.abs(centerX - elCenter);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestIndex = idx;
           }
-        }
-      );
-    }
+        });
 
-    // Animate floating 3D car images
-    if (car3DRef.current) {
-      gsap.fromTo(
-        car3DRef.current,
-        { opacity: 0, x: -150, rotateY: -30, scale: 0.8 },
-        {
-          opacity: 0.18,
-          x: 0,
-          rotateY: 0,
-          scale: 1,
-          duration: 2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 60%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-
-      // Parallax effect
-      gsap.to(car3DRef.current, {
-        y: -80,
-        x: 30,
-        rotateY: -15,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 2
-        }
+        setActive(bestIndex);
       });
+    };
 
-      // Continuous floating
-      gsap.to(car3DRef.current, {
-        y: '+=30',
-        rotate: '+=2',
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
+    track.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      track.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
-    if (car3D2Ref.current) {
-      gsap.fromTo(
-        car3D2Ref.current,
-        { opacity: 0, x: 150, rotateY: 30, scale: 0.8 },
-        {
-          opacity: 0.15,
-          x: 0,
-          rotateY: 0,
-          scale: 1,
-          duration: 2,
-          delay: 0.3,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 60%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-
-      // Parallax effect
-      gsap.to(car3D2Ref.current, {
-        y: -60,
-        x: -40,
-        rotateY: 12,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 2
-        }
-      });
-
-      // Continuous floating
-      gsap.to(car3D2Ref.current, {
-        y: '-=35',
-        rotate: '-=3',
-        duration: 4.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
-    }
-
-    // Animate button with bounce
-    gsap.fromTo(
-      buttonRef.current,
-      { opacity: 0, y: 40, scale: 0.9 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.9,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: buttonRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
+  // Cleanup timers
+  useEffect(() => {
+    return () => {
+      if (pauseTimerRef.current) window.clearTimeout(pauseTimerRef.current);
+      if (autoplayRef.current) window.clearInterval(autoplayRef.current);
+    };
   }, []);
 
   return (
-    <section className={styles.experienceSection} ref={sectionRef}>
-      <div className={styles.container}>
-        <div className={styles.sectionHeader} ref={headerRef}>
-          <h2 className={styles.sectionTitle}>{t.experience3d.title}</h2>
-          <p className={styles.sectionSubtitle}>{t.experience3d.subtitle}</p>
-        </div>
+    <section className={styles.experienceSection}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{labels.title}</h2>
+        <p className={styles.subtitle}>{labels.subtitle}</p>
+      </div>
 
-        {/* Floating 3D Car Images */}
-        <div className={styles.floating3DCar1} ref={car3DRef}>
-          <img
-            src="https://images.unsplash.com/photo-1599912027667-755b68b4dd3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjcwNDI0NjB8MA&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Luxury car interior"
-          />
-        </div>
-        <div className={styles.floating3DCar2} ref={car3D2Ref}>
-          <img
-            src="https://images.unsplash.com/photo-1742056024244-02a093dae0b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcG9ydHMlMjBjYXJ8ZW58MXx8fHwxNzY3MTEzNzg4fDA&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Luxury sports car"
-          />
-        </div>
-
-        <div className={styles.experienceContainer}>
-          <div className={styles.viewer3D} ref={viewerRef}>
-            {/* Three.js / react-three-fiber integration placeholder */}
-            <div className={styles.placeholderContent} ref={placeholderRef}>
-              <span className={styles.placeholderIcon}>🚗</span>
-              <h3 className={styles.placeholderTitle}>{t.experience3d.placeholderTitle}</h3>
-              <p className={styles.placeholderText}>
-                {t.experience3d.placeholderText}<br />
-                {t.experience3d.placeholderNote}
-              </p>
-            </div>
-
-            <div className={styles.viewerControls}>
-              <div className={styles.rotateHint}>
-                <span>🔄</span>
-                <span>{t.experience3d.rotateHint}</span>
+      {/* Carousel horizontal */}
+      <div className={styles.carousel} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <div className={styles.track} ref={trackRef}>
+          {models.map((m, i) => (
+            <div className={styles.slide} key={m.url} data-slide={i}>
+              <div className={styles.canvasWrap}>
+                <CarCanvas modelUrl={m.url} enableControls />
               </div>
-              
-              <div className={styles.colorDots}>
-                <div className={styles.colorDot} style={{ backgroundColor: '#000000' }} />
-                <div className={styles.colorDot} style={{ backgroundColor: '#FFFFFF' }} />
-                <div className={styles.colorDot} style={{ backgroundColor: '#C0C0C0' }} />
-                <div className={styles.colorDot} style={{ backgroundColor: '#1A2332' }} />
+              <div className={styles.slideCaption}>
+                <span className={styles.carName}>{m.name}</span>
+                <span className={styles.hint}>
+                  <span aria-hidden="true">🔄</span> {labels.rotateHint}
+                </span>
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
-          <button className={styles.exploreButton} ref={buttonRef}>
-            {t.experience3d.explorePackages}
-          </button>
+        {/* Dots */}
+        <div className={styles.dots} aria-label="Carousel navigation">
+          {models.map((m, i) => (
+            <button
+              key={m.url}
+              type="button"
+              className={`${styles.dot} ${i === active ? styles.dotActive : ''}`}
+              onClick={() => goTo(i, 'user')}
+              aria-label={`Go to ${m.name}`}
+              aria-pressed={i === active}
+            />
+          ))}
         </div>
+      </div>
+
+      <div className={styles.buttonRow}>
+        <button className={styles.exploreButton} type="button">
+          {labels.explorePackages}
+        </button>
       </div>
     </section>
   );
