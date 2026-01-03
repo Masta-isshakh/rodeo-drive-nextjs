@@ -53,33 +53,33 @@ export default function ContactPage() {
       {
         icon: Phone,
         title: language === "en" ? "Phone" : "الهاتف",
-        details: ["+974 1234 5678", "+974 8765 4321"],
-        action: () => window.open("tel:+97412345678", "_self"),
+        details: ["+974 33388451", "+974 33388452"],
+        action: () => window.open("tel:+97433388452", "_self"),
       },
       {
         icon: MessageCircle,
         title: "WhatsApp",
-        details: ["+974 1234 5678"],
-        action: () => window.open("https://wa.me/97412345678", "_blank"),
+        details: ["+974 33388451"],
+        action: () => window.open("https://wa.me/97433202409", "_blank"),
       },
       {
         icon: Mail,
         title: language === "en" ? "Email" : "البريد الإلكتروني",
-        details: ["info@rodeodrive.qa", "booking@rodeodrive.qa"],
+        details: ["info@rodeodrive.qa", "info@rodeodrive.me"],
         action: () => window.open("mailto:info@rodeodrive.qa", "_self"),
       },
       {
         icon: MapPin,
         title: language === "en" ? "Location" : "الموقع",
-        details: ["Doha, Qatar", "Al Sadd Street"],
-        action: () => window.open("https://maps.google.com", "_blank"),
+        details: ["Doha, Qatar", "Block 2, Shop No SYS 066, Block 21, Near Dragon Mart Al Sayer, Doha"],
+        action: () => window.open("https://maps.app.goo.gl/w1QEpGjy7UmE9LBs9?g_st=ipc", "_blank"),
       },
       {
         icon: Clock,
         title: language === "en" ? "Working Hours" : "ساعات العمل",
         details: [
-          language === "en" ? "Sun - Thu: 8AM - 8PM" : "الأحد - الخميس: 8 صباحاً - 8 مساءً",
-          language === "en" ? "Sat: 9AM - 6PM" : "السبت: 9 صباحاً - 6 مساءً",
+          language === "en" ? "Sun - Thu: 9AM - 9PM" : "السبت - الخميس: 9 صباحاً - 9 مساءً",
+         
         ],
         action: null as null | (() => void),
       },
@@ -268,7 +268,7 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     className={styles.input}
                     required
-                    placeholder={language === "en" ? "John Doe" : "الاسم الكامل"}
+                    placeholder={language === "en" ? "rashid" : "الاسم الكامل"}
                   />
                 </div>
 
@@ -281,7 +281,7 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     className={styles.input}
                     required
-                    placeholder="+974 XXXX XXXX"
+                    placeholder="+974 65464365"
                   />
                 </div>
               </div>
@@ -295,7 +295,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     className={styles.input}
-                    placeholder="john@example.com"
+                    placeholder="rashid@gmail.com"
                   />
                 </div>
 
@@ -308,7 +308,7 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     className={styles.input}
                     required
-                    placeholder={language === "en" ? "e.g., Ferrari 488" : "مثال: فيراري 488"}
+                    placeholder={language === "en" ? " Ferrari 488" : "مثال: فيراري 488"}
                   />
                 </div>
               </div>

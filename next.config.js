@@ -8,5 +8,9 @@ const nextConfig = {
 
   },
 };
+module.exports = {
+  reactStrictMode: false,
+};
+
 
 module.exports = nextConfig;

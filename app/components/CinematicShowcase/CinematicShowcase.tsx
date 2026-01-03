@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./CinematicShowcase.module.css";
 import { useI18n } from "../../lib/i18n";
+import { Sparkles, ShieldCheck, Paintbrush, Gem } from "lucide-react";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,7 +79,7 @@ export default function CinematicShowcase() {
     return arr;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const sectionEl = sectionRef.current;
     if (!sectionEl) return;
 
@@ -254,25 +258,37 @@ export default function CinematicShowcase() {
 
         <div className={styles.cardsGrid} ref={cardsContainerRef}>
           <div className={styles.card}>
-            <div className={styles.cardIcon}>✨</div>
+<div className={styles.cardIcon} aria-hidden="true">
+  <Sparkles size={44} strokeWidth={2} />
+</div>
+
             <h3 className={styles.cardTitle}>{labels.premiumDetailingTitle}</h3>
             <p className={styles.cardDesc}>{labels.premiumDetailingDesc}</p>
           </div>
 
           <div className={styles.card}>
-            <div className={styles.cardIcon}>🛡️</div>
+<div className={styles.cardIcon} aria-hidden="true">
+  <ShieldCheck size={44} strokeWidth={2} />
+</div>
+
             <h3 className={styles.cardTitle}>{labels.ceramicCoatingTitle}</h3>
             <p className={styles.cardDesc}>{labels.ceramicCoatingDesc}</p>
           </div>
 
           <div className={styles.card}>
-            <div className={styles.cardIcon}>🎨</div>
+<div className={styles.cardIcon} aria-hidden="true">
+  <Paintbrush size={44} strokeWidth={2} />
+</div>
+
             <h3 className={styles.cardTitle}>{labels.paintCorrectionTitle}</h3>
             <p className={styles.cardDesc}>{labels.paintCorrectionDesc}</p>
           </div>
 
           <div className={styles.card}>
-            <div className={styles.cardIcon}>💎</div>
+<div className={styles.cardIcon} aria-hidden="true">
+  <Gem size={44} strokeWidth={2} />
+</div>
+
             <h3 className={styles.cardTitle}>{labels.interiorLuxuryTitle}</h3>
             <p className={styles.cardDesc}>{labels.interiorLuxuryDesc}</p>
           </div>

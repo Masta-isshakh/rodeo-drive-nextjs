@@ -347,35 +347,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className={styles.teamSection} ref={teamRef}>
-        <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>{copy.teamTitle}</h2>
-          <p className={styles.sectionSubtitle}>{copy.teamSubtitle}</p>
 
-          <div className={styles.teamGrid}>
-            {teamMembers.map((member, index) => (
-              <div key={index} className={styles.teamMember}>
-                <div className={styles.memberImageWrapper}>
-                  <img src={member.image} alt={member.name} className={styles.memberImage} />
-                  <div className={styles.memberOverlay}>
-                    <div className={styles.memberSocial}>
-                      <button className={styles.socialButton} type="button">
-                        LinkedIn
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.memberInfo}>
-                  <h3 className={styles.memberName}>{member.name}</h3>
-                  <p className={styles.memberRole}>{member.role}</p>
-                  <p className={styles.memberDescription}>{member.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Achievements */}
       <section className={styles.achievementsSection} ref={achievementsRef}>

@@ -38,7 +38,7 @@
     rgba(107, 15, 26, 0.2) 50%,
     transparent 70%
   );
-  filter: blur(60px);
+
   animation: orbFloat linear infinite;
   opacity: 0;
 }
@@ -60,31 +60,6 @@
   }
 }
 
-/* Animated Lines */
-.animatedLinesContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.animatedLine {
-  position: absolute;
-  width: 2px;
-  height: 100px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(192, 192, 192, 0.6) 50%,
-    transparent 100%
-  );
-  animation: linefall linear infinite;
-  opacity: 0;
-}
 
 @keyframes linefall {
   0% {
@@ -307,23 +282,6 @@
   50%, 100% {
     left: 100%;
   }
-}
-
-/* Dark Cinematic Overlay */
-.videoOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 25, 41, 0.7) 0%,
-    rgba(107, 15, 26, 0.3) 50%,
-    rgba(10, 25, 41, 0.8) 100%
-  );
-  z-index: 1;
-  opacity: 0;
 }
 
 /* Content Container */

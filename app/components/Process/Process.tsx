@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Process.module.css';
 import { useI18n } from '../../lib/i18n';
+import { Search, SprayCan, Sparkles, ShieldCheck } from 'lucide-react';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,130 +40,135 @@ export default function Process() {
     };
   }, [t]);
 
-  const steps = useMemo(
-    () => [
-      { number: '01', icon: '🔍', title: labels.step1.title, description: labels.step1.description },
-      { number: '02', icon: '🧼', title: labels.step2.title, description: labels.step2.description },
-      { number: '03', icon: '✨', title: labels.step3.title, description: labels.step3.description },
-      { number: '04', icon: '🛡️', title: labels.step4.title, description: labels.step4.description },
-    ],
-    [labels]
-  );
+const steps = useMemo(
+  () => [
+    { number: '01', icon: Search, title: labels.step1.title, description: labels.step1.description },
+    { number: '02', icon: SprayCan, title: labels.step2.title, description: labels.step2.description },
+    { number: '03', icon: Sparkles, title: labels.step3.title, description: labels.step3.description },
+    { number: '04', icon: ShieldCheck, title: labels.step4.title, description: labels.step4.description },
+  ],
+  [labels]
+);
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
+
+  useLayoutEffect(() => {
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
+
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // réduit les recalculs sur mobile / resize
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) return;
+
+      // HEADER (once)
       if (headerRef.current) {
         gsap.fromTo(
           headerRef.current,
-          { opacity: 0, y: 80, rotateX: -18, scale: 0.95 },
+          { opacity: 0, y: 28 },
           {
             opacity: 1,
             y: 0,
-            rotateX: 0,
-            scale: 1,
-            duration: 1.05,
-            ease: 'power3.out',
+            duration: 0.6,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: headerRef.current,
-              start: 'top 80%',
-              toggleActions: 'play none none reverse',
+              start: 'top 85%',
+              once: true,
             },
           }
         );
       }
 
+      // TIMELINE LINE (once) => scaleX au lieu de scaleY (plus logique / léger)
       if (timelineLineRef.current) {
         gsap.fromTo(
           timelineLineRef.current,
-          { scaleY: 0, transformOrigin: 'top' },
+          { scaleX: 0, transformOrigin: '0% 50%' },
           {
-            scaleY: 1,
-            duration: 1.8,
-            ease: 'power2.inOut',
+            scaleX: 1,
+            duration: 0.8,
+            ease: 'power2.out',
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 75%',
-              toggleActions: 'play none none reverse',
+              trigger: sectionEl,
+              start: 'top 85%',
+              once: true,
             },
           }
         );
-
-        gsap.to(timelineLineRef.current, {
-          boxShadow: '0 0 26px rgba(192, 192, 192, 0.55)',
-          duration: 1.8,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-        });
       }
 
-      const stepEls = stepsRef.current?.querySelectorAll(`.${styles.step}`);
-      if (stepEls && stepEls.length) {
+      // STEPS (once)
+      if (stepsRef.current) {
+        const items = stepsRef.current.querySelectorAll(`.${styles.step}`);
         gsap.fromTo(
-          stepEls,
-          { opacity: 0, x: -80, rotateY: -18, scale: 0.95 },
+          items,
+          { opacity: 0, y: 18 },
           {
             opacity: 1,
-            x: 0,
-            rotateY: 0,
-            scale: 1,
-            duration: 0.9,
-            stagger: 0.15,
-            ease: 'power3.out',
+            y: 0,
+            duration: 0.55,
+            stagger: 0.08,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: stepsRef.current,
-              start: 'top 75%',
-              toggleActions: 'play none none reverse',
+              start: 'top 88%',
+              once: true,
             },
           }
         );
       }
 
+      // FLOATING CAR (once) - pas de scrub, pas de boucle JS (la “float” est en CSS)
       if (floatingCarRef.current) {
         gsap.fromTo(
           floatingCarRef.current,
-          { opacity: 0, y: 110, scale: 0.85, rotate: -10 },
+          { opacity: 0, y: 24 },
           {
             opacity: 0.12,
             y: 0,
-            scale: 1,
-            rotate: 0,
-            duration: 1.5,
-            ease: 'power3.out',
+            duration: 0.7,
+            ease: 'power2.out',
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 70%',
-              toggleActions: 'play none none reverse',
+              trigger: sectionEl,
+              start: 'top 85%',
+              once: true,
             },
           }
         );
-
-        gsap.to(floatingCarRef.current, {
-          y: -90,
-          rotate: 6,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.2,
-          },
-        });
-
-        gsap.to(floatingCarRef.current, {
-          y: '+=30',
-          rotate: '+=3',
-          duration: 4.5,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-        });
       }
-    }, sectionRef);
+    }, sectionEl);
 
-    return () => ctx.revert();
-  }, [steps]);
+    // refresh léger après paint
+    const raf = requestAnimationFrame(() => {
+      if (sectionRef.current) ScrollTrigger.refresh();
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+
+      // Cleanup SAFE : tuer uniquement les triggers de cette section
+      try {
+        ScrollTrigger.getAll().forEach((st) => {
+          const trig = st.trigger as Element | null;
+          if (trig && sectionEl.contains(trig)) st.kill(false);
+        });
+      } catch {
+        // ignore
+      }
+
+      try {
+        ctx.revert();
+      } catch {
+        // ignore
+      }
+    };
+  }, [labels]); // pas [steps] pour éviter reruns inutiles
 
   return (
     <section className={styles.processSection} ref={sectionRef}>
@@ -171,11 +178,12 @@ export default function Process() {
           <p className={styles.sectionSubtitle}>{labels.subtitle}</p>
         </div>
 
-        <div className={styles.floatingProcessCar} ref={floatingCarRef}>
+        <div className={styles.floatingProcessCar} ref={floatingCarRef} aria-hidden="true">
           <img
             src="https://images.unsplash.com/photo-1585601265915-f45bd0d42357?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBjYXIlMjBtb3Rpb258ZW58MXx8fHwxNzY3MTEzNzg5fDA&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Sports car"
+            alt=""
             loading="lazy"
+            decoding="async"
           />
         </div>
 
@@ -186,7 +194,10 @@ export default function Process() {
             {steps.map((step, index) => (
               <div key={index} className={styles.step}>
                 <div className={styles.stepNumber}>{step.number}</div>
-                <span className={styles.stepIcon}>{step.icon}</span>
+<span className={styles.stepIcon} aria-hidden="true">
+  <step.icon size={32} strokeWidth={2} />
+</span>
+
                 <h3 className={styles.stepTitle}>{step.title}</h3>
                 <p className={styles.stepDescription}>{step.description}</p>
               </div>

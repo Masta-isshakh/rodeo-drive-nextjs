@@ -1,4 +1,4 @@
-/* Process Section - 4-Step Timeline */
+/* Process Section - 4-Step Timeline (Optimized) */
 
 .processSection {
   padding: var(--spacing-4xl) 0;
@@ -11,9 +11,14 @@
   color: var(--color-primary-silver);
   position: relative;
   overflow: hidden;
+
+  /* Perf: isolate layout/paint; permet un rendu plus fluide */
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
 }
 
-/* Top animated border */
+/* Top animated border (CSS only, light) */
 .processSection::before {
   content: '';
   position: absolute;
@@ -23,35 +28,31 @@
   height: 3px;
   background: var(--gradient-silver);
   background-size: 200% 100%;
-  animation: borderFlow 3s linear infinite;
-  box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
-}
-
-/* Animated light rays */
-.processSection::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(192, 192, 192, 0.03) 0%, transparent 50%);
+  animation: borderFlow 5s linear infinite;
+  opacity: 0.7;
   z-index: 0;
   pointer-events: none;
 }
 
 @keyframes borderFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
-/* Floating Car Decoration */
+/* Light rays (static => cheaper) */
+.processSection::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(192, 192, 192, 0.03) 0%, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Floating Car Decoration (NO JS loop) */
 .floatingProcessCar {
   position: absolute;
   bottom: 5%;
@@ -62,7 +63,15 @@
   z-index: 1;
   pointer-events: none;
   opacity: 0;
+
+  /* CSS float: très léger */
+  animation: floatCar 6s ease-in-out infinite;
   will-change: transform, opacity;
+}
+
+@keyframes floatCar {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-16px); }
 }
 
 .floatingProcessCar img {
@@ -85,7 +94,6 @@
 .sectionHeader {
   text-align: center;
   margin-bottom: var(--spacing-3xl);
-  transform-style: preserve-3d;
 }
 
 .sectionTitle {
@@ -104,26 +112,32 @@
   padding: var(--spacing-xl) 0;
 }
 
-/* Timeline Line - GSAP draw animation */
+/* Timeline Line */
 .timelineLine {
   position: absolute;
   top: 80px;
   left: 0;
   right: 0;
   height: 2px;
-  background: rgba(192, 192, 192, 0.2);
-  /* GSAP: Draw animation from left to right on scroll */
+  background: rgba(192, 192, 192, 0.18);
+  transform: scaleX(1);
+  transform-origin: 0% 50%;
 }
 
+/* Light glow (CSS only) */
 .timelineLine::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
+  inset: 0;
   background: var(--gradient-silver);
-  /* GSAP: Animate width from 0 to 100% */
+  opacity: 0.6;
+  animation: lineGlow 3.6s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes lineGlow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.75; }
 }
 
 .steps {
@@ -132,14 +146,12 @@
   gap: var(--spacing-xl);
   position: relative;
   z-index: 1;
-  perspective: 1000px;
 }
 
 .step {
   text-align: center;
-  transform-style: preserve-3d;
-  will-change: transform;
-  /* GSAP will handle animation */
+  /* évite will-change permanent sur toutes les cartes */
+  transform: translateZ(0);
 }
 
 .stepNumber {
@@ -156,7 +168,6 @@
   color: var(--color-secondary-navy);
   box-shadow: var(--shadow-silver-glow);
   position: relative;
-  /* GSAP: Scale animation */
 }
 
 .stepNumber::after {
@@ -165,7 +176,7 @@
   inset: -4px;
   border-radius: 50%;
   border: 2px solid var(--color-primary-silver);
-  opacity: 0.3;
+  opacity: 0.28;
 }
 
 .stepTitle {
@@ -187,6 +198,18 @@
   margin-bottom: var(--spacing-sm);
 }
 
+/* Hover effects (pure CSS, cheap) */
+@media (hover: hover) and (pointer: fine) {
+  .step:hover .stepNumber {
+    transform: translateY(-2px);
+    transition: transform 160ms ease;
+  }
+  .step:hover .stepTitle {
+    color: rgba(255, 255, 255, 0.92);
+  }
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
   .steps {
     grid-template-columns: repeat(2, 1fr);
@@ -217,4 +240,23 @@
     height: 70px;
     font-size: var(--font-size-h4);
   }
+
+  .floatingProcessCar {
+    display: none;
+  }
 }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .processSection::before,
+  .timelineLine::after,
+  .floatingProcessCar {
+    animation: none !important;
+  }
+}
+
+.stepIcon svg {
+  display: block;
+  margin: 0 auto;
+}
+

@@ -7,16 +7,18 @@
   border-top: 2px solid rgba(192, 192, 192, 0.3);
   position: relative;
   overflow: hidden;
+
+  /* Perf: accélère l’affichage hors viewport */
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
+  inset: 0;
+  background:
     radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.05) 0%, transparent 50%),
     radial-gradient(circle at 80% 50%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
   pointer-events: none;
@@ -91,7 +93,7 @@
   justify-content: center;
   color: rgba(255, 255, 255, 0.7);
   font-size: 20px;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(192, 192, 192, 0.2);
@@ -100,26 +102,22 @@
 .socialLink::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(192, 192, 192, 0.3);
+  inset: 0;
+  background: rgba(192, 192, 192, 0.25);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
+  transform: scale(0);
+  transition: transform 0.25s ease;
 }
 
 .socialLink:hover::before {
-  width: 100%;
-  height: 100%;
+  transform: scale(1);
 }
 
 .socialLink:hover {
   background: #c0c0c0;
   color: #0f0f1e;
-  transform: translateY(-4px) scale(1.1);
-  box-shadow: 0 8px 20px rgba(192, 192, 192, 0.4);
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 8px 20px rgba(192, 192, 192, 0.35);
   border-color: #c0c0c0;
 }
 
@@ -151,22 +149,19 @@
   gap: 12px;
 }
 
-.footerList li {
-  margin: 0;
-}
-
 .footerLink {
   color: rgba(255, 255, 255, 0.65);
   font-size: 15px;
-  transition: all 0.3s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
   display: inline-block;
   text-decoration: none;
   letter-spacing: 0.02em;
+  transform: translateZ(0);
 }
 
 .footerLink:hover {
   color: #ffffff;
-  padding-left: 8px;
+  transform: translateX(6px);
   text-decoration: none;
 }
 
@@ -193,7 +188,7 @@
 .footerBottomLink {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
   text-decoration: none;
   letter-spacing: 0.02em;
 }
@@ -241,6 +236,10 @@
     flex-direction: column;
     gap: 12px;
   }
+
+  .footerLink:hover {
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 480px) {
@@ -270,8 +269,7 @@
 
 /* RTL Support */
 [dir="rtl"] .footerLink:hover {
-  padding-left: 0;
-  padding-right: 8px;
+  transform: translateX(0);
 }
 
 [dir="rtl"] .footerLogo {
@@ -280,4 +278,15 @@
 
 [dir="rtl"] .socialLinks {
   flex-direction: row-reverse;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .socialLink,
+  .footerLink {
+    transition: none !important;
+  }
+  .socialLink::before {
+    transition: none !important;
+  }
 }

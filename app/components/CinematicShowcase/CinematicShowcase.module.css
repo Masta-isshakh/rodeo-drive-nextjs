@@ -255,3 +255,7 @@
     transition: none !important;
   }
 }
+.cardIcon svg {
+  display: inline-block;
+  vertical-align: middle;
+}

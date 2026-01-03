@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import styles from "./Header.module.css";
 import { useI18n } from "../../lib/i18n";
+import { MessageCircleMore } from "lucide-react";
+
 
 export default function Header() {
   const pathname = usePathname();
@@ -253,15 +255,17 @@ export default function Header() {
               {t.nav.bookNow}
             </Link>
 
-            <a
-              className={styles.mobileWhatsapp}
-              href={phoneWa}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              WhatsApp
-            </a>
+<a
+  className={styles.whatsappButton}
+  href={phoneWa}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="WhatsApp"
+  title="WhatsApp"
+>
+  <MessageCircleMore size={20} strokeWidth={2} aria-hidden="true" />
+</a>
+
 
             <div className={styles.mobileLangRow}>
               <button

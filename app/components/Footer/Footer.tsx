@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -26,14 +26,12 @@ export default function Footer() {
     const contact = (t as any)?.contact ?? {};
 
     return {
-      // footer
       description: safeText(footer.description, 'Premium car detailing and protection services in Doha, Qatar.'),
       quickLinks: safeText(footer.quickLinks, 'Quick Links'),
       rights: safeText(footer.rights, 'All rights reserved.'),
       privacy: safeText(footer.privacy, 'Privacy Policy'),
       terms: safeText(footer.terms, 'Terms of Service'),
 
-      // nav
       home: safeText(nav.home, 'Home'),
       services: safeText(nav.services, 'Services'),
       gallery: safeText(nav.gallery, 'Gallery'),
@@ -41,7 +39,6 @@ export default function Footer() {
       contact: safeText(nav.contact, safeText(contact.title, 'Contact')),
       faq: safeText(nav.faq, 'FAQ'),
 
-      // services list
       ceramicCoating: safeText(servicesList.ceramicCoating, 'Ceramic Coating'),
       paintProtection: safeText(servicesList.paintProtection, 'Paint Protection'),
       polish: safeText(servicesList.polish, 'Polish'),
@@ -49,42 +46,74 @@ export default function Footer() {
     };
   }, [t]);
 
-  useEffect(() => {
-    if (!footerRef.current) return;
+  useLayoutEffect(() => {
+    const footerEl = footerRef.current;
+    if (!footerEl) return;
+
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Le footer ne doit JAMAIS rester caché si l'anim ne se lance pas
+    const cols = footerEl.querySelectorAll(`.${styles.footerBrand}, .${styles.footerColumn}`);
+    gsap.set(cols, { clearProps: 'opacity,transform,visibility' });
+
+    if (prefersReducedMotion) return;
+
+    // Important: ignoreMobileResize pour éviter refreshs coûteux
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const ctx = gsap.context(() => {
-      const cols = footerRef.current?.querySelectorAll(
-        `.${styles.footerBrand}, .${styles.footerColumn}`
+      gsap.fromTo(
+        cols,
+        { autoAlpha: 0, y: 18 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: footerEl,
+            start: 'top 92%',
+            once: true, // ✅ ne reverse jamais
+          },
+        }
       );
+    }, footerEl);
 
-      if (cols && cols.length) {
-        gsap.fromTo(
-          cols,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: 'top 90%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
+    const raf = requestAnimationFrame(() => {
+      if (footerRef.current) ScrollTrigger.refresh();
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+
+      // Cleanup SAFE: kill uniquement les triggers dont le trigger est dans le footer
+      try {
+        ScrollTrigger.getAll().forEach((st) => {
+          const trig = st.trigger as Element | null;
+          if (trig && footerEl.contains(trig)) st.kill(false);
+        });
+      } catch {
+        // ignore
       }
-    }, footerRef);
 
-    return () => ctx.revert();
+      try {
+        ctx.revert();
+      } catch {
+        // ignore
+      }
+
+      // S'assure qu'en dev/StrictMode le footer redevient visible
+      gsap.set(cols, { clearProps: 'opacity,transform,visibility' });
+    };
   }, [labels]);
 
   const year = new Date().getFullYear();
-
-  // Mets tes vraies infos ici (ou remplace par traduction si tu veux)
   const phone = '+974 5000 0748';
-  const email = 'info@rodeo-drive.me';
+  const email = 'info@rodeodrive.me';
 
   return (
     <footer className={styles.footer} ref={footerRef}>

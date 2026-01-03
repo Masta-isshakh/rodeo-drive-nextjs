@@ -11,7 +11,7 @@
   position: relative;
   height: 60vh;
   min-height: 400px;
-  background: url('../../../public/direction.JPG')
+  background: url('../../../public/bureau1.JPG')
     center/cover;
   display: flex;
   align-items: center;
@@ -112,6 +112,47 @@
 .packageCard:hover::before {
   left: 100%;
 }
+.servicesHero {
+  position: relative;
+  height: 60vh;
+  min-height: 400px;
+  background-image: url('/bureau1.JPG');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.packagesSection,
+.servicesListSection {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+.serviceIcon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto var(--spacing-md);
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 30%, rgba(192,192,192,0.18), transparent 60%),
+              linear-gradient(135deg, rgba(26, 26, 46, 0.55), rgba(15, 15, 30, 0.55));
+  border: 1px solid rgba(192, 192, 192, 0.22);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.25);
+  color: #c0c0c0;
+}
+.serviceCard:hover .serviceIcon {
+  color: #ffffff;
+  border-color: rgba(192,192,192,0.35);
+}
+.serviceCard {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
 
 .packageCard:hover {
   transform: translateY(-8px);
