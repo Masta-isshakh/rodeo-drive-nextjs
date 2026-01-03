@@ -266,7 +266,7 @@ export default function AboutPage() {
         <div className={styles.heroOverlay} />
         <div className={styles.heroBackground}>
           <img
-            src="https://images.unsplash.com/photo-1736426341937-656fc3363b8f?auto=format&fit=crop&w=1600&q=80"
+            src="about.JPG"
             alt="Rodeo Drive Showroom"
             className={styles.heroImage}
           />

@@ -9,9 +9,9 @@
 /* Hero Section */
 .servicesHero {
   position: relative;
-  height: 50vh;
+  height: 60vh;
   min-height: 400px;
-  background: url('https://images.unsplash.com/photo-1658058765281-0833dce61996?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBkZXRhaWxpbmclMjBjbG9zZSUyMHVwfGVufDF8fHx8MTc2NzExMDM0MXww&ixlib=rb-4.1.0&q=80&w=1080')
+  background: url('../../../public/direction.JPG')
     center/cover;
   display: flex;
   align-items: center;
@@ -22,8 +22,8 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.25);
+
 }
 
 .heroContent {

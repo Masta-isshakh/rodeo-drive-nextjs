@@ -35,7 +35,7 @@ export default function Experience3D() {
   const models = useMemo(
     () => [
       { name: labels.cars[0], url: '/rollscar.glb' },
-      { name: labels.cars[1], url: '/lamborghini.glb' },
+      { name: labels.cars[1], url: '/lamborghini1.glb' },
       { name: labels.cars[2], url: '/merce.glb' },
       { name: labels.cars[3], url: '/bmw.glb' },
     ],

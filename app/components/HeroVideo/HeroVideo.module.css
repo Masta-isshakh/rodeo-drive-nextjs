@@ -7,7 +7,7 @@
 .heroVideo {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   min-height: 700px;
   overflow: hidden;
   display: flex;

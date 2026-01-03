@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useCallback } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
@@ -11,7 +11,6 @@ import { useI18n } from "../../lib/i18n";
 gsap.registerPlugin(ScrollTrigger);
 
 type Service = {
-  icon: string;
   title: string;
   description: string;
   image: string;
@@ -28,157 +27,144 @@ export default function ServicesHighlight() {
   const services: Service[] = useMemo(
     () => [
       {
-        icon: "✨",
         title: t.services.list.ceramicCoating,
         description: t.services.descriptions.ceramicCoatingDesc ?? t.services.descriptions.ceramicCoating,
-        image: "/NANO/IMG_0555.jpg",
+        image: "/nano3.PNG",
       },
       {
-        icon: "🛡️",
         title: t.services.list.paintProtection,
         description: t.services.descriptions.paintProtectionDesc ?? t.services.descriptions.paintProtection,
-        image: "/PFF/C0094T01.JPG",
+        image: "/ppf.png",
       },
       {
-        icon: "💎",
         title: t.services.list.polish,
         description: t.services.descriptions.polishDesc ?? t.services.descriptions.polish,
-        image: "/polish.JPG",
+        image: "/polish.png",
       },
       {
-        icon: "🖤",
         title: t.services.list.blackEdition,
         description: t.services.descriptions.blackEditionDesc ?? t.services.descriptions.blackEdition,
-        image: "/lamborghini.JPG",
+        image: "/defender.PNG",
       },
       {
-        icon: "🔧",
         title: t.services.list.smartRepair,
         description: t.services.descriptions.smartRepairDesc ?? t.services.descriptions.smartRepair,
-        image: "https://images.unsplash.com/photo-1658058765281-0833dce61996?auto=format&fit=crop&w=1600&q=80",
+        image: "/paint2.PNG",
       },
       {
-        icon: "🪑",
         title: t.services.list.nanoLeather,
         description: t.services.descriptions.nanoLeatherDesc ?? t.services.descriptions.nanoLeather,
-        image: "/NANO/IMG_0539.jpg",
+        image: "/thermal.png",
       },
     ],
     [t]
   );
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
+  useLayoutEffect(() => {
+    const sectionEl = sectionRef.current;
+    if (!sectionEl) return;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // IMPORTANT: on force un refresh léger après images/layout
+    // mais seulement 1 fois et sans boucle.
+    const scheduleRefresh = () => {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
 
     const ctx = gsap.context(() => {
-      // Nettoyage ciblé: uniquement les triggers liés à cette section
-      ScrollTrigger.getAll().forEach((st) => {
-        const triggerEl = st.trigger as Element | null;
-        if (triggerEl && sectionRef.current?.contains(triggerEl)) st.kill(true);
-      });
+      // Si reduced motion => aucun ScrollTrigger, tout visible immédiatement
+      if (prefersReducedMotion) {
+        if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, y: 0 });
+        if (gridRef.current) {
+          const cards = gridRef.current.querySelectorAll(`.${styles.serviceCard}`);
+          gsap.set(cards, { opacity: 1, y: 0 });
+        }
+        if (floatingRef.current) gsap.set(floatingRef.current, { opacity: 0.08, x: 0, y: 0 });
+        return;
+      }
 
-      // HEADER
+      // HEADER (simple: opacity + y)
       if (headerRef.current) {
         gsap.fromTo(
           headerRef.current,
-          { opacity: 0, y: 40, scale: 0.98 },
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
-            duration: 0.9,
-            ease: "power3.out",
+            duration: 0.65,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: headerRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
+              start: "top 85%",
+              once: true, // très performant
             },
           }
         );
       }
 
-      // CARDS
+      // CARDS (stagger léger, sans 3D)
       if (gridRef.current) {
-        const cards = gridRef.current.querySelectorAll(`.${styles.serviceCard}`);
+        const cards = Array.from(gridRef.current.querySelectorAll(`.${styles.serviceCard}`));
+
         gsap.fromTo(
           cards,
-          { opacity: 0, y: 40, scale: 0.96, rotateY: -8 },
+          { opacity: 0, y: 18 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
-            rotateY: 0,
-            duration: 0.85,
-            stagger: 0.08,
-            ease: "power3.out",
+            duration: 0.55,
+            ease: "power2.out",
+            stagger: 0.05,
             scrollTrigger: {
               trigger: gridRef.current,
-              start: "top 78%",
-              toggleActions: "play none none reverse",
+              start: "top 85%",
+              once: true, // évite reverse / recalcul en scroll
             },
           }
         );
       }
 
-      // FLOATING DECOR
+      // FLOATING DECOR (léger, pas de scrub)
       if (floatingRef.current) {
         gsap.fromTo(
           floatingRef.current,
-          { opacity: 0, x: 120, rotate: 8 },
+          { opacity: 0, x: 40 },
           {
-            opacity: 0.1,
+            opacity: 0.08,
             x: 0,
-            rotate: 0,
-            duration: 1.4,
+            duration: 0.9,
             ease: "power2.out",
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 75%",
-              toggleActions: "play none none reverse",
+              trigger: sectionEl,
+              start: "top 85%",
+              once: true,
             },
           }
         );
 
+        // petite "respiration" très légère
         gsap.to(floatingRef.current, {
-          y: -40,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-
-        gsap.to(floatingRef.current, {
-          rotate: "+=4",
+          y: "+=14",
           duration: 3.6,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
         });
       }
-    }, sectionRef);
 
-    // Important: Next/Image charge après → refresh
-    const refresh = () => ScrollTrigger.refresh();
-    const id = window.setTimeout(refresh, 250);
+      scheduleRefresh();
+    }, sectionEl);
 
     return () => {
-      window.clearTimeout(id);
       ctx.revert();
+      // évite accumulations de triggers
+      ScrollTrigger.clearMatchMedia?.();
     };
-  }, [t]); // re-run proprement quand la langue change
-
-  const hoverIn = useCallback((el: HTMLElement) => {
-    gsap.killTweensOf(el);
-    gsap.to(el, { y: -10, scale: 1.02, rotateY: 1.5, duration: 0.25, ease: "power2.out" });
-  }, []);
-
-  const hoverOut = useCallback((el: HTMLElement) => {
-    gsap.killTweensOf(el);
-    gsap.to(el, { y: 0, scale: 1, rotateY: 0, duration: 0.25, ease: "power2.out" });
-  }, []);
+  }, [t]);
 
   return (
     <section className={styles.servicesSection} ref={sectionRef}>
@@ -195,17 +181,13 @@ export default function ServicesHighlight() {
             fill
             sizes="(max-width: 768px) 50vw, 30vw"
             className={styles.floatingImg}
+            priority={false}
           />
         </div>
 
         <div className={styles.servicesGrid} ref={gridRef}>
           {services.map((service, index) => (
-            <article
-              key={`${service.title}-${index}`}
-              className={styles.serviceCard}
-              onMouseEnter={(e) => hoverIn(e.currentTarget)}
-              onMouseLeave={(e) => hoverOut(e.currentTarget)}
-            >
+            <article key={`${service.title}-${index}`} className={styles.serviceCard}>
               <div className={styles.serviceMedia}>
                 <Image
                   src={service.image}
@@ -213,13 +195,12 @@ export default function ServicesHighlight() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className={styles.serviceImage}
+                  // si ces images sont visibles très tôt sur la home, tu peux mettre priority sur les 1-2 premières:
+                  // priority={index < 2}
                 />
               </div>
 
               <div className={styles.serviceContent}>
-                <span className={styles.serviceIcon} aria-hidden="true">
-                  {service.icon}
-                </span>
                 <h3 className={styles.serviceTitle}>{service.title}</h3>
                 <p className={styles.serviceDescription}>{service.description}</p>
 

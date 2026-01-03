@@ -13,10 +13,9 @@ export default function HomePage() {
     <>
       <HeroVideo />
       <TrustStrip />
-            <Experience3D />
+
 
       <ServicesHighlight />
-            <RotatingCarGallery />
 
       <CinematicShowcase />
       <Process />
