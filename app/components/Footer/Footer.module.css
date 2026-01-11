@@ -1,0 +1,331 @@
+/* Footer */
+
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+  color: #ffffff;
+  padding: 80px 0 40px;
+  border-top: 2px solid rgba(192, 192, 192, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  /* Perf: accélère l’affichage hors viewport */
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.footerContent {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 40px;
+}
+
+.footerBrand {
+  max-width: 400px;
+}
+
+.footerLogo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerLogoIcon img {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.footerDescription {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+  letter-spacing: 0.02em;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 12px;
+}
+
+.socialLink {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(192, 192, 192, 0.2);
+}
+
+.socialLink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(192, 192, 192, 0.25);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.25s ease;
+}
+
+.socialLink:hover::before {
+  transform: scale(1);
+}
+
+.socialLink:hover {
+  background: #c0c0c0;
+  color: #0f0f1e;
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 8px 20px rgba(192, 192, 192, 0.35);
+  border-color: #c0c0c0;
+}
+
+.socialLink svg {
+  position: relative;
+  z-index: 1;
+}
+
+.footerColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.footerList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footerLink {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 15px;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transform: translateZ(0);
+}
+
+.footerLink:hover {
+  color: #ffffff;
+  transform: translateX(6px);
+  text-decoration: none;
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding-top: 30px;
+}
+
+.copyright {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+/* ✅ Bidi helpers: يمنع تكسير الجملة عند RTL */
+.bidiLtr {
+  unicode-bidi: isolate;
+  direction: ltr;
+  display: inline;
+}
+
+.bidiRtl {
+  unicode-bidi: isolate;
+  direction: rtl;
+  display: inline;
+}
+
+.footerBottomLinks {
+  display: flex;
+  gap: 30px;
+}
+
+.footerBottomLink {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.footerBottomLink:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .footerContent {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footerBrand {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 0 30px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .footerContent {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .footerBottomLinks {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footerLink:hover {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 50px 0 25px;
+  }
+
+  /* ✅ Logo + texte sur UNE ligne, centrés, logo gauche / texte droite */
+  .footerLogo {
+    display: inline-flex;       /* inline-flex pour se centrer facilement */
+    flex-direction: row;        /* logo à gauche, texte à droite */
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin: 0 auto 16px;
+  }
+
+  /* ✅ le wrapper du logo ne force pas une taille étrange */
+  .footerLogoIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+
+  /* ✅ IMPORTANT: réduire l'image (sinon elle reste à 78x78 à cause du style desktop) */
+  .footerLogoImage {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .socialLinks {
+    justify-content: center;    /* joli sur mobile */
+    gap: 10px;
+  }
+
+  .socialLink {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .footerLink:hover {
+  transform: translateX(0);
+}
+
+[dir="rtl"] .footerLogo {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .socialLinks {
+  flex-direction: row-reverse;
+}
+
+/* ✅ RTL: ترتيب Bottom (الروابط يمين والحقوق يسار) */
+[dir="rtl"] .footerBottom {
+  flex-direction: row-reverse;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .socialLink,
+  .footerLink {
+    transition: none !important;
+  }
+  .socialLink::before {
+    transition: none !important;
+  }
+}
+
+
+.footerBottomLinks a.footerBottomLink{color:inherit;text-decoration:none}
+.footerBottomLinks a.footerBottomLink:hover{text-decoration:underline}
