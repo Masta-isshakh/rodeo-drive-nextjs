@@ -2,6 +2,7 @@
    Base + container
 ========================= */
 .page {
+    padding-top: 20px;
   background: transparent;
   overflow-x: hidden; /* prevents horizontal scroll on mobile */
 }
@@ -202,6 +203,7 @@
   .miniGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .miniImg {
     height: 110px;
   }
