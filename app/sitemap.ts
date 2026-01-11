@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { CATALOG } from "./content/catalog";
+import { CATALOG } from "./content/catalog2";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://rodeodrive.work";
