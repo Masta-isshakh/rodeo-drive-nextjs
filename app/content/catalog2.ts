@@ -1,9 +1,16 @@
 export type Lang = 'en' | 'ar';
 export type FAQ = { q: Record<Lang,string>; a: Record<Lang,string> };
+
 export type Subservice = {
   slug: string;
   title: Record<Lang,string>;
   heroImage: string;
+
+  /** Optional: detail-page media */
+  beforeImage?: string;
+  afterImage?: string;
+  miniImages?: string[]; // expected: 3 images
+
   intro: Record<Lang,string[]>;
   bestFor: Record<Lang,string[]>;
   specs: Record<Lang,string[]>;
@@ -13,6 +20,7 @@ export type Subservice = {
   aftercare: Record<Lang,string[]>;
   faqs: FAQ[];
 };
+
 export type Service = {
   slug: string;
   title: Record<Lang,string>;
@@ -21,6 +29,7 @@ export type Service = {
   overview: Record<Lang,string[]>;
   subservices: Subservice[];
 };
+
 export const CATALOG: { services: Service[] } = {
   "services": [
     {
@@ -54,12 +63,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/full-ppf.png",
           "intro": {
             "en": [
-              "Full Body PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Full-vehicle coverage designed to shield every painted panel from chips, scratches, and sand abrasion—ideal for brand-new cars and long-term ownership in Qatar.",
+              "Installed with precise panel alignment, wrapped edges where possible, and workshop-controlled finishing for a seamless, factory-clean look."
             ],
             "ar": [
-              "PPF حماية كاملة مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تغطية كاملة للسيارة لحماية جميع أجزاء الطلاء من ضربات الحصى والخدوش وخدوش الرمال—مناسبة للسيارات الجديدة والملكية طويلة المدى في قطر.",
+              "تركيب بدقة عالية مع محاذاة مثالية للحواف قدر الإمكان وإنهاء نظيف داخل الورشة للحصول على مظهر مصنع."
             ]
           },
           "bestFor": {
@@ -227,6 +236,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/full-ppf.png",
+          "afterImage": "/full-ppf.png",
+          "miniImages": [
+            "/full-ppf.png",
+            "/full-ppf.png",
+            "/full-ppf.png"
           ]
         },
         {
@@ -238,12 +254,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/front-ppf.png",
           "intro": {
             "en": [
-              "Front-End PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Focused protection for the highest-impact zones (bumper, hood, fenders, mirrors) to stop stone chips and road rash before they start.",
+              "A smart balance between coverage and budget, with clean edges and consistent clarity for daily Doha driving."
             ],
             "ar": [
-              "PPF للواجهة الأمامية مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "حماية مركزة لأكثر المناطق تعرضًا للصدمات (الصدام، غطاء المحرك، الرفارف، المرايا) لمنع ضربات الحصى وخدوش الطريق.",
+              "خيار متوازن بين التغطية والتكلفة مع حواف نظيفة وشفافية ثابتة لقيادة الدوحة اليومية."
             ]
           },
           "bestFor": {
@@ -411,6 +427,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/front-end-ppf/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/front-end-ppf/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/front-end-ppf/mini-1.jpg",
+            "/proof/full-protection-ppf/front-end-ppf/mini-2.jpg",
+            "/proof/full-protection-ppf/front-end-ppf/mini-3.jpg"
           ]
         },
         {
@@ -422,12 +445,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/partial-ppf.png",
           "intro": {
             "en": [
-              "Partial Front PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Entry-level chip protection for key front areas, typically covering the bumper and targeted hood/fender sections where damage happens most.",
+              "Perfect for commuters and city driving—clean installs, minimal visual lines, and easy maintenance."
             ],
             "ar": [
-              "PPF جزئي أمامي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "حماية أساسية من ضربات الحصى لأهم أجزاء الواجهة الأمامية، غالبًا للصدام وأجزاء محددة من غطاء المحرك/الرفارف حيث يحدث الضرر أكثر.",
+              "مناسب لقيادة المدينة والتنقل—تركيب نظيف وخطوط مرئية أقل وصيانة سهلة."
             ]
           },
           "bestFor": {
@@ -595,6 +618,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/partial-front-ppf/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/partial-front-ppf/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/partial-front-ppf/mini-1.jpg",
+            "/proof/full-protection-ppf/partial-front-ppf/mini-2.jpg",
+            "/proof/full-protection-ppf/partial-front-ppf/mini-3.jpg"
           ]
         },
         {
@@ -606,12 +636,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/gloss-ppf.png",
           "intro": {
             "en": [
-              "Gloss PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "High-clarity gloss PPF that preserves the original paint color while adding a deep, wet-look finish and strong impact resistance.",
+              "Great for owners who want maximum shine without compromising on protection or maintenance."
             ],
             "ar": [
-              "PPF لامع مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "PPF لامع عالي الشفافية يحافظ على لون الطلاء الأصلي مع لمعة عميقة ومقاومة قوية للصدمات.",
+              "مناسب لمن يريد لمعانًا أقوى مع حماية عالية وصيانة بسيطة."
             ]
           },
           "bestFor": {
@@ -779,6 +809,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/gloss-ppf/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/gloss-ppf/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/gloss-ppf/mini-1.jpg",
+            "/proof/full-protection-ppf/gloss-ppf/mini-2.jpg",
+            "/proof/full-protection-ppf/gloss-ppf/mini-3.jpg"
           ]
         },
         {
@@ -790,12 +827,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/matt-ppf.png",
           "intro": {
             "en": [
-              "Matte PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Matte PPF transforms gloss paint into a premium satin-matte appearance while defending against chips, scratches, and harsh washing marks.",
+              "Uniform texture and controlled finishing to avoid patchiness and keep the look consistent panel-to-panel."
             ],
             "ar": [
-              "PPF مطفي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "PPF مطفي يحول الطلاء اللامع إلى مظهر مطفي فاخر مع حماية ضد ضربات الحصى والخدوش وآثار الغسيل القاسي.",
+              "ملمس موحد وإنهاء مضبوط لتجنب اختلاف الدرجات والحفاظ على تناسق الشكل بين الألواح."
             ]
           },
           "bestFor": {
@@ -963,6 +1000,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/matte-ppf/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/matte-ppf/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/matte-ppf/mini-1.jpg",
+            "/proof/full-protection-ppf/matte-ppf/mini-2.jpg",
+            "/proof/full-protection-ppf/matte-ppf/mini-3.jpg"
           ]
         },
         {
@@ -974,12 +1018,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/matt-ppf.png",
           "intro": {
             "en": [
-              "Satin PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Satin PPF delivers a refined, semi-matte finish—more depth than matte, less glare than gloss—while keeping strong impact protection.",
+              "Ideal for luxury cars seeking a modern, understated look with easy cleaning."
             ],
             "ar": [
-              "PPF ساتان مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "PPF ساتان يعطي مظهرًا نصف مطفي أنيق—عمق أكثر من المطفي ولمعان أقل من اللامع—مع حماية قوية ضد الصدمات.",
+              "مثالي للسيارات الفاخرة التي تريد مظهرًا عصريًا هادئًا مع تنظيف أسهل."
             ]
           },
           "bestFor": {
@@ -1147,6 +1191,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/satin-ppf/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/satin-ppf/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/satin-ppf/mini-1.jpg",
+            "/proof/full-protection-ppf/satin-ppf/mini-2.jpg",
+            "/proof/full-protection-ppf/satin-ppf/mini-3.jpg"
           ]
         },
         {
@@ -1158,12 +1209,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/matt-ppf.png",
           "intro": {
             "en": [
-              "Self-Healing PPF is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Advanced self-healing PPF that helps minor swirls and light scratches disappear with heat, keeping the surface looking newer for longer.",
+              "Best for high-use vehicles and frequent washing—engineered for Qatar heat and dust exposure."
             ],
             "ar": [
-              "PPF ذاتي المعالجة مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "PPF ذاتي الالتئام يساعد على اختفاء الخدوش الخفيفة وآثار الدوامات مع الحرارة للحفاظ على مظهر جديد لفترة أطول.",
+              "مناسب للسيارات المستخدمة بكثرة ومع الغسيل المتكرر—مصمم لتحمل حرارة وغبار قطر."
             ]
           },
           "bestFor": {
@@ -1331,6 +1382,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/self-healing-ppf/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/self-healing-ppf/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/self-healing-ppf/mini-1.jpg",
+            "/proof/full-protection-ppf/self-healing-ppf/mini-2.jpg",
+            "/proof/full-protection-ppf/self-healing-ppf/mini-3.jpg"
           ]
         },
         {
@@ -1342,12 +1400,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/matt-ppf.png",
           "intro": {
             "en": [
-              "Headlight & Taillight Protection Film is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Clear or lightly-tinted lens film that protects headlights and taillights from pitting, sandblasting, and surface scratches.",
+              "Maintains clarity and visibility while reducing yellowing and wear from harsh sun and highway driving."
             ],
             "ar": [
-              "حماية الأنوار مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "فيلم شفاف أو بدرجة تظليل خفيفة لحماية المصابيح الأمامية والخلفية من التآكل وخدوش الرمال والخدوش السطحية.",
+              "يحافظ على الوضوح والرؤية ويقلل الاصفرار والتلف بسبب الشمس القوية والطرق السريعة."
             ]
           },
           "bestFor": {
@@ -1515,6 +1573,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/headlight-taillight-film/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/headlight-taillight-film/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/headlight-taillight-film/mini-1.jpg",
+            "/proof/full-protection-ppf/headlight-taillight-film/mini-2.jpg",
+            "/proof/full-protection-ppf/headlight-taillight-film/mini-3.jpg"
           ]
         },
         {
@@ -1526,12 +1591,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/matt-ppf.png",
           "intro": {
             "en": [
-              "Interior Screen Protection Film is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Precision-cut protection for infotainment screens, clusters, and glossy trim to prevent scratches, fingerprints, and daily wear.",
+              "A clean, bubble-free application with touch responsiveness preserved and easy wipe-down maintenance."
             ],
             "ar": [
-              "حماية الشاشات مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "حماية مقصوصة بدقة لشاشات السيارة والعدادات والديكورات اللامعة لمنع الخدوش وبصمات الأصابع والاستخدام اليومي.",
+              "تركيب نظيف بدون فقاعات مع الحفاظ على الاستجابة للمس وحلول تنظيف سهلة."
             ]
           },
           "bestFor": {
@@ -1699,6 +1764,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/interior-screen-protection/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/interior-screen-protection/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/interior-screen-protection/mini-1.jpg",
+            "/proof/full-protection-ppf/interior-screen-protection/mini-2.jpg",
+            "/proof/full-protection-ppf/interior-screen-protection/mini-3.jpg"
           ]
         },
         {
@@ -1710,12 +1782,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/matt-ppf.png",
           "intro": {
             "en": [
-              "PPF Removal & Replacement is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Safe removal of old or damaged PPF with controlled heat and adhesive cleanup to protect the original paint underneath.",
+              "Includes surface prep and optional replacement film installation to restore a clean, uniform finish."
             ],
             "ar": [
-              "إزالة واستبدال PPF مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "إزالة آمنة للـ PPF القديم أو التالف باستخدام حرارة محسوبة وتنظيف بقايا اللاصق لحماية الطلاء الأصلي.",
+              "يشمل تجهيز السطح وإمكانية تركيب فيلم جديد لاستعادة مظهر موحد ونظيف."
             ]
           },
           "bestFor": {
@@ -1883,6 +1955,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/full-protection-ppf/ppf-removal-replacement/before.jpg",
+          "afterImage": "/proof/full-protection-ppf/ppf-removal-replacement/after.jpg",
+          "miniImages": [
+            "/proof/full-protection-ppf/ppf-removal-replacement/mini-1.jpg",
+            "/proof/full-protection-ppf/ppf-removal-replacement/mini-2.jpg",
+            "/proof/full-protection-ppf/ppf-removal-replacement/mini-3.jpg"
           ]
         }
       ]
@@ -1918,12 +1997,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/window-solar.jpg",
           "intro": {
             "en": [
-              "Nano Ceramic Tint is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility—ideal for Qatar’s intense sun.",
+              "Reduces cabin temperature, glare, and UV exposure while keeping a clean, high-end appearance."
             ],
             "ar": [
-              "تظليل نانو سيراميك مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تظليل نانو سيراميك فاخر مصمم لرفض الحرارة بأعلى مستوى مع الحفاظ على وضوح الرؤية—مثالي لشمس قطر القوية.",
+              "يقلل حرارة المقصورة والوهج وأشعة UV مع مظهر أنيق وفاخر."
             ]
           },
           "bestFor": {
@@ -2091,6 +2170,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/window-solar-film/nano-ceramic-tint/before.jpg",
+          "afterImage": "/proof/window-solar-film/nano-ceramic-tint/after.jpg",
+          "miniImages": [
+            "/proof/window-solar-film/nano-ceramic-tint/mini-1.jpg",
+            "/proof/window-solar-film/nano-ceramic-tint/mini-2.jpg",
+            "/proof/window-solar-film/nano-ceramic-tint/mini-3.jpg"
           ]
         },
         {
@@ -2102,12 +2188,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/window-solar.jpg",
           "intro": {
             "en": [
-              "Heat & UV Protection Film is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "High-performance film focused on blocking UV and reducing infrared heat to protect interiors from fading and cracking.",
+              "A practical upgrade for daily drivers—comfort improves immediately, especially in summer traffic."
             ],
             "ar": [
-              "فيلم حماية حرارة وUV مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "فيلم عالي الأداء لصد أشعة UV وتقليل حرارة الأشعة تحت الحمراء لحماية الداخلية من البهتان والتشقق.",
+              "ترقية عملية للاستخدام اليومي—راحة أفضل مباشرة خصوصًا في زحمة الصيف."
             ]
           },
           "bestFor": {
@@ -2275,6 +2361,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/window-solar-film/heat-uv-protection-film/before.jpg",
+          "afterImage": "/proof/window-solar-film/heat-uv-protection-film/after.jpg",
+          "miniImages": [
+            "/proof/window-solar-film/heat-uv-protection-film/mini-1.jpg",
+            "/proof/window-solar-film/heat-uv-protection-film/mini-2.jpg",
+            "/proof/window-solar-film/heat-uv-protection-film/mini-3.jpg"
           ]
         },
         {
@@ -2286,12 +2379,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/window-solar.jpg",
           "intro": {
             "en": [
-              "Windshield Clear Protection is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Optically clear film for the front windshield that defends against sand pitting and light impacts while keeping full visibility.",
+              "Installed with precision to maintain clarity and reduce micro-scratches from wipers and dust."
             ],
             "ar": [
-              "حماية شفافة للزجاج الأمامي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "فيلم شفاف للزجاج الأمامي يحمي من تآكل الرمال والصدمات الخفيفة مع الحفاظ على رؤية كاملة.",
+              "تركيب دقيق للحفاظ على الوضوح وتقليل الخدوش الدقيقة من المساحات والغبار."
             ]
           },
           "bestFor": {
@@ -2459,6 +2552,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/window-solar-film/windshield-clear-protection/before.jpg",
+          "afterImage": "/proof/window-solar-film/windshield-clear-protection/after.jpg",
+          "miniImages": [
+            "/proof/window-solar-film/windshield-clear-protection/mini-1.jpg",
+            "/proof/window-solar-film/windshield-clear-protection/mini-2.jpg",
+            "/proof/window-solar-film/windshield-clear-protection/mini-3.jpg"
           ]
         },
         {
@@ -2470,12 +2570,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/window-solar.jpg",
           "intro": {
             "en": [
-              "Sunroof & Panoramic Roof Tint is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Specialized tint for sunroofs and panoramic glass to cut heat and glare from above—improving comfort for front and rear passengers.",
+              "Helps protect the headliner and interior trims from UV damage while maintaining a premium look."
             ],
             "ar": [
-              "تظليل سقف بانوراما مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تظليل مخصص لفتحات السقف والسقف البانورامي لتقليل الحرارة والوهج من الأعلى—لراحة أفضل للركاب.",
+              "يساعد على حماية سقف السيارة والديكورات الداخلية من UV مع مظهر فاخر."
             ]
           },
           "bestFor": {
@@ -2643,6 +2743,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/window-solar-film/sunroof-panorama-tint/before.jpg",
+          "afterImage": "/proof/window-solar-film/sunroof-panorama-tint/after.jpg",
+          "miniImages": [
+            "/proof/window-solar-film/sunroof-panorama-tint/mini-1.jpg",
+            "/proof/window-solar-film/sunroof-panorama-tint/mini-2.jpg",
+            "/proof/window-solar-film/sunroof-panorama-tint/mini-3.jpg"
           ]
         },
         {
@@ -2654,12 +2761,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/window-solar.jpg",
           "intro": {
             "en": [
-              "Tint Removal & Reinstallation is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Professional tint removal that protects defroster lines and trims, followed by clean reinstallation with a fresh finish.",
+              "Best for bubbling, purple tint, poor visibility, or non-compliant film—restored clarity and comfort."
             ],
             "ar": [
-              "إزالة وإعادة تظليل مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "إزالة تظليل احترافية تحافظ على خطوط التسخين والديكورات، ثم إعادة تركيب نظيفة بنتيجة جديدة.",
+              "مناسب للتظليل المتقشر أو المتغير اللون أو ضعف الرؤية أو عدم المطابقة—وضوح وراحة أفضل."
             ]
           },
           "bestFor": {
@@ -2827,6 +2934,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/window-solar-film/tint-removal-reinstallation/before.jpg",
+          "afterImage": "/proof/window-solar-film/tint-removal-reinstallation/after.jpg",
+          "miniImages": [
+            "/proof/window-solar-film/tint-removal-reinstallation/mini-1.jpg",
+            "/proof/window-solar-film/tint-removal-reinstallation/mini-2.jpg",
+            "/proof/window-solar-film/tint-removal-reinstallation/mini-3.jpg"
           ]
         }
       ]
@@ -2862,12 +2976,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/lexus1.png",
           "intro": {
             "en": [
-              "Exterior Detailing & Paint Correction is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Multi-step exterior detailing and paint correction to remove swirls, haze, and defects—restoring true gloss and clarity.",
+              "The ideal foundation before ceramic/graphene coating for maximum durability and a flawless finish."
             ],
             "ar": [
-              "تفصيل خارجي وتصحيح طلاء مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تنظيف خارجي متقدم وتصحيح طلاء متعدد المراحل لإزالة الدوامات والبهتان والعيوب—لاستعادة اللمعة والوضوح.",
+              "أساس مثالي قبل تطبيق السيراميك/الجرافين لتحقيق أفضل متانة ونتيجة مثالية."
             ]
           },
           "bestFor": {
@@ -3035,6 +3149,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/detailing-coating/exterior-detailing-paint-correction/before.jpg",
+          "afterImage": "/proof/detailing-coating/exterior-detailing-paint-correction/after.jpg",
+          "miniImages": [
+            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-1.jpg",
+            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-2.jpg",
+            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-3.jpg"
           ]
         },
         {
@@ -3046,12 +3167,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/lexus1.png",
           "intro": {
             "en": [
-              "Interior Deep Cleaning is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Deep interior cleaning for seats, carpets, plastics, and vents—removing stains, odors, and embedded dust safely.",
+              "Includes conditioning where needed for a fresh, hygienic cabin feel suited to Doha’s dusty environment."
             ],
             "ar": [
-              "تنظيف داخلي عميق مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تنظيف داخلي عميق للمقاعد والسجاد والبلاستيك والفتحات لإزالة البقع والروائح والغبار المتراكم بأمان.",
+              "يشمل تكييف/ترطيب عند الحاجة للحصول على مقصورة نظيفة وصحية تناسب بيئة الدوحة."
             ]
           },
           "bestFor": {
@@ -3219,6 +3340,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/detailing-coating/interior-deep-cleaning/before.jpg",
+          "afterImage": "/proof/detailing-coating/interior-deep-cleaning/after.jpg",
+          "miniImages": [
+            "/proof/detailing-coating/interior-deep-cleaning/mini-1.jpg",
+            "/proof/detailing-coating/interior-deep-cleaning/mini-2.jpg",
+            "/proof/detailing-coating/interior-deep-cleaning/mini-3.jpg"
           ]
         },
         {
@@ -3230,12 +3358,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/lexus1.png",
           "intro": {
             "en": [
-              "Ceramic & Graphene Coating is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Long-lasting ceramic or graphene coating that boosts gloss, adds hydrophobic behavior, and improves resistance to chemicals and UV.",
+              "Applied under controlled conditions with proper prep to ensure durability and easy maintenance."
             ],
             "ar": [
-              "طلاء سيراميك وجرافين مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "طلاء سيراميك أو جرافين طويل المدى يزيد اللمعة ويعطي خاصية طرد الماء ويحسن مقاومة المواد الكيميائية وUV.",
+              "يُطبق داخل الورشة مع تجهيز صحيح لضمان المتانة وسهولة الصيانة."
             ]
           },
           "bestFor": {
@@ -3403,6 +3531,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/detailing-coating/ceramic-graphene-coating/before.jpg",
+          "afterImage": "/proof/detailing-coating/ceramic-graphene-coating/after.jpg",
+          "miniImages": [
+            "/proof/detailing-coating/ceramic-graphene-coating/mini-1.jpg",
+            "/proof/detailing-coating/ceramic-graphene-coating/mini-2.jpg",
+            "/proof/detailing-coating/ceramic-graphene-coating/mini-3.jpg"
           ]
         },
         {
@@ -3414,12 +3549,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/lexus1.png",
           "intro": {
             "en": [
-              "Glass, Wheel & Interior Coating is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Targeted coatings for glass, wheels, and interior surfaces to reduce staining, ease cleaning, and improve daily durability.",
+              "Helps repel water on glass, brake dust on wheels, and wear on high-touch interior areas."
             ],
             "ar": [
-              "طلاءات للزجاج والجنوط والداخل مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "طلاءات مخصصة للزجاج والجنوط والأسطح الداخلية لتقليل البقع وتسهيل التنظيف وزيادة التحمل اليومي.",
+              "يساعد على طرد الماء من الزجاج وتقليل التصاق غبار الفرامل بالجنوط وحماية المناطق الداخلية كثيرة الاستخدام."
             ]
           },
           "bestFor": {
@@ -3587,6 +3722,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/detailing-coating/glass-wheel-interior-coating/before.jpg",
+          "afterImage": "/proof/detailing-coating/glass-wheel-interior-coating/after.jpg",
+          "miniImages": [
+            "/proof/detailing-coating/glass-wheel-interior-coating/mini-1.jpg",
+            "/proof/detailing-coating/glass-wheel-interior-coating/mini-2.jpg",
+            "/proof/detailing-coating/glass-wheel-interior-coating/mini-3.jpg"
           ]
         }
       ]
@@ -3622,12 +3764,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/paintoriginal1.png",
           "intro": {
             "en": [
-              "Smart Paint Repair is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Localized paint repair for scuffs, scratches, and bumper damage—minimizing repaint area while restoring a clean OEM look.",
+              "Fast turnaround with precise blending to match surrounding paint and preserve vehicle value."
             ],
             "ar": [
-              "إصلاح طلاء ذكي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "إصلاح طلاء موضعي للخدوش والاحتكاكات وأضرار الصدام—مع تقليل مساحة الرش واستعادة مظهر قريب من المصنع.",
+              "تنفيذ سريع مع دمج لون دقيق لمطابقة الطلاء المحيط والحفاظ على قيمة السيارة."
             ]
           },
           "bestFor": {
@@ -3795,6 +3937,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/paint-repair-services/smart-paint-repair/before.jpg",
+          "afterImage": "/proof/paint-repair-services/smart-paint-repair/after.jpg",
+          "miniImages": [
+            "/proof/paint-repair-services/smart-paint-repair/mini-1.jpg",
+            "/proof/paint-repair-services/smart-paint-repair/mini-2.jpg",
+            "/proof/paint-repair-services/smart-paint-repair/mini-3.jpg"
           ]
         },
         {
@@ -3806,12 +3955,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/paintoriginal1.png",
           "intro": {
             "en": [
-              "Rubber / Peelable Paint is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Peelable rubberized paint for temporary color change or protection—reversible when you want to return to original paint.",
+              "Great for styling, seasonal looks, or protecting panels without permanent modifications."
             ],
             "ar": [
-              "دهان مطاطي قابل للإزالة مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "طلاء مطاطي قابل للإزالة لتغيير اللون مؤقتًا أو للحماية—يمكن نزعه والعودة للون الأصلي متى ما رغبت.",
+              "مناسب للتغيير الشكلي أو الحماية بدون تعديل دائم على السيارة."
             ]
           },
           "bestFor": {
@@ -3979,6 +4128,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/paint-repair-services/rubber-peelable-paint/before.jpg",
+          "afterImage": "/proof/paint-repair-services/rubber-peelable-paint/after.jpg",
+          "miniImages": [
+            "/proof/paint-repair-services/rubber-peelable-paint/mini-1.jpg",
+            "/proof/paint-repair-services/rubber-peelable-paint/mini-2.jpg",
+            "/proof/paint-repair-services/rubber-peelable-paint/mini-3.jpg"
           ]
         },
         {
@@ -3990,12 +4146,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/paintoriginal1.png",
           "intro": {
             "en": [
-              "Normal & Full Repaint is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Full-panel or full-body repaint with professional preparation and controlled application to restore a uniform, premium finish.",
+              "Ideal for faded paint, multiple panel damage, or a complete refresh—quality-focused and color-consistent."
             ],
             "ar": [
-              "دهان عادي أو كامل مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "إعادة رش كاملة للوحة أو للسيارة مع تجهيز احترافي وتطبيق مضبوط لاستعادة نتيجة موحدة وفاخرة.",
+              "مناسب للطلاء الباهت أو الأضرار المتعددة أو تجديد كامل—مع جودة عالية وتناسق لون."
             ]
           },
           "bestFor": {
@@ -4163,6 +4319,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/paint-repair-services/normal-full-repaint/before.jpg",
+          "afterImage": "/proof/paint-repair-services/normal-full-repaint/after.jpg",
+          "miniImages": [
+            "/proof/paint-repair-services/normal-full-repaint/mini-1.jpg",
+            "/proof/paint-repair-services/normal-full-repaint/mini-2.jpg",
+            "/proof/paint-repair-services/normal-full-repaint/mini-3.jpg"
           ]
         },
         {
@@ -4174,12 +4337,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/paintoriginal1.png",
           "intro": {
             "en": [
-              "Paintless Dent Repair (PDR) is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Paintless Dent Repair (PDR) removes dents from panels without repainting—preserving the original factory paint whenever possible.",
+              "Perfect for door dings and small impacts with faster service and excellent cosmetic results."
             ],
             "ar": [
-              "إصلاح صدمات بدون دهان مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "إصلاح الصدمات بدون رش (PDR) يزيل الانبعاجات دون إعادة طلاء—مع الحفاظ على طلاء المصنع قدر الإمكان.",
+              "مناسب لنقرات الأبواب والصدمات الخفيفة مع وقت أسرع ونتائج شكلية ممتازة."
             ]
           },
           "bestFor": {
@@ -4347,6 +4510,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/paint-repair-services/paintless-dent-repair-pdr/before.jpg",
+          "afterImage": "/proof/paint-repair-services/paintless-dent-repair-pdr/after.jpg",
+          "miniImages": [
+            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-1.jpg",
+            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-2.jpg",
+            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-3.jpg"
           ]
         },
         {
@@ -4358,12 +4528,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/paintoriginal1.png",
           "intro": {
             "en": [
-              "Color Matching & Panel Painting is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Accurate color matching and panel painting using blending techniques to ensure seamless transitions between panels.",
+              "Best for single-panel repairs, bumper work, and restoring factory appearance with consistent gloss."
             ],
             "ar": [
-              "مطابقة لون ودهان ألواح مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "مطابقة لون دقيقة ورش ألواح مع تقنيات دمج لضمان انتقال سلس بين الألواح.",
+              "مناسب لإصلاح لوحة واحدة أو الصدام واستعادة مظهر المصنع مع لمعة متناسقة."
             ]
           },
           "bestFor": {
@@ -4531,6 +4701,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/paint-repair-services/color-matching-panel-painting/before.jpg",
+          "afterImage": "/proof/paint-repair-services/color-matching-panel-painting/after.jpg",
+          "miniImages": [
+            "/proof/paint-repair-services/color-matching-panel-painting/mini-1.jpg",
+            "/proof/paint-repair-services/color-matching-panel-painting/mini-2.jpg",
+            "/proof/paint-repair-services/color-matching-panel-painting/mini-3.jpg"
           ]
         }
       ]
@@ -4566,12 +4743,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/car-wash.png",
           "intro": {
             "en": [
-              "Basic & Premium Hand Wash is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Safe hand wash using proper wash media and drying methods to reduce swirls—choose Basic for maintenance or Premium for extra finishing touches.",
+              "A clean, consistent wash routine that keeps your car presentable between detailing sessions."
             ],
             "ar": [
-              "غسيل يدوي أساسي وبريميوم مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "غسيل يدوي آمن باستخدام أدوات وغسيل وتجفيف صحيح لتقليل الدوامات—اختر العادي للصيانة أو البريميوم لتفاصيل إضافية.",
+              "روتين غسيل ثابت يحافظ على نظافة السيارة بين جلسات العناية."
             ]
           },
           "bestFor": {
@@ -4739,6 +4916,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/car-wash-services/basic-premium-hand-wash/before.jpg",
+          "afterImage": "/proof/car-wash-services/basic-premium-hand-wash/after.jpg",
+          "miniImages": [
+            "/proof/car-wash-services/basic-premium-hand-wash/mini-1.jpg",
+            "/proof/car-wash-services/basic-premium-hand-wash/mini-2.jpg",
+            "/proof/car-wash-services/basic-premium-hand-wash/mini-3.jpg"
           ]
         },
         {
@@ -4750,12 +4934,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/car-wash.png",
           "intro": {
             "en": [
-              "Foam Wash is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Thick snow-foam pre-wash that loosens dirt and sand before contact—reducing swirl risk in dusty conditions.",
+              "Ideal as a first step before a hand wash for a safer, more thorough clean."
             ],
             "ar": [
-              "غسيل رغوي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "غسيل فوم كثيف يفك الأوساخ والرمال قبل اللمس لتقليل خطر الدوامات في الأجواء المغبرة.",
+              "مثالي كخطوة أولى قبل الغسيل اليدوي لتنظيف أعمق وأكثر أمانًا."
             ]
           },
           "bestFor": {
@@ -4923,6 +5107,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/car-wash-services/foam-wash/before.jpg",
+          "afterImage": "/proof/car-wash-services/foam-wash/after.jpg",
+          "miniImages": [
+            "/proof/car-wash-services/foam-wash/mini-1.jpg",
+            "/proof/car-wash-services/foam-wash/mini-2.jpg",
+            "/proof/car-wash-services/foam-wash/mini-3.jpg"
           ]
         },
         {
@@ -4934,12 +5125,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/car-wash.png",
           "intro": {
             "en": [
-              "Engine Bay Cleaning is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Controlled engine bay cleaning and degreasing to remove dust buildup and oil residue without harming sensitive components.",
+              "Finished with careful drying and dressing for a neat, professional look under the hood."
             ],
             "ar": [
-              "تنظيف حجرة المحرك مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تنظيف حجرة المحرك وإزالة الدهون بشكل مضبوط لإزالة الغبار المتراكم وبقايا الزيوت دون الإضرار بالمكونات الحساسة.",
+              "تشطيب مع تجفيف وتلميع مناسب لمظهر مرتب واحترافي تحت الغطاء."
             ]
           },
           "bestFor": {
@@ -5107,6 +5298,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/car-wash-services/engine-bay-cleaning/before.jpg",
+          "afterImage": "/proof/car-wash-services/engine-bay-cleaning/after.jpg",
+          "miniImages": [
+            "/proof/car-wash-services/engine-bay-cleaning/mini-1.jpg",
+            "/proof/car-wash-services/engine-bay-cleaning/mini-2.jpg",
+            "/proof/car-wash-services/engine-bay-cleaning/mini-3.jpg"
           ]
         },
         {
@@ -5118,12 +5316,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/car-wash.png",
           "intro": {
             "en": [
-              "Interior Vacuum & Sanitization is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Thorough vacuuming plus sanitization of high-touch areas to reduce odors, dust, and bacteria for a fresher cabin.",
+              "Perfect for family cars, ride-hailing vehicles, and anyone who wants a clean, hygienic interior quickly."
             ],
             "ar": [
-              "شفط وتعقيم داخلي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "شفط وتنظيف شامل مع تعقيم المناطق كثيرة اللمس لتقليل الروائح والغبار والبكتيريا لمقصورة أنظف.",
+              "مناسب لسيارات العائلة وسيارات التوصيل وكل من يريد داخلية نظيفة وصحية بسرعة."
             ]
           },
           "bestFor": {
@@ -5291,6 +5489,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/car-wash-services/interior-vacuum-sanitization/before.jpg",
+          "afterImage": "/proof/car-wash-services/interior-vacuum-sanitization/after.jpg",
+          "miniImages": [
+            "/proof/car-wash-services/interior-vacuum-sanitization/mini-1.jpg",
+            "/proof/car-wash-services/interior-vacuum-sanitization/mini-2.jpg",
+            "/proof/car-wash-services/interior-vacuum-sanitization/mini-3.jpg"
           ]
         }
       ]
@@ -5326,12 +5531,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Stone Chip & Crack Repair is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Resin-based repair for stone chips and small cracks to stop spreading and restore structural integrity.",
+              "A cost-effective solution that improves clarity and helps avoid full windshield replacement."
             ],
             "ar": [
-              "إصلاح ضربات وتشققات مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "إصلاح شقوق وخدوش الحصى براتنج خاص لمنع انتشار الشرخ واستعادة قوة الزجاج.",
+              "حل اقتصادي يحسن الوضوح ويساعد على تجنب تغيير الزجاج بالكامل."
             ]
           },
           "bestFor": {
@@ -5499,6 +5704,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/stone-chip-crack-repair/before.jpg",
+          "afterImage": "/proof/windshield-services/stone-chip-crack-repair/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/stone-chip-crack-repair/mini-1.jpg",
+            "/proof/windshield-services/stone-chip-crack-repair/mini-2.jpg",
+            "/proof/windshield-services/stone-chip-crack-repair/mini-3.jpg"
           ]
         },
         {
@@ -5510,12 +5722,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Glass Polishing is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Glass polishing to reduce wiper marks, water spots, and light scratches—improving visibility and overall appearance.",
+              "Best paired with water-repellent treatment for smoother driving in rain and easier cleaning."
             ],
             "ar": [
-              "تلميع الزجاج مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تلميع الزجاج لتقليل آثار المساحات وبقع الماء والخدوش الخفيفة—لرؤية أفضل ومظهر أنظف.",
+              "يفضل مع علاج طارد للماء لقيادة أسهل في المطر وتنظيف أسرع."
             ]
           },
           "bestFor": {
@@ -5683,6 +5895,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/glass-polishing/before.jpg",
+          "afterImage": "/proof/windshield-services/glass-polishing/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/glass-polishing/mini-1.jpg",
+            "/proof/windshield-services/glass-polishing/mini-2.jpg",
+            "/proof/windshield-services/glass-polishing/mini-3.jpg"
           ]
         },
         {
@@ -5694,12 +5913,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Water Repellent Treatment is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Hydrophobic treatment that makes water bead and slide off the windshield—improving visibility at speed and reducing wiper chatter.",
+              "Helps keep glass cleaner for longer and makes bug and dust removal easier."
             ],
             "ar": [
-              "طبقة طاردة للماء مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "علاج طارد للماء يجعل الماء يتجمع وينزلق عن الزجاج الأمامي لتحسين الرؤية وتقليل صوت المساحات.",
+              "يساعد على بقاء الزجاج أنظف لفترة أطول ويسهل إزالة الغبار والحشرات."
             ]
           },
           "bestFor": {
@@ -5867,6 +6086,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/water-repellent-treatment/before.jpg",
+          "afterImage": "/proof/windshield-services/water-repellent-treatment/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/water-repellent-treatment/mini-1.jpg",
+            "/proof/windshield-services/water-repellent-treatment/mini-2.jpg",
+            "/proof/windshield-services/water-repellent-treatment/mini-3.jpg"
           ]
         },
         {
@@ -5878,12 +6104,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Windshield Replacement is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Professional windshield replacement using quality glass and proper sealing to prevent leaks, noise, and fitment issues.",
+              "Includes careful installation and guidance for ADAS/sensor checks when applicable."
             ],
             "ar": [
-              "استبدال الزجاج الأمامي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "تغيير الزجاج الأمامي بشكل احترافي باستخدام زجاج عالي الجودة وتركيب صحيح لمنع التسريب والضوضاء ومشاكل المقاس.",
+              "يشمل تركيب دقيق وإرشادات لفحص أنظمة الحساسات/ADAS عند الحاجة."
             ]
           },
           "bestFor": {
@@ -6051,6 +6277,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/windshield-replacement/before.jpg",
+          "afterImage": "/proof/windshield-services/windshield-replacement/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/windshield-replacement/mini-1.jpg",
+            "/proof/windshield-services/windshield-replacement/mini-2.jpg",
+            "/proof/windshield-services/windshield-replacement/mini-3.jpg"
           ]
         },
         {
@@ -6062,12 +6295,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Windshield Protection – Light is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Light-level windshield protection film for basic defense against sand pitting and minor surface wear.",
+              "A practical option for city use—maintains clarity and reduces micro-scratches over time."
             ],
             "ar": [
-              "حماية الزجاج – لايت مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "حماية خفيفة للزجاج الأمامي لمقاومة تآكل الرمال والاستخدام اليومي البسيط.",
+              "خيار عملي لقيادة المدينة—يحافظ على الوضوح ويقلل الخدوش الدقيقة مع الوقت."
             ]
           },
           "bestFor": {
@@ -6235,6 +6468,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/windshield-light/before.jpg",
+          "afterImage": "/proof/windshield-services/windshield-light/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/windshield-light/mini-1.jpg",
+            "/proof/windshield-services/windshield-light/mini-2.jpg",
+            "/proof/windshield-services/windshield-light/mini-3.jpg"
           ]
         },
         {
@@ -6246,12 +6486,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Windshield Protection – City is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "City-level windshield protection with enhanced durability for frequent road use, keeping glass clearer despite dust and traffic exposure.",
+              "Balanced performance for daily driving: comfort, clarity, and stronger resistance than entry-level film."
             ],
             "ar": [
-              "حماية الزجاج – سيتي مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "حماية مستوى المدينة للزجاج الأمامي بمتانة أعلى للاستخدام اليومي المتكرر مع الحفاظ على وضوح أفضل رغم الغبار والزحمة.",
+              "أداء متوازن للقيادة اليومية: راحة ووضوح ومقاومة أقوى من المستوى الخفيف."
             ]
           },
           "bestFor": {
@@ -6419,6 +6659,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/windshield-city/before.jpg",
+          "afterImage": "/proof/windshield-services/windshield-city/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/windshield-city/mini-1.jpg",
+            "/proof/windshield-services/windshield-city/mini-2.jpg",
+            "/proof/windshield-services/windshield-city/mini-3.jpg"
           ]
         },
         {
@@ -6430,12 +6677,12 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/rollsroyce.png",
           "intro": {
             "en": [
-              "Windshield Protection – Extreme is designed for Doha driving conditions—heat, dust, and daily wear—delivering a premium finish with controlled installation and quality checks.",
-              "You will receive clear scope, a step-by-step process, and aftercare guidance to keep results consistent long after delivery."
+              "Extreme-level windshield protection built for heavy highway use and harsh conditions—maximum resistance against pitting and impacts.",
+              "Ideal for long-distance driving and high-speed roads, with careful installation for optical clarity."
             ],
             "ar": [
-              "حماية الزجاج – إكستريم مصمم لظروف القيادة في الدوحة—الحرارة والغبار والاستخدام اليومي—مع تشطيب فاخر وتركيب مدروس وفحص جودة.",
-              "ستحصل على نطاق خدمة واضح وخطوات تنفيذ وتعليمات عناية للحفاظ على النتيجة بعد التسليم."
+              "حماية قصوى للزجاج الأمامي للطرق السريعة والظروف القاسية—أعلى مقاومة للتآكل والصدمات.",
+              "مناسب للقيادة الطويلة والسرعات العالية مع تركيب دقيق للحفاظ على الوضوح."
             ]
           },
           "bestFor": {
@@ -6603,6 +6850,13 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
               }
             }
+          ],
+          "beforeImage": "/proof/windshield-services/windshield-extreme/before.jpg",
+          "afterImage": "/proof/windshield-services/windshield-extreme/after.jpg",
+          "miniImages": [
+            "/proof/windshield-services/windshield-extreme/mini-1.jpg",
+            "/proof/windshield-services/windshield-extreme/mini-2.jpg",
+            "/proof/windshield-services/windshield-extreme/mini-3.jpg"
           ]
         }
       ]

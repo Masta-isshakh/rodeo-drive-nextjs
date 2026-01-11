@@ -160,6 +160,7 @@ export default function ServiceRoutePage() {
   // subservice page
   const s = view.service;
   const sub = view.sub;
+
   const title = getText(sub.title, lang);
   const intro = getText(sub.intro, lang);
   const bestFor = getText(sub.bestFor, lang);
@@ -168,6 +169,14 @@ export default function ServiceRoutePage() {
   const process = getText(sub.process, lang);
   const aftercare = getText(sub.aftercare, lang);
   const timeline = getText(sub.timeline, lang);
+
+  // ✅ media resolution (subservice first, fallback to service-level)
+  const serviceKey = s.slug.replace(/\//g, "-");
+  const beforeSrc = sub.beforeImage || `/proof/${serviceKey}-before.png`;
+  const afterSrc = sub.afterImage || `/proof/${serviceKey}-after.png`;
+  const miniImages: string[] = (sub.miniImages && sub.miniImages.length
+    ? sub.miniImages
+    : ["/services/proof-1.svg", "/services/proof-2.svg", "/services/proof-3.svg"]).slice(0, 3);
 
   return (
     <main className={styles.page} dir={dir}>
@@ -197,7 +206,7 @@ export default function ServiceRoutePage() {
         <div className={styles.container}>
           <div className={styles.split}>
             <div>
-              {intro.slice(0,2).map((p, idx) => (
+              {intro.slice(0, 2).map((p, idx) => (
                 <motion.p key={idx} className={styles.paragraph} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} transition={{ duration: 0.35 }}>
                   {p}
                 </motion.p>
@@ -212,15 +221,15 @@ export default function ServiceRoutePage() {
 
             <div className={styles.mediaCard}>
               <BeforeAfterSlider
-            beforeSrc={`/proof/${s.slug.replace(/\//g, "-")}-before.svg`}
-            afterSrc={`/proof/${s.slug.replace(/\//g, "-")}-after.svg`}
-            alt={`${getText(sub.title, lang)} before/after`}
-            height={360}
-          />
+                beforeSrc={beforeSrc}
+                afterSrc={afterSrc}
+                alt={`${getText(sub.title, lang)} before/after`}
+                height={360}
+              />
               <div className={styles.miniGrid}>
-                <img src="/services/proof-1.svg" alt="" className={styles.miniImg} />
-                <img src="/services/proof-2.svg" alt="" className={styles.miniImg} />
-                <img src="/services/proof-3.svg" alt="" className={styles.miniImg} />
+                {miniImages.map((src, i) => (
+                  <img key={`${src}-${i}`} src={src} alt="" className={styles.miniImg} />
+                ))}
               </div>
             </div>
           </div>
@@ -263,7 +272,7 @@ export default function ServiceRoutePage() {
           <ol className={styles.timeline}>
             {process.map((step, i) => (
               <motion.li key={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} transition={{ duration: 0.3 }}>
-                <span className={styles.stepIndex}>{i+1}</span>
+                <span className={styles.stepIndex}>{i + 1}</span>
                 <span className={styles.stepText}>{step}</span>
               </motion.li>
             ))}

@@ -345,7 +345,7 @@ export default function ServicesPage() {
                     beforeSrc={`/proof/${svc.slug}-before.png`}
                     afterSrc={`/proof/${svc.slug}-after.png`}
                     alt={`${svc.title} before/after`}
-                    height={180}
+height="clamp(240px, 18vw, 360px)"
                   />
                   <span className={styles.serviceIcon} aria-hidden="true">
                     <img

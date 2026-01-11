@@ -155,8 +155,8 @@
 
 /* ✅ image inside icon container */
 .serviceIconImage{
-  width:26px;
-  height:26px;
+  width:46px;
+  height:46px;
   object-fit:contain;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
 }
@@ -302,11 +302,12 @@
   box-shadow: 0 8px 25px rgba(139, 0, 0, 0.35);
 }
 
-.servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-lg);
+.servicesGrid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
 }
+
 
 .serviceCard {
   background: linear-gradient(
@@ -368,8 +369,8 @@
     grid-template-columns: 1fr;
   }
 
-  .servicesGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .servicesGrid{
+    grid-template-columns: 1fr;
   }
 }
 
@@ -426,4 +427,9 @@
 }
 
 
-.serviceMedia{position:relative;margin-bottom:12px}
+/* FULL-WIDTH container ONLY for the services grid section */
+.servicesListSection .container{
+  max-width: 100%;
+  padding-left: clamp(16px, 3vw, 56px);
+  padding-right: clamp(16px, 3vw, 56px);
+}

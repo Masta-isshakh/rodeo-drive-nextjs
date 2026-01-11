@@ -1,4 +1,6 @@
 .wrap{
+    width: 100%;
+
   position:relative;
   border-radius:18px;
   overflow:hidden;

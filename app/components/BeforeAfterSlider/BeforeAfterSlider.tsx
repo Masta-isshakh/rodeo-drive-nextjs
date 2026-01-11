@@ -7,7 +7,7 @@ type Props = {
   beforeSrc: string;
   afterSrc: string;
   alt: string;
-  height?: number;
+height?: number | string;
 };
 
 export default function BeforeAfterSlider({ beforeSrc, afterSrc, alt, height = 320 }: Props) {
