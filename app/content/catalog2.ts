@@ -60,7 +60,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Full Body PPF",
             "ar": "PPF حماية كاملة"
           },
-          "heroImage": "/full-ppf.png",
+          "heroImage": "/full-body.png",
           "intro": {
             "en": [
               "Full-vehicle coverage designed to shield every painted panel from chips, scratches, and sand abrasion—ideal for brand-new cars and long-term ownership in Qatar.",
