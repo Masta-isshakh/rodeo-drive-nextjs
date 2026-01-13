@@ -25,18 +25,18 @@
   border-bottom: 1px solid rgba(255, 255, 255, .06);
 }
 
-.heroSmall {
-  position: relative;
-  padding: 56px 0 28px;
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
-}
-
+/* Make the background stay BEHIND and never block clicks */
 .heroBg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(900px 380px at 20% 0%, rgba(200, 160, 74, .22), transparent 60%),
-    radial-gradient(700px 380px at 90% 10%, rgba(255, 255, 255, .08), transparent 55%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ensure hero content is above the background */
+.hero > .container {
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================
@@ -315,12 +315,76 @@
 /* =========================
    Breadcrumbs
 ========================= */
+/* Back arrow */
+.backArrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+
+  width: fit-content;
+  margin-bottom: 12px;
+
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.backArrow:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.backIcon {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(201, 161, 74, 0.20);
+  border: 1px solid rgba(201, 161, 74, 0.35);
+
+  font-weight: 900;
+  line-height: 1;
+}
+
+.backText {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Mobile: make it easier to tap */
+@media (max-width: 640px) {
+  .backArrow {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 14px;
+  }
+}
+
+/* RTL: keep spacing natural */
+[dir="rtl"] .backArrow {
+  flex-direction: row-reverse;
+}
+
 .breadcrumbs {
   display: flex;
   gap: 8px;
   align-items: center;
   color: rgba(255, 255, 255, .6);
   margin-bottom: 10px;
+  margin-top: 30px;
   flex-wrap: wrap;
 }
 

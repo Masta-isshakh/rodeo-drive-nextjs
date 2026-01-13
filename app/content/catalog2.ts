@@ -251,7 +251,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Front-End PPF",
             "ar": "PPF للواجهة الأمامية"
           },
-          "heroImage": "/front-ppf.png",
+          "heroImage": "/frontendppf.png",
           "intro": {
             "en": [
               "Focused protection for the highest-impact zones (bumper, hood, fenders, mirrors) to stop stone chips and road rash before they start.",
@@ -442,7 +442,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Partial Front PPF",
             "ar": "PPF جزئي أمامي"
           },
-          "heroImage": "/partial-ppf.png",
+          "heroImage": "/frontend-partial.jpg",
           "intro": {
             "en": [
               "Entry-level chip protection for key front areas, typically covering the bumper and targeted hood/fender sections where damage happens most.",
@@ -633,7 +633,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Gloss PPF",
             "ar": "PPF لامع"
           },
-          "heroImage": "/gloss-ppf.png",
+          "heroImage": "/matt-ppf.jpg",
           "intro": {
             "en": [
               "High-clarity gloss PPF that preserves the original paint color while adding a deep, wet-look finish and strong impact resistance.",
@@ -824,7 +824,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Matte PPF",
             "ar": "PPF مطفي"
           },
-          "heroImage": "/matt-ppf.png",
+          "heroImage": "/gloss-ppf.jpg",
           "intro": {
             "en": [
               "Matte PPF transforms gloss paint into a premium satin-matte appearance while defending against chips, scratches, and harsh washing marks.",
@@ -1015,7 +1015,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Satin PPF",
             "ar": "PPF ساتان"
           },
-          "heroImage": "/matt-ppf.png",
+          "heroImage": "/satin-ppf.jpeg",
           "intro": {
             "en": [
               "Satin PPF delivers a refined, semi-matte finish—more depth than matte, less glare than gloss—while keeping strong impact protection.",
@@ -1206,7 +1206,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Self-Healing PPF",
             "ar": "PPF ذاتي المعالجة"
           },
-          "heroImage": "/matt-ppf.png",
+          "heroImage": "/self-healing-ppf.jpg",
           "intro": {
             "en": [
               "Advanced self-healing PPF that helps minor swirls and light scratches disappear with heat, keeping the surface looking newer for longer.",
@@ -1397,7 +1397,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Headlight & Taillight Protection Film",
             "ar": "حماية الأنوار"
           },
-          "heroImage": "/matt-ppf.png",
+          "heroImage": "/Headlight.webp",
           "intro": {
             "en": [
               "Clear or lightly-tinted lens film that protects headlights and taillights from pitting, sandblasting, and surface scratches.",
@@ -1588,7 +1588,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Screen Protection Film",
             "ar": "حماية الشاشات"
           },
-          "heroImage": "/matt-ppf.png",
+          "heroImage": "/interior-protective.jpg",
           "intro": {
             "en": [
               "Precision-cut protection for infotainment screens, clusters, and glossy trim to prevent scratches, fingerprints, and daily wear.",
@@ -1779,7 +1779,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "PPF Removal & Replacement",
             "ar": "إزالة واستبدال PPF"
           },
-          "heroImage": "/matt-ppf.png",
+          "heroImage": "/remove.jpg",
           "intro": {
             "en": [
               "Safe removal of old or damaged PPF with controlled heat and adhesive cleanup to protect the original paint underneath.",
@@ -1994,7 +1994,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Nano Ceramic Tint",
             "ar": "تظليل نانو سيراميك"
           },
-          "heroImage": "/window-solar.jpg",
+          "heroImage": "/nano-ceramic.webp",
           "intro": {
             "en": [
               "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility—ideal for Qatar’s intense sun.",
@@ -2185,7 +2185,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Heat & UV Protection Film",
             "ar": "فيلم حماية حرارة وUV"
           },
-          "heroImage": "/window-solar.jpg",
+          "heroImage": "/UV-Protection.webp",
           "intro": {
             "en": [
               "High-performance film focused on blocking UV and reducing infrared heat to protect interiors from fading and cracking.",
@@ -2376,7 +2376,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Clear Protection",
             "ar": "حماية شفافة للزجاج الأمامي"
           },
-          "heroImage": "/window-solar.jpg",
+          "heroImage": "/clear-glass.jpeg",
           "intro": {
             "en": [
               "Optically clear film for the front windshield that defends against sand pitting and light impacts while keeping full visibility.",
@@ -2567,7 +2567,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Sunroof & Panoramic Roof Tint",
             "ar": "تظليل سقف بانوراما"
           },
-          "heroImage": "/window-solar.jpg",
+          "heroImage": "/sunroof.webp",
           "intro": {
             "en": [
               "Specialized tint for sunroofs and panoramic glass to cut heat and glare from above—improving comfort for front and rear passengers.",
@@ -2758,7 +2758,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Tint Removal & Reinstallation",
             "ar": "إزالة وإعادة تظليل"
           },
-          "heroImage": "/window-solar.jpg",
+          "heroImage": "/sun-remove.webp",
           "intro": {
             "en": [
               "Professional tint removal that protects defroster lines and trims, followed by clean reinstallation with a fresh finish.",
@@ -2973,7 +2973,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Exterior Detailing & Paint Correction",
             "ar": "تفصيل خارجي وتصحيح طلاء"
           },
-          "heroImage": "/lexus1.png",
+          "heroImage": "/paint-correction.png",
           "intro": {
             "en": [
               "Multi-step exterior detailing and paint correction to remove swirls, haze, and defects—restoring true gloss and clarity.",
@@ -3164,7 +3164,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Deep Cleaning",
             "ar": "تنظيف داخلي عميق"
           },
-          "heroImage": "/lexus1.png",
+          "heroImage": "/car_interior_cleaning.webp",
           "intro": {
             "en": [
               "Deep interior cleaning for seats, carpets, plastics, and vents—removing stains, odors, and embedded dust safely.",
@@ -3355,7 +3355,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Ceramic & Graphene Coating",
             "ar": "طلاء سيراميك وجرافين"
           },
-          "heroImage": "/lexus1.png",
+          "heroImage": "/Graphene-Coating.jpg",
           "intro": {
             "en": [
               "Long-lasting ceramic or graphene coating that boosts gloss, adds hydrophobic behavior, and improves resistance to chemicals and UV.",
@@ -3546,7 +3546,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Glass, Wheel & Interior Coating",
             "ar": "طلاءات للزجاج والجنوط والداخل"
           },
-          "heroImage": "/lexus1.png",
+          "heroImage": "/interior-coating.webp",
           "intro": {
             "en": [
               "Targeted coatings for glass, wheels, and interior surfaces to reduce staining, ease cleaning, and improve daily durability.",

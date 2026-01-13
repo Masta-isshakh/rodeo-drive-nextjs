@@ -73,6 +73,19 @@ export default function ServiceRoutePage() {
         <div className={styles.hero}>
           <div className={styles.heroBg} />
           <div className={styles.container}>
+        <Link
+  href="/services"
+  className={styles.backArrow}
+  aria-label={lang === "ar" ? "الرجوع إلى صفحة الخدمات" : "Back to Services"}
+>
+  <span className={styles.backIcon} aria-hidden="true">
+    {lang === "ar" ? "→" : "←"}
+  </span>
+  <span className={styles.backText}>
+    {lang === "ar" ? "رجوع للخدمات" : "Back to Services"}
+  </span>
+</Link>
+
             <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.5 }}>
               <h1 className={styles.h1}>{title}</h1>
               <p className={styles.subtitle}>{subtitle}</p>
@@ -182,6 +195,8 @@ export default function ServiceRoutePage() {
     <main className={styles.page} dir={dir}>
       <div className={styles.heroSmall}>
         <div className={styles.container}>
+
+
           <div className={styles.breadcrumbs}>
             <Link href="/services">{lang === "ar" ? "الخدمات" : "Services"}</Link>
             <span className={styles.sep}>/</span>
