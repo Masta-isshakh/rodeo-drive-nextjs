@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BookApp from "./Book";
+import  styles from "./book.module.css";
 
 export const metadata:Metadata = {
   title: "Book Appointment | Rodeo Drive",

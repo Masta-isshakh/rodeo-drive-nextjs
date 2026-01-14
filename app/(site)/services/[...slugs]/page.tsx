@@ -73,18 +73,18 @@ export default function ServiceRoutePage() {
         <div className={styles.hero}>
           <div className={styles.heroBg} />
           <div className={styles.container}>
-        <Link
-  href="/services"
-  className={styles.backArrow}
-  aria-label={lang === "ar" ? "الرجوع إلى صفحة الخدمات" : "Back to Services"}
->
-  <span className={styles.backIcon} aria-hidden="true">
-    {lang === "ar" ? "→" : "←"}
-  </span>
-  <span className={styles.backText}>
-    {lang === "ar" ? "رجوع للخدمات" : "Back to Services"}
-  </span>
-</Link>
+            <Link
+              href="/services"
+              className={styles.backArrow}
+              aria-label={lang === "ar" ? "الرجوع إلى صفحة الخدمات" : "Back to Services"}
+            >
+              <span className={styles.backIcon} aria-hidden="true">
+                {lang === "ar" ? "→" : "←"}
+              </span>
+              <span className={styles.backText}>
+                {lang === "ar" ? "رجوع للخدمات" : "Back to Services"}
+              </span>
+            </Link>
 
             <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.5 }}>
               <h1 className={styles.h1}>{title}</h1>
@@ -235,16 +235,10 @@ export default function ServiceRoutePage() {
             </div>
 
             <div className={styles.mediaCard}>
-              <BeforeAfterSlider
-                beforeSrc={beforeSrc}
-                afterSrc={afterSrc}
-                alt={`${getText(sub.title, lang)} before/after`}
-                height={360}
-              />
-              <div className={styles.miniGrid}>
-                {miniImages.map((src, i) => (
-                  <img key={`${src}-${i}`} src={src} alt="" className={styles.miniImg} />
-                ))}
+
+              <div className={styles.cardTop}>
+                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImg} />
+
               </div>
             </div>
           </div>

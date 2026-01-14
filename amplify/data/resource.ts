@@ -12,8 +12,12 @@ const schema = a.schema({
       name: a.string(),
       email: a.string(),
       phone: a.string(),
+
+      carModel: a.string(), // ✅ NEW
+      service: a.string(),  // ✅ NEW
+
       date: a.string(),
-      time: a.string(),
+      time: a.string(),     // will store "hh:mm AM/PM"
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
@@ -24,8 +28,6 @@ export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "apiKey",
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
+    apiKeyAuthorizationMode: { expiresInDays: 30 },
   },
 });

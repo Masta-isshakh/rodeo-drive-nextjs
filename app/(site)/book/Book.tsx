@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
+import styles from "./book.module.css";
 
 const MAX_BOOKINGS_PER_DAY = 10;
 
-// Utilitaire: YYYY-MM-DD local (pas UTC) pour éviter les bugs de timezone
 function formatLocalDateYYYYMMDD(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -14,49 +14,70 @@ function formatLocalDateYYYYMMDD(d: Date) {
   return `${y}-${m}-${day}`;
 }
 
-// Compare uniquement la date (sans heure)
 function isDateInPast(dateStr: string) {
   if (!dateStr) return false;
   const todayStr = formatLocalDateYYYYMMDD(new Date());
-  return dateStr < todayStr; // comparaison lexicographique OK en YYYY-MM-DD
+  return dateStr < todayStr;
+}
+
+// ✅ Convert "14:30" -> "02:30 PM"
+function toAmPm(time24: string) {
+  if (!time24) return "";
+  const [hhStr, mm] = time24.split(":");
+  const hh = Number(hhStr);
+  if (Number.isNaN(hh) || !mm) return time24;
+
+  const period = hh >= 12 ? "PM" : "AM";
+  const hour12 = hh % 12 === 0 ? 12 : hh % 12;
+  return `${String(hour12).padStart(2, "0")}:${mm} ${period}`;
 }
 
 export default function BookAppointment() {
   const client = useMemo(() => generateClient<Schema>(), []);
 
+  // ✅ Define your service options here (edit as you want)
+  const serviceOptions = useMemo(
+    () => [
+      "Full Protection – PPF",
+      "Window Solar Film",
+      "Detailing & Coating",
+      "Paint & Repair Services",
+      "Car Wash Services",
+      "Windshield Services",
+    ],
+    []
+  );
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
+    carModel: "",   // ✅ NEW
+    service: "",    // ✅ NEW
     date: "",
-    time: "",
+    time: "",       // raw 24h from input
   });
 
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
-  // Pour empêcher la sélection de dates passées via l'UI
   const [minDate, setMinDate] = useState<string>("");
 
   useEffect(() => {
     setMinDate(formatLocalDateYYYYMMDD(new Date()));
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setErrorMsg("");
     setSuccess(false);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Vérifie le quota (<= 10) pour une date donnée
   const getBookingsCountForDate = async (date: string) => {
-    // Si ton modèle a une clé "date" simple (string), ceci suffit
-    // NB: certains projets Amplify Gen2 utilisent list({ filter: {...} })
     const { data, errors } = await client.models.Appointment.list({
       filter: { date: { eq: date } },
-      // limit peut rester large, mais on peut optimiser:
-      // limit: MAX_BOOKINGS_PER_DAY + 1,
     });
 
     if (errors?.length) {
@@ -71,22 +92,25 @@ export default function BookAppointment() {
     setSuccess(false);
     setErrorMsg("");
 
-    // 1) Bloquer date passée
     if (isDateInPast(form.date)) {
       setErrorMsg("You cannot book an appointment in the past. Please select a future date.");
       return;
     }
 
-    // (Optionnel mais recommandé) Bloquer si date vide
     if (!form.date) {
       setErrorMsg("Please choose a date.");
+      return;
+    }
+
+    // ✅ Basic required checks (since service is a <select>)
+    if (!form.service) {
+      setErrorMsg("Please select a service.");
       return;
     }
 
     setLoading(true);
 
     try {
-      // 2) Bloquer si quota journalier atteint
       const count = await getBookingsCountForDate(form.date);
       if (count >= MAX_BOOKINGS_PER_DAY) {
         setErrorMsg("Sorry, this date is fully booked. Please choose another day.");
@@ -94,20 +118,28 @@ export default function BookAppointment() {
         return;
       }
 
-      // Création booking
+      // ✅ Convert time to AM/PM before saving
+      const timeAmPm = toAmPm(form.time);
+
+      // ✅ Save in DB (time stored as "hh:mm AM/PM")
       await client.models.Appointment.create({
         name: form.name,
         email: form.email,
         phone: form.phone,
+        carModel: form.carModel,
+        service: form.service,
         date: form.date,
-        time: form.time,
+        time: timeAmPm,
       });
 
-      // Email (ne bloque pas booking si échec)
+      // ✅ Email payload should match what you want to send
       const res = await fetch("/api/sendAppointmentEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          time: timeAmPm, // send AM/PM in email too
+        }),
       });
 
       if (!res.ok) {
@@ -115,7 +147,15 @@ export default function BookAppointment() {
       }
 
       setSuccess(true);
-      setForm({ name: "", email: "", phone: "", date: "", time: "" });
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        carModel: "",
+        service: "",
+        date: "",
+        time: "",
+      });
     } catch (err: any) {
       console.error("Booking error:", err);
       setErrorMsg(err?.message ?? "Erreur lors de la réservation, veuillez réessayer.");
@@ -125,48 +165,24 @@ export default function BookAppointment() {
   };
 
   return (
-    <div
-      className="appointment-page"
-      style={{ maxWidth: "600px", margin: "120px auto", padding: "20px" }}
-    >
-      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
-        Book an Appointment
-      </h1>
+    <div className={styles.appointmentContainer}>
+      <h1>Book an Appointment</h1>
 
       {success && (
-        <div
-          style={{
-            padding: "15px",
-            marginBottom: "20px",
-            backgroundColor: "#d4edda",
-            color: "#155724",
-            borderRadius: "6px",
-            textAlign: "center",
-          }}
-        >
+        <div className={styles.successMessage}>
           Thank you! Your appointment has been booked successfully. One of our customer service will call you soon.
         </div>
       )}
 
       {errorMsg && (
         <div
-          style={{
-            padding: "12px",
-            marginBottom: "20px",
-            backgroundColor: "#f8d7da",
-            color: "#721c24",
-            borderRadius: "6px",
-            textAlign: "center",
-          }}
+          className={styles.errorMessage}
         >
           {errorMsg}
         </div>
       )}
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
-      >
+      <form className={styles.appointmentForm} onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
@@ -174,7 +190,6 @@ export default function BookAppointment() {
           value={form.name}
           onChange={handleChange}
           required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
         />
 
         <input
@@ -184,7 +199,6 @@ export default function BookAppointment() {
           value={form.email}
           onChange={handleChange}
           required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
         />
 
         <input
@@ -194,8 +208,34 @@ export default function BookAppointment() {
           value={form.phone}
           onChange={handleChange}
           required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
         />
+
+        {/* ✅ NEW: Car Model */}
+        <input
+          type="text"
+          name="carModel"
+          placeholder="Car Model (e.g., Land Cruiser, BMW X5)"
+          value={form.carModel}
+          onChange={handleChange}
+          required
+        />
+
+        {/* ✅ NEW: Select Service */}
+        <select
+          name="service"
+          value={form.service}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled>
+            Select a Service
+          </option>
+          {serviceOptions.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
 
         <input
           type="date"
@@ -203,35 +243,23 @@ export default function BookAppointment() {
           value={form.date}
           onChange={handleChange}
           required
-          min={minDate} // ✅ empêche de choisir une date passée
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
+          min={minDate}
         />
 
+        {/* user chooses time normally, but we store AM/PM */}
         <input
           type="time"
           name="time"
           value={form.time}
           onChange={handleChange}
           required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
         />
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: "12px",
-            backgroundColor: loading ? "#8b0000" : "#8b0000",
-            color: "#fff",
-            border: "none",
-            borderRadius: "6px",
-            cursor: loading ? "not-allowed" : "pointer",
-            fontWeight: "bold",
-          }}
-        >
+        <button type="submit" disabled={loading}>
           {loading ? "Booking..." : "Book"}
         </button>
       </form>
     </div>
   );
 }
+

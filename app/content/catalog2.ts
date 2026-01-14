@@ -633,7 +633,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Gloss PPF",
             "ar": "PPF لامع"
           },
-          "heroImage": "/matt-ppf.jpg",
+          "heroImage": "/gloss-ppff.JPG",
           "intro": {
             "en": [
               "High-clarity gloss PPF that preserves the original paint color while adding a deep, wet-look finish and strong impact resistance.",
@@ -2185,7 +2185,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Heat & UV Protection Film",
             "ar": "فيلم حماية حرارة وUV"
           },
-          "heroImage": "/UV-Protection.webp",
+          "heroImage": "/uv-protection.PNG",
           "intro": {
             "en": [
               "High-performance film focused on blocking UV and reducing infrared heat to protect interiors from fading and cracking.",
@@ -2376,7 +2376,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Clear Protection",
             "ar": "حماية شفافة للزجاج الأمامي"
           },
-          "heroImage": "/clear-glass.jpeg",
+          "heroImage": "/windshield-clear.PNG",
           "intro": {
             "en": [
               "Optically clear film for the front windshield that defends against sand pitting and light impacts while keeping full visibility.",
@@ -2567,7 +2567,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Sunroof & Panoramic Roof Tint",
             "ar": "تظليل سقف بانوراما"
           },
-          "heroImage": "/sunroof.webp",
+          "heroImage": "/sunroof.PNG",
           "intro": {
             "en": [
               "Specialized tint for sunroofs and panoramic glass to cut heat and glare from above—improving comfort for front and rear passengers.",
@@ -2758,7 +2758,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Tint Removal & Reinstallation",
             "ar": "إزالة وإعادة تظليل"
           },
-          "heroImage": "/sun-remove.webp",
+          "heroImage": "/tint-removal.PNG",
           "intro": {
             "en": [
               "Professional tint removal that protects defroster lines and trims, followed by clean reinstallation with a fresh finish.",
@@ -2973,7 +2973,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Exterior Detailing & Paint Correction",
             "ar": "تفصيل خارجي وتصحيح طلاء"
           },
-          "heroImage": "/paint-correction.png",
+          "heroImage": "/exterior-detailing.PNG",
           "intro": {
             "en": [
               "Multi-step exterior detailing and paint correction to remove swirls, haze, and defects—restoring true gloss and clarity.",
@@ -3761,7 +3761,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Smart Paint Repair",
             "ar": "إصلاح طلاء ذكي"
           },
-          "heroImage": "/paintoriginal1.png",
+          "heroImage": "/smart-paint2.png",
           "intro": {
             "en": [
               "Localized paint repair for scuffs, scratches, and bumper damage—minimizing repaint area while restoring a clean OEM look.",
@@ -4143,7 +4143,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Normal & Full Repaint",
             "ar": "دهان عادي أو كامل"
           },
-          "heroImage": "/paintoriginal1.png",
+          "heroImage": "/smart-paint.PNG",
           "intro": {
             "en": [
               "Full-panel or full-body repaint with professional preparation and controlled application to restore a uniform, premium finish.",
@@ -4334,7 +4334,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Paintless Dent Repair (PDR)",
             "ar": "إصلاح صدمات بدون دهان"
           },
-          "heroImage": "/paintoriginal1.png",
+          "heroImage": "/pdr-paint.PNG",
           "intro": {
             "en": [
               "Paintless Dent Repair (PDR) removes dents from panels without repainting—preserving the original factory paint whenever possible.",
@@ -4525,7 +4525,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Color Matching & Panel Painting",
             "ar": "مطابقة لون ودهان ألواح"
           },
-          "heroImage": "/paintoriginal1.png",
+          "heroImage": "/paintoriginal3.png",
           "intro": {
             "en": [
               "Accurate color matching and panel painting using blending techniques to ensure seamless transitions between panels.",
@@ -4740,7 +4740,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Basic & Premium Hand Wash",
             "ar": "غسيل يدوي أساسي وبريميوم"
           },
-          "heroImage": "/car-wash.png",
+          "heroImage": "/hand-wash.PNG",
           "intro": {
             "en": [
               "Safe hand wash using proper wash media and drying methods to reduce swirls—choose Basic for maintenance or Premium for extra finishing touches.",
@@ -4931,7 +4931,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Foam Wash",
             "ar": "غسيل رغوي"
           },
-          "heroImage": "/car-wash.png",
+          "heroImage": "/foam-wash.PNG",
           "intro": {
             "en": [
               "Thick snow-foam pre-wash that loosens dirt and sand before contact—reducing swirl risk in dusty conditions.",
@@ -5122,7 +5122,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Engine Bay Cleaning",
             "ar": "تنظيف حجرة المحرك"
           },
-          "heroImage": "/car-wash.png",
+          "heroImage": "/engine-wash.png",
           "intro": {
             "en": [
               "Controlled engine bay cleaning and degreasing to remove dust buildup and oil residue without harming sensitive components.",
@@ -5313,7 +5313,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Vacuum & Sanitization",
             "ar": "شفط وتعقيم داخلي"
           },
-          "heroImage": "/car-wash.png",
+          "heroImage": "/vacuum.png",
           "intro": {
             "en": [
               "Thorough vacuuming plus sanitization of high-touch areas to reduce odors, dust, and bacteria for a fresher cabin.",
