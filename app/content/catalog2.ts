@@ -251,7 +251,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Front-End PPF",
             "ar": "PPF للواجهة الأمامية"
           },
-          "heroImage": "/frontendppf.png",
+          "heroImage": "/front-ppff.PNG",
           "intro": {
             "en": [
               "Focused protection for the highest-impact zones (bumper, hood, fenders, mirrors) to stop stone chips and road rash before they start.",
@@ -824,7 +824,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Matte PPF",
             "ar": "PPF مطفي"
           },
-          "heroImage": "/gloss-ppf.jpg",
+          "heroImage": "/matte-ppf.PNG",
           "intro": {
             "en": [
               "Matte PPF transforms gloss paint into a premium satin-matte appearance while defending against chips, scratches, and harsh washing marks.",
@@ -1015,7 +1015,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Satin PPF",
             "ar": "PPF ساتان"
           },
-          "heroImage": "/satin-ppf.jpeg",
+          "heroImage": "/satin-ppf.PNG",
           "intro": {
             "en": [
               "Satin PPF delivers a refined, semi-matte finish—more depth than matte, less glare than gloss—while keeping strong impact protection.",
@@ -1206,7 +1206,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Self-Healing PPF",
             "ar": "PPF ذاتي المعالجة"
           },
-          "heroImage": "/self-healing-ppf.jpg",
+          "heroImage": "/self-healing.PNG",
           "intro": {
             "en": [
               "Advanced self-healing PPF that helps minor swirls and light scratches disappear with heat, keeping the surface looking newer for longer.",
@@ -1397,7 +1397,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Headlight & Taillight Protection Film",
             "ar": "حماية الأنوار"
           },
-          "heroImage": "/Headlight.webp",
+          "heroImage": "/headlight-ppf.jpeg",
           "intro": {
             "en": [
               "Clear or lightly-tinted lens film that protects headlights and taillights from pitting, sandblasting, and surface scratches.",
@@ -1588,7 +1588,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Screen Protection Film",
             "ar": "حماية الشاشات"
           },
-          "heroImage": "/interior-protective.jpg",
+          "heroImage": "/interior-ppf.PNG",
           "intro": {
             "en": [
               "Precision-cut protection for infotainment screens, clusters, and glossy trim to prevent scratches, fingerprints, and daily wear.",
@@ -5522,204 +5522,14 @@ export const CATALOG: { services: Service[] } = {
         ]
       },
       "subservices": [
-        {
-          "slug": "stone-chip-crack-repair",
-          "title": {
-            "en": "Stone Chip & Crack Repair",
-            "ar": "إصلاح ضربات وتشققات"
-          },
-          "heroImage": "/rollsroyce.png",
-          "intro": {
-            "en": [
-              "Resin-based repair for stone chips and small cracks to stop spreading and restore structural integrity.",
-              "A cost-effective solution that improves clarity and helps avoid full windshield replacement."
-            ],
-            "ar": [
-              "إصلاح شقوق وخدوش الحصى براتنج خاص لمنع انتشار الشرخ واستعادة قوة الزجاج.",
-              "حل اقتصادي يحسن الوضوح ويساعد على تجنب تغيير الزجاج بالكامل."
-            ]
-          },
-          "bestFor": {
-            "en": [
-              "Daily drivers",
-              "Highway commuters",
-              "Owners who want long-lasting results"
-            ],
-            "ar": [
-              "الاستخدام اليومي",
-              "الطرق السريعة",
-              "من يريد نتائج طويلة المدى"
-            ]
-          },
-          "specs": {
-            "en": [
-              "High clarity / clean finish specification",
-              "Durability designed for heat and dust exposure",
-              "Controlled application methods to reduce defects",
-              "Quality inspection under lighting",
-              "Warranty-backed service delivery"
-            ],
-            "ar": [
-              "مواصفة وضوح وتشطيب نظيف",
-              "متانة مناسبة للحرارة والغبار",
-              "طرق تنفيذ مدروسة لتقليل العيوب",
-              "فحص جودة تحت الإضاءة",
-              "خدمة بضمان"
-            ]
-          },
-          "included": {
-            "en": [
-              "Inspection and recommendation",
-              "Surface preparation and safe cleaning",
-              "Precision application/installation",
-              "Edge/finish refinement where applicable",
-              "Final quality check",
-              "Aftercare guidance + warranty details"
-            ],
-            "ar": [
-              "فحص وتوصية",
-              "تجهيز وتنظيف آمن",
-              "تنفيذ/تركيب دقيق",
-              "تحسين التشطيب والحواف عند الحاجة",
-              "فحص جودة نهائي",
-              "تعليمات عناية + تفاصيل الضمان"
-            ]
-          },
-          "process": {
-            "en": [
-              "Vehicle inspection and confirmation of scope",
-              "Preparation and decontamination (as needed)",
-              "Controlled installation/application step-by-step",
-              "Detail finishing and alignment checks",
-              "Curing / settling guidance (when applicable)",
-              "Quality control under different angles and lighting",
-              "Delivery briefing + aftercare"
-            ],
-            "ar": [
-              "فحص السيارة وتأكيد النطاق",
-              "تجهيز وإزالة شوائب عند الحاجة",
-              "تنفيذ/تركيب مدروس خطوة بخطوة",
-              "تشطيب وتحقق من المحاذاة",
-              "تعليمات تثبيت/تجفيف عند الحاجة",
-              "فحص جودة بزوايا وإضاءة مختلفة",
-              "تسليم + تعليمات العناية"
-            ]
-          },
-          "timeline": {
-            "en": "Varies by vehicle and scope; confirmed after inspection.",
-            "ar": "يختلف حسب السيارة والنطاق؛ نؤكده بعد الفحص."
-          },
-          "aftercare": {
-            "en": [
-              "Follow curing guidance if provided",
-              "Use safe wash methods",
-              "Avoid harsh chemicals/abrasives",
-              "Contact us if you notice any issue early"
-            ],
-            "ar": [
-              "اتبع تعليمات التثبيت إن وجدت",
-              "استخدم غسيل آمن",
-              "تجنب مواد قوية/كاشطة",
-              "تواصل معنا مبكرًا عند وجود أي ملاحظة"
-            ]
-          },
-          "faqs": [
-            {
-              "q": {
-                "en": "How do I choose the right option?",
-                "ar": "كيف أختار الخيار المناسب؟"
-              },
-              "a": {
-                "en": "We recommend the best option based on your driving pattern, paint/glass condition, and goals after inspection.",
-                "ar": "نقترح الأفضل حسب الاستخدام وحالة السطح والهدف بعد الفحص."
-              }
-            },
-            {
-              "q": {
-                "en": "Does it come with warranty?",
-                "ar": "هل يوجد ضمان؟"
-              },
-              "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
-              }
-            },
-            {
-              "q": {
-                "en": "How long does it take?",
-                "ar": "كم يستغرق؟"
-              },
-              "a": {
-                "en": "Time depends on vehicle size and scope; we confirm a realistic timeline before starting.",
-                "ar": "يعتمد على حجم السيارة والنطاق؛ نؤكد وقتًا واقعيًا قبل البدء."
-              }
-            },
-            {
-              "q": {
-                "en": "Will it affect the look?",
-                "ar": "هل يؤثر على الشكل؟"
-              },
-              "a": {
-                "en": "We prioritize clean finishing and clarity; aesthetic options are clarified during consultation.",
-                "ar": "نركز على تشطيب نظيف ووضوح؛ الخيارات الجمالية نوضحها أثناء الاستشارة."
-              }
-            },
-            {
-              "q": {
-                "en": "What maintenance is required?",
-                "ar": "ما الصيانة المطلوبة؟"
-              },
-              "a": {
-                "en": "Safe washing and basic aftercare protect results; we provide a simple routine.",
-                "ar": "غسيل آمن وتعليمات بسيطة للحفاظ على النتيجة."
-              }
-            },
-            {
-              "q": {
-                "en": "Can it be removed or adjusted later?",
-                "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
-              },
-              "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
-              }
-            },
-            {
-              "q": {
-                "en": "Is it suitable for Qatar heat?",
-                "ar": "هل يناسب حرارة قطر؟"
-              },
-              "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
-              }
-            },
-            {
-              "q": {
-                "en": "How do I book?",
-                "ar": "كيف أحجز؟"
-              },
-              "a": {
-                "en": "Use the Book Now page or WhatsApp for a fast quote and scheduling.",
-                "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
-              }
-            }
-          ],
-          "beforeImage": "/proof/windshield-services/stone-chip-crack-repair/before.jpg",
-          "afterImage": "/proof/windshield-services/stone-chip-crack-repair/after.jpg",
-          "miniImages": [
-            "/proof/windshield-services/stone-chip-crack-repair/mini-1.jpg",
-            "/proof/windshield-services/stone-chip-crack-repair/mini-2.jpg",
-            "/proof/windshield-services/stone-chip-crack-repair/mini-3.jpg"
-          ]
-        },
+
         {
           "slug": "glass-polishing",
           "title": {
             "en": "Glass Polishing",
             "ar": "تلميع الزجاج"
           },
-          "heroImage": "/rollsroyce.png",
+          "heroImage": "/glass-polishing.PNG",
           "intro": {
             "en": [
               "Glass polishing to reduce wiper marks, water spots, and light scratches—improving visibility and overall appearance.",
