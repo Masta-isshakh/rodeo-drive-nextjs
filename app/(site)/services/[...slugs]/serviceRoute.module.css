@@ -2,9 +2,9 @@
    Base + container
 ========================= */
 .page {
-    padding-top: 20px;
+  padding-top: 20px;
   background: transparent;
-  overflow-x: hidden; /* prevents horizontal scroll on mobile */
+  overflow-x: hidden;
 }
 
 .container {
@@ -13,16 +13,20 @@
   padding: 28px 20px;
 }
 
-/* Improve tap targets */
-
-
 /* =========================
    Hero blocks
 ========================= */
 .hero {
   position: relative;
   padding: 70px 0 56px;
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* In your file you reference heroSmall; keep it defined */
+.heroSmall {
+  position: relative;
+  padding: 56px 0 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Make the background stay BEHIND and never block clicks */
@@ -34,7 +38,8 @@
 }
 
 /* Ensure hero content is above the background */
-.hero > .container {
+.hero > .container,
+.heroSmall > .container {
   position: relative;
   z-index: 1;
 }
@@ -47,7 +52,7 @@
   line-height: 1.1;
   margin: 0 0 12px;
   font-weight: 800;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
   word-break: break-word;
 }
 
@@ -65,41 +70,51 @@
 
 .subtitle {
   font-size: 18px;
-  color: rgba(255, 255, 255, .78);
+  color: rgba(255, 255, 255, 0.78);
   max-width: 820px;
   margin: 0 0 18px;
   line-height: 1.6;
 }
 
 .muted {
-  color: rgba(255, 255, 255, .70);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   line-height: 1.6;
 }
 
 .mutedSmall {
-  color: rgba(255, 255, 255, .6);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 13px;
   margin: 10px 0 0;
   line-height: 1.55;
 }
 
 .paragraph {
-  color: rgba(255, 255, 255, .78);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.75;
   margin: 0 0 10px;
   word-break: break-word;
 }
 
 /* =========================
-   CTA row (responsive)
+   CTA row (ALIGNED FIX)
 ========================= */
 .ctaRow {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 16px;
+  align-items: stretch; /* ✅ all buttons same height */
+}
+
+/* ✅ shared CTA sizing so all 3 align perfectly */
+.ctaBtn {
+  min-height: 46px;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .btnPrimary {
@@ -108,17 +123,15 @@
   padding: 12px 16px;
   border-radius: 12px;
   font-weight: 800;
-  display: inline-block;
   text-decoration: none;
 }
 
 .btnGhost {
-  border: 1px solid rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 12px 16px;
   border-radius: 12px;
   color: #fff;
-  background: rgba(255, 255, 255, .03);
-  display: inline-block;
+  background: rgba(255, 255, 255, 0.03);
   text-decoration: none;
 }
 
@@ -127,13 +140,13 @@
 ========================= */
 .section {
   padding: 34px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .sectionAlt {
   padding: 34px 0;
-  background: rgba(255, 255, 255, .02);
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .sectionHeader {
@@ -144,14 +157,14 @@
 }
 
 /* =========================
-   Split layout (key fix)
+   Split layout
 ========================= */
 .split {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 18px;
   align-items: start;
-  min-width: 0; /* critical for preventing overflow */
+  min-width: 0;
 }
 
 @media (max-width: 900px) {
@@ -161,15 +174,26 @@
 }
 
 /* =========================
-   Media card (slider)
+   Media card (slider) — FIX
 ========================= */
 .mediaCard {
   width: 100%;
   min-width: 0;
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
   padding: 12px;
-  background: rgba(0, 0, 0, .18);
+  background: rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 1; /* ✅ ensure above any background effects */
+}
+
+/* ✅ ensures slider remains clickable / draggable */
+.sliderWrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  touch-action: pan-y; /* allow vertical scroll, slider handles horizontal internally */
 }
 
 /* optional if you use heroImg anywhere */
@@ -177,8 +201,8 @@
   width: 100%;
   height: auto;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 /* mini proof images */
@@ -194,16 +218,14 @@
   height: 86px;
   object-fit: cover;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, .08);
-  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
 }
 
-/* Mobile: make proof images bigger and 2 columns */
 @media (max-width: 520px) {
   .miniGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .miniImg {
     height: 110px;
   }
@@ -220,16 +242,16 @@
 }
 
 .trustItem {
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   padding: 10px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .03);
+  background: rgba(255, 255, 255, 0.03);
   font-size: 13px;
-  color: rgba(255, 255, 255, .8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* =========================
-   Subservices grid (big fix)
+   Subservices grid
 ========================= */
 .grid {
   display: grid;
@@ -252,9 +274,9 @@
 
 /* Cards */
 .card {
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
-  background: rgba(255, 255, 255, .02);
+  background: rgba(255, 255, 255, 0.02);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -264,7 +286,7 @@
 .cardTop {
   height: 250px;
   overflow: hidden;
-  background: rgba(255, 255, 255, .03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .cardImg {
@@ -273,39 +295,49 @@
   object-fit: cover;
 }
 
+/* ✅ header aligned at top, button pinned at bottom */
 .cardBody {
   padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.cardHeader {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .cardText {
-  color: rgba(255, 255, 255, .72);
+  color: rgba(255, 255, 255, 0.72);
   line-height: 1.6;
   margin: 0;
   overflow: hidden;
 
-  /* make text behave nicely */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
+/* ✅ pinned bottom always */
 .cardBtn {
   margin-top: auto;
-  background: rgba(201, 161, 74, .18);
-  border: 1px solid rgba(201, 161, 74, .35);
+  background: rgba(201, 161, 74, 0.18);
+  border: 1px solid rgba(201, 161, 74, 0.35);
   color: #fff;
   padding: 10px 12px;
   border-radius: 12px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   text-decoration: none;
+  min-height: 44px;
 }
 
-/* Mobile card image height reduced */
 @media (max-width: 640px) {
   .cardTop {
     height: 200px;
@@ -313,9 +345,8 @@
 }
 
 /* =========================
-   Breadcrumbs
+   Back arrow
 ========================= */
-/* Back arrow */
 .backArrow {
   display: inline-flex;
   align-items: center;
@@ -364,7 +395,6 @@
   white-space: nowrap;
 }
 
-/* Mobile: make it easier to tap */
 @media (max-width: 640px) {
   .backArrow {
     width: 100%;
@@ -373,23 +403,25 @@
   }
 }
 
-/* RTL: keep spacing natural */
 [dir="rtl"] .backArrow {
   flex-direction: row-reverse;
 }
 
+/* =========================
+   Breadcrumbs
+========================= */
 .breadcrumbs {
   display: flex;
   gap: 8px;
   align-items: center;
-  color: rgba(255, 255, 255, .6);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 10px;
-  margin-top: 30px;
+  padding-top: 30px;
   flex-wrap: wrap;
 }
 
 .sep {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 /* =========================
@@ -409,17 +441,17 @@
 }
 
 .kpi {
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 14px;
   padding: 12px;
-  background: rgba(255, 255, 255, .02);
+  background: rgba(255, 255, 255, 0.02);
   min-width: 0;
 }
 
 .kpi span {
   display: block;
   font-size: 12px;
-  color: rgba(255, 255, 255, .6);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 6px;
 }
 
@@ -434,7 +466,7 @@
 .bullets {
   margin: 0;
   padding-left: 18px;
-  color: rgba(255, 255, 255, .78);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.7;
 }
 
@@ -451,10 +483,10 @@
 }
 
 .panel {
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
   padding: 14px;
-  background: rgba(255, 255, 255, .02);
+  background: rgba(255, 255, 255, 0.02);
   min-width: 0;
 }
 
@@ -474,10 +506,10 @@
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 14px;
   padding: 12px;
-  background: rgba(255, 255, 255, .02);
+  background: rgba(255, 255, 255, 0.02);
   min-width: 0;
 }
 
@@ -485,8 +517,8 @@
   width: 28px;
   height: 28px;
   border-radius: 10px;
-  background: rgba(201, 161, 74, .22);
-  border: 1px solid rgba(201, 161, 74, .35);
+  background: rgba(201, 161, 74, 0.22);
+  border: 1px solid rgba(201, 161, 74, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -495,7 +527,7 @@
 }
 
 .stepText {
-  color: rgba(255, 255, 255, .78);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.6;
   word-break: break-word;
 }
@@ -517,10 +549,10 @@
 }
 
 .faq {
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 14px;
   padding: 10px 12px;
-  background: rgba(255, 255, 255, .02);
+  background: rgba(255, 255, 255, 0.02);
   min-width: 0;
 }
 
@@ -531,7 +563,7 @@
 
 .faqAns {
   margin: 8px 0 0;
-  color: rgba(255, 255, 255, .74);
+  color: rgba(255, 255, 255, 0.74);
   line-height: 1.7;
   word-break: break-word;
 }
@@ -541,14 +573,70 @@
 ========================= */
 .finalCta {
   margin-top: 18px;
-  border: 1px solid rgba(201, 161, 74, .30);
-  background: rgba(201, 161, 74, .10);
+  border: 1px solid rgba(201, 161, 74, 0.30);
+  background: rgba(201, 161, 74, 0.10);
   border-radius: 16px;
   padding: 16px;
 }
 
 /* =========================
-   Mobile polish (major conversion improvements)
+   PREMIUM PACKAGE CARD SUPPORT (for your Services page)
+   Use these classes in your Premium Packages cards:
+   - packageCard
+   - packageHeader
+   - packageBadge
+   - packageBody
+   - packageCtas (bottom pinned)
+========================= */
+.packageCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.packageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.packageBadge {
+  align-self: flex-start;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 161, 74, 0.45);
+  background: rgba(201, 161, 74, 0.16);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.packageBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.packageCtas {
+  margin-top: auto; /* ✅ pins the CTA to the bottom */
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.packageCtas a,
+.packageCtas button {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   Mobile polish
 ========================= */
 @media (max-width: 640px) {
   .container {
@@ -580,12 +668,10 @@
     gap: 8px;
   }
 
-  /* Make CTAs full width for thumb-friendly conversion */
   .btnPrimary,
   .btnGhost {
     width: 100%;
     text-align: center;
-    justify-content: center;
   }
 
   .section,

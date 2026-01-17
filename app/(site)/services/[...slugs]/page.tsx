@@ -56,17 +56,26 @@ export default function ServiceRoutePage() {
         <div className={styles.container}>
           <h1 className={styles.h1}>Page not found</h1>
           <p className={styles.muted}>The requested service page does not exist.</p>
-          <Link className={styles.btn} href="/services">Back to Services</Link>
+          <Link className={styles.btnPrimary} href="/services">
+            Back to Services
+          </Link>
         </div>
       </main>
     );
   }
 
+  // ===========================
+  // SERVICE PAGE
+  // ===========================
   if (view.kind === "service") {
     const s = view.service;
     const title = getText(s.title, lang);
     const subtitle = getText(s.subtitle, lang);
     const overview = getText(s.overview, lang);
+
+    const proofKey = s.slug.replace(/\//g, "-");
+    const beforeSrc = `/proof/${proofKey}-before.png`;
+    const afterSrc = `/proof/${proofKey}-after.png`;
 
     return (
       <main className={styles.page} dir={dir}>
@@ -89,12 +98,23 @@ export default function ServiceRoutePage() {
             <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.5 }}>
               <h1 className={styles.h1}>{title}</h1>
               <p className={styles.subtitle}>{subtitle}</p>
+
+              {/* ✅ aligned CTAs */}
               <div className={styles.ctaRow}>
-                <Link className={styles.btnPrimary} href="/book">{lang === "ar" ? "احجز الآن" : "Book Now"}</Link>
-                <a className={styles.btnGhost} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
+                  {lang === "ar" ? "احجز الآن" : "Book Now"}
+                </Link>
+                <a
+                  className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                  href={SITE.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {lang === "ar" ? "واتساب" : "WhatsApp"}
                 </a>
-                <a className={styles.btnGhost} href={`tel:${SITE.phoneTel}`}>{lang === "ar" ? "اتصال" : "Call"}</a>
+                <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={`tel:${SITE.phoneTel}`}>
+                  {lang === "ar" ? "اتصال" : "Call"}
+                </a>
               </div>
             </motion.div>
           </div>
@@ -105,24 +125,48 @@ export default function ServiceRoutePage() {
             <div className={styles.split}>
               <div>
                 {overview.map((p, idx) => (
-                  <motion.p key={idx} className={styles.paragraph} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} transition={{ duration: 0.45 }}>
+                  <motion.p
+                    key={idx}
+                    className={styles.paragraph}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={fadeUp}
+                    transition={{ duration: 0.45 }}
+                  >
                     {p}
                   </motion.p>
                 ))}
+
                 <div className={styles.trustStrip}>
-                  <div className={styles.trustItem}>{lang === "ar" ? "ضمان على جميع الخدمات" : "Warranty on all services"}</div>
-                  <div className={styles.trustItem}>{lang === "ar" ? "فحص جودة متعدد" : "Multi-step quality control"}</div>
-                  <div className={styles.trustItem}>{lang === "ar" ? "مناسب لظروف قطر" : "Optimized for Qatar conditions"}</div>
+                  <div className={styles.trustItem}>
+                    {lang === "ar" ? "ضمان على جميع الخدمات" : "Warranty on all services"}
+                  </div>
+                  <div className={styles.trustItem}>
+                    {lang === "ar" ? "فحص جودة متعدد" : "Multi-step quality control"}
+                  </div>
+                  <div className={styles.trustItem}>
+                    {lang === "ar" ? "مناسب لظروف قطر" : "Optimized for Qatar conditions"}
+                  </div>
                 </div>
               </div>
+
+              {/* ✅ slider wrapper to ensure it stays clickable & smooth */}
               <div className={styles.mediaCard}>
-                <BeforeAfterSlider
-                  beforeSrc={`/proof/${s.slug.replace(/\//g, "-")}-before.png`}
-                  afterSrc={`/proof/${s.slug.replace(/\//g, "-")}-after.png`}
-                  alt={`${title} before/after`}
-                  height={320}
-                />
-                <p className={styles.mutedSmall}>{lang === "ar" ? "صور توضيحية — استبدلها بصور الورشة الحقيقية لزيادة التحويل." : "Illustrative images — replace with real workshop photos for maximum conversion."}</p>
+                <div className={styles.sliderWrap}>
+                  <BeforeAfterSlider
+                    beforeSrc={beforeSrc}
+                    afterSrc={afterSrc}
+                    alt={`${title} before/after`}
+                    height={320}
+                  />
+                </div>
+
+                <p className={styles.mutedSmall}>
+                  {lang === "ar"
+                    ? "صور توضيحية — استبدلها بصور الورشة الحقيقية لزيادة التحويل."
+                    : "Illustrative images — replace with real workshop photos for maximum conversion."}
+                </p>
               </div>
             </div>
           </div>
@@ -132,18 +176,35 @@ export default function ServiceRoutePage() {
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.h2}>{lang === "ar" ? "الخدمات الفرعية" : "Subservices"}</h2>
-              <p className={styles.muted}>{lang === "ar" ? "اختر خدمة فرعية لعرض التفاصيل الكاملة والخطوات والمواصفات." : "Choose a subservice to see full details, process, specifications, and FAQs."}</p>
+              <p className={styles.muted}>
+                {lang === "ar"
+                  ? "اختر خدمة فرعية لعرض التفاصيل الكاملة والخطوات والمواصفات."
+                  : "Choose a subservice to see full details, process, specifications, and FAQs."}
+              </p>
             </div>
 
             <div className={styles.grid}>
               {s.subservices.map((sub) => (
-                <motion.div key={sub.slug} className={styles.card} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} transition={{ duration: 0.35 }}>
+                <motion.div
+                  key={sub.slug}
+                  className={styles.card}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={fadeUp}
+                  transition={{ duration: 0.35 }}
+                >
                   <div className={styles.cardTop}>
                     <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImg} />
                   </div>
+
+                  {/* ✅ header aligned + CTA pinned bottom */}
                   <div className={styles.cardBody}>
-                    <h3 className={styles.h3}>{getText(sub.title, lang)}</h3>
-                    <p className={styles.cardText}>{getText(sub.intro, lang)[0]}</p>
+                    <div className={styles.cardHeader}>
+                      <h3 className={styles.h3}>{getText(sub.title, lang)}</h3>
+                      <p className={styles.cardText}>{getText(sub.intro, lang)[0]}</p>
+                    </div>
+
                     <Link className={styles.cardBtn} href={`/services/${s.slug}/${sub.slug}`}>
                       {lang === "ar" ? "عرض التفاصيل" : "View details"}
                     </Link>
@@ -158,10 +219,24 @@ export default function ServiceRoutePage() {
           <div className={styles.container}>
             <div className={styles.finalCta}>
               <h2 className={styles.h2}>{lang === "ar" ? "هل تريد توصية دقيقة؟" : "Want an accurate recommendation?"}</h2>
-              <p className={styles.muted}>{lang === "ar" ? "احجز فحصًا سريعًا أو أرسل صورًا عبر واتساب للحصول على عرض سعر." : "Book a quick inspection or send photos on WhatsApp to get a quote."}</p>
+              <p className={styles.muted}>
+                {lang === "ar"
+                  ? "احجز فحصًا سريعًا أو أرسل صورًا عبر واتساب للحصول على عرض سعر."
+                  : "Book a quick inspection or send photos on WhatsApp to get a quote."}
+              </p>
+
               <div className={styles.ctaRow}>
-                <Link className={styles.btnPrimary} href="/book">{lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}</Link>
-                <a className={styles.btnGhost} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">{lang === "ar" ? "واتساب" : "WhatsApp"}</a>
+                <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
+                  {lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}
+                </Link>
+                <a
+                  className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                  href={SITE.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {lang === "ar" ? "واتساب" : "WhatsApp"}
+                </a>
               </div>
             </div>
           </div>
@@ -170,7 +245,9 @@ export default function ServiceRoutePage() {
     );
   }
 
-  // subservice page
+  // ===========================
+  // SUBSERVICE PAGE
+  // ===========================
   const s = view.service;
   const sub = view.sub;
 
@@ -183,19 +260,33 @@ export default function ServiceRoutePage() {
   const aftercare = getText(sub.aftercare, lang);
   const timeline = getText(sub.timeline, lang);
 
-  // ✅ media resolution (subservice first, fallback to service-level)
   const serviceKey = s.slug.replace(/\//g, "-");
   const beforeSrc = sub.beforeImage || `/proof/${serviceKey}-before.png`;
   const afterSrc = sub.afterImage || `/proof/${serviceKey}-after.png`;
-  const miniImages: string[] = (sub.miniImages && sub.miniImages.length
-    ? sub.miniImages
-    : ["/services/proof-1.svg", "/services/proof-2.svg", "/services/proof-3.svg"]).slice(0, 3);
+
+  const miniImages: string[] = (
+    sub.miniImages && sub.miniImages.length
+      ? sub.miniImages
+      : ["/services/proof-1.svg", "/services/proof-2.svg", "/services/proof-3.svg"]
+  ).slice(0, 3);
 
   return (
     <main className={styles.page} dir={dir}>
       <div className={styles.heroSmall}>
         <div className={styles.container}>
-
+          {/* ✅ bring back the back arrow so header is aligned + consistent */}
+          <Link
+            href={`/services/${s.slug}`}
+            className={styles.backArrow}
+            aria-label={lang === "ar" ? "الرجوع إلى صفحة الخدمة" : "Back to Service"}
+          >
+            <span className={styles.backIcon} aria-hidden="true">
+              {lang === "ar" ? "→" : "←"}
+            </span>
+            <span className={styles.backText}>
+              {lang === "ar" ? "رجوع" : "Back"}
+            </span>
+          </Link>
 
           <div className={styles.breadcrumbs}>
             <Link href="/services">{lang === "ar" ? "الخدمات" : "Services"}</Link>
@@ -208,10 +299,23 @@ export default function ServiceRoutePage() {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.45 }}>
             <h1 className={styles.h1}>{title}</h1>
             <p className={styles.subtitle}>{intro[0]}</p>
+
+            {/* ✅ aligned CTAs */}
             <div className={styles.ctaRow}>
-              <Link className={styles.btnPrimary} href="/book">{lang === "ar" ? "احجز الآن" : "Book Now"}</Link>
-              <a className={styles.btnGhost} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">{lang === "ar" ? "واتساب" : "WhatsApp"}</a>
-              <a className={styles.btnGhost} href={`tel:${SITE.phoneTel}`}>{lang === "ar" ? "اتصال" : "Call"}</a>
+              <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
+                {lang === "ar" ? "احجز الآن" : "Book Now"}
+              </Link>
+              <a
+                className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                href={SITE.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {lang === "ar" ? "واتساب" : "WhatsApp"}
+              </a>
+              <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={`tel:${SITE.phoneTel}`}>
+                {lang === "ar" ? "اتصال" : "Call"}
+              </a>
             </div>
           </motion.div>
         </div>
@@ -222,23 +326,50 @@ export default function ServiceRoutePage() {
           <div className={styles.split}>
             <div>
               {intro.slice(0, 2).map((p, idx) => (
-                <motion.p key={idx} className={styles.paragraph} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} transition={{ duration: 0.35 }}>
+                <motion.p
+                  key={idx}
+                  className={styles.paragraph}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={fadeUp}
+                  transition={{ duration: 0.35 }}
+                >
                   {p}
                 </motion.p>
               ))}
 
               <div className={styles.kpiRow}>
-                <div className={styles.kpi}><span>{lang === "ar" ? "المدة" : "Timeline"}</span><strong>{timeline}</strong></div>
-                <div className={styles.kpi}><span>{lang === "ar" ? "ضمان" : "Warranty"}</span><strong>{lang === "ar" ? "متوفر" : "Included"}</strong></div>
-                <div className={styles.kpi}><span>{lang === "ar" ? "المنطقة" : "Location"}</span><strong>{lang === "ar" ? "الدوحة" : "Doha"}</strong></div>
+                <div className={styles.kpi}>
+                  <span>{lang === "ar" ? "المدة" : "Timeline"}</span>
+                  <strong>{timeline}</strong>
+                </div>
+                <div className={styles.kpi}>
+                  <span>{lang === "ar" ? "ضمان" : "Warranty"}</span>
+                  <strong>{lang === "ar" ? "متوفر" : "Included"}</strong>
+                </div>
+                <div className={styles.kpi}>
+                  <span>{lang === "ar" ? "المنطقة" : "Location"}</span>
+                  <strong>{lang === "ar" ? "الدوحة" : "Doha"}</strong>
+                </div>
               </div>
             </div>
 
+            {/* ✅ restore slider for subservice (your previous version removed it) */}
             <div className={styles.mediaCard}>
+              <div className={styles.sliderWrap}>
+                <BeforeAfterSlider
+                  beforeSrc={beforeSrc}
+                  afterSrc={afterSrc}
+                  alt={`${title} before/after`}
+                  height={360}
+                />
+              </div>
 
-              <div className={styles.cardTop}>
-                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImg} />
-
+              <div className={styles.miniGrid}>
+                {miniImages.map((src, i) => (
+                  <img key={`${src}-${i}`} src={src} alt="" className={styles.miniImg} />
+                ))}
               </div>
             </div>
           </div>
@@ -250,9 +381,7 @@ export default function ServiceRoutePage() {
           <div className={styles.sectionHeader}>
             <h2 className={styles.h2}>{lang === "ar" ? "مناسب لـ" : "Best for"}</h2>
           </div>
-          <ul className={styles.bullets}>
-            {bestFor.map((x) => <li key={x}>{x}</li>)}
-          </ul>
+          <ul className={styles.bullets}>{bestFor.map((x) => <li key={x}>{x}</li>)}</ul>
         </div>
       </section>
 
@@ -280,7 +409,14 @@ export default function ServiceRoutePage() {
           <h2 className={styles.h2}>{lang === "ar" ? "العملية" : "Our process"}</h2>
           <ol className={styles.timeline}>
             {process.map((step, i) => (
-              <motion.li key={i} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeUp} transition={{ duration: 0.3 }}>
+              <motion.li
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={fadeUp}
+                transition={{ duration: 0.3 }}
+              >
                 <span className={styles.stepIndex}>{i + 1}</span>
                 <span className={styles.stepText}>{step}</span>
               </motion.li>
@@ -303,10 +439,22 @@ export default function ServiceRoutePage() {
 
           <div className={styles.finalCta}>
             <h3 className={styles.h3}>{lang === "ar" ? "جاهز للبدء؟" : "Ready to start?"}</h3>
-            <p className={styles.muted}>{lang === "ar" ? "أرسل صورًا عبر واتساب للحصول على عرض سعر سريع." : "Send photos on WhatsApp for a fast quote."}</p>
+            <p className={styles.muted}>
+              {lang === "ar" ? "أرسل صورًا عبر واتساب للحصول على عرض سعر سريع." : "Send photos on WhatsApp for a fast quote."}
+            </p>
+
             <div className={styles.ctaRow}>
-              <Link className={styles.btnPrimary} href="/book">{lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}</Link>
-              <a className={styles.btnGhost} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">{lang === "ar" ? "واتساب" : "WhatsApp"}</a>
+              <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
+                {lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}
+              </Link>
+              <a
+                className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                href={SITE.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {lang === "ar" ? "واتساب" : "WhatsApp"}
+              </a>
             </div>
           </div>
         </div>

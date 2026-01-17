@@ -99,20 +99,15 @@
 }
 
 /* Stats Section */
-.statsSection {
-  padding: 80px 20px;
-  background: #0f0f0f;
-  border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+.statsSection .container {
+  display: flex;
+  justify-content: center;
 }
 
 .statsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 40px;
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
 }
-
 .statCard {
   text-align: center;
   padding: 30px;
@@ -293,10 +288,7 @@
   background: #0f0f0f;
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-}
+
 
 .filterButtons {
   display: flex;
@@ -609,9 +601,10 @@
 }
 /* ✅ ONLY VIDEO CAROUSEL CSS CHANGES (full width + slide takes full viewport width) */
 /* Keep everything else exactly as-is */
+/* ✅ VIDEO CAROUSEL — 90% centered, 80vh height, beautiful border */
 
 .videoCarouselSection {
-  padding: 40px 0 10px 0;              /* ✅ remove side padding to allow true full-width */
+  padding: 40px 0 30px 0;
   background: #0a0a0a;
   border-bottom: 1px solid rgba(192, 192, 192, 0.1);
 }
@@ -620,54 +613,87 @@
   text-align: center;
   max-width: 1000px;
   margin: 0 auto 22px auto;
-  padding: 0 20px;                     /* ✅ keep nice spacing only for header text */
+  padding: 0 20px;
 }
 
+/* ✅ 90% width + centered */
 .videoTrack {
-  width: 100vw;                        /* ✅ full screen width */
-  margin-left: calc(50% - 50vw);       /* ✅ break out of any container constraints */
-  margin-right: calc(50% - 50vw);
+  width: 90%;
+  margin: 0 auto;
   display: flex;
-  gap: 0;                               /* ✅ no gaps so each slide is full width */
+  gap: 18px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+
+  padding: 14px; /* gives space for border/glow */
 }
 
 .videoTrack::-webkit-scrollbar {
   display: none;
 }
 
+/* each slide fills the track width (so your auto-scroll still works) */
 .videoSlide {
-  flex: 0 0 100vw;                     /* ✅ each slide = full viewport width */
+  flex: 0 0 100%;
   scroll-snap-align: start;
-  opacity: 1;
 }
 
+/* ✅ beautiful frame */
 .videoFrame {
   width: 100%;
-  border-radius: 0;                    /* ✅ full width edge-to-edge */
+  height: 80vh;                 /* ✅ requested */
+  border-radius: 18px;
   overflow: hidden;
-  border: none;                        /* ✅ remove frame border to look like full-width */
-  background: transparent;
-  box-shadow: none;                    /* ✅ remove shadow so it fills naturally */
+
+  border: 1px solid rgba(192, 192, 192, 0.28);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.55), rgba(15, 15, 30, 0.55));
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(139, 0, 0, 0.18) inset;
+  position: relative;
 }
 
+/* subtle premium top highlight */
+.videoFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    transparent 28%,
+    transparent 72%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+/* ✅ video fills frame */
 .video {
   width: 100%;
-  height: 56vw;                        /* ✅ responsive height */
-  max-height: 520px;                   /* ✅ prevent too tall on big screens */
-  min-height: 260px;                   /* ✅ avoid too small */
+  height: 100%;
   object-fit: cover;
   display: block;
   filter: contrast(1.05) brightness(0.95);
 }
 
-/* Mobile tuning (optional, still only affects carousel) */
+/* Mobile tuning */
 @media (max-width: 768px) {
-  .video {
-    height: 62vw;
-    max-height: 420px;
+  .videoTrack {
+    width: 92%;
+    padding: 10px;
+  }
+
+  .videoFrame {
+    height: 70vh;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .videoFrame {
+    height: 62vh;
   }
 }

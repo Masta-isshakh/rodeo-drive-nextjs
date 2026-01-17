@@ -177,11 +177,17 @@
   border: 1px solid rgba(139, 0, 0, 0.65);
 }
 
+/* Top-right “Most Popular / Recommended” badge */
 .featuredBadge {
-  margin-bottom: 30px;
+  position: absolute;
+  top: 16px;                /* or var(--spacing-md) */
+  right: 16px;              /* or var(--spacing-md) */
+  bottom: auto;             /* important: cancel bottom */
+  left: auto;
+
   width: max-content;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
+  z-index: 5;
+
   background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
   color: #ffffff;
   font-size: var(--font-size-body-sm);
@@ -212,6 +218,9 @@
 }
 
 .packageFeatures {
+    display: flex;
+  flex-direction: column;
+  gap: 10px;
   list-style: none;
   padding: 0;
   margin: 0 0 var(--spacing-xl);

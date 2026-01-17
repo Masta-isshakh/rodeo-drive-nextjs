@@ -76,11 +76,12 @@ export default function ServicesPage() {
       "Rim nano coating",
       "Leather nano coating",
       "Body nano coating",
+
     ];
 
     const standard = packagesNew.standardFeatures ?? [
       "Full car PPF installation",
-      "Exterior polishing",
+      "Ceramic coating",
       "Rim protection",
       "Leather protection",
       "Solar window film",
@@ -94,7 +95,6 @@ export default function ServicesPage() {
       "Windshield (extreme)",
       "Leather nano coating",
       "Rim nano coating",
-      "Exterior polishing",
       "One free service extra wash",
     ];
 
@@ -319,7 +319,7 @@ export default function ServicesPage() {
                 </ul>
 
                 <Link href="/contact" className={styles.packageButton}>
-                  {t.services.getQuote ?? (language === "en" ? "Get a Quote" : "احصل على عرض سعر")}
+                  {t.services.getQuote ?? (language === "en" ? "Get a Quote" : "اطلب عرض سعر")}
                 </Link>
               </article>
             ))}
@@ -345,7 +345,6 @@ export default function ServicesPage() {
                     beforeSrc={`/proof/${svc.slug}-before.png`}
                     afterSrc={`/proof/${svc.slug}-after.png`}
                     alt={`${svc.title} before/after`}
-                    height="clamp(240px, 18vw, 360px)"
                   />
                   <span className={styles.serviceIcon} aria-hidden="true">
                     <img
@@ -360,11 +359,7 @@ export default function ServicesPage() {
                 <h3 className={styles.serviceName}>{svc.title}</h3>
                 <p className={styles.serviceDescription}>{svc.description}</p>
 
-                <div className={styles.serviceMeta}>
-                  <span className={styles.serviceMetaPill}>
-                    {labels.subservicesLabel}: {svc.subservices.length}
-                  </span>
-                </div>
+
 
                 <span className={styles.serviceButton} aria-hidden="true">
                   {labels.exploreBtn}

@@ -8,6 +8,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./gallery.module.css";
 import { useI18n } from "../../lib/i18n";
+import Link from "next/link";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,8 +35,8 @@ export default function GalleryPage() {
   // --- VIDEO CAROUSEL (3 vidéos) ---
   const videoItems = useMemo(
     () => [
-      { id: 1, src: "/gallery.mp4", poster: "/videos/poster-1.jpg" },
-      { id: 2, src: "/gallery1.mp4", poster: "/videos/poster-2.jpg" },
+      { id: 1, src: "/lexus.mp4", poster: "/videos/poster-1.jpg" },
+      { id: 2, src: "/videocarousel.mp4", poster: "/videos/poster-2.jpg" },
       { id: 3, src: "/gallery2.mp4", poster: "/videos/poster-3.jpg" },
     ],
     []
@@ -508,7 +510,9 @@ export default function GalleryPage() {
                     <div className={styles.overlayContent}>
                       <h3 className={styles.imageTitle}>{item.title}</h3>
                       <p className={styles.imageDescription}>{item.description}</p>
-                      <span className={styles.viewButton}>{labels.viewDetails}</span>
+                      <Link href="/services" className={styles.viewButton}>
+                        {labels.viewDetails}
+                      </Link>
                     </div>
                   </div>
                 </div>
