@@ -332,41 +332,41 @@ export default function ServicesPage() {
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>{labels.viewAllTitle}</h2>
 
-          <div className={styles.servicesGrid} aria-live="polite">
-            {serviceGroups.map((svc) => (
-              <Link
-                key={svc.slug}
-                href={`/services/${svc.slug}`}
-                className={styles.serviceCard}
-                aria-label={`${svc.title} - ${labels.subservicesLabel}`}
-              >
-                <div className={styles.serviceMedia} aria-hidden="true">
-                  <BeforeAfterSlider
-                    beforeSrc={`/proof/${svc.slug}-before.png`}
-                    afterSrc={`/proof/${svc.slug}-after.png`}
-                    alt={`${svc.title} before/after`}
-                  />
-                  <span className={styles.serviceIcon} aria-hidden="true">
-                    <img
-                      src={svc.imageSrc}
-                      alt=""
-                      className={styles.serviceIconImage}
-                      loading="lazy"
-                    />
-                  </span>
-                </div>
+<div className={styles.servicesGrid} aria-live="polite">
+  {serviceGroups.map((svc) => (
+    <article key={svc.slug} className={styles.serviceCard}>
+      <div className={styles.serviceMedia}>
+        <BeforeAfterSlider
+          beforeSrc={`/proof/${svc.slug}-before.png`}
+          afterSrc={`/proof/${svc.slug}-after.png`}
+          alt={`${svc.title} before/after`}
+          height={320}
+        />
 
-                <h3 className={styles.serviceName}>{svc.title}</h3>
-                <p className={styles.serviceDescription}>{svc.description}</p>
+        <span className={styles.serviceIcon} aria-hidden="true">
+          <img
+            src={svc.imageSrc}
+            alt=""
+            className={styles.serviceIconImage}
+            loading="lazy"
+          />
+        </span>
+      </div>
 
+      <h3 className={styles.serviceName}>{svc.title}</h3>
+      <p className={styles.serviceDescription}>{svc.description}</p>
 
+      <Link
+        href={`/services/${svc.slug}`}
+        className={styles.serviceButton}
+        aria-label={`${svc.title} - ${labels.exploreBtn}`}
+      >
+        {labels.exploreBtn}
+      </Link>
+    </article>
+  ))}
+</div>
 
-                <span className={styles.serviceButton} aria-hidden="true">
-                  {labels.exploreBtn}
-                </span>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
     </main>
