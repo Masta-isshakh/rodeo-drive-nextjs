@@ -35,7 +35,7 @@ export default function GalleryPage() {
   // --- VIDEO CAROUSEL (3 vidéos) ---
   const videoItems = useMemo(
     () => [
-      { id: 1, src: "/lexus.mp4", poster: "/videos/poster-1.jpg" },
+      { id: 1, src: "/video.mp4", poster: "/videos/poster-1.jpg" },
       { id: 2, src: "/videocarousel.mp4", poster: "/videos/poster-2.jpg" },
       { id: 3, src: "/gallery2.mp4", poster: "/videos/poster-3.jpg" },
     ],
