@@ -14,7 +14,7 @@ const schema = a.schema({
       phone: a.string(),
 
       carModel: a.string(), // ✅ NEW
-      service: a.string(),  // ✅ NEW
+      services: a.string().array(),  // ✅ NEW
 
       date: a.string(),
       time: a.string(),     // will store "hh:mm AM/PM"

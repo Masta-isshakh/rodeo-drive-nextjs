@@ -36,8 +36,8 @@ export default function GalleryPage() {
   const videoItems = useMemo(
     () => [
       { id: 1, src: "/video.mp4", poster: "/videos/poster-1.jpg" },
-      { id: 2, src: "/videocarousel.mp4", poster: "/videos/poster-2.jpg" },
-      { id: 3, src: "/gallery2.mp4", poster: "/videos/poster-3.jpg" },
+      { id: 2, src: "/video.mp4", poster: "/videos/poster-2.jpg" },
+      { id: 3, src: "/video.mp4", poster: "/videos/poster-3.jpg" },
     ],
     []
   );
@@ -204,13 +204,6 @@ export default function GalleryPage() {
         after: "/bmw_wheel_trim_after.jpg",
         title: language === "en" ? "Wheel & Trim Revival" : "تجديد الجنط والزوائد",
         description: language === "en" ? "Restoration of wheels, trims, and plastics" : "ترميم الجنط والقطع البلاستيكية",
-      },
-      {
-        id: 6,
-        before: "lamborghini_showroom_before.jpg",
-        after: "lamborghini_showroom_after.jpg",
-        title: language === "en" ? "Showroom Finish" : "نتيجة صالة عرض",
-        description: language === "en" ? "Complete exterior + interior refresh" : "تفصيل خارجي وداخلي كامل",
       },
     ],
     [language]

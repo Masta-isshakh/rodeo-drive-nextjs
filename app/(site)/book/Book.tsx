@@ -20,7 +20,7 @@ function isDateInPast(dateStr: string) {
   return dateStr < todayStr;
 }
 
-// ✅ Convert "14:30" -> "02:30 PM"
+// Convert "14:30" -> "02:30 PM"
 function toAmPm(time24: string) {
   if (!time24) return "";
   const [hhStr, mm] = time24.split(":");
@@ -35,7 +35,6 @@ function toAmPm(time24: string) {
 export default function BookAppointment() {
   const client = useMemo(() => generateClient<Schema>(), []);
 
-  // ✅ Define your service options here (edit as you want)
   const serviceOptions = useMemo(
     () => [
       "Full Protection – PPF",
@@ -52,10 +51,10 @@ export default function BookAppointment() {
     name: "",
     email: "",
     phone: "",
-    carModel: "",   // ✅ NEW
-    service: "",    // ✅ NEW
+    carModel: "",
+    services: [] as string[], // ✅ multiple + can be empty
     date: "",
-    time: "",       // raw 24h from input
+    time: "",
   });
 
   const [success, setSuccess] = useState(false);
@@ -67,12 +66,30 @@ export default function BookAppointment() {
     setMinDate(formatLocalDateYYYYMMDD(new Date()));
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMsg("");
     setSuccess(false);
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  // ✅ Multi-select handler
+  const handleServicesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setErrorMsg("");
+    setSuccess(false);
+
+    const selected = Array.from(e.target.selectedOptions).map((o) => o.value);
+
+    // If user selects the empty option, force empty list
+    if (selected.includes("")) {
+      setForm((prev) => ({ ...prev, services: [] }));
+      return;
+    }
+
+    setForm((prev) => ({ ...prev, services: selected }));
+  };
+
+  const clearServices = () => {
+    setForm((prev) => ({ ...prev, services: [] }));
   };
 
   const getBookingsCountForDate = async (date: string) => {
@@ -102,12 +119,6 @@ export default function BookAppointment() {
       return;
     }
 
-    // ✅ Basic required checks (since service is a <select>)
-    if (!form.service) {
-      setErrorMsg("Please select a service.");
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -118,27 +129,27 @@ export default function BookAppointment() {
         return;
       }
 
-      // ✅ Convert time to AM/PM before saving
       const timeAmPm = toAmPm(form.time);
 
-      // ✅ Save in DB (time stored as "hh:mm AM/PM")
+      // ✅ store services as array (can be empty)
       await client.models.Appointment.create({
         name: form.name,
         email: form.email,
         phone: form.phone,
         carModel: form.carModel,
-        service: form.service,
+        services: form.services, // ✅ array
         date: form.date,
         time: timeAmPm,
       });
 
-      // ✅ Email payload should match what you want to send
+      // ✅ email: send a readable string (or empty)
       const res = await fetch("/api/sendAppointmentEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
-          time: timeAmPm, // send AM/PM in email too
+          time: timeAmPm,
+          servicesText: form.services.length ? form.services.join(", ") : "N/A",
         }),
       });
 
@@ -152,13 +163,13 @@ export default function BookAppointment() {
         email: "",
         phone: "",
         carModel: "",
-        service: "",
+        services: [],
         date: "",
         time: "",
       });
     } catch (err: any) {
       console.error("Booking error:", err);
-      setErrorMsg(err?.message ?? "Erreur lors de la réservation, veuillez réessayer.");
+      setErrorMsg(err?.message ?? "Error while booking, please try again.");
     } finally {
       setLoading(false);
     }
@@ -174,13 +185,7 @@ export default function BookAppointment() {
         </div>
       )}
 
-      {errorMsg && (
-        <div
-          className={styles.errorMessage}
-        >
-          {errorMsg}
-        </div>
-      )}
+      {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
 
       <form className={styles.appointmentForm} onSubmit={handleSubmit}>
         <input
@@ -188,7 +193,7 @@ export default function BookAppointment() {
           name="name"
           placeholder="Your Name"
           value={form.name}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
 
@@ -197,7 +202,7 @@ export default function BookAppointment() {
           name="email"
           placeholder="Your Email"
           value={form.email}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
 
@@ -206,52 +211,63 @@ export default function BookAppointment() {
           name="phone"
           placeholder="Phone Number"
           value={form.phone}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
 
-        {/* ✅ NEW: Car Model */}
         <input
           type="text"
           name="carModel"
           placeholder="Car Model (e.g., Land Cruiser, BMW X5)"
           value={form.carModel}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
 
-        {/* ✅ NEW: Select Service */}
-        <select
-          name="service"
-          value={form.service}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>
-            Select a Service
-          </option>
-          {serviceOptions.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+        {/* ✅ Multi select that can be blank */}
+        <div className={styles.servicesBlock}>
+          <label className={styles.servicesLabel}>
+            Services (optional) — you can choose multiple
+          </label>
+
+          <select
+            name="services"
+            multiple
+            value={form.services}
+            onChange={handleServicesChange}
+            className={styles.servicesSelect}
+          >
+            {/* optional blank option */}
+            <option value="">-- No service selected --</option>
+
+            {serviceOptions.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+
+          <div className={styles.servicesActions}>
+            <button type="button" onClick={clearServices} className={styles.clearBtn}>
+              Clear services
+            </button>
+          </div>
+        </div>
 
         <input
           type="date"
           name="date"
           value={form.date}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
           min={minDate}
         />
 
-        {/* user chooses time normally, but we store AM/PM */}
         <input
           type="time"
           name="time"
           value={form.time}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
 
@@ -262,4 +278,3 @@ export default function BookAppointment() {
     </div>
   );
 }
-
