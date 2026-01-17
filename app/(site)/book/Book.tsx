@@ -32,6 +32,126 @@ function toAmPm(time24: string) {
   return `${String(hour12).padStart(2, "0")}:${mm} ${period}`;
 }
 
+type MultiSelectProps = {
+  label: string;
+  options: string[];
+  value: string[];
+  placeholder?: string;
+  onChange: (next: string[]) => void;
+};
+
+function MultiSelectDropdown({
+  label,
+  options,
+  value,
+  placeholder = "Select services (optional)",
+  onChange,
+}: MultiSelectProps) {
+  const [open, setOpen] = React.useState(false);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      if (!rootRef.current) return;
+      if (!rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onEsc);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onEsc);
+    };
+  }, []);
+
+  const toggleValue = (opt: string) => {
+    if (value.includes(opt)) onChange(value.filter((v) => v !== opt));
+    else onChange([...value, opt]);
+  };
+
+  const clearAll = () => onChange([]);
+
+  const selectedText =
+    value.length === 0 ? placeholder : `${value.length} selected`;
+
+  return (
+    <div className={styles.msRoot} ref={rootRef}>
+      <label className={styles.msLabel}>{label}</label>
+
+      <button
+        type="button"
+        className={styles.msButton}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((s) => !s)}
+      >
+        <span className={styles.msButtonText}>{selectedText}</span>
+        <span className={styles.msChevron} aria-hidden="true">
+          ▾
+        </span>
+      </button>
+
+      {open && (
+        <div className={styles.msPanel} role="listbox" aria-multiselectable="true">
+          <div className={styles.msPanelHeader}>
+            <button
+              type="button"
+              className={styles.msClear}
+              onClick={clearAll}
+              disabled={value.length === 0}
+            >
+              Clear
+            </button>
+
+            <button
+              type="button"
+              className={styles.msDone}
+              onClick={() => setOpen(false)}
+            >
+              Done
+            </button>
+          </div>
+
+          <div className={styles.msOptions}>
+            {options.map((opt) => {
+              const checked = value.includes(opt);
+              return (
+                <label key={opt} className={styles.msOption}>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleValue(opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {value.length > 0 && (
+        <div className={styles.msChips}>
+          {value.map((v) => (
+            <button
+              type="button"
+              key={v}
+              className={styles.msChip}
+              onClick={() => toggleValue(v)}
+              title="Remove"
+            >
+              {v} <span aria-hidden="true">×</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 export default function BookAppointment() {
   const client = useMemo(() => generateClient<Schema>(), []);
 
@@ -226,32 +346,17 @@ export default function BookAppointment() {
 
         {/* ✅ Multi select that can be blank */}
         <div className={styles.servicesBlock}>
-          <label className={styles.servicesLabel}>
-            Services (optional) — you can choose multiple
-          </label>
 
-          <select
-            name="services"
-            multiple
-            value={form.services}
-            onChange={handleServicesChange}
-            className={styles.servicesSelect}
-          >
-            {/* optional blank option */}
-            <option value="">-- No service selected --</option>
+<MultiSelectDropdown
+  label="Services (optional)"
+  options={serviceOptions}
+  value={form.services}
+  onChange={(next) => setForm((prev) => ({ ...prev, services: next }))}
+  placeholder="Select services (optional)"
+/>
 
-            {serviceOptions.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
 
-          <div className={styles.servicesActions}>
-            <button type="button" onClick={clearServices} className={styles.clearBtn}>
-              Clear services
-            </button>
-          </div>
+
         </div>
 
         <input

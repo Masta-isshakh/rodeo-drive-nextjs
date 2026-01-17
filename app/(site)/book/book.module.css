@@ -137,3 +137,109 @@
 .clearBtn:hover {
   background: rgba(255, 255, 255, 0.06);
 }
+
+
+
+.msRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msLabel {
+  color: #ffffff;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.msButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.msButton:focus {
+  outline: none;
+  border-color: #818181;
+  box-shadow: 0 0 5px rgba(0,119,204,0.5);
+}
+
+.msButtonText {
+  color: #333;
+  text-align: left;
+}
+
+.msChevron {
+  color: #333;
+}
+
+.msPanel {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.msPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.msClear,
+.msDone {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.msClear:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.msOptions {
+  max-height: 220px;
+  overflow: auto;
+  padding: 10px;
+}
+
+.msOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.msOption:hover {
+  background: #f3f3f3;
+}
+
+.msChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.msChip {
+  border: 1px solid #444;
+  background: transparent;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
