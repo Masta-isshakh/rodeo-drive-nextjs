@@ -160,7 +160,7 @@ export default function GalleryPage() {
       {
         id: 6,
         category: "ceramic",
-        image: "/polish1.JPG",
+        image: "/rollsroyce.png",
         title: language === "en" ? "Supercar Collection" : "مجموعة سوبركار",
         description: language === "en" ? "Elite ceramic coating service" : "سيراميك نخبة",
       },
@@ -191,20 +191,8 @@ export default function GalleryPage() {
         title: language === "en" ? "PPF Installation" : "تركيب PPF",
         description: language === "en" ? "Full body PPF with flawless application" : "PPF كامل بتطبيق مثالي",
       },
-      {
-        id: 4,
-        before: "mercedes_before.jpg",
-        after: "mercedes_after.jpg",
-        title: language === "en" ? "Deep Gloss Enhancement" : "تعزيز اللمعان العميق",
-        description: language === "en" ? "Polish + gloss boost for mirror finish" : "تلميع + تعزيز لمعان",
-      },
-      {
-        id: 5,
-        before: "/bmw_wheel_trim_before.jpg",
-        after: "/bmw_wheel_trim_after.jpg",
-        title: language === "en" ? "Wheel & Trim Revival" : "تجديد الجنط والزوائد",
-        description: language === "en" ? "Restoration of wheels, trims, and plastics" : "ترميم الجنط والقطع البلاستيكية",
-      },
+
+
     ],
     [language]
   );
@@ -521,9 +509,9 @@ export default function GalleryPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>{labels.ctaTitle}</h2>
             <p className={styles.ctaSubtitle}>{labels.ctaSubtitle}</p>
-            <button className={styles.ctaButton} type="button">
-              {labels.bookNow}
-            </button>
+<Link href="/contact" className={styles.ctaButton}>
+  {labels.bookNow}
+</Link>
           </div>
         </div>
       </section>

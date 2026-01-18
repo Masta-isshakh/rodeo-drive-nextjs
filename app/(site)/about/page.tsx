@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./about.module.css";
 import { Award, Users, Target, Trophy, Shield, Zap } from "lucide-react";
 import { useI18n } from "../../lib/i18n";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -376,9 +377,9 @@ export default function AboutPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>{copy.ctaTitle}</h2>
             <p className={styles.ctaSubtitle}>{copy.ctaSubtitle}</p>
-            <button className={styles.ctaButton} type="button">
-              {copy.ctaButton}
-            </button>
+<Link href="/contact" className={styles.ctaButton}>
+  {copy.ctaButton}
+</Link>
           </div>
         </div>
       </section>
