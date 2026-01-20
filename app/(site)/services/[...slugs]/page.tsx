@@ -356,22 +356,9 @@ export default function ServiceRoutePage() {
             </div>
 
             {/* ✅ restore slider for subservice (your previous version removed it) */}
-            <div className={styles.mediaCard}>
-              <div className={styles.sliderWrap}>
-                <BeforeAfterSlider
-                  beforeSrc={beforeSrc}
-                  afterSrc={afterSrc}
-                  alt={`${title} before/after`}
-                  height={360}
-                />
-              </div>
-
-              <div className={styles.miniGrid}>
-                {miniImages.map((src, i) => (
-                  <img key={`${src}-${i}`} src={src} alt="" className={styles.miniImg} />
-                ))}
-              </div>
-            </div>
+                  <div className={styles.cardTop}>
+                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImg} />
+                  </div>
           </div>
         </div>
       </section>
