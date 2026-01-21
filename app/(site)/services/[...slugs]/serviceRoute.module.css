@@ -699,3 +699,51 @@
 [dir="rtl"] .stepText {
   text-align: right;
 }
+
+
+/* =========================
+   Subservice image block (NEW)
+   Makes images bigger on desktop + responsive everywhere
+========================= */
+
+.cardTopsub {
+  width: 100%;
+  /* Bigger visual area on desktop */
+  height: clamp(220px, 22vw, 360px);
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  /* Optional: looks more premium */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cardImgsub {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  /* keeps it looking good regardless of aspect ratio */
+  object-fit: cover;
+  object-position: center;
+
+  /* optional: slightly smoother look */
+  transform: scale(1.01);
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .cardTopsub {
+    height: clamp(200px, 32vw, 320px);
+  }
+}
+
+/* Phone */
+@media (max-width: 640px) {
+  .cardTopsub {
+    height: clamp(180px, 55vw, 260px);
+    border-radius: 14px;
+  }
+}

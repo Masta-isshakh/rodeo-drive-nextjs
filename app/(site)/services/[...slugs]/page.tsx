@@ -356,8 +356,8 @@ export default function ServiceRoutePage() {
             </div>
 
             {/* ✅ restore slider for subservice (your previous version removed it) */}
-                  <div className={styles.cardTop}>
-                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImg} />
+                  <div className={styles.cardTopsub}>
+                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImgsub} />
                   </div>
           </div>
         </div>
