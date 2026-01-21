@@ -3355,7 +3355,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Ceramic & Graphene Coating",
             "ar": "طلاء سيراميك وجرافين"
           },
-          "heroImage": "/Graphene-Coating.jpg",
+          "heroImage": "/ceramic-coating.PNG",
           "intro": {
             "en": [
               "Long-lasting ceramic or graphene coating that boosts gloss, adds hydrophobic behavior, and improves resistance to chemicals and UV.",
