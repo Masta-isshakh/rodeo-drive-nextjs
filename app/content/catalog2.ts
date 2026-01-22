@@ -1994,7 +1994,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Nano Ceramic Tint",
             "ar": "تظليل نانو سيراميك"
           },
-          "heroImage": "/nano-ceramic.png",
+          "heroImage": "/nanoceramic.png",
           "intro": {
             "en": [
               "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility—ideal for Qatar’s intense sun.",
@@ -3546,7 +3546,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Glass, Wheel & Interior Coating",
             "ar": "طلاءات للزجاج والجنوط والداخل"
           },
-          "heroImage": "/interior-coating.webp",
+          "heroImage": "/nano-interior.png",
           "intro": {
             "en": [
               "Targeted coatings for glass, wheels, and interior surfaces to reduce staining, ease cleaning, and improve daily durability.",
