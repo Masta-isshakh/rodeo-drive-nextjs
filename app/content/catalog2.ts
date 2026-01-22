@@ -3952,7 +3952,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Rubber / Peelable Paint",
             "ar": "دهان مطاطي قابل للإزالة"
           },
-          "heroImage": "/paintoriginal1.png",
+          "heroImage": "/paintoriginal2.PNG",
           "intro": {
             "en": [
               "Peelable rubberized paint for temporary color change or protection—reversible when you want to return to original paint.",
@@ -4525,7 +4525,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Color Matching & Panel Painting",
             "ar": "مطابقة لون ودهان ألواح"
           },
-          "heroImage": "/paintoriginal3.png",
+          "heroImage": "/color-matching.png",
           "intro": {
             "en": [
               "Accurate color matching and panel painting using blending techniques to ensure seamless transitions between panels.",
@@ -5720,7 +5720,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Water Repellent Treatment",
             "ar": "طبقة طاردة للماء"
           },
-          "heroImage": "/rollsroyce.png",
+          "heroImage": "/water.png",
           "intro": {
             "en": [
               "Hydrophobic treatment that makes water bead and slide off the windshield—improving visibility at speed and reducing wiper chatter.",
@@ -5911,7 +5911,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Replacement",
             "ar": "استبدال الزجاج الأمامي"
           },
-          "heroImage": "/rollsroyce.png",
+          "heroImage": "/replacement.webp",
           "intro": {
             "en": [
               "Professional windshield replacement using quality glass and proper sealing to prevent leaks, noise, and fitment issues.",
@@ -6102,7 +6102,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Protection – Light",
             "ar": "حماية الزجاج – لايت"
           },
-          "heroImage": "/rollsroyce.png",
+          "heroImage": "/light.jpg",
           "intro": {
             "en": [
               "Light-level windshield protection film for basic defense against sand pitting and minor surface wear.",
@@ -6293,7 +6293,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Protection – City",
             "ar": "حماية الزجاج – سيتي"
           },
-          "heroImage": "/rollsroyce.png",
+          "heroImage": "/city.png",
           "intro": {
             "en": [
               "City-level windshield protection with enhanced durability for frequent road use, keeping glass clearer despite dust and traffic exposure.",
@@ -6484,7 +6484,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Protection – Extreme",
             "ar": "حماية الزجاج – إكستريم"
           },
-          "heroImage": "/rollsroyce.png",
+          "heroImage": "/extreme.png",
           "intro": {
             "en": [
               "Extreme-level windshield protection built for heavy highway use and harsh conditions—maximum resistance against pitting and impacts.",
