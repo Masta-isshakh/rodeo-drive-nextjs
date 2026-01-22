@@ -52,15 +52,35 @@ export default function ServiceRoutePage() {
 
   if (view.kind === "notfound") {
     return (
-      <main className={styles.page} dir={dir}>
-        <div className={styles.container}>
-          <h1 className={styles.h1}>Page not found</h1>
-          <p className={styles.muted}>The requested service page does not exist.</p>
-          <Link className={styles.btnPrimary} href="/services">
-            Back to Services
-          </Link>
-        </div>
-      </main>
+<main className={styles.page} dir={dir}>
+  <div className={styles.container}>
+    <div className={styles.card} role="status" aria-live="polite">
+      <div className={styles.badge}>404</div>
+
+      <h1 className={styles.h1}>Page not found</h1>
+      <p className={styles.muted}>
+        The requested service page does not exist or may have been moved.
+      </p>
+
+      <div className={styles.actions}>
+        <Link className={styles.btnPrimary} href="/services">
+          Back to Services
+        </Link>
+        <Link className={styles.btnGhost} href="/contact">
+          Contact Us
+        </Link>
+        <Link className={styles.btnGhost} href="/">
+          Home
+        </Link>
+      </div>
+
+      <p className={styles.hint}>
+        If you reached this page from a link, please let us know and we will fix it.
+      </p>
+    </div>
+  </div>
+</main>
+
     );
   }
 

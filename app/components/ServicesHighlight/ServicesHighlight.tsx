@@ -60,111 +60,95 @@ export default function ServicesHighlight() {
     [t]
   );
 
-  useLayoutEffect(() => {
-    const sectionEl = sectionRef.current;
-    if (!sectionEl) return;
+useLayoutEffect(() => {
+  const sectionEl = sectionRef.current;
+  if (!sectionEl) return;
 
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // IMPORTANT: on force un refresh léger après images/layout
-    // mais seulement 1 fois et sans boucle.
-    const scheduleRefresh = () => {
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-    };
-
-    const ctx = gsap.context(() => {
-      // Si reduced motion => aucun ScrollTrigger, tout visible immédiatement
-      if (prefersReducedMotion) {
-        if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, y: 0 });
-        if (gridRef.current) {
-          const cards = gridRef.current.querySelectorAll(`.${styles.serviceCard}`);
-          gsap.set(cards, { opacity: 1, y: 0 });
-        }
-        if (floatingRef.current) gsap.set(floatingRef.current, { opacity: 0.08, x: 0, y: 0 });
-        return;
-      }
-
-      // HEADER (simple: opacity + y)
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.65,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: headerRef.current,
-              start: "top 85%",
-              once: true, // très performant
-            },
-          }
-        );
-      }
-
-      // CARDS (stagger léger, sans 3D)
+  const ctx = gsap.context(() => {
+    // Reduced motion: show everything, no triggers
+    if (prefersReducedMotion) {
+      if (headerRef.current) gsap.set(headerRef.current, { autoAlpha: 1, y: 0 });
       if (gridRef.current) {
-        const cards = Array.from(gridRef.current.querySelectorAll(`.${styles.serviceCard}`));
+        const cards = gridRef.current.querySelectorAll(`.${styles.serviceCard}`);
+        gsap.set(cards, { autoAlpha: 1, y: 0 });
+      }
+      if (floatingRef.current) gsap.set(floatingRef.current, { autoAlpha: 0.08, x: 0, y: 0 });
+      return;
+    }
 
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 18 },
-          {
-            opacity: 1,
+    // Header reveal (fast)
+    if (headerRef.current) {
+      gsap.fromTo(
+        headerRef.current,
+        { autoAlpha: 0, y: 24 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true },
+        }
+      );
+    }
+
+    // Cards reveal (BATCH = fewer triggers, better performance)
+    if (gridRef.current) {
+      const cards = gsap.utils.toArray<HTMLElement>(
+        gridRef.current.querySelectorAll(`.${styles.serviceCard}`)
+      );
+
+      gsap.set(cards, { autoAlpha: 0, y: 18 });
+
+      ScrollTrigger.batch(cards, {
+        start: "top 86%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            autoAlpha: 1,
             y: 0,
             duration: 0.55,
             ease: "power2.out",
-            stagger: 0.05,
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 85%",
-              once: true, // évite reverse / recalcul en scroll
-            },
-          }
-        );
-      }
+            stagger: 0.06,
+            overwrite: true,
+          });
+        },
+      });
+    }
 
-      // FLOATING DECOR (léger, pas de scrub)
-      if (floatingRef.current) {
-        gsap.fromTo(
-          floatingRef.current,
-          { opacity: 0, x: 40 },
-          {
-            opacity: 0.08,
-            x: 0,
-            duration: 0.9,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: sectionEl,
-              start: "top 85%",
-              once: true,
-            },
-          }
-        );
+    // Floating decor reveal + ultra-light breathing motion (transform only)
+    if (floatingRef.current) {
+      gsap.fromTo(
+        floatingRef.current,
+        { autoAlpha: 0, x: 50 },
+        {
+          autoAlpha: 0.09,
+          x: 0,
+          duration: 0.9,
+          ease: "power2.out",
+          scrollTrigger: { trigger: sectionEl, start: "top 85%", once: true },
+        }
+      );
 
-        // petite "respiration" très légère
-        gsap.to(floatingRef.current, {
-          y: "+=14",
-          duration: 3.6,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-      }
+      gsap.to(floatingRef.current, {
+        y: "+=14",
+        duration: 3.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    }
 
-      scheduleRefresh();
-    }, sectionEl);
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  }, sectionEl);
 
-    return () => {
-      ctx.revert();
-      // évite accumulations de triggers
-      ScrollTrigger.clearMatchMedia?.();
-    };
-  }, [t]);
+  return () => ctx.revert();
+}, [t]);
+
 
   return (
     <section className={styles.servicesSection} ref={sectionRef}>

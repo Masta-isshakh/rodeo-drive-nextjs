@@ -1994,7 +1994,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Nano Ceramic Tint",
             "ar": "تظليل نانو سيراميك"
           },
-          "heroImage": "/nano-ceramic.webp",
+          "heroImage": "/nano-ceramic.png",
           "intro": {
             "en": [
               "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility—ideal for Qatar’s intense sun.",
@@ -3355,7 +3355,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Ceramic & Graphene Coating",
             "ar": "طلاء سيراميك وجرافين"
           },
-          "heroImage": "/ceramic-coating.PNG",
+          "heroImage": "/nano.png",
           "intro": {
             "en": [
               "Long-lasting ceramic or graphene coating that boosts gloss, adds hydrophobic behavior, and improves resistance to chemicals and UV.",
@@ -5905,197 +5905,7 @@ export const CATALOG: { services: Service[] } = {
             "/proof/windshield-services/water-repellent-treatment/mini-3.jpg"
           ]
         },
-        {
-          "slug": "windshield-replacement",
-          "title": {
-            "en": "Windshield Replacement",
-            "ar": "استبدال الزجاج الأمامي"
-          },
-          "heroImage": "/replacement.webp",
-          "intro": {
-            "en": [
-              "Professional windshield replacement using quality glass and proper sealing to prevent leaks, noise, and fitment issues.",
-              "Includes careful installation and guidance for ADAS/sensor checks when applicable."
-            ],
-            "ar": [
-              "تغيير الزجاج الأمامي بشكل احترافي باستخدام زجاج عالي الجودة وتركيب صحيح لمنع التسريب والضوضاء ومشاكل المقاس.",
-              "يشمل تركيب دقيق وإرشادات لفحص أنظمة الحساسات/ADAS عند الحاجة."
-            ]
-          },
-          "bestFor": {
-            "en": [
-              "Daily drivers",
-              "Highway commuters",
-              "Owners who want long-lasting results"
-            ],
-            "ar": [
-              "الاستخدام اليومي",
-              "الطرق السريعة",
-              "من يريد نتائج طويلة المدى"
-            ]
-          },
-          "specs": {
-            "en": [
-              "High clarity / clean finish specification",
-              "Durability designed for heat and dust exposure",
-              "Controlled application methods to reduce defects",
-              "Quality inspection under lighting",
-              "Warranty-backed service delivery"
-            ],
-            "ar": [
-              "مواصفة وضوح وتشطيب نظيف",
-              "متانة مناسبة للحرارة والغبار",
-              "طرق تنفيذ مدروسة لتقليل العيوب",
-              "فحص جودة تحت الإضاءة",
-              "خدمة بضمان"
-            ]
-          },
-          "included": {
-            "en": [
-              "Inspection and recommendation",
-              "Surface preparation and safe cleaning",
-              "Precision application/installation",
-              "Edge/finish refinement where applicable",
-              "Final quality check",
-              "Aftercare guidance + warranty details"
-            ],
-            "ar": [
-              "فحص وتوصية",
-              "تجهيز وتنظيف آمن",
-              "تنفيذ/تركيب دقيق",
-              "تحسين التشطيب والحواف عند الحاجة",
-              "فحص جودة نهائي",
-              "تعليمات عناية + تفاصيل الضمان"
-            ]
-          },
-          "process": {
-            "en": [
-              "Vehicle inspection and confirmation of scope",
-              "Preparation and decontamination (as needed)",
-              "Controlled installation/application step-by-step",
-              "Detail finishing and alignment checks",
-              "Curing / settling guidance (when applicable)",
-              "Quality control under different angles and lighting",
-              "Delivery briefing + aftercare"
-            ],
-            "ar": [
-              "فحص السيارة وتأكيد النطاق",
-              "تجهيز وإزالة شوائب عند الحاجة",
-              "تنفيذ/تركيب مدروس خطوة بخطوة",
-              "تشطيب وتحقق من المحاذاة",
-              "تعليمات تثبيت/تجفيف عند الحاجة",
-              "فحص جودة بزوايا وإضاءة مختلفة",
-              "تسليم + تعليمات العناية"
-            ]
-          },
-          "timeline": {
-            "en": "Varies by vehicle and scope; confirmed after inspection.",
-            "ar": "يختلف حسب السيارة والنطاق؛ نؤكده بعد الفحص."
-          },
-          "aftercare": {
-            "en": [
-              "Follow curing guidance if provided",
-              "Use safe wash methods",
-              "Avoid harsh chemicals/abrasives",
-              "Contact us if you notice any issue early"
-            ],
-            "ar": [
-              "اتبع تعليمات التثبيت إن وجدت",
-              "استخدم غسيل آمن",
-              "تجنب مواد قوية/كاشطة",
-              "تواصل معنا مبكرًا عند وجود أي ملاحظة"
-            ]
-          },
-          "faqs": [
-            {
-              "q": {
-                "en": "How do I choose the right option?",
-                "ar": "كيف أختار الخيار المناسب؟"
-              },
-              "a": {
-                "en": "We recommend the best option based on your driving pattern, paint/glass condition, and goals after inspection.",
-                "ar": "نقترح الأفضل حسب الاستخدام وحالة السطح والهدف بعد الفحص."
-              }
-            },
-            {
-              "q": {
-                "en": "Does it come with warranty?",
-                "ar": "هل يوجد ضمان؟"
-              },
-              "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
-              }
-            },
-            {
-              "q": {
-                "en": "How long does it take?",
-                "ar": "كم يستغرق؟"
-              },
-              "a": {
-                "en": "Time depends on vehicle size and scope; we confirm a realistic timeline before starting.",
-                "ar": "يعتمد على حجم السيارة والنطاق؛ نؤكد وقتًا واقعيًا قبل البدء."
-              }
-            },
-            {
-              "q": {
-                "en": "Will it affect the look?",
-                "ar": "هل يؤثر على الشكل؟"
-              },
-              "a": {
-                "en": "We prioritize clean finishing and clarity; aesthetic options are clarified during consultation.",
-                "ar": "نركز على تشطيب نظيف ووضوح؛ الخيارات الجمالية نوضحها أثناء الاستشارة."
-              }
-            },
-            {
-              "q": {
-                "en": "What maintenance is required?",
-                "ar": "ما الصيانة المطلوبة؟"
-              },
-              "a": {
-                "en": "Safe washing and basic aftercare protect results; we provide a simple routine.",
-                "ar": "غسيل آمن وتعليمات بسيطة للحفاظ على النتيجة."
-              }
-            },
-            {
-              "q": {
-                "en": "Can it be removed or adjusted later?",
-                "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
-              },
-              "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
-              }
-            },
-            {
-              "q": {
-                "en": "Is it suitable for Qatar heat?",
-                "ar": "هل يناسب حرارة قطر؟"
-              },
-              "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
-              }
-            },
-            {
-              "q": {
-                "en": "How do I book?",
-                "ar": "كيف أحجز؟"
-              },
-              "a": {
-                "en": "Use the Book Now page or WhatsApp for a fast quote and scheduling.",
-                "ar": "استخدم صفحة الحجز أو واتساب لعرض سعر سريع وتحديد موعد."
-              }
-            }
-          ],
-          "beforeImage": "/proof/windshield-services/windshield-replacement/before.jpg",
-          "afterImage": "/proof/windshield-services/windshield-replacement/after.jpg",
-          "miniImages": [
-            "/proof/windshield-services/windshield-replacement/mini-1.jpg",
-            "/proof/windshield-services/windshield-replacement/mini-2.jpg",
-            "/proof/windshield-services/windshield-replacement/mini-3.jpg"
-          ]
-        },
+
         {
           "slug": "windshield-light",
           "title": {

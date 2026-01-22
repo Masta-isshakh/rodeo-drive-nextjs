@@ -174,8 +174,9 @@ export default function GalleryPage() {
         id: 1,
         before: "/before.jpg",
         after: "/after.jpg",
-        title: language === "en" ? "Complete Detailing Transformation" : "تحول كامل بالتفصيل",
-        description: language === "en" ? "Full paint correction and ceramic coating" : "تصحيح طلاء + سيراميك",
+title: language === "en" ? "Color PPF Upgrade" : "ترقية بـ PPF الملون",
+description: language === "en" ? "Full-body color film wrap" : "تغليف كامل بفيلم ملون",
+
       },
       {
         id: 2,

@@ -11,7 +11,6 @@ import GoogleReviewsBadge from "@/app/components/GoogleReviewsBadge/GoogleReview
 import { SITE } from "@/app/config/site";
 // supprime: import { MessageCircleMore } from "lucide-react";
 
-
 export default function Header() {
   const pathname = usePathname();
   const { language, setLanguage, t } = useI18n();
@@ -136,31 +135,28 @@ export default function Header() {
         ref={headerRef}
       >
         <div className={styles.headerContainer}>
-
           <div className={styles.logoo}>
-          <a
-            className={styles.whatsappButtonn}
-            href={phoneWa}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            title="WhatsApp"
-          >
-            <Image
-              src="/logo.jpeg"
-              alt=""
-              width={54}
-              height={54}
-              quality={100}
-              priority={false}
-            />
-
-          </a>
-          <a href="/" className={styles.logoLink}>
-           <h4>RODEO DRIVE</h4>
-          </a>
+            <a
+              className={styles.whatsappButtonn}
+              href={phoneWa}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              title="WhatsApp"
+            >
+              <Image
+                src="/logo.jpeg"
+                alt=""
+                width={54}
+                height={54}
+                quality={100}
+                priority={false}
+              />
+            </a>
+            <a href="/" className={styles.logoLink}>
+              <h4>RODEO DRIVE</h4>
+            </a>
           </div>
-
 
           <nav className={styles.nav} ref={navRef} aria-label="Primary">
             <ul className={styles.navList}>
@@ -181,9 +177,12 @@ export default function Header() {
           </nav>
 
           <div className={styles.actions} ref={actionsRef}>
+            {/* ✅ Desktop/tablet: reviews visible here. Mobile: hidden via CSS */}
             <div className={styles.reviewsWrap}>
               <GoogleReviewsBadge />
             </div>
+
+            {/* ✅ Language is always in navbar on mobile (CSS will keep it visible) */}
             <div className={styles.languageSwitch} aria-label="Language">
               <button
                 className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
@@ -221,9 +220,7 @@ export default function Header() {
                 quality={100}
                 priority={false}
               />
-
             </a>
-
 
             <button
               className={styles.mobileMenuToggle}
@@ -259,6 +256,11 @@ export default function Header() {
             >
               ✕
             </button>
+          </div>
+
+          {/* ✅ Mobile: Reviews INSIDE toggle */}
+          <div className={styles.mobileReviews}>
+            <GoogleReviewsBadge />
           </div>
 
           <ul className={styles.mobileNavList}>
@@ -300,11 +302,9 @@ export default function Header() {
                 quality={100}
                 priority={false}
               />
-
             </a>
 
-
-
+            {/* ✅ Remove language from inside toggle (kept class but hidden via CSS) */}
             <div className={styles.mobileLangRow}>
               <button
                 className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
