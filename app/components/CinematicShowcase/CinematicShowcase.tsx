@@ -1,29 +1,17 @@
 "use client";
 
 import { useLayoutEffect, useMemo, useRef } from "react";
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./CinematicShowcase.module.css";
 import { useI18n } from "../../lib/i18n";
 import Image from "next/image";
 
-
-
 gsap.registerPlugin(ScrollTrigger);
 
 function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
-
-type Particle = {
-  left: string;
-  top: string;
-  delay: string;
-  duration: string;
-  size: number;
-  opacity: number;
-};
 
 export default function CinematicShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -32,7 +20,6 @@ export default function CinematicShowcase() {
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
-  // ✅ refs pour éviter setState en boucle
   const carsNumRef = useRef<HTMLDivElement>(null);
   const clientsNumRef = useRef<HTMLDivElement>(null);
   const yearsNumRef = useRef<HTMLDivElement>(null);
@@ -44,7 +31,10 @@ export default function CinematicShowcase() {
     const cs = (t as any)?.cinematicShowcase ?? {};
     return {
       title: safeText(cs.title, "Excellence in Every Detail"),
-      subtitle: safeText(cs.subtitle, "Experience automotive perfection through our signature services"),
+      subtitle: safeText(
+        cs.subtitle,
+        "Experience automotive perfection through our signature services"
+      ),
       premiumDetailingTitle: safeText(cs.premiumDetailingTitle, "Premium Detailing"),
       premiumDetailingDesc: safeText(cs.premiumDetailingDesc, "Meticulous care for every surface."),
       ceramicCoatingTitle: safeText(cs.ceramicCoatingTitle, "Ceramic Coating"),
@@ -60,25 +50,6 @@ export default function CinematicShowcase() {
     };
   }, [t]);
 
-  // ✅ particles générés une seule fois (pas de innerHTML)
-  const particles = useMemo<Particle[]>(() => {
-    // réduit pour perf (tu peux monter à 30 si tu veux)
-    const COUNT = 24;
-    const arr: Particle[] = [];
-    for (let i = 0; i < COUNT; i++) {
-      const size = 2 + Math.random() * 3;
-      arr.push({
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        delay: `${Math.random() * 2.5}s`,
-        duration: `${4.5 + Math.random() * 4}s`,
-        size,
-        opacity: 0.35 + Math.random() * 0.35,
-      });
-    }
-    return arr;
-  }, []);
-
   useLayoutEffect(() => {
     const sectionEl = sectionRef.current;
     if (!sectionEl) return;
@@ -88,19 +59,22 @@ export default function CinematicShowcase() {
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let rafId: number | null = null;
-    const createdAnims: gsap.core.Animation[] = [];
+    // Perf: reduce refresh churn on mobile
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const ctx = gsap.context(() => {
-      // ✅ si reduced motion: pas d’animations lourdes
+      // Default state for reduced motion
       if (prefersReducedMotion) {
         if (titleRef.current) gsap.set(titleRef.current, { opacity: 1, y: 0, clearProps: "transform" });
         if (subtitleRef.current) gsap.set(subtitleRef.current, { opacity: 1, y: 0, clearProps: "transform" });
+
         if (cardsContainerRef.current) {
           const cards = cardsContainerRef.current.querySelectorAll(`.${styles.card}`);
           gsap.set(cards, { opacity: 1, y: 0, clearProps: "transform" });
         }
-        // stats par défaut
+
+        if (statsRef.current) gsap.set(statsRef.current, { opacity: 1, y: 0, clearProps: "transform" });
+
         if (carsNumRef.current) carsNumRef.current.textContent = "5,000+";
         if (clientsNumRef.current) clientsNumRef.current.textContent = "10,000+";
         if (yearsNumRef.current) yearsNumRef.current.textContent = "15+";
@@ -108,71 +82,89 @@ export default function CinematicShowcase() {
         return;
       }
 
-      // --- Header (once) ---
+      // Title
       if (titleRef.current) {
-        const a = gsap.fromTo(
+        gsap.fromTo(
           titleRef.current,
-          { opacity: 0, y: 36 },
+          { opacity: 0, y: 18 },
           {
             opacity: 1,
             y: 0,
             duration: 0.65,
             ease: "power2.out",
             scrollTrigger: { trigger: sectionEl, start: "top 82%", once: true },
+            onComplete: () => { gsap.set(titleRef.current, { clearProps: "willChange" }); },
           }
         );
-        createdAnims.push(a);
       }
 
+      // Subtitle
       if (subtitleRef.current) {
-        const a = gsap.fromTo(
+        gsap.fromTo(
           subtitleRef.current,
-          { opacity: 0, y: 18 },
+          { opacity: 0, y: 12 },
           {
             opacity: 1,
             y: 0,
             duration: 0.6,
             ease: "power2.out",
             scrollTrigger: { trigger: sectionEl, start: "top 82%", once: true },
+            onComplete: () => { gsap.set(subtitleRef.current, { clearProps: "willChange" }); },
           }
         );
-        createdAnims.push(a);
       }
 
-      // --- Cards (once, léger) ---
+      // Cards (batch for perf)
       if (cardsContainerRef.current) {
-        const cards = Array.from(cardsContainerRef.current.children);
+        const cards = Array.from(cardsContainerRef.current.querySelectorAll(`.${styles.card}`));
 
-        const a = gsap.fromTo(
-          cards,
-          { opacity: 0, y: 18 },
+        ScrollTrigger.batch(cards, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.fromTo(
+              batch,
+              { opacity: 0, y: 14 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.55,
+                ease: "power2.out",
+                stagger: 0.08,
+                onComplete: () => batch.forEach((el) => gsap.set(el, { clearProps: "willChange" })),
+              }
+            );
+          },
+        });
+      }
+
+      // Stats count (DOM update only, once)
+      if (statsRef.current) {
+        gsap.fromTo(
+          statsRef.current,
+          { opacity: 0, y: 12 },
           {
             opacity: 1,
             y: 0,
             duration: 0.55,
-            stagger: 0.08,
             ease: "power2.out",
-            scrollTrigger: { trigger: cardsContainerRef.current, start: "top 85%", once: true },
+            scrollTrigger: { trigger: statsRef.current, start: "top 90%", once: true },
           }
         );
-        createdAnims.push(a);
-      }
 
-      // --- Stats: animation sans setState (update DOM) ---
-      if (statsRef.current) {
         const obj = { cars: 0, clients: 0, years: 0, rating: 0 };
 
-        const st = ScrollTrigger.create({
+        ScrollTrigger.create({
           trigger: statsRef.current,
-          start: "top 85%",
+          start: "top 88%",
           once: true,
           onEnter: () => {
-            const tween = gsap.to(obj, {
+            gsap.to(obj, {
               cars: 5000,
               clients: 10000,
               years: 15,
               rating: 4.9,
-              duration: 1.6,
+              duration: 1.35,
               ease: "power2.out",
               onUpdate: () => {
                 if (carsNumRef.current) carsNumRef.current.textContent = `${Math.floor(obj.cars).toLocaleString()}+`;
@@ -181,71 +173,30 @@ export default function CinematicShowcase() {
                 if (ratingNumRef.current) ratingNumRef.current.textContent = obj.rating.toFixed(1);
               },
             });
-
-            createdAnims.push(tween);
           },
         });
-
-        // animation d’entrée stats (once)
-        const a = gsap.fromTo(
-          statsRef.current,
-          { opacity: 0, y: 18 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: { trigger: statsRef.current, start: "top 88%", once: true },
-          }
-        );
-        createdAnims.push(a);
-
-        // garder un handle pour cleanup
-        createdAnims.push({ scrollTrigger: st } as unknown as gsap.core.Animation);
       }
-
-      // ✅ refresh propre
-      rafId = window.requestAnimationFrame(() => {
-        if (!sectionRef.current) return;
-        ScrollTrigger.refresh();
-      });
     }, sectionEl);
 
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
     return () => {
-      if (rafId !== null) window.cancelAnimationFrame(rafId);
-
-      // kill propre : évite bugs / removeChild
-      for (const anim of createdAnims) {
-        const st = (anim as any).scrollTrigger as ScrollTrigger | undefined;
-        if (st) st.kill(false);
-        anim.kill?.();
-      }
-
+      cancelAnimationFrame(raf);
       ctx.revert();
+      // also kill any remaining triggers created by batch/create
+      try {
+        ScrollTrigger.getAll().forEach((st) => {
+          const trig = st.trigger as Element | null;
+          if (trig && sectionEl.contains(trig)) st.kill(false);
+        });
+      } catch {
+        // ignore
+      }
     };
   }, [labels]);
 
   return (
     <section className={styles.showcase} ref={sectionRef}>
-      {/* Particles légers (pas de DOM innerHTML) */}
-      <div className={styles.particles} aria-hidden="true">
-        {particles.map((p, i) => (
-          <span
-            key={i}
-            className={styles.particle}
-            style={{
-              left: p.left,
-              top: p.top,
-              animationDelay: p.delay,
-              animationDuration: p.duration,
-              width: p.size,
-              height: p.size,
-              opacity: p.opacity,
-            }}
-          />
-        ))}
-      </div>
-
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title} ref={titleRef}>
@@ -259,13 +210,7 @@ export default function CinematicShowcase() {
         <div className={styles.cardsGrid} ref={cardsContainerRef}>
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image
-                src="/10.png"
-                alt=""
-                width={44}
-                height={44}
-                priority={false}
-              />
+              <Image src="/10.png" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.premiumDetailingTitle}</h3>
             <p className={styles.cardDesc}>{labels.premiumDetailingDesc}</p>
@@ -273,13 +218,7 @@ export default function CinematicShowcase() {
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image
-                src="/11.png"
-                alt=""
-                width={44}
-                height={44}
-                priority={false}
-              />
+              <Image src="/11.png" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.ceramicCoatingTitle}</h3>
             <p className={styles.cardDesc}>{labels.ceramicCoatingDesc}</p>
@@ -287,13 +226,7 @@ export default function CinematicShowcase() {
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image
-                src="/12.png"
-                alt=""
-                width={44}
-                height={44}
-                priority={false}
-              />
+              <Image src="/12.png" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.paintCorrectionTitle}</h3>
             <p className={styles.cardDesc}>{labels.paintCorrectionDesc}</p>
@@ -301,43 +234,31 @@ export default function CinematicShowcase() {
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image
-                src="/13.png"
-                alt=""
-                width={44}
-                height={44}
-                priority={false}
-              />
+              <Image src="/13.png" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.interiorLuxuryTitle}</h3>
             <p className={styles.cardDesc}>{labels.interiorLuxuryDesc}</p>
           </div>
         </div>
 
-
         <div className={styles.stats} ref={statsRef}>
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={carsNumRef}>
-              0+
-            </div>
+            <div className={styles.statNumber} ref={carsNumRef}>0+</div>
             <div className={styles.statLabel}>{labels.carsDetailedLabel}</div>
           </div>
+
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={clientsNumRef}>
-              0+
-            </div>
+            <div className={styles.statNumber} ref={clientsNumRef}>0+</div>
             <div className={styles.statLabel}>{labels.happyClientsLabel}</div>
           </div>
+
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={yearsNumRef}>
-              0+
-            </div>
+            <div className={styles.statNumber} ref={yearsNumRef}>0+</div>
             <div className={styles.statLabel}>{labels.yearsExperienceLabel}</div>
           </div>
+
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={ratingNumRef}>
-              0
-            </div>
+            <div className={styles.statNumber} ref={ratingNumRef}>0</div>
             <div className={styles.statLabel}>{labels.averageRatingLabel}</div>
           </div>
         </div>
