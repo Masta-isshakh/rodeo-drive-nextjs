@@ -1,699 +1,773 @@
-.galleryPage {
+/* ==============================
+   GALLERY — SILVER SHOWROOM LUX
+   Perf-safe: no infinite anims, no backdrop-filter, no heavy blur
+============================== */
+
+/* Page base */
+.galleryPage{
   padding-top: 50px;
   min-height: 100vh;
-  background: #0a0a0a;
+  color: #0b1222;
+
+  /* Bright silver showroom */
+  background:
+    radial-gradient(1200px 720px at 50% -10%, rgba(255,255,255,0.92), rgba(255,255,255,0.18) 58%, transparent 72%),
+    radial-gradient(900px 640px at 18% 18%, rgba(255,255,255,0.68), transparent 62%),
+    radial-gradient(900px 660px at 82% 14%, rgba(255,255,255,0.60), transparent 64%),
+    radial-gradient(980px 720px at 50% 120%, rgba(210,210,210,0.26), transparent 70%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.12) 0 2px, transparent 2px 14px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 16px),
+    linear-gradient(180deg, #c4c4c4 0%, #c4c4c4 46%, #c4c4c4 100%);
 }
 
-/* Hero Section */
-.hero {
+/* Subtle vignette for contrast (static) */
+.galleryPage::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,0.08) 0%, transparent 58%),
+    radial-gradient(circle at 50% 70%, rgba(0,0,0,0.10) 0%, transparent 58%),
+    linear-gradient(180deg, rgba(255,255,255,0.00) 0%, rgba(0,0,0,0.05) 92%);
+}
+
+/* =========================
+   HERO (silver + luxe)
+========================= */
+.hero{
   position: relative;
-  height: 60vh;
-  min-height: 500px;
+  height: 62vh;
+  min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
   overflow: hidden;
+
+  /* Bright silver hero */
+  background:
+    radial-gradient(900px 560px at 24% 22%, rgba(255,255,255,0.70), transparent 62%),
+    radial-gradient(980px 620px at 78% 18%, rgba(255,255,255,0.58), transparent 66%),
+    linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(233,237,244,0.92) 100%);
+  border-bottom: 1px solid rgba(11,18,34,0.10);
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(192, 192, 192, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
-  animation: pulseGradient 8s ease-in-out infinite;
-}
-
-@keyframes pulseGradient {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.heroOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.heroContent {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 900px;
-  padding: 0 20px;
-}
-
-.title {
-  font-size: clamp(48px, 7vw, 96px);
-  font-weight: 700;
-  color: #c0c0c0;
-  margin-bottom: 20px;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 50%, #8b8b8b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.subtitle {
-  font-size: clamp(18px, 2.5vw, 28px);
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 40px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.heroDecoration {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 40px;
-}
-
-.decorLine {
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #c0c0c0, transparent);
-}
-
-.decorDiamond {
-  color: #8b0000;
-  font-size: 14px;
-  animation: rotateGem 4s linear infinite;
-}
-
-@keyframes rotateGem {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Stats Section */
-.statsSection .container {
-  display: flex;
-  justify-content: center;
-}
-
-.statsGrid {
-  width: 100%;
-  max-width: 1200px;
-}
-.statCard {
-  text-align: center;
-  padding: 30px;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.6) 0%, rgba(15, 15, 30, 0.6) 100%);
-  border: 1px solid rgba(192, 192, 192, 0.2);
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-}
-
-.statCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(192, 192, 192, 0.1), transparent);
-  transition: left 0.6s;
-}
-
-.statCard:hover::before {
-  left: 100%;
-}
-
-.statNumber {
-  font-size: 56px;
-  font-weight: 700;
-  color: #c0c0c0;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.statLabel {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-/* Before/After Section */
-.beforeAfterSection {
-  padding: 100px 20px;
-  background: #0a0a0a;
-}
-
-.sectionTitle {
-  font-size: clamp(36px, 5vw, 56px);
-  font-weight: 700;
-  color: #c0c0c0;
-  text-align: center;
-  margin-bottom: 15px;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-
-.sectionSubtitle {
-  font-size: clamp(16px, 2vw, 20px);
-  color: rgba(255, 255, 255, 0.7);
-  text-align: center;
-  margin-bottom: 60px;
-  letter-spacing: 0.03em;
-}
-
-.comparisonsGrid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-}
-
-.comparisonCard {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.4) 0%, rgba(15, 15, 30, 0.4) 100%);
-  border: 1px solid rgba(192, 192, 192, 0.2);
-  border-radius: 16px;
-  padding: 40px;
-  overflow: hidden;
-  position: relative;
-}
-
-.comparisonCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #8b0000, #c0c0c0, #8b0000);
-  opacity: 0.6;
-}
-
-.comparisonImages {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 30px;
-  margin-bottom: 30px;
-  align-items: center;
-}
-
-.imageWrapper {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-}
-
-.comparisonImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.comparisonCard:hover .comparisonImage {
-  transform: scale(1.05);
-}
-
-.imageLabel {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #c0c0c0;
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid rgba(192, 192, 192, 0.3);
-}
-
-.divider {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.dividerLine {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(180deg, transparent, #c0c0c0, transparent);
-}
-
-.dividerIcon {
-  font-size: 32px;
-  color: #8b0000;
-  font-weight: 700;
-  transform: rotate(90deg);
-}
-
-.comparisonInfo {
-  text-align: center;
-}
-
-.comparisonTitle {
-  font-size: 28px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 12px;
-  letter-spacing: -0.01em;
-}
-
-.comparisonDescription {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.02em;
-}
-
-/* Gallery Section */
-.gallerySection {
-  padding: 100px 20px;
-  background: #0f0f0f;
-}
-
-
-
-.filterButtons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 50px 0;
-  flex-wrap: wrap;
-}
-
-.filterButton {
-  padding: 12px 32px;
-  background: transparent;
-  border: 2px solid rgba(192, 192, 192, 0.3);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.filterButton::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(192, 192, 192, 0.2) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-  border-radius: 50%;
-}
-
-.filterButton:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.filterButton:hover {
-  border-color: #c0c0c0;
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-
-.filterButton.active {
-  background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
-  border-color: #8b0000;
-  color: #ffffff;
-  box-shadow: 0 8px 25px rgba(139, 0, 0, 0.4);
-}
-
-.galleryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 30px;
-  margin-top: 60px;
-}
-
-.galleryItem {
-  position: relative;
-  cursor: pointer;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: all 0.5s ease;
-}
-
-.imageContainer {
-  position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-}
-
-.galleryImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s ease;
-}
-
-.galleryItem:hover .galleryImage {
-  transform: scale(1.15);
-}
-
-.imageOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.5) 50%,
-    rgba(0, 0, 0, 0.95) 100%
-  );
-  display: flex;
-  align-items: flex-end;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.galleryItem:hover .imageOverlay {
+/* Replace animated before-layer with static premium lighting */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 45%, rgba(255,255,255,0.55) 0%, transparent 56%),
+    radial-gradient(circle at 82% 40%, rgba(255,255,255,0.40) 0%, transparent 60%),
+    radial-gradient(circle at 50% 78%, rgba(0,0,0,0.12) 0%, transparent 70%);
   opacity: 1;
 }
 
-.overlayContent {
-  padding: 30px;
-  width: 100%;
-  transform: translateY(20px);
-  transition: transform 0.5s ease;
+/* Remove blur overlay (perf heavy). Keep simple overlay */
+.heroOverlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06) 0%,
+    rgba(0,0,0,0.18) 80%,
+    rgba(0,0,0,0.24) 100%
+  );
 }
 
-.galleryItem:hover .overlayContent {
-  transform: translateY(0);
-}
-
-.imageTitle {
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 10px;
-  letter-spacing: -0.01em;
-}
-
-.imageDescription {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 20px;
-  letter-spacing: 0.02em;
-}
-
-.viewButton {
-  padding: 10px 24px;
-  background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
-  border: none;
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-.viewButton:hover {
-  background: linear-gradient(135deg, #a00000 0%, #7a0000 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(139, 0, 0, 0.4);
-}
-
-/* CTA Section */
-.ctaSection {
-  padding: 120px 20px;
-  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+/* Content */
+.heroContent{
   position: relative;
-  overflow: hidden;
-}
-
-.ctaSection::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 70% 50%, rgba(192, 192, 192, 0.1) 0%, transparent 60%);
-}
-
-.ctaContent {
-  position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.ctaTitle {
-  font-size: clamp(32px, 5vw, 52px);
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 20px;
-  letter-spacing: -0.01em;
-}
-
-.ctaSubtitle {
-  font-size: clamp(16px, 2vw, 22px);
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 40px;
-  letter-spacing: 0.03em;
-}
-
-.ctaButton {
-  padding: 18px 48px;
-  background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
-  border: 2px solid #8b0000;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.ctaButton::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.2);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  transition: width 0.6s, height 0.6s;
-}
-
-.ctaButton:hover::before {
-  width: 400px;
-  height: 400px;
-}
-
-.ctaButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(139, 0, 0, 0.5);
-  border-color: #c0c0c0;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-  .comparisonsGrid {
-    gap: 40px;
-  }
-
-  .comparisonImages {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .divider {
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .dividerLine {
-    width: 60px;
-    height: 1px;
-  }
-
-  .dividerIcon {
-    transform: rotate(0deg);
-  }
-}
-
-@media (max-width: 768px) {
-  .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .galleryGrid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .filterButtons {
-    gap: 10px;
-  }
-
-  .filterButton {
-    padding: 10px 20px;
-    font-size: 12px;
-  }
-
-  .comparisonCard {
-    padding: 25px;
-  }
-
-  .beforeAfterSection {
-    padding: 60px 20px;
-  }
-
-  .gallerySection {
-    padding: 60px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    height: 50vh;
-    min-height: 400px;
-  }
-}
-/* ✅ ONLY VIDEO CAROUSEL CSS CHANGES (full width + slide takes full viewport width) */
-/* Keep everything else exactly as-is */
-/* ✅ VIDEO CAROUSEL — 90% centered, 80vh height, beautiful border */
-
-.videoCarouselSection {
-  padding: 40px 0 30px 0;
-  background: #0a0a0a;
-  border-bottom: 1px solid rgba(192, 192, 192, 0.1);
-}
-
-.videoCarouselHeader {
-  text-align: center;
-  max-width: 1000px;
-  margin: 0 auto 22px auto;
+  max-width: 980px;
   padding: 0 20px;
 }
 
-/* ✅ 90% width + centered */
-.videoTrack {
+.title{
+  font-size: clamp(44px, 6.4vw, 92px);
+  font-weight: 900;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+
+  background: linear-gradient(135deg, #0b1222 0%, #2a3348 38%, #0b1222 78%, #1b2438 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: black;
+
+  filter: drop-shadow(0 14px 26px rgba(0,0,0,0.14));
+}
+
+.subtitle{
+  font-size: clamp(16px, 2vw, 24px);
+  color: rgba(11,18,34,0.76);
+  margin-bottom: 34px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+
+/* Decoration (no rotation animation) */
+.heroDecoration{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 18px;
+  margin-top: 26px;
+  opacity: 0.95;
+}
+
+.decorLine{
+  width: 74px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(11,18,34,0.22), rgba(11,18,34,0.65), rgba(11,18,34,0.22), transparent);
+}
+
+.decorDiamond{
+  color: #bfa14a; /* premium gold accent */
+  font-size: 12px;
+  transform: rotate(45deg);
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.18));
+}
+
+/* =========================
+   STATS SECTION
+========================= */
+.statsSection{
+  padding: 54px 20px 20px;
+}
+
+.statsSection .container{
+  display:flex;
+  justify-content:center;
+}
+
+/* Keep if your layout uses grid elsewhere */
+.statsGrid{
+  width:100%;
+  max-width: 1200px;
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.statCard{
+  text-align:center;
+  padding: 22px 18px;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,244,248,0.97), rgba(232,236,244,0.98)) padding-box,
+    linear-gradient(135deg, rgba(11,18,34,0.16), rgba(11,18,34,0.06), rgba(11,18,34,0.14)) border-box;
+  border: 1px solid transparent;
+
+  box-shadow:
+    0 18px 54px rgba(0,0,0,0.10),
+    0 0 0 1px rgba(0,0,0,0.04) inset;
+
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .statCard:hover{
+    transform: translateY(-6px);
+    box-shadow:
+      0 30px 86px rgba(0,0,0,0.14),
+      0 0 0 1px rgba(0,0,0,0.05) inset;
+  }
+}
+
+.statCard::before{
+  display:none; /* remove sweep animation layer */
+}
+
+.statNumber{
+  font-size: 46px;
+  font-weight: 950;
+  margin-bottom: 8px;
+
+  background: linear-gradient(135deg, #0b1222 0%, #2a3348 55%, #0b1222 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+}
+
+.statLabel{
+  font-size: 12px;
+  color: rgba(11,18,34,0.66);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 800;
+}
+
+/* =========================
+   BEFORE/AFTER SECTION
+========================= */
+.beforeAfterSection{
+  padding: 86px 20px;
+  background: transparent; /* keep silver page background */
+}
+
+.sectionTitle{
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 950;
+  text-align:center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(11,18,34,0.92);
+}
+
+.sectionTitle::after{
+  content:"";
+  display:block;
+  width: 180px;
+  height: 2px;
+  margin: 16px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(11,18,34,0.18), rgba(11,18,34,0.58), rgba(11,18,34,0.18), transparent);
+}
+
+.sectionSubtitle{
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(11,18,34,0.70);
+  text-align:center;
+  margin-bottom: 52px;
+  letter-spacing: 0.06em;
+}
+
+.comparisonsGrid{
+  max-width: 1200px;
+  margin: 0 auto;
+  display:flex;
+  flex-direction:column;
+  gap: 26px;
+}
+
+.comparisonCard{
+  border-radius: 22px;
+  padding: 22px;
+  position: relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,244,248,0.97), rgba(232,236,244,0.98)) padding-box,
+    linear-gradient(135deg, rgba(11,18,34,0.16), rgba(11,18,34,0.06), rgba(11,18,34,0.14)) border-box;
+  border: 1px solid transparent;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.10);
+}
+
+.comparisonCard::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(191,161,74,0.20), rgba(11,18,34,0.58), rgba(191,161,74,0.20));
+  opacity: 0.9;
+}
+
+.comparisonImages{
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+  align-items:center;
+}
+
+.imageWrapper{
+  position:relative;
+  border-radius: 16px;
+  overflow:hidden;
+  aspect-ratio: 4/3;
+  border: 1px solid rgba(11,18,34,0.12);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+}
+
+.comparisonImage{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  transition: transform 260ms ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .comparisonCard:hover .comparisonImage{
+    transform: scale(1.06);
+  }
+}
+
+.imageLabel{
+  position:absolute;
+  top: 14px;
+  left: 14px;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.88);
+  color: rgba(11,18,34,0.86);
+
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  border: 1px solid rgba(11,18,34,0.12);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+}
+
+/* Divider */
+.divider{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 10px;
+}
+
+.dividerLine{
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, transparent, rgba(11,18,34,0.35), transparent);
+}
+
+.dividerIcon{
+  font-size: 22px;
+  color: #bfa14a; /* gold accent */
+  font-weight: 900;
+  transform: rotate(90deg);
+}
+
+.comparisonInfo{
+  text-align:center;
+}
+
+.comparisonTitle{
+  font-size: 22px;
+  font-weight: 950;
+  color: rgba(11,18,34,0.92);
+  margin-bottom: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.comparisonDescription{
+  font-size: 15px;
+  color: rgba(11,18,34,0.74);
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+/* =========================
+   GALLERY SECTION
+========================= */
+.gallerySection{
+  padding: 86px 20px;
+  background:
+    radial-gradient(1100px 520px at 50% 0%, rgba(255,255,255,0.58), transparent 72%),
+    linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.10));
+  border-top: 1px solid rgba(11,18,34,0.10);
+  border-bottom: 1px solid rgba(11,18,34,0.10);
+}
+
+.filterButtons{
+  display:flex;
+  justify-content:center;
+  gap: 12px;
+  margin: 40px 0 22px;
+  flex-wrap:wrap;
+}
+
+.filterButton{
+  padding: 11px 22px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(11,18,34,0.14);
+  color: rgba(11,18,34,0.84);
+
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  cursor:pointer;
+
+  box-shadow: 0 14px 44px rgba(0,0,0,0.10);
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.filterButton::before{
+  display:none; /* remove expanding radial effect (heavy) */
+}
+
+@media (hover:hover) and (pointer:fine){
+  .filterButton:hover{
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.82);
+    border-color: rgba(11,18,34,0.22);
+    box-shadow: 0 20px 56px rgba(0,0,0,0.14);
+  }
+}
+
+.filterButton.active{
+  background: linear-gradient(135deg, #0b1222 0%, #1f2a40 55%, #0b1222 100%);
+  border-color: rgba(11,18,34,0.22);
+  color: rgba(255,255,255,0.96);
+  box-shadow: 0 22px 66px rgba(0,0,0,0.18);
+}
+
+.galleryGrid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 22px;
+  margin-top: 36px;
+}
+
+.galleryItem{
+  position:relative;
+  cursor:pointer;
+  border-radius: 22px;
+  overflow:hidden;
+
+  border: 1px solid rgba(11,18,34,0.12);
+  box-shadow: 0 18px 54px rgba(0,0,0,0.14);
+
+  transform: translateZ(0);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .galleryItem:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 34px 92px rgba(0,0,0,0.18);
+  }
+}
+
+.imageContainer{
+  position:relative;
+  aspect-ratio: 4/3;
+  overflow:hidden;
+}
+
+.galleryImage{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  transition: transform 320ms ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .galleryItem:hover .galleryImage{
+    transform: scale(1.10);
+  }
+}
+
+/* Overlay: keep simple & elegant */
+.imageOverlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.00) 0%, rgba(0,0,0,0.22) 58%, rgba(0,0,0,0.62) 100%);
+  display:flex;
+  align-items:flex-end;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.galleryItem:hover .imageOverlay{
+  opacity: 1;
+}
+
+.overlayContent{
+  padding: 22px;
+  width:100%;
+  transform: translateY(10px);
+  transition: transform 220ms ease;
+}
+
+.galleryItem:hover .overlayContent{
+  transform: translateY(0);
+}
+
+.imageTitle{
+  font-size: 20px;
+  font-weight: 950;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.imageDescription{
+  font-size: 13px;
+  color: rgba(255,255,255,0.84);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.viewButton{
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.22);
+
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.96);
+
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor:pointer;
+
+  transition: transform 220ms ease, background 220ms ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .viewButton:hover{
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.22);
+  }
+}
+
+/* =========================
+   CTA SECTION (silver)
+========================= */
+.ctaSection{
+  padding: 96px 20px;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(900px 560px at 30% 35%, rgba(255,255,255,0.60), transparent 62%),
+    radial-gradient(900px 600px at 70% 35%, rgba(255,255,255,0.46), transparent 66%),
+    linear-gradient(180deg, rgba(255,255,255,0.58), rgba(233,237,244,0.94));
+  border-top: 1px solid rgba(11,18,34,0.10);
+}
+
+.ctaSection::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 45%, rgba(255,255,255,0.45) 0%, transparent 56%),
+    radial-gradient(circle at 82% 45%, rgba(0,0,0,0.12) 0%, transparent 66%);
+}
+
+.ctaContent{
+  position: relative;
+  z-index: 1;
+  text-align:center;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.ctaTitle{
+  font-size: clamp(28px, 4.6vw, 52px);
+  font-weight: 950;
+  margin-bottom: 14px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(11,18,34,0.94);
+}
+
+.ctaSubtitle{
+  font-size: clamp(15px, 1.8vw, 20px);
+  color: rgba(11,18,34,0.74);
+  margin-bottom: 26px;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+.ctaButton{
+  padding: 14px 30px;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #0b1222 0%, #1f2a40 55%, #0b1222 100%);
+  border: 1px solid rgba(11,18,34,0.22);
+  color: rgba(255,255,255,0.96);
+
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor:pointer;
+
+  box-shadow: 0 22px 66px rgba(0,0,0,0.18);
+  transition: transform 220ms ease, filter 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaButton::before{
+  display:none; /* remove expanding circle (heavy) */
+}
+
+@media (hover:hover) and (pointer:fine){
+  .ctaButton:hover{
+    transform: translateY(-3px);
+    filter: brightness(1.05);
+  }
+}
+
+/* =========================
+   VIDEO CAROUSEL — SILVER
+========================= */
+.videoCarouselSection{
+  padding: 34px 0 22px 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(11,18,34,0.10);
+}
+
+.videoCarouselHeader{
+  text-align:center;
+  max-width: 1000px;
+  margin: 0 auto 18px auto;
+  padding: 0 20px;
+}
+
+/* 90% width centered */
+.videoTrack{
   width: 90%;
   margin: 0 auto;
-  display: flex;
+  display:flex;
   gap: 18px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-
-  padding: 14px; /* gives space for border/glow */
+  padding: 12px;
 }
 
-.videoTrack::-webkit-scrollbar {
-  display: none;
-}
+.videoTrack::-webkit-scrollbar{ display:none; }
 
-/* each slide fills the track width (so your auto-scroll still works) */
-.videoSlide {
+.videoSlide{
   flex: 0 0 100%;
   scroll-snap-align: start;
 }
 
-/* ✅ beautiful frame */
-.videoFrame {
+.videoFrame{
   width: 100%;
-  height: 80vh;                 /* ✅ requested */
-  border-radius: 18px;
+  height: 80vh;
+  border-radius: 22px;
   overflow: hidden;
-
-  border: 1px solid rgba(192, 192, 192, 0.28);
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.55), rgba(15, 15, 30, 0.55));
-  box-shadow:
-    0 18px 60px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(139, 0, 0, 0.18) inset;
   position: relative;
+
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,244,248,0.97), rgba(232,236,244,0.98)) padding-box,
+    linear-gradient(135deg, rgba(11,18,34,0.16), rgba(11,18,34,0.06), rgba(11,18,34,0.14)) border-box;
+  border: 1px solid transparent;
+
+  box-shadow: 0 26px 80px rgba(0,0,0,0.16);
 }
 
-/* subtle premium top highlight */
-.videoFrame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+.videoFrame::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255,255,255,0.10) 0%,
     transparent 28%,
     transparent 72%,
-    rgba(0, 0, 0, 0.25) 100%
+    rgba(0,0,0,0.18) 100%
   );
 }
 
-/* ✅ video fills frame */
-.video {
-  width: 100%;
-  height: 100%;
+.video{
+  width:100%;
+  height:100%;
   object-fit: cover;
-  display: block;
-  filter: contrast(1.05) brightness(0.95);
+  display:block;
+  filter: contrast(1.04) brightness(0.98);
 }
 
-/* Mobile tuning */
-@media (max-width: 768px) {
-  .videoTrack {
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 992px){
+  .comparisonImages{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .divider{
+    flex-direction: row;
+    width: 100%;
+    justify-content:center;
+  }
+
+  .dividerLine{
+    width: 60px;
+    height: 1px;
+  }
+
+  .dividerIcon{
+    transform: rotate(0deg);
+  }
+}
+
+@media (max-width: 768px){
+  .statsGrid{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .galleryGrid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .filterButtons{
+    gap: 10px;
+  }
+
+  .filterButton{
+    padding: 10px 16px;
+    font-size: 11px;
+  }
+
+  .comparisonCard{
+    padding: 18px;
+  }
+
+  .beforeAfterSection{
+    padding: 60px 20px;
+  }
+
+  .gallerySection{
+    padding: 60px 20px;
+  }
+
+  .videoTrack{
     width: 92%;
     padding: 10px;
   }
 
-  .videoFrame {
+  .videoFrame{
     height: 70vh;
-    border-radius: 14px;
+    border-radius: 18px;
   }
 }
 
-@media (max-width: 480px) {
-  .videoFrame {
+@media (max-width: 480px){
+  .statsGrid{
+    grid-template-columns: 1fr;
+  }
+
+  .hero{
+    height: 52vh;
+    min-height: 420px;
+  }
+
+  .videoFrame{
     height: 62vh;
   }
 }

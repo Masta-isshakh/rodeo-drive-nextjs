@@ -15,7 +15,7 @@ type ServiceGroup = {
   slug: string;
   title: string;
   description: string;
-  imageSrc: string; // ✅ replaced Icon with image path
+  imageSrc: string;
   subservices: string[];
 };
 
@@ -27,6 +27,36 @@ type PackageCard = {
 
 function safeText(v: unknown, fallback: string) {
   return typeof v === "string" && v.trim() ? v : fallback;
+}
+
+function GoldBadgeIcon() {
+  // Premium “crown/star” style icon (gold)
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={styles.badgeIcon}
+    >
+      <path
+        d="M4 10l3-3 5 4 5-4 3 3v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7Z"
+        fill="currentColor"
+        opacity="0.9"
+      />
+      <path
+        d="M7 7l-3 3 2 2 1-2 5 3 5-3 1 2 2-2-3-3-5 4-5-4Z"
+        fill="currentColor"
+      />
+      <path
+        d="M8 20h8"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+    </svg>
+  );
 }
 
 export default function ServicesPage() {
@@ -41,32 +71,38 @@ export default function ServicesPage() {
     const services = (t as any)?.services ?? {};
     const packages = (t as any)?.packages ?? {};
     const packagesNew = (t as any)?.packagesNew ?? {};
+    const footer = (t as any)?.footer ?? {};
 
     return {
-      heroTitle: safeText(
-        services.title,
-        language === "en" ? "Premium Services" : "خدمات مميزة"
-      ),
+      kicker: safeText((services as any).kicker, language === "en" ? "Luxury Car Care" : "عناية فاخرة بالسيارات"),
+      heroTitle: safeText(services.title, language === "en" ? "Premium Services" : "خدمات مميزة"),
       heroSubtitle: safeText(
         services.subtitle,
         language === "en"
-          ? "Comprehensive automotive care solutions"
-          : "حلول شاملة لرعاية السيارات"
+          ? "Detailing, Protection and Finishing—crafted to showroom standards."
+          : "تفصيل، حماية، وتشطيب—بمعايير صالات العرض."
       ),
+
       packagesTitle: safeText(packages.title, language === "en" ? "Packages" : "الباقات"),
       viewAllTitle: safeText(services.viewAll, language === "en" ? "View All Services" : "عرض الخدمات"),
       exploreBtn: safeText(services.learnMore, language === "en" ? "Explore" : "استكشاف"),
-      subservicesLabel: safeText(services.subservicesLabel, language === "en" ? "Subservices" : "الخدمات الفرعية"),
+      getQuote: safeText((services as any).getQuote, language === "en" ? "Get a Quote" : "اطلب عرض سعر"),
 
-      // New packages titles
       vipTitle: safeText(packagesNew.vipTitle, "VIP Detailing"),
       standardTitle: safeText(packagesNew.standardTitle, "Standard Packages"),
       premiumTitle: safeText(packagesNew.premiumTitle, "Premium Packages"),
-      featuredBadge: safeText(packagesNew.featuredBadge, language === "en" ? "Recommended" : "موصى به"),
+
+      featuredBadge: safeText(
+        packagesNew.featuredBadge,
+        language === "en" ? "Most Popular" : "الأكثر طلبًا"
+      ),
+
+      // Optional: used in CTA arrow label
+      learnMore: safeText(services.learnMore, language === "en" ? "Explore" : "استكشاف"),
+      rights: safeText(footer.rights, "All rights reserved."),
     };
   }, [t, language]);
 
-  // ✅ 3 packages (VIP / Standard / Premium)
   const packages: PackageCard[] = useMemo(() => {
     const packagesNew = (t as any)?.packagesNew ?? {};
 
@@ -76,7 +112,6 @@ export default function ServicesPage() {
       "Rim nano coating",
       "Leather nano coating",
       "Body nano coating",
-
     ];
 
     const standard = packagesNew.standardFeatures ?? [
@@ -105,8 +140,6 @@ export default function ServicesPage() {
     ];
   }, [t, labels.vipTitle, labels.standardTitle, labels.premiumTitle, labels.featuredBadge]);
 
-  // ✅ 6 services only + subservices + routing
-  // Put your images inside /public, then reference them like "/icons/ppf.png"
   const serviceGroups: ServiceGroup[] = useMemo(() => {
     const data = (t as any)?.servicesGroups ?? {};
 
@@ -121,14 +154,7 @@ export default function ServicesPage() {
             : "حلول حماية كاملة بفيلم PPF للحفاظ على الطلاء."
         ),
         imageSrc: "/ppf-icon.png",
-        subservices: data.ppfSubservices ?? [
-          "Full Body PPF",
-          "Front-End PPF (Bumper, Hood, Fenders, Mirrors)",
-          "Gloss / Matte / Satin PPF",
-          "Self-Healing PPF",
-          "Headlight, Taillight & Interior PPF",
-          "PPF Removal & Replacement",
-        ],
+        subservices: data.ppfSubservices ?? [],
       },
       {
         slug: "window-solar-film",
@@ -140,13 +166,7 @@ export default function ServicesPage() {
             : "تقليل الحرارة والأشعة فوق البنفسجية مع تظليل وحماية شفافة."
         ),
         imageSrc: "/SolarWindowTint-icon.png",
-        subservices: data.solarSubservices ?? [
-          "Nano Ceramic Tint",
-          "Heat & UV Protection Film",
-          "Windshield Clear Protection",
-          "Sunroof & Panoramic Roof Tint",
-          "Tint Removal & Reinstallation",
-        ],
+        subservices: data.solarSubservices ?? [],
       },
       {
         slug: "detailing-coating",
@@ -158,12 +178,7 @@ export default function ServicesPage() {
             : "تصحيح طلاء وتنظيف عميق وطبقات حماية متقدمة."
         ),
         imageSrc: "/Exteriordetailing-icon.png",
-        subservices: data.detailingSubservices ?? [
-          "Exterior Detailing & Paint Correction",
-          "Interior Deep Cleaning",
-          "Ceramic & Graphene Coating",
-          "Glass, Wheel & Interior Coating",
-        ],
+        subservices: data.detailingSubservices ?? [],
       },
       {
         slug: "paint-repair-services",
@@ -175,13 +190,7 @@ export default function ServicesPage() {
             : "إصلاحات ذكية ودهان مع مطابقة لون دقيقة."
         ),
         imageSrc: "/paintessdentrepair-icon.png",
-        subservices: data.paintRepairSubservices ?? [
-          "Smart Paint Repair",
-          "Rubber / Peelable Paint",
-          "Normal & Full Repaint",
-          "Paintless Dent Repair (PDR)",
-          "Color Matching & Panel Painting",
-        ],
+        subservices: data.paintRepairSubservices ?? [],
       },
       {
         slug: "car-wash-services",
@@ -193,12 +202,7 @@ export default function ServicesPage() {
             : "غسيل يدوي ممتاز وغسيل رغوي وتعقيم داخلي آمن."
         ),
         imageSrc: "/carwash-icon.png",
-        subservices: data.washSubservices ?? [
-          "Basic & Premium Hand Wash",
-          "Foam Wash",
-          "Engine Bay Cleaning",
-          "Interior Vacuum & Sanitization",
-        ],
+        subservices: data.washSubservices ?? [],
       },
       {
         slug: "windshield-services",
@@ -210,12 +214,7 @@ export default function ServicesPage() {
             : "إصلاح وحماية واستبدال لضمان أفضل رؤية."
         ),
         imageSrc: "/windsheild-icon.png",
-        subservices: data.windshieldSubservices ?? [
-          "Stone Chip & Crack Repair",
-          "Glass Polishing",
-          "Water Repellent Treatment",
-          "Windshield Replacement",
-        ],
+        subservices: data.windshieldSubservices ?? [],
       },
     ];
   }, [t, language]);
@@ -234,28 +233,28 @@ export default function ServicesPage() {
     ScrollTrigger.config({ ignoreMobileResize: true });
 
     const ctx = gsap.context(() => {
-      // HERO
+      // HERO (quick)
       if (heroRef.current) {
         const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
         if (heroContent) {
           gsap.fromTo(
             heroContent,
             { autoAlpha: 0, y: 18 },
-            { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }
+            { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }
           );
         }
       }
 
-      // PACKAGES section
+      // PACKAGES
       if (packagesRef.current) {
         const cards = packagesRef.current.querySelectorAll(`.${styles.packageCard}`);
         gsap.fromTo(
           cards,
-          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 0, y: 14 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.45,
+            duration: 0.42,
             stagger: 0.06,
             ease: "power2.out",
             scrollTrigger: { trigger: packagesRef.current, start: "top 85%", once: true },
@@ -263,16 +262,16 @@ export default function ServicesPage() {
         );
       }
 
-      // SERVICES section
+      // SERVICES
       if (servicesRef.current) {
         const items = servicesRef.current.querySelectorAll(`.${styles.serviceCard}`);
         gsap.fromTo(
           items,
-          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 0, y: 14 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.45,
+            duration: 0.42,
             stagger: 0.06,
             ease: "power2.out",
             scrollTrigger: { trigger: servicesRef.current, start: "top 85%", once: true },
@@ -288,16 +287,18 @@ export default function ServicesPage() {
 
   return (
     <main className={styles.servicesPage} ref={rootRef}>
-      {/* Hero */}
+      {/* HERO */}
       <section className={styles.servicesHero} ref={heroRef}>
         <div className={styles.heroOverlay} />
+        <div className={styles.heroSpotlights} aria-hidden="true" />
         <div className={styles.heroContent}>
+          <div className={styles.heroKicker}>{labels.kicker}</div>
           <h1 className={styles.heroTitle}>{labels.heroTitle}</h1>
           <p className={styles.heroSubtitle}>{labels.heroSubtitle}</p>
         </div>
       </section>
 
-      {/* Packages */}
+      {/* PACKAGES */}
       <section className={styles.packagesSection} ref={packagesRef}>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>{labels.packagesTitle}</h2>
@@ -308,18 +309,34 @@ export default function ServicesPage() {
                 key={pkg.title}
                 className={`${styles.packageCard} ${pkg.badge ? styles.featured : ""}`}
               >
-                {pkg.badge && <div className={styles.featuredBadge}>{pkg.badge}</div>}
+                {/* Gold sticker top-right (never overlaps title) */}
+                {pkg.badge && (
+                  <div className={styles.popularSticker} aria-label={pkg.badge}>
+                    <span className={styles.stickerPin} aria-hidden="true" />
+                    <span className={styles.stickerIcon} aria-hidden="true">
+                      <GoldBadgeIcon />
+                    </span>
+                    <span className={styles.stickerText}>{pkg.badge}</span>
+                    <span className={styles.stickerTail} aria-hidden="true" />
+                  </div>
+                )}
 
-                <h3 className={styles.packageName}>{pkg.title}</h3>
+                <div className={styles.packageHeader}>
+                  <h3 className={styles.packageName}>{pkg.title}</h3>
+                </div>
 
                 <ul className={styles.packageFeatures}>
                   {pkg.features.map((f) => (
-                    <li key={f}>✓ {f}</li>
+                    <li key={f} className={styles.packageFeature}>
+                      <span className={styles.featureDot} aria-hidden="true" />
+                      <span className={styles.featureText}>{f}</span>
+                    </li>
                   ))}
                 </ul>
 
                 <Link href="/contact" className={styles.packageButton}>
-                  {t.services.getQuote ?? (language === "en" ? "Get a Quote" : "اطلب عرض سعر")}
+                  {labels.getQuote}
+                  <span className={styles.btnArrow} aria-hidden="true">→</span>
                 </Link>
               </article>
             ))}
@@ -327,46 +344,51 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* View All Services (6 only) */}
+      {/* SERVICES */}
       <section className={styles.servicesListSection} ref={servicesRef}>
-        <div className={styles.container}>
+        <div className={styles.containerWide}>
           <h2 className={styles.sectionTitle}>{labels.viewAllTitle}</h2>
 
-<div className={styles.servicesGrid} aria-live="polite">
-  {serviceGroups.map((svc) => (
-    <article key={svc.slug} className={styles.serviceCard}>
-      <div className={styles.serviceMedia}>
-        <BeforeAfterSlider
-          beforeSrc={`/proof/${svc.slug}-before.png`}
-          afterSrc={`/proof/${svc.slug}-after.png`}
-          alt={`${svc.title} before/after`}
-          height={320}
-        />
+          <div className={styles.servicesGrid} aria-live="polite">
+            {serviceGroups.map((svc) => (
+              <article key={svc.slug} className={styles.serviceCard}>
+                <div className={styles.serviceMedia}>
+                  <BeforeAfterSlider
+                    beforeSrc={`/proof/${svc.slug}-before.png`}
+                    afterSrc={`/proof/${svc.slug}-after.png`}
+                    alt={`${svc.title} before/after`}
+                    height={320}
+                  />
 
-        <span className={styles.serviceIcon} aria-hidden="true">
-          <img
-            src={svc.imageSrc}
-            alt=""
-            className={styles.serviceIconImage}
-            loading="lazy"
-          />
-        </span>
-      </div>
+                  <div className={styles.mediaOverlay} aria-hidden="true" />
 
-      <h3 className={styles.serviceName}>{svc.title}</h3>
-      <p className={styles.serviceDescription}>{svc.description}</p>
+                  <span className={styles.serviceIcon} aria-hidden="true">
+                    <img
+                      src={svc.imageSrc}
+                      alt=""
+                      className={styles.serviceIconImage}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                </div>
 
-      <Link
-        href={`/services/${svc.slug}`}
-        className={styles.serviceButton}
-        aria-label={`${svc.title} - ${labels.exploreBtn}`}
-      >
-        {labels.exploreBtn}
-      </Link>
-    </article>
-  ))}
-</div>
+                <div className={styles.serviceBody}>
+                  <h3 className={styles.serviceName}>{svc.title}</h3>
+                  <p className={styles.serviceDescription}>{svc.description}</p>
 
+                  <Link
+                    href={`/services/${svc.slug}`}
+                    className={styles.serviceButton}
+                    aria-label={`${svc.title} - ${labels.exploreBtn}`}
+                  >
+                    {labels.exploreBtn}
+                    <span className={styles.btnArrow} aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </main>
