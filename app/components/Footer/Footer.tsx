@@ -4,7 +4,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Instagram, Facebook, Twitter, Linkedin, MapPin } from 'lucide-react';
+import { MapPin  } from 'lucide-react';
 import styles from './Footer.module.css';
 import { useI18n } from '../../lib/i18n';
 import { SITE } from '@/app/config/site';
@@ -166,42 +166,83 @@ export default function Footer() {
             <div className={styles.socialBlock}>
               <div className={styles.blockLabel}>{labels.followUs}</div>
               <div className={styles.socialLinks}>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialLink}
-                  aria-label="Instagram"
-                >
-                  <Instagram size={20} />
-                </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialLink}
-                  aria-label="Facebook"
-                >
-                  <Facebook size={20} />
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialLink}
-                  aria-label="Twitter"
-                >
-                  <Twitter size={20} />
-                </a>
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialLink}
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={20} />
-                </a>
+<a
+  href="https://www.instagram.com/YOUR_INSTAGRAM_USERNAME"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={styles.socialLink}
+  aria-label="Instagram"
+>
+  {/* Instagram (brand-style) */}
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" strokeWidth="2" />
+    <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="2" />
+    <circle cx="16.8" cy="7.2" r="1" fill="currentColor" />
+  </svg>
+</a>
+
+<a
+  href="https://www.facebook.com/YOUR_FACEBOOK_PAGE"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={styles.socialLink}
+  aria-label="Facebook"
+>
+  {/* Facebook (brand-style) */}
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M13.5 22v-8h2.7l.4-3h-3.1V9.1c0-.9.3-1.6 1.6-1.6H16.7V4.8c-.3 0-1.4-.1-2.7-.1-2.7 0-4.5 1.6-4.5 4.6V11H7v3h2.5v8h4z" />
+  </svg>
+</a>
+
+<a
+  href="https://x.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={styles.socialLink}
+  aria-label="X (formerly Twitter)"
+>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26L22.5 21.75h-6.592l-5.156-6.745L4.844 21.75H1.536l7.73-8.835L1.5 2.25h6.75l4.66 6.07L18.244 2.25z" />
+  </svg>
+</a>
+
+<a
+  href="https://www.snapchat.com/add/YOUR_USERNAME"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={styles.socialLink}
+  aria-label="Snapchat"
+>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12 2.5c-3.25 0-5.88 2.63-5.88 5.88v3.63c0 .53-.7.88-1.4 1.05-.88.2-1.58.7-1.58 1.4 0 .7.7 1.2 1.58 1.4.7.17 1.4.52 1.4 1.05 0 2.05 2.93 4.09 5.88 4.09s5.88-2.04 5.88-4.09c0-.53.7-.88 1.4-1.05.88-.2 1.58-.7 1.58-1.4 0-.7-.7-1.2-1.58-1.4-.7-.17-1.4-.52-1.4-1.05V8.38C17.88 5.13 15.25 2.5 12 2.5z"/>
+  </svg>
+</a>
+
+
               </div>
 
               <a
@@ -234,11 +275,11 @@ export default function Footer() {
           <div className={styles.footerColumn}>
             <h3 className={styles.footerTitle}>{labels.services}</h3>
             <ul className={styles.footerList}>
-              <li><Link href="/services" className={styles.footerLink}>{labels.paintProtection}</Link></li>
-              <li><Link href="/services" className={styles.footerLink}>{labels.detailing}</Link></li>
-              <li><Link href="/services" className={styles.footerLink}>{labels.nanoLeather}</Link></li>
-              <li><Link href="/services" className={styles.footerLink}>{labels.windshield}</Link></li>
-              <li><Link href="/services" className={styles.footerLink}>{labels.pdrandpaint}</Link></li>
+              <li><Link href="/services/full-protection-ppf" className={styles.footerLink}>{labels.paintProtection}</Link></li>
+              <li><Link href="/services/detailing-coating" className={styles.footerLink}>{labels.detailing}</Link></li>
+              <li><Link href="/services/window-solar-film" className={styles.footerLink}>{labels.nanoLeather}</Link></li>
+              <li><Link href="/services/windshield-services" className={styles.footerLink}>{labels.windshield}</Link></li>
+              <li><Link href="/services/paint-repair-services" className={styles.footerLink}>{labels.pdrandpaint}</Link></li>
             </ul>
           </div>
 
