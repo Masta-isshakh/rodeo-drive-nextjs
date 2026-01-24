@@ -79,7 +79,7 @@
   margin: 0;
   padding: 0;
 
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(175, 175, 175, 0.95);
   font-weight: 900;
   text-transform: uppercase;
 
@@ -232,7 +232,7 @@
   padding: 10px 10px;
   border-radius: 999px;
 
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(175, 175, 175, 0.92);
   text-decoration: none;
 
   font-size: clamp(0.70rem, 0.75vw, 0.78rem);
@@ -315,7 +315,7 @@
   background: transparent;
   border: none;
 
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(175, 175, 175, 0.95);
   font-weight: 700;
   font-size: 12px;
 
@@ -365,7 +365,7 @@
 
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(192, 192, 192, 0.18);
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(175, 175, 175, 0.95);
 
   width: 44px;
   height: 44px;
@@ -450,10 +450,10 @@
   z-index: calc(var(--z-sticky) + 2);
 
   background:
-    radial-gradient(900px 520px at 30% 10%, rgba(255,255,255,0.92), rgba(255,255,255,0.18) 55%, transparent 72%),
+    radial-gradient(900px 520px at 30% 10%, rgba(175, 175, 175, 0.92), rgba(255,255,255,0.18) 55%, transparent 72%),
     radial-gradient(720px 520px at 90% 18%, rgba(255,255,255,0.55), transparent 60%),
     radial-gradient(980px 760px at 50% 120%, rgba(210,210,210,0.22), transparent 70%),
-    linear-gradient(180deg, #f6f7fb 0%, #eef1f6 55%, #e9edf4 100%);
+    linear-gradient(180deg, #aaaaaa 0%, #aaaaaa 55%, #aaaaaa 100%);
 
   border-left: 1px solid rgba(11, 18, 34, 0.10);
   box-shadow: -18px 0 70px rgba(0, 0, 0, 0.22);
