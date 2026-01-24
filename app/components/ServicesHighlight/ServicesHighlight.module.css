@@ -116,13 +116,14 @@
   min-width: 0;
   position: relative;
   z-index: 1;
+  color: black;
 }
 
 .kicker{
   font-size: 0.9rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: rgba(11,18,34,0.62);
+  color: rgba(0, 0, 0, 0.62);
   margin-bottom: 10px;
 }
 
@@ -136,13 +137,13 @@
   background: linear-gradient(135deg, #aaaaaa 0%, #aaaaaa 28%, #aaaaaa 55%, #aaaaaa 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  color: black;
 
   filter: drop-shadow(0 18px 30px rgba(0,0,0,0.10));
 }
 
 .lead{
-  color: rgba(11,18,34,0.74);
+  color: rgba(0, 0, 0, 0.74);
   font-size: 1.02rem;
   line-height: 1.7;
   max-width: 70ch;
@@ -424,6 +425,8 @@
 
 /* Bottom row */
 .bottomRow{
+  border-radius: 15px;
+  background-color: #aaaaaa;
   margin-top: clamp(22px, 3vw, 36px);
   display:flex;
   align-items:center;
@@ -439,9 +442,10 @@
 }
 
 .bottomText{
+  text-align: center;
   flex: 0 0 auto;
   margin: 0;
-  color: rgba(11,18,34,0.64);
+  color: black;
   font-size: 0.95rem;
   line-height: 1.5;
   max-width: 58ch;

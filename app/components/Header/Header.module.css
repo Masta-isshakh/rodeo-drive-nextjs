@@ -1,110 +1,83 @@
-/* =========================================================
-   HEADER — FINAL “NO-OVERLAP” SILVER SYSTEM
-   Goals:
-   1) "RODEO DRIVE" ALWAYS fully visible (no ellipsis)
-   2) Google Reviews NEVER overlaps nav (hide earlier + move to drawer)
-   3) At ~1250px and below: switch to burger (professional breakpoint)
-   4) Mobile drawer uses SILVER design (not navy)
-   ========================================================= */
+/* ===============================
+   HEADER — Silver Premium (No overlap, responsive)
+   Works with your current JSX classes
+   =============================== */
 
-/* -------------------------------
-   Header shell
--------------------------------- */
-.header {
+.header{
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-
-  height: 80px;
   z-index: var(--z-sticky);
+  height: 80px;
   width: 100%;
+
   padding: 10px 0;
+  border-bottom: 1px solid rgba(192,192,192,0.14);
 
-  border-bottom: 1px solid rgba(192, 192, 192, 0.14);
-
+  /* glass */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
-  transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease,
-    border-color 0.35s ease;
+  transition:
+    background 260ms ease,
+    box-shadow 260ms ease,
+    border-color 260ms ease,
+    padding 260ms ease;
 }
 
-/* If you already have these classes in your module,
-   keep them (example): */
-.transparent {
-  background: rgba(10, 25, 41, 0.35);
-  box-shadow: none;
-}
-.solid {
-  background: rgba(10, 25, 41, 0.78);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+/* transparent vs solid states used in your component */
+.transparent{
+  background: rgba(10,25,41,0.22);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  border-color: rgba(192,192,192,0.10);
 }
 
-/* -------------------------------
-   Layout: Grid (no collision)
-   - Center column shrinks safely
--------------------------------- */
-.headerContainer {
+.solid{
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 40%, rgba(107,15,26,0.06) 100%),
+    rgba(10,25,41,0.86);
+  box-shadow: 0 14px 46px rgba(0,0,0,0.38);
+  border-color: rgba(192,192,192,0.16);
+}
+
+/* ===============================
+   LAYOUT (no overlap)
+   =============================== */
+
+.headerContainer{
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(14px, 2vw, 28px);
+  padding: 0 clamp(12px, 1.6vw, 22px);
 
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;
   align-items: center;
+  column-gap: clamp(8px, 1.2vw, 18px);
 
-  column-gap: clamp(10px, 1.6vw, 22px);
+  min-width: 0; /* critical for grid shrinking */
+}
+
+/* ===============================
+   LOGO GROUP
+   =============================== */
+
+.logoo{
+  display: flex;
+  align-items: center;
+  gap: 12px;
   min-width: 0;
 }
 
-/* -------------------------------
-   Left: Logo area
--------------------------------- */
-.logoo {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
-}
-
-.logoLink {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-}
-
-/* ✅ Always show full text (no truncation) */
-.logoLink h4 {
-  margin: 0;
-  padding: 0;
-
-  color: rgba(175, 175, 175, 0.95);
-  font-weight: 900;
-  text-transform: uppercase;
-
-  /* Responsive sizing so it fits ALL screens */
-  font-size: clamp(0.95rem, 1.15vw, 1.25rem);
-  letter-spacing: clamp(0.10em, 0.16vw, 0.18em);
-
-  white-space: nowrap;
-  overflow: visible;
-  text-overflow: clip;
-  max-width: none;
-}
-
-/* -------------------------------
-   WhatsApp / Logo round buttons
--------------------------------- */
-.whatsappButton,
-.whatsappButtonn {
+/* round logo */
+.whatsappButtonn{
+  width: 56px;
+  height: 56px;
   border-radius: 999px;
   background: transparent !important;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   position: relative;
   overflow: visible;
 
@@ -112,260 +85,279 @@
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.40),
+    0 0 0 1px rgba(255,255,255,0.10);
 
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
-.whatsappButton {
-  width: 32px;
-  height: 32px;
-}
-.whatsappButtonn {
+.whatsappButtonn img{
+  display: block;
   width: 56px;
   height: 56px;
+  object-fit: cover;
+  border-radius: 999px;
 }
 
-.whatsappButton img {
-  display: block;
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  background: transparent !important;
-  border-radius: 0 !important;
-}
-
-.whatsappButtonn img {
-  display: block;
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  background: transparent !important;
-  border-radius: 30px !important;
-}
-
-/* ring + glow */
-.whatsappButton::before,
-.whatsappButtonn::before {
+/* subtle ring (keeps your premium look) */
+.whatsappButtonn::before{
   content: "";
   position: absolute;
   inset: -7px;
   border-radius: 999px;
-  border: 2px solid rgba(192, 192, 192, 0.7);
-  opacity: 0.95;
+  border: 2px solid rgba(192, 192, 192, 0.62);
+  opacity: 0.9;
   transform: scale(0.92);
-  animation: ringPulseSame 1.7s ease-in-out infinite;
+  animation: ringPulseSame 1.9s ease-in-out infinite;
   pointer-events: none;
 }
 
-.whatsappButton::after,
-.whatsappButtonn::after {
+.whatsappButtonn::after{
   content: "";
   position: absolute;
   inset: -14px;
   border-radius: 999px;
-  opacity: 0.8;
-  animation: glowPulseSame 2.3s ease-in-out infinite;
+  opacity: 0.75;
+  animation: glowPulseSame 2.6s ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes ringPulseSame {
-  0%,
-  100% {
-    transform: scale(0.92);
-    opacity: 0.85;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
+@keyframes ringPulseSame{
+  0%, 100% { transform: scale(0.92); opacity: 0.78; }
+  50%      { transform: scale(1.05); opacity: 1; }
 }
 
-@keyframes glowPulseSame {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 0.9;
-  }
+@keyframes glowPulseSame{
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.85; }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .whatsappButton:hover,
-  .whatsappButtonn:hover {
-    transform: translateY(-1px) scale(1.06);
-  }
-}
-
-/* -------------------------------
-   Center: Nav
--------------------------------- */
-.nav {
+.logoLink{
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   min-width: 0;
-  display: flex;
-  justify-content: center;
 }
 
-.navList {
+.logoLink h4{
+  margin: 0;
+  /* ensure full “RODEO DRIVE” stays visible across sizes */
+  font-size: clamp(14px, 1.15vw, 18px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 900;
+  white-space: nowrap;
+
+  /* silver text */
+  background: linear-gradient(135deg, #ffffff 0%, #d6d6d6 55%, #a7a7a7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  filter: drop-shadow(0 0 16px rgba(192,192,192,0.14));
+}
+
+/* ===============================
+   NAV (center)
+   =============================== */
+
+.nav{
+  min-width: 0;
+  justify-self: center;
+}
+
+.navList{
   list-style: none;
   margin: 0;
-  padding: 10px 14px;
+  padding: 8px 12px;
 
   display: inline-flex;
   align-items: center;
-  gap: clamp(8px, 1.1vw, 18px);
+  gap: clamp(8px, 1vw, 16px);
+
+  min-width: 0;
 
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  white-space: nowrap;
-  min-width: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(192,192,192,0.14);
 }
 
-.navLink {
-  display: inline-flex;
-  align-items: center;
-
-  padding: 10px 10px;
-  border-radius: 999px;
-
-  color: rgba(175, 175, 175, 0.92);
-  text-decoration: none;
-
-  font-size: clamp(0.70rem, 0.75vw, 0.78rem);
-  font-weight: 850;
-  letter-spacing: 0.12em;
+.navLink{
+  color: rgba(255,255,255,0.90);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
 
   position: relative;
-  transition: transform 200ms ease, background 200ms ease, color 200ms ease;
+  padding: 10px 8px;
+  white-space: nowrap;
+  text-decoration: none;
+
+  transition: color 180ms ease;
 }
 
-.navLink::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
+.navLink::after{
+  content:"";
+  position:absolute;
+  left: 10px;
+  right: 10px;
   bottom: 6px;
   height: 2px;
   border-radius: 999px;
-
+  background: linear-gradient(90deg, transparent, rgba(192,192,192,0.70), transparent);
   transform: scaleX(0);
-  transform-origin: 50% 50%;
-  background: var(--gradient-silver);
-  transition: transform 220ms ease;
+  transform-origin: center;
+  transition: transform 200ms ease;
+  opacity: 0.9;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .navLink:hover {
-    color: var(--color-primary-silver);
-    background: rgba(255, 255, 255, 0.06);
-    transform: translateY(-1px);
-  }
-  .navLink:hover::after {
-    transform: scaleX(1);
-  }
+.navLink:hover{
+  color: rgba(255,255,255,0.98);
 }
 
-.activeNavLink {
-  color: var(--color-primary-silver);
-}
-.activeNavLink::after {
+.navLink:hover::after{
   transform: scaleX(1);
 }
 
-/* -------------------------------
-   Right: Actions (no overlap)
--------------------------------- */
-.actions {
-  display: inline-flex;
+.activeNavLink{
+  color: rgba(255,255,255,0.98);
+}
+
+.activeNavLink::after{
+  transform: scaleX(1);
+}
+
+/* ===============================
+   ACTIONS (right)
+   =============================== */
+
+.actions{
+  display: flex;
   align-items: center;
-  gap: 10px;
-  justify-content: flex-end;
+  gap: 8px;
+  justify-self: end;
+  flex-shrink: 0;
   min-width: 0;
 }
 
-/* ✅ Reviews never overlap: allow it on large only */
-.reviewsWrap {
+/* ✅ Google Reviews smaller + never dominates */
+.reviewsWrap{
   display: flex;
   align-items: center;
-  max-width: 220px;
+  max-width: 170px;
+  min-width: 0;
   overflow: hidden;
 }
 
-/* Language */
-.languageSwitch {
+.reviewsWrap > *{
+  transform: scale(0.86);
+  transform-origin: right center;
+}
+
+.reviewsWrap *{
+  max-width: 100%;
+  min-width: 0;
+}
+
+.languageSwitch{
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 4px;
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(192, 192, 192, 0.18);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(192,192,192,0.18);
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
-.langButton {
+.langButton{
   background: transparent;
   border: none;
-
-  color: rgba(175, 175, 175, 0.95);
+  color: rgba(255,255,255,0.95);
   font-weight: 700;
   font-size: 12px;
-
   padding: 7px 10px;
   border-radius: 999px;
-
   cursor: pointer;
-  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-.langButton:hover {
-  background: rgba(255, 255, 255, 0.08);
+.langButton:hover{
+  background: rgba(255,255,255,0.08);
   transform: translateY(-1px);
 }
 
-.langButton.active {
-  background: var(--gradient-silver);
-  color: var(--color-secondary-navy);
-  box-shadow: 0 2px 10px rgba(192, 192, 192, 0.25);
+.active{
+  background: linear-gradient(135deg, #f4f4f4 0%, #cfcfcf 50%, #a6a6a6 100%);
+  color: rgba(10,25,41,0.96);
+  box-shadow: 0 6px 20px rgba(192, 192, 192, 0.20);
 }
 
-/* CTA */
-.ctaButton {
-  background: var(--gradient-silver);
-  color: var(--color-secondary-navy);
-  font-weight: 850;
-  font-size: 13px;
+.ctaButton{
+  background: linear-gradient(135deg, #f4f4f4 0%, #cfcfcf 50%, #a6a6a6 100%);
+  color: rgba(10,25,41,0.96);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
 
   padding: 10px 14px;
   border-radius: 999px;
   white-space: nowrap;
-
-  box-shadow: 0 6px 20px rgba(192, 192, 192, 0.22);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
   text-decoration: none;
+
+  box-shadow: 0 10px 28px rgba(192, 192, 192, 0.20);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.ctaButton:hover {
+.ctaButton:hover{
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(192, 192, 192, 0.32);
+  box-shadow: 0 14px 36px rgba(192, 192, 192, 0.30);
+  filter: brightness(1.02);
 }
 
-/* Burger */
-.mobileMenuToggle {
-  display: none;
+/* WhatsApp icon */
+.whatsappButton{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(192, 192, 192, 0.18);
-  color: rgba(175, 175, 175, 0.95);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(192,192,192,0.18);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.whatsappButton:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(192,192,192,0.26);
+}
+
+.whatsappButton img{
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Mobile burger */
+.mobileMenuToggle{
+  display: none;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(192,192,192,0.18);
+  color: rgba(255,255,255,0.95);
 
   width: 44px;
   height: 44px;
@@ -374,70 +366,37 @@
   font-size: 22px;
   cursor: pointer;
 
-  transition: transform 0.18s ease, background 0.18s ease;
+  transition: transform 160ms ease, background 160ms ease;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
-.mobileMenuToggle:hover {
+.mobileMenuToggle:hover{
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255,255,255,0.09);
 }
 
-/* =========================================================
-   IMPORTANT FIX: 1250px behavior
-   - Nav hidden (no more overlap)
-   - Reviews hidden in header
-   - Burger shown
-   - Reviews appear inside drawer
-   ========================================================= */
-@media (max-width: 1260px) {
-  .nav {
-    display: none;
-  }
+/* ===============================
+   MOBILE MENU (silver drawer)
+   =============================== */
 
-  .reviewsWrap {
-    display: none;
-  }
-
-  .mobileMenuToggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mobileReviews {
-    display: block;
-  }
-}
-
-/* Optional: hide CTA earlier if you want even more space */
-@media (max-width: 1040px) {
-  .ctaButton {
-    display: none;
-  }
-}
-
-/* =========================================================
-   Mobile overlay / drawer
-   ========================================================= */
-.mobileOverlay {
+.mobileOverlay{
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0,0,0,0.45);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity 220ms ease;
   z-index: calc(var(--z-sticky) + 1);
 }
 
-.mobileOverlay.open {
+.mobileOverlay.open{
   opacity: 1;
   pointer-events: auto;
 }
 
-/* ✅ Drawer in SILVER (requested) */
-.mobileNav {
+/* ✅ Silver drawer as you requested */
+.mobileNav{
   position: fixed;
   top: 0;
   right: 0;
@@ -445,30 +404,30 @@
   width: min(380px, 92vw);
 
   transform: translateX(110%);
-  transition: transform 0.35s ease;
+  transition: transform 320ms ease;
 
   z-index: calc(var(--z-sticky) + 2);
 
   background:
-    radial-gradient(900px 520px at 30% 10%, rgba(175, 175, 175, 0.92), rgba(255,255,255,0.18) 55%, transparent 72%),
-    radial-gradient(720px 520px at 90% 18%, rgba(255,255,255,0.55), transparent 60%),
-    radial-gradient(980px 760px at 50% 120%, rgba(210,210,210,0.22), transparent 70%),
-    linear-gradient(180deg, #aaaaaa 0%, #aaaaaa 55%, #aaaaaa 100%);
+    radial-gradient(900px 520px at 30% 10%, rgba(255,255,255,0.92), rgba(255,255,255,0.20) 58%, transparent 72%),
+    radial-gradient(780px 540px at 90% 22%, rgba(107,15,26,0.10), transparent 60%),
+    linear-gradient(180deg, #f6f7fb 0%, #eef1f6 46%, #e9edf4 100%);
 
-  border-left: 1px solid rgba(11, 18, 34, 0.10);
-  box-shadow: -18px 0 70px rgba(0, 0, 0, 0.22);
+  border-left: 1px solid rgba(11,18,34,0.14);
+  box-shadow: -18px 0 60px rgba(0,0,0,0.28);
+
   overflow-y: auto;
 }
 
-.mobileNav.open {
+.mobileNav.open{
   transform: translateX(0);
 }
 
-.mobileNavContent {
-  padding: 22px;
+.mobileNavContent{
+  padding: 20px;
 }
 
-.mobileTop {
+.mobileTop{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -476,41 +435,44 @@
   margin-bottom: 14px;
 }
 
-.mobileBrand {
-  color: rgba(11, 18, 34, 0.92);
+.mobileBrand{
   font-weight: 900;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: rgba(11,18,34,0.90);
 }
 
-.mobileNavClose {
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(11, 18, 34, 0.12);
-  color: rgba(11, 18, 34, 0.92);
-
+.mobileNavClose{
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(11,18,34,0.12);
+  color: rgba(11,18,34,0.90);
   width: 44px;
   height: 44px;
   border-radius: 999px;
   font-size: 18px;
-
   cursor: pointer;
 }
 
 /* Reviews inside drawer (silver panel) */
-.mobileReviews {
-  display: none; /* enabled at <=1260px */
-  margin: 0 0 14px;
+.mobileReviews{
+  display: none; /* shown at mobile breakpoint */
+  margin: 0 0 12px;
   padding: 12px;
   border-radius: 14px;
 
-  border: 1px solid rgba(11, 18, 34, 0.10);
-  background: rgba(255, 255, 255, 0.60);
+  border: 1px solid rgba(11,18,34,0.12);
+  background: rgba(255,255,255,0.60);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.10);
 
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
 }
 
-/* Nav list inside drawer */
-.mobileNavList {
+.mobileReviews > *{
+  transform: scale(0.88);
+  transform-origin: left center;
+}
+
+.mobileNavList{
   list-style: none;
   padding: 0;
   margin: 0;
@@ -520,86 +482,130 @@
   gap: 8px;
 }
 
-.mobileNavLink {
+.mobileNavLink{
   display: block;
   padding: 14px 12px;
-  border-radius: 14px;
+  border-radius: 12px;
 
-  color: rgba(11, 18, 34, 0.90);
+  color: rgba(11,18,34,0.90);
   text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 12px;
 
-  border: 1px solid rgba(11, 18, 34, 0.10);
-  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(11,18,34,0.10);
+  background: rgba(255,255,255,0.55);
 
-  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
-.mobileNavLink:hover {
+.mobileNavLink:hover{
   transform: translateX(4px);
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(11, 18, 34, 0.16);
+  background: rgba(255,255,255,0.70);
+  border-color: rgba(11,18,34,0.16);
 }
 
-.mobileActions {
-  margin-top: 16px;
+.mobileActions{
+  margin-top: 14px;
   display: grid;
   gap: 10px;
 }
 
-.mobileCta {
+.mobileCta{
   width: 100%;
   text-align: center;
   padding: 12px 14px;
   border-radius: 999px;
-
-  background: var(--gradient-silver);
-  color: var(--color-secondary-navy);
-  font-weight: 900;
   text-decoration: none;
 
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
+  background: linear-gradient(135deg, #f4f4f4 0%, #cfcfcf 50%, #a6a6a6 100%);
+  color: rgba(10,25,41,0.96);
+
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-size: 12px;
+
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
 }
 
-.mobileLangRow {
+.mobileLangRow{
   display: inline-flex;
   gap: 6px;
   justify-content: center;
   padding-top: 6px;
 }
 
-/* RTL */
-[dir="rtl"] .headerContainer {
+/* ===============================
+   RTL
+   =============================== */
+
+[dir="rtl"] .headerContainer{
   direction: rtl;
 }
 
-[dir="rtl"] .mobileNav {
+[dir="rtl"] .mobileNav{
   right: auto;
   left: 0;
   transform: translateX(-110%);
 }
 
-[dir="rtl"] .mobileNav.open {
+[dir="rtl"] .mobileNav.open{
   transform: translateX(0);
 }
 
-[dir="rtl"] .mobileNavLink:hover {
+[dir="rtl"] .mobileNavLink:hover{
   transform: translateX(-4px);
 }
 
-/* Small phones */
-@media (max-width: 480px) {
-  .mobileMenuToggle {
+/* ===============================
+   RESPONSIVE — professional breakpoints
+   =============================== */
+
+/* ✅ Hide Reviews earlier to avoid any crowding */
+@media (max-width: 1320px){
+  .reviewsWrap{ display: none; }
+}
+
+/* ✅ At ~1250px switch to burger (fixes your screenshot issue) */
+@media (max-width: 1260px){
+  .nav{ display: none; }
+
+  .mobileMenuToggle{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobileReviews{ display: block; }
+}
+
+/* optional: reduce CTA usage earlier */
+@media (max-width: 1040px){
+  .ctaButton{ display: none; }
+}
+
+/* small phones */
+@media (max-width: 480px){
+  .whatsappButtonn{
+    width: 52px;
+    height: 52px;
+  }
+  .whatsappButtonn img{
+    width: 52px;
+    height: 52px;
+  }
+  .mobileMenuToggle{
     width: 40px;
     height: 40px;
   }
 }
 
 /* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .whatsappButton::before,
-  .whatsappButton::after,
+@media (prefers-reduced-motion: reduce){
   .whatsappButtonn::before,
-  .whatsappButtonn::after {
+  .whatsappButtonn::after{
     animation: none !important;
   }
 }
