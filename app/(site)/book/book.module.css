@@ -243,3 +243,23 @@
   cursor: pointer;
   font-weight: 600;
 }
+
+.notice{
+  margin: 10px 0 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.88);
+  line-height: 1.5;
+  font-size: 14px;
+}
+.note{
+  margin: 10px 0 18px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+}

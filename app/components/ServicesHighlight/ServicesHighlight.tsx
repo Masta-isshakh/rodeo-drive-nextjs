@@ -56,7 +56,7 @@ export default function ServicesHighlight() {
         description:
           t.services.descriptions.smartRepairDesc ??
           t.services.descriptions.smartRepair,
-        image: "/paintoriginal.PNG",
+        image: "/paintoriginal.png",
         tone: "silver",
       },
       {

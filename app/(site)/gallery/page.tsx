@@ -1,19 +1,13 @@
-// ✅ ONLY VIDEO CAROUSEL CHANGES (full-width + auto-scroll every 3s)
-// Keep everything else exactly as-is.
-
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./gallery.module.css";
 import { useI18n } from "../../lib/i18n";
 import Link from "next/link";
 
-
 gsap.registerPlugin(ScrollTrigger);
-
-type Filter = "all" | "detailing" | "ceramic" | "interior" | "ppf";
 
 function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
@@ -22,24 +16,68 @@ function safeText(value: unknown, fallback: string) {
 export default function GalleryPage() {
   const { language, t } = useI18n();
 
-  const [activeFilter, setActiveFilter] = useState<Filter>("all");
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
-
   const rootRef = useRef<HTMLElement>(null);
   const videoCarouselRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLElement>(null);
-  const galleryGridRef = useRef<HTMLDivElement>(null);
   const beforeAfterRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const s3ShowcaseRef = useRef<HTMLElement>(null);
 
-  // --- VIDEO CAROUSEL (3 vidéos) ---
+  // --- VIDEO CAROUSEL (3 videos) ---
   const videoItems = useMemo(
     () => [
-      { id: 1, src: "/video.mp4", poster: "/videos/poster-1.jpg" },
-      { id: 2, src: "/video.mp4", poster: "/videos/poster-2.jpg" },
-      { id: 3, src: "/video.mp4", poster: "/videos/poster-3.jpg" },
+      {
+        id: 1,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_0395.MOV",
+        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
+        label: language === "en" ? "PPF Installation" : "تركيب PPF",
+      },
+      {
+        id: 2,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1006.MOV",
+        poster: "/videos/poster-2.jpg",
+        label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
+      },
+            {
+        id: 3,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1098.MOV",
+        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
+        label: language === "en" ? "PPF Installation" : "تركيب PPF",
+      },
+
     ],
-    []
+    [language]
+  );
+
+  // ✅ S3 Showcase videos (REPLACE with your real S3 URLs)
+  const s3Videos = useMemo(
+    () => [
+      {
+        id: 1,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1119.MOV",
+        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
+        label: language === "en" ? "PPF Installation" : "تركيب PPF",
+      },
+      {
+        id: 2,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_2217.MOV",
+        poster: "/videos/poster-2.jpg",
+        label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
+      },
+            {
+        id: 3,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_9060.MOV",
+        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
+        label: language === "en" ? "PPF Installation" : "تركيب PPF",
+      },
+      {
+        id: 4,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1445.MOV",
+        poster: "/videos/poster-2.jpg",
+        label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
+      },
+    ],
+    [language]
   );
 
   // ✅ Auto-scroll carousel every 3 seconds (ONLY for video carousel)
@@ -75,7 +113,6 @@ export default function GalleryPage() {
       }, 3000);
     };
 
-    // If user scrolls manually, keep autoplay stable
     track.addEventListener("scroll", onUserInteract, { passive: true });
 
     return () => {
@@ -84,7 +121,7 @@ export default function GalleryPage() {
     };
   }, [language]);
 
-  // Traductions safe (aucune erreur si la clé manque)
+  // Safe labels (no crash if translation missing)
   const labels = useMemo(() => {
     const gallery = (t as any)?.gallery ?? {};
     const beforeAfter = (t as any)?.beforeAfter ?? {};
@@ -92,7 +129,6 @@ export default function GalleryPage() {
     const nav = (t as any)?.nav ?? {};
     const cinematic = (t as any)?.cinematicShowcase ?? {};
     const about = (t as any)?.aboutPage ?? {};
-    const services = (t as any)?.services ?? {};
 
     return {
       galleryTitle: safeText(gallery.title, language === "en" ? "Gallery" : "المعرض"),
@@ -105,13 +141,12 @@ export default function GalleryPage() {
       beforeLabel: safeText(beforeAfter.before, language === "en" ? "Before" : "قبل"),
       afterLabel: safeText(beforeAfter.after, language === "en" ? "After" : "بعد"),
       beforeAfterDesc: safeText(galleryPage.description, language === "en" ? "Real transformations by our team." : "تحولات حقيقية من فريقنا."),
-      featured: safeText(galleryPage.featured, language === "en" ? "Featured Work" : "أعمال مختارة"),
-      filterAll: safeText(galleryPage.filterAll, language === "en" ? "All" : "الكل"),
-      filterInterior: safeText(galleryPage.filterInterior, language === "en" ? "Interior" : "الداخلية"),
-      detailingLabel: safeText(services?.categories?.detailing, language === "en" ? "Detailing" : "تفصيل"),
-      ceramicLabel: safeText(services?.list?.ceramicCoating, language === "en" ? "Ceramic" : "سيراميك"),
-      ppfLabel: safeText(services?.list?.paintProtection, "PPF"),
-      viewDetails: language === "en" ? "View Details" : "عرض التفاصيل",
+
+      // ✅ S3 section labels
+      s3Title: safeText(galleryPage.s3Title, language === "en" ? "Work Showcase" : "عرض الأعمال"),
+      s3Subtitle: safeText(galleryPage.s3Subtitle, language === "en" ? "Real videos from our workshop" : "فيديوهات حقيقية من الورشة"),
+      watchFull: safeText(galleryPage.watchFull, language === "en" ? "Watch Full" : "شاهد كامل"),
+
       ctaTitle: safeText((t as any)?.finalCta?.title, language === "en" ? "Ready to protect your car?" : "جاهز لحماية سيارتك؟"),
       ctaSubtitle: safeText(galleryPage.description, language === "en" ? "Contact us for a tailored quote." : "تواصل معنا للحصول على عرض سعر."),
       bookNow: safeText(nav.bookNow, language === "en" ? "Book Now" : "احجز الآن"),
@@ -120,63 +155,14 @@ export default function GalleryPage() {
     };
   }, [t, language]);
 
-  const galleryItems = useMemo(
-    () => [
-      {
-        id: 1,
-        category: "detailing",
-        image: "/lexus1.png",
-        title: language === "en" ? "Premium Detailing" : "تفصيل فاخر",
-        description: language === "en" ? "Complete exterior restoration" : "ترميم خارجي كامل",
-      },
-      {
-        id: 2,
-        category: "ceramic",
-        image: "/nano.jpg",
-        title: language === "en" ? "Ceramic Coating" : "سيراميك",
-        description: language === "en" ? "Nano-ceramic protection application" : "تطبيق حماية نانو سيراميك",
-      },
-      {
-        id: 3,
-        category: "interior",
-        image: "/interior1.png",
-        title: language === "en" ? "Interior Luxury" : "فخامة الداخلية",
-        description: language === "en" ? "Premium leather treatment" : "عناية فاخرة بالجلد",
-      },
-      {
-        id: 4,
-        category: "ppf",
-        image: "ppf.png",
-        title: language === "en" ? "Paint Protection Film" : "حماية الطلاء PPF",
-        description: language === "en" ? "Full PPF installation" : "تركيب كامل PPF",
-      },
-      {
-        id: 5,
-        category: "detailing",
-        image: "/lambor.png",
-        title: language === "en" ? "Sports Car Detailing" : "تفصيل سيارات رياضية",
-        description: language === "en" ? "High-performance vehicle care" : "عناية عالية الأداء",
-      },
-      {
-        id: 6,
-        category: "ceramic",
-        image: "/rollsroyce.png",
-        title: language === "en" ? "Supercar Collection" : "مجموعة سوبركار",
-        description: language === "en" ? "Elite ceramic coating service" : "سيراميك نخبة",
-      },
-    ],
-    [language]
-  );
-
   const beforeAfterComparisons = useMemo(
     () => [
       {
         id: 1,
         before: "/before.jpg",
         after: "/after.jpg",
-title: language === "en" ? "Color PPF Upgrade" : "ترقية بـ PPF الملون",
-description: language === "en" ? "Full-body color film wrap" : "تغليف كامل بفيلم ملون",
-
+        title: language === "en" ? "Color PPF Upgrade" : "ترقية بـ PPF الملون",
+        description: language === "en" ? "Full-body color film wrap" : "تغليف كامل بفيلم ملون",
       },
       {
         id: 2,
@@ -192,38 +178,28 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
         title: language === "en" ? "PPF Installation" : "تركيب PPF",
         description: language === "en" ? "Full body PPF with flawless application" : "PPF كامل بتطبيق مثالي",
       },
-
-
     ],
     [language]
   );
 
-  const filteredItems = useMemo(() => {
-    if (activeFilter === "all") return galleryItems;
-    return galleryItems.filter((i) => i.category === activeFilter);
-  }, [galleryItems, activeFilter]);
-
-  // --- Autoplay vidéos: tentative play + fallback interaction ---
+  // --- Autoplay: attempt play videos in carousel + S3 showcase ---
   useEffect(() => {
-    const section = videoCarouselRef.current;
-    if (!section) return;
+    const allVideos = Array.from(document.querySelectorAll("video"));
+    if (!allVideos.length) return;
 
-    const videos = Array.from(section.querySelectorAll("video"));
-    if (!videos.length) return;
-
-    videos.forEach((v) => {
+    allVideos.forEach((v) => {
       v.muted = true;
-      v.playsInline = true;
+      (v as any).playsInline = true;
       v.loop = true;
       v.preload = "metadata";
     });
 
     const tryPlayAll = async () => {
-      for (const v of videos) {
+      for (const v of allVideos) {
         try {
           await v.play();
         } catch {
-          // Autoplay peut être bloqué; fallback ci-dessous
+          // Autoplay can be blocked; user gesture fallback below
         }
       }
     };
@@ -245,7 +221,7 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
     };
   }, [language]);
 
-  // --- Animations GSAP existantes + animation pour carousel vidéo ---
+  // --- GSAP animations (removed gallery-grid animations; keep others) ---
   useEffect(() => {
     if (!rootRef.current) return;
 
@@ -276,23 +252,6 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
             { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: "power3.out", delay: 0.12 }
           );
         }
-      }
-
-      if (galleryGridRef.current) {
-        const items = galleryGridRef.current.querySelectorAll(`.${styles.galleryItem}`);
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 50, scale: 0.97 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.05,
-            ease: "power2.out",
-            scrollTrigger: { trigger: galleryGridRef.current, start: "top 80%", toggleActions: "play none none reverse" },
-          }
-        );
       }
 
       if (beforeAfterRef.current) {
@@ -330,18 +289,20 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
         });
       }
 
-      const filterButtons = document.querySelectorAll(`.${styles.filterButton}`);
-      if (filterButtons.length) {
+      // ✅ Animate S3 showcase cards (nice entrance)
+      if (s3ShowcaseRef.current) {
+        const cards = s3ShowcaseRef.current.querySelectorAll(`.${styles.s3Card}`);
         gsap.fromTo(
-          filterButtons,
-          { opacity: 0, y: -14 },
+          cards,
+          { opacity: 0, y: 26, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.06,
+            scale: 1,
+            duration: 0.75,
+            stagger: 0.10,
             ease: "power2.out",
-            scrollTrigger: { trigger: (filterButtons[0] as HTMLElement).parentElement, start: "top 88%" },
+            scrollTrigger: { trigger: s3ShowcaseRef.current, start: "top 80%" },
           }
         );
       }
@@ -351,27 +312,15 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
     return () => ctx.revert();
   }, [language]);
 
-  useEffect(() => {
-    if (!galleryGridRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const items = galleryGridRef.current!.querySelectorAll(`.${styles.galleryItem}`);
-      gsap.fromTo(items, { opacity: 0, y: 12, scale: 0.99 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.03, ease: "power2.out" });
-    }, galleryGridRef);
-
-    return () => ctx.revert();
-  }, [activeFilter, filteredItems.length]);
-
   return (
     <main className={styles.galleryPage} ref={rootRef}>
-      {/* VIDEO CAROUSEL (juste sous la navbar) */}
+      {/* VIDEO CAROUSEL (under navbar) */}
       <section className={styles.videoCarouselSection} ref={videoCarouselRef} aria-label="Video carousel">
         <div className={styles.videoCarouselHeader}>
           <h2 className={styles.videoCarouselTitle}>{labels.videosTitle}</h2>
           <p className={styles.videoCarouselSubtitle}>{labels.videosSubtitle}</p>
         </div>
 
-        {/* ✅ full width */}
         <div className={styles.videoTrack} role="list">
           {videoItems.map((v) => (
             <div className={styles.videoSlide} key={v.id} role="listitem">
@@ -383,7 +332,6 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
         </div>
       </section>
 
-      {/* ... REST OF YOUR PAGE UNCHANGED ... */}
       {/* Hero */}
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroOverlay} />
@@ -460,45 +408,37 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className={styles.gallerySection}>
+      {/* ✅ S3 VIDEOS (horizontal frames) */}
+      <section className={styles.s3Section} ref={s3ShowcaseRef} aria-label="Work showcase videos">
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>{labels.featured}</h2>
+          <h2 className={styles.sectionTitle}>{labels.s3Title}</h2>
+          <p className={styles.sectionSubtitle}>{labels.s3Subtitle}</p>
 
-          <div className={styles.filterButtons}>
-            <button className={`${styles.filterButton} ${activeFilter === "all" ? styles.active : ""}`} onClick={() => setActiveFilter("all")} type="button">
-              {labels.filterAll}
-            </button>
-            <button className={`${styles.filterButton} ${activeFilter === "detailing" ? styles.active : ""}`} onClick={() => setActiveFilter("detailing")} type="button">
-              {labels.detailingLabel}
-            </button>
-            <button className={`${styles.filterButton} ${activeFilter === "ceramic" ? styles.active : ""}`} onClick={() => setActiveFilter("ceramic")} type="button">
-              {labels.ceramicLabel}
-            </button>
-            <button className={`${styles.filterButton} ${activeFilter === "interior" ? styles.active : ""}`} onClick={() => setActiveFilter("interior")} type="button">
-              {labels.filterInterior}
-            </button>
-            <button className={`${styles.filterButton} ${activeFilter === "ppf" ? styles.active : ""}`} onClick={() => setActiveFilter("ppf")} type="button">
-              {labels.ppfLabel}
-            </button>
-          </div>
+          <div className={styles.s3Grid}>
+            {s3Videos.map((v) => (
+              <article key={v.id} className={styles.s3Card}>
+                <div className={styles.s3Top}>
+                  <span className={styles.s3Pill}>{v.label}</span>
 
-          <div className={styles.galleryGrid} ref={galleryGridRef}>
-            {filteredItems.map((item) => (
-              <button key={item.id} className={styles.galleryItem} onClick={() => setSelectedImage(item.id)} type="button">
-                <div className={styles.imageContainer}>
-                  <img src={item.image} alt={item.title} className={styles.galleryImage} />
-                  <div className={styles.imageOverlay}>
-                    <div className={styles.overlayContent}>
-                      <h3 className={styles.imageTitle}>{item.title}</h3>
-                      <p className={styles.imageDescription}>{item.description}</p>
-                      <Link href="/services" className={styles.viewButton}>
-                        {labels.viewDetails}
-                      </Link>
-                    </div>
-                  </div>
+                  <a className={styles.s3Link} href={v.src} target="_blank" rel="noopener noreferrer">
+                    {labels.watchFull}
+                    <span className={styles.s3Arrow} aria-hidden="true">↗</span>
+                  </a>
                 </div>
-              </button>
+
+                <div className={styles.s3Frame}>
+                  <video
+                    className={styles.s3Video}
+                    src={v.src}
+                    poster={v.poster}
+                    muted
+                    playsInline
+                    loop
+                    controls
+                    preload="metadata"
+                  />
+                </div>
+              </article>
             ))}
           </div>
         </div>
@@ -510,9 +450,9 @@ description: language === "en" ? "Full-body color film wrap" : "تغليف كا�
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>{labels.ctaTitle}</h2>
             <p className={styles.ctaSubtitle}>{labels.ctaSubtitle}</p>
-<Link href="/contact" className={styles.ctaButton}>
-  {labels.bookNow}
-</Link>
+            <Link href="/contact" className={styles.ctaButton}>
+              {labels.bookNow}
+            </Link>
           </div>
         </div>
       </section>

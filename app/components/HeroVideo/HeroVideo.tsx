@@ -166,7 +166,7 @@ export default function HeroVideo() {
               playsInline
               preload="metadata"
             >
-              <source src="/video.mp4" type="video/mp4" />
+              <source src="https://mastatiktok.s3.us-east-1.amazonaws.com/videos/lv_0_20260110205248.mp4" type="video/mp4" />
             </video>
           </div>
 

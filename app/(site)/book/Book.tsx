@@ -7,6 +7,13 @@ import styles from "./book.module.css";
 
 const MAX_BOOKINGS_PER_DAY = 10;
 
+// Business rules
+const OPEN_TIME_24 = "09:00";
+const CLOSE_TIME_24 = "20:00";
+
+const OPEN_MINUTES = 9 * 60;   // 09:00
+const CLOSE_MINUTES = 20 * 60; // 20:00
+
 function formatLocalDateYYYYMMDD(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -18,6 +25,28 @@ function isDateInPast(dateStr: string) {
   if (!dateStr) return false;
   const todayStr = formatLocalDateYYYYMMDD(new Date());
   return dateStr < todayStr;
+}
+
+// Friday check (local time)
+function isFriday(dateStr: string) {
+  if (!dateStr) return false;
+  const d = new Date(`${dateStr}T00:00:00`);
+  return d.getDay() === 5; // 0 Sun ... 5 Fri ... 6 Sat
+}
+
+function parseTimeToMinutes(time24: string) {
+  if (!time24) return NaN;
+  const [hhStr, mmStr] = time24.split(":");
+  const hh = Number(hhStr);
+  const mm = Number(mmStr);
+  if (Number.isNaN(hh) || Number.isNaN(mm)) return NaN;
+  return hh * 60 + mm;
+}
+
+function isTimeInRange(time24: string) {
+  const mins = parseTimeToMinutes(time24);
+  if (Number.isNaN(mins)) return false;
+  return mins >= OPEN_MINUTES && mins <= CLOSE_MINUTES;
 }
 
 // Convert "14:30" -> "02:30 PM"
@@ -151,7 +180,6 @@ function MultiSelectDropdown({
   );
 }
 
-
 export default function BookAppointment() {
   const client = useMemo(() => generateClient<Schema>(), []);
 
@@ -172,7 +200,7 @@ export default function BookAppointment() {
     email: "",
     phone: "",
     carModel: "",
-    services: [] as string[], // ✅ multiple + can be empty
+    services: [] as string[],
     date: "",
     time: "",
   });
@@ -192,24 +220,40 @@ export default function BookAppointment() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // ✅ Multi-select handler
-  const handleServicesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  // ✅ Date validation on change (blocks Friday + past)
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextDate = e.target.value;
     setErrorMsg("");
     setSuccess(false);
 
-    const selected = Array.from(e.target.selectedOptions).map((o) => o.value);
-
-    // If user selects the empty option, force empty list
-    if (selected.includes("")) {
-      setForm((prev) => ({ ...prev, services: [] }));
+    if (isDateInPast(nextDate)) {
+      setForm((prev) => ({ ...prev, date: "" }));
+      setErrorMsg("You cannot book in the past. Please select a future date.");
       return;
     }
 
-    setForm((prev) => ({ ...prev, services: selected }));
+    if (isFriday(nextDate)) {
+      setForm((prev) => ({ ...prev, date: "" }));
+      setErrorMsg("We are closed on Friday. Please choose another day.");
+      return;
+    }
+
+    setForm((prev) => ({ ...prev, date: nextDate }));
   };
 
-  const clearServices = () => {
-    setForm((prev) => ({ ...prev, services: [] }));
+  // ✅ Time validation on change (blocks outside hours)
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextTime = e.target.value;
+    setErrorMsg("");
+    setSuccess(false);
+
+    if (!isTimeInRange(nextTime)) {
+      setForm((prev) => ({ ...prev, time: nextTime }));
+      setErrorMsg(`Booking hours are ${OPEN_TIME_24} to ${CLOSE_TIME_24}. Please select a valid time.`);
+      return;
+    }
+
+    setForm((prev) => ({ ...prev, time: nextTime }));
   };
 
   const getBookingsCountForDate = async (date: string) => {
@@ -218,10 +262,21 @@ export default function BookAppointment() {
     });
 
     if (errors?.length) {
-      throw new Error(errors.map((e) => e.message).join(" | "));
+      throw new Error(errors.map((er) => er.message).join(" | "));
     }
 
     return data?.length ?? 0;
+  };
+
+  const validateBusinessRules = () => {
+    if (!form.date) return "Please choose a date.";
+    if (isDateInPast(form.date)) return "You cannot book an appointment in the past. Please select a future date.";
+    if (isFriday(form.date)) return "We are closed on Friday. Please choose another day.";
+
+    if (!form.time) return "Please choose a time.";
+    if (!isTimeInRange(form.time)) return `Booking hours are ${OPEN_TIME_24} to ${CLOSE_TIME_24}. Please select a valid time.`;
+
+    return "";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -229,13 +284,9 @@ export default function BookAppointment() {
     setSuccess(false);
     setErrorMsg("");
 
-    if (isDateInPast(form.date)) {
-      setErrorMsg("You cannot book an appointment in the past. Please select a future date.");
-      return;
-    }
-
-    if (!form.date) {
-      setErrorMsg("Please choose a date.");
+    const ruleError = validateBusinessRules();
+    if (ruleError) {
+      setErrorMsg(ruleError);
       return;
     }
 
@@ -251,18 +302,17 @@ export default function BookAppointment() {
 
       const timeAmPm = toAmPm(form.time);
 
-      // ✅ store services as array (can be empty)
       await client.models.Appointment.create({
         name: form.name,
         email: form.email,
         phone: form.phone,
         carModel: form.carModel,
-        services: form.services, // ✅ array
+        services: form.services,
         date: form.date,
         time: timeAmPm,
       });
 
-      // ✅ email: send a readable string (or empty)
+      // Email (optional)
       const res = await fetch("/api/sendAppointmentEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -298,6 +348,10 @@ export default function BookAppointment() {
   return (
     <div className={styles.appointmentContainer}>
       <h1>Book an Appointment</h1>
+
+      <div className={styles.note}>
+        Booking hours: <strong>09:00–20:00</strong>. Closed on <strong>Friday</strong>.
+      </div>
 
       {success && (
         <div className={styles.successMessage}>
@@ -344,26 +398,21 @@ export default function BookAppointment() {
           required
         />
 
-        {/* ✅ Multi select that can be blank */}
         <div className={styles.servicesBlock}>
-
-<MultiSelectDropdown
-  label="Services (optional)"
-  options={serviceOptions}
-  value={form.services}
-  onChange={(next) => setForm((prev) => ({ ...prev, services: next }))}
-  placeholder="Select services (optional)"
-/>
-
-
-
+          <MultiSelectDropdown
+            label="Services (optional)"
+            options={serviceOptions}
+            value={form.services}
+            onChange={(next) => setForm((prev) => ({ ...prev, services: next }))}
+            placeholder="Select services (optional)"
+          />
         </div>
 
         <input
           type="date"
           name="date"
           value={form.date}
-          onChange={handleInputChange}
+          onChange={handleDateChange}
           required
           min={minDate}
         />
@@ -372,8 +421,11 @@ export default function BookAppointment() {
           type="time"
           name="time"
           value={form.time}
-          onChange={handleInputChange}
+          onChange={handleTimeChange}
           required
+          min={OPEN_TIME_24}
+          max={CLOSE_TIME_24}
+          step={900} // 15 minutes
         />
 
         <button type="submit" disabled={loading}>
