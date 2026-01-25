@@ -100,33 +100,69 @@
   border: 1px solid rgba(11,18,34,0.14);
   box-shadow: 0 16px 44px rgba(0,0,0,0.10);
 
-  color: rgba(11,18,34,0.86);
-  font-weight: 900;
+  color: black;
+  font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  font-size: 0.78rem;
+  font-size: 16px;
+      text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 }
 
 .heroTitle {
-  font-size: clamp(2.7rem, 5.4vw, 4.9rem);
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
   margin-bottom: 14px;
-  letter-spacing: 0.14em;
+  border-radius: 999px;
+
+  background: rgba(223, 223, 223, 0.72);
+  border: 1px solid rgba(11,18,34,0.14);
+  box-shadow: 0 16px 44px rgba(0,0,0,0.10);
+
+  color: black;
+  font-weight: 800;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  font-size: clamp(2.1rem, 3.3vw, 3.9rem);
+    text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 
-  background: linear-gradient(135deg, #0b1222 0%, #2a3348 38%, #0b1222 76%, #1b2438 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  /* Rendering quality */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-  filter: drop-shadow(0 14px 24px rgba(0,0,0,0.12));
+  /* Motion safety */
+  will-change: transform, opacity;
 }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 1.6vw, 1.35rem);
-  color: rgba(10,16,32,0.74);
-  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+
+  background: rgba(223, 223, 223, 0.72);
+  border: 1px solid rgba(11,18,34,0.14);
+  box-shadow: 0 16px 44px rgba(0,0,0,0.10);
+
+  color: black;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  line-height: 1.75;
+  font-size: 18px;
+      text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 }
 
 /* =========================
@@ -587,7 +623,54 @@
   .stickerText {
     font-size: 0.74rem;
   }
+    .heroKicker {
+    font-size: 13px;
+    padding: 8px 14px;
+    letter-spacing: 0.16em;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.7rem, 4.8vw, 2.6rem);
+    padding: 8px 14px;
+    letter-spacing: 0.18em;
+  }
+
+  .heroSubtitle {
+    font-size: 14px;
+    padding: 8px 14px;
+    letter-spacing: 0.16em;
+  }
 }
+
+@media (max-width: 480px) {
+  .heroKicker,
+  .heroTitle,
+  .heroSubtitle {
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    border-radius: 999px;
+
+    letter-spacing: 0.14em;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+
+    text-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.85),
+      0 2px 6px rgba(0, 0, 0, 0.55);
+  }
+
+  .heroKicker {
+    font-size: 11px;
+  }
+
+  .heroTitle {
+    font-size: clamp(1.35rem, 4.5vw, 1.9rem);
+  }
+
+  .heroSubtitle {
+    font-size: 12px;
+  }
+}
+
 
 /* =========================
    RTL SUPPORT

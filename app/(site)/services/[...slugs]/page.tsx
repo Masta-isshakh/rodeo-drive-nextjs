@@ -52,35 +52,34 @@ export default function ServiceRoutePage() {
 
   if (view.kind === "notfound") {
     return (
-<main className={styles.page} dir={dir}>
-  <div className={styles.container}>
-    <div className={styles.card} role="status" aria-live="polite">
-      <div className={styles.badge}>404</div>
+      <main className={styles.page} dir={dir}>
+        <div className={styles.container}>
+          <div className={styles.card} role="status" aria-live="polite">
+            <div className={styles.badge}>404</div>
 
-      <h1 className={styles.h1}>Page not found</h1>
-      <p className={styles.muted}>
-        The requested service page does not exist or may have been moved.
-      </p>
+            <h1 className={styles.h1}>Page not found</h1>
+            <p className={styles.muted}>
+              The requested service page does not exist or may have been moved.
+            </p>
 
-      <div className={styles.actions}>
-        <Link className={styles.btnPrimary} href="/services">
-          Back to Services
-        </Link>
-        <Link className={styles.btnGhost} href="/contact">
-          Contact Us
-        </Link>
-        <Link className={styles.btnGhost} href="/">
-          Home
-        </Link>
-      </div>
+            <div className={styles.actions}>
+              <Link className={styles.btnPrimary} href="/services">
+                Back to Services
+              </Link>
+              <Link className={styles.btnGhost} href="/contact">
+                Contact Us
+              </Link>
+              <Link className={styles.btnGhost} href="/">
+                Home
+              </Link>
+            </div>
 
-      <p className={styles.hint}>
-        If you reached this page from a link, please let us know and we will fix it.
-      </p>
-    </div>
-  </div>
-</main>
-
+            <p className={styles.hint}>
+              If you reached this page from a link, please let us know and we will fix it.
+            </p>
+          </div>
+        </div>
+      </main>
     );
   }
 
@@ -115,11 +114,15 @@ export default function ServiceRoutePage() {
               </span>
             </Link>
 
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.5 }}>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              transition={{ duration: 0.5 }}
+            >
               <h1 className={styles.h1}>{title}</h1>
               <p className={styles.subtitle}>{subtitle}</p>
 
-              {/* ✅ aligned CTAs */}
               <div className={styles.ctaRow}>
                 <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
                   {lang === "ar" ? "احجز الآن" : "Book Now"}
@@ -149,10 +152,9 @@ export default function ServiceRoutePage() {
                     key={idx}
                     className={styles.paragraph}
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
+                    animate="visible"
                     variants={fadeUp}
-                    transition={{ duration: 0.45 }}
+                    transition={{ duration: 0.35, delay: idx * 0.04 }}
                   >
                     {p}
                   </motion.p>
@@ -171,7 +173,6 @@ export default function ServiceRoutePage() {
                 </div>
               </div>
 
-              {/* ✅ slider wrapper to ensure it stays clickable & smooth */}
               <div className={styles.mediaCard}>
                 <div className={styles.sliderWrap}>
                   <BeforeAfterSlider
@@ -204,21 +205,23 @@ export default function ServiceRoutePage() {
             </div>
 
             <div className={styles.grid}>
-              {s.subservices.map((sub) => (
+              {s.subservices.map((sub, idx) => (
                 <motion.div
                   key={sub.slug}
                   className={styles.card}
                   initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
+                  animate="visible"
                   variants={fadeUp}
-                  transition={{ duration: 0.35 }}
+                  transition={{ duration: 0.28, delay: idx * 0.03 }}
                 >
                   <div className={styles.cardTop}>
-                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImg} />
+                    <img
+                      src={sub.heroImage || "/services/placeholder.png"}
+                      alt=""
+                      className={styles.cardImg}
+                    />
                   </div>
 
-                  {/* ✅ header aligned + CTA pinned bottom */}
                   <div className={styles.cardBody}>
                     <div className={styles.cardHeader}>
                       <h3 className={styles.h3}>{getText(sub.title, lang)}</h3>
@@ -238,7 +241,9 @@ export default function ServiceRoutePage() {
         <section className={styles.section}>
           <div className={styles.container}>
             <div className={styles.finalCta}>
-              <h2 className={styles.h2}>{lang === "ar" ? "هل تريد توصية دقيقة؟" : "Want an accurate recommendation?"}</h2>
+              <h2 className={styles.h2}>
+                {lang === "ar" ? "هل تريد توصية دقيقة؟" : "Want an accurate recommendation?"}
+              </h2>
               <p className={styles.muted}>
                 {lang === "ar"
                   ? "احجز فحصًا سريعًا أو أرسل صورًا عبر واتساب للحصول على عرض سعر."
@@ -280,21 +285,10 @@ export default function ServiceRoutePage() {
   const aftercare = getText(sub.aftercare, lang);
   const timeline = getText(sub.timeline, lang);
 
-  const serviceKey = s.slug.replace(/\//g, "-");
-  const beforeSrc = sub.beforeImage || `/proof/${serviceKey}-before.png`;
-  const afterSrc = sub.afterImage || `/proof/${serviceKey}-after.png`;
-
-  const miniImages: string[] = (
-    sub.miniImages && sub.miniImages.length
-      ? sub.miniImages
-      : ["/services/proof-1.svg", "/services/proof-2.svg", "/services/proof-3.svg"]
-  ).slice(0, 3);
-
   return (
     <main className={styles.page} dir={dir}>
       <div className={styles.heroSmall}>
         <div className={styles.container}>
-          {/* ✅ bring back the back arrow so header is aligned + consistent */}
           <Link
             href={`/services/${s.slug}`}
             className={styles.backArrow}
@@ -303,9 +297,7 @@ export default function ServiceRoutePage() {
             <span className={styles.backIcon} aria-hidden="true">
               {lang === "ar" ? "→" : "←"}
             </span>
-            <span className={styles.backText}>
-              {lang === "ar" ? "رجوع" : "Back"}
-            </span>
+            <span className={styles.backText}>{lang === "ar" ? "رجوع" : "Back"}</span>
           </Link>
 
           <div className={styles.breadcrumbs}>
@@ -316,11 +308,15 @@ export default function ServiceRoutePage() {
             <span>{title}</span>
           </div>
 
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.45 }}>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            transition={{ duration: 0.45 }}
+          >
             <h1 className={styles.h1}>{title}</h1>
             <p className={styles.subtitle}>{intro[0]}</p>
 
-            {/* ✅ aligned CTAs */}
             <div className={styles.ctaRow}>
               <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
                 {lang === "ar" ? "احجز الآن" : "Book Now"}
@@ -350,10 +346,9 @@ export default function ServiceRoutePage() {
                   key={idx}
                   className={styles.paragraph}
                   initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
+                  animate="visible"
                   variants={fadeUp}
-                  transition={{ duration: 0.35 }}
+                  transition={{ duration: 0.32, delay: idx * 0.04 }}
                 >
                   {p}
                 </motion.p>
@@ -375,10 +370,13 @@ export default function ServiceRoutePage() {
               </div>
             </div>
 
-            {/* ✅ restore slider for subservice (your previous version removed it) */}
-                  <div className={styles.cardTopsub}>
-                    <img src={sub.heroImage || "/services/placeholder.png"} alt="" className={styles.cardImgsub} />
-                  </div>
+            <div className={styles.cardTopsub}>
+              <img
+                src={sub.heroImage || "/services/placeholder.png"}
+                alt=""
+                className={styles.cardImgsub}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -388,7 +386,11 @@ export default function ServiceRoutePage() {
           <div className={styles.sectionHeader}>
             <h2 className={styles.h2}>{lang === "ar" ? "مناسب لـ" : "Best for"}</h2>
           </div>
-          <ul className={styles.bullets}>{bestFor.map((x) => <li key={x}>{x}</li>)}</ul>
+          <ul className={styles.bullets}>
+            {bestFor.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -397,15 +399,27 @@ export default function ServiceRoutePage() {
           <div className={styles.threeCols}>
             <div className={styles.panel}>
               <h2 className={styles.h2}>{lang === "ar" ? "المواصفات" : "Specifications"}</h2>
-              <ul className={styles.bullets}>{specs.map((x) => <li key={x}>{x}</li>)}</ul>
+              <ul className={styles.bullets}>
+                {specs.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
             </div>
             <div className={styles.panel}>
               <h2 className={styles.h2}>{lang === "ar" ? "يشمل" : "What’s included"}</h2>
-              <ul className={styles.bullets}>{included.map((x) => <li key={x}>{x}</li>)}</ul>
+              <ul className={styles.bullets}>
+                {included.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
             </div>
             <div className={styles.panel}>
               <h2 className={styles.h2}>{lang === "ar" ? "بعد الخدمة" : "Aftercare"}</h2>
-              <ul className={styles.bullets}>{aftercare.map((x) => <li key={x}>{x}</li>)}</ul>
+              <ul className={styles.bullets}>
+                {aftercare.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
@@ -419,10 +433,9 @@ export default function ServiceRoutePage() {
               <motion.li
                 key={i}
                 initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                animate="visible"
                 variants={fadeUp}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.26, delay: i * 0.03 }}
               >
                 <span className={styles.stepIndex}>{i + 1}</span>
                 <span className={styles.stepText}>{step}</span>
@@ -447,7 +460,9 @@ export default function ServiceRoutePage() {
           <div className={styles.finalCta}>
             <h3 className={styles.h3}>{lang === "ar" ? "جاهز للبدء؟" : "Ready to start?"}</h3>
             <p className={styles.muted}>
-              {lang === "ar" ? "أرسل صورًا عبر واتساب للحصول على عرض سعر سريع." : "Send photos on WhatsApp for a fast quote."}
+              {lang === "ar"
+                ? "أرسل صورًا عبر واتساب للحصول على عرض سعر سريع."
+                : "Send photos on WhatsApp for a fast quote."}
             </p>
 
             <div className={styles.ctaRow}>

@@ -123,7 +123,7 @@
   font-size: 0.9rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.62);
+  color: black;
   margin-bottom: 10px;
 }
 
@@ -366,7 +366,7 @@
   line-height: 1.7;
   font-size: 0.98rem;
   margin: 12px 0 14px;
-
+text-shadow: #7e7e7e 0px 0px 1px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;

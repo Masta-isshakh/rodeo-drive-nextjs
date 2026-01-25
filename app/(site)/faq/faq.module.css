@@ -61,18 +61,20 @@
 }
 
 .title{
-  font-size: clamp(44px, 6.2vw, 90px);
+  font-size: clamp(34px, 4.2vw, 90px);
   font-weight: 950;
   margin-bottom: 12px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
 
-  background: linear-gradient(135deg, #868686 0%, #414141 24%, #686868 55%, #ffffff 100%);
+  background: linear-gradient(135deg, #535353 0%, #313131 24%, #424242 55%, #8d8d8d 100%);
   -webkit-background-clip:text;
   background-clip:text;
   color: transparent;
 
   filter: drop-shadow(0 18px 30px rgba(0,0,0,0.12));
+  text-align:center;
+  letter-spacing: 0.14em;
 }
 
 .subtitle{

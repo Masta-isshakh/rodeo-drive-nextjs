@@ -37,8 +37,8 @@
 ========================= */
 .hero{
   position: relative;
-  height: 62vh;
-  min-height: 520px;
+  height: 22vh;
+  min-height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,27 +87,53 @@
 }
 
 .title{
-  font-size: clamp(44px, 6.4vw, 92px);
-  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
   margin-bottom: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
+  border-radius: 999px;
 
-  background: linear-gradient(135deg, #0b1222 0%, #2a3348 38%, #0b1222 78%, #1b2438 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
+
+
   color: black;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: clamp(2.1rem, 3.3vw, 3.9rem);
+    text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 
-  filter: drop-shadow(0 14px 26px rgba(0,0,0,0.14));
+  /* Rendering quality */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Motion safety */
+  will-change: transform, opacity;
 }
 
 .subtitle{
-  font-size: clamp(16px, 2vw, 24px);
-  color: rgba(11,18,34,0.76);
-  margin-bottom: 34px;
-  letter-spacing: 0.14em;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+
+
+
+  color: black;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  line-height: 1.7;
+  font-size: 18px;
+      text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 }
 
 /* Decoration (no rotation animation) */
@@ -539,7 +565,7 @@
    CTA SECTION (silver)
 ========================= */
 .ctaSection{
-  padding: 96px 20px;
+  padding: 46px 20px;
   position: relative;
   overflow: hidden;
 
@@ -569,20 +595,53 @@
 }
 
 .ctaTitle{
-  font-size: clamp(28px, 4.6vw, 52px);
-  font-weight: 950;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
   margin-bottom: 14px;
-  letter-spacing: 0.10em;
+  border-radius: 999px;
+
+
+
+  color: black;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(11,18,34,0.94);
+  font-size: clamp(2.1rem, 3.3vw, 3.9rem);
+    text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
+
+  /* Rendering quality */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Motion safety */
+  will-change: transform, opacity;
 }
 
 .ctaSubtitle{
-  font-size: clamp(15px, 1.8vw, 20px);
-  color: rgba(11,18,34,0.74);
-  margin-bottom: 26px;
-  letter-spacing: 0.04em;
-  line-height: 1.7;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+
+
+
+  color: black;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 18px;
+      text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 }
 
 .ctaButton{
@@ -630,6 +689,52 @@
   max-width: 1000px;
   margin: 0 auto 18px auto;
   padding: 0 20px;
+}
+
+.videoCarouselTitle{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+  margin-bottom: 6px;
+  border-radius: 999px;
+
+
+
+  color: black;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 40px;
+    text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
+
+  /* Rendering quality */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Motion safety */
+  will-change: transform, opacity;
+}
+.videoCarouselSubtitle{
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+
+
+  color: black;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-size: 18px;
+      text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.9),
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 6px 14px rgba(0, 0, 0, 0.55);
 }
 
 /* 90% width centered */

@@ -70,6 +70,39 @@
   align-items:flex-start;
 }
 
+.blockLabel{
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+
+  background: linear-gradient(135deg, #0f0f1e 0%, rgba(15,15,30,0.60) 55%, #0f0f1e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  position: relative;
+  display:inline-block;
+}
+.mapsCta{
+  font-size: 18px;
+  color: rgba(15,15,30,0.78);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+  margin-left: -10px;          /* keeps alignment while padding adds “hit area” */
+  border-radius: 10px;
+  margin-top: 10px;
+
+
+
+}
+
 /* Social */
 .socialLinks{
   display:flex;
@@ -158,6 +191,7 @@
 .footerLink{
   color: rgba(15, 15, 30, 0.78);
   font-size: 13px;
+  font-weight: bold;
   letter-spacing: 0.02em;
   text-decoration: none;
 
