@@ -415,15 +415,15 @@ export default function GalleryPage() {
                   <span className={styles.s3Pill}>{v.label}</span>
 
                   {/* ✅ Open WATCH PAGE in a new tab (no direct download link) */}
-                  <a
-                    className={styles.s3Link}
-                    href={buildWatchUrl(v.src)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {labels.watchFull}
-                    <span className={styles.s3Arrow} aria-hidden="true">↗</span>
-                  </a>
+<a
+  className={styles.s3Link}
+  href={`/watch?src=${encodeURIComponent(v.src)}`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  {labels.watchFull} <span aria-hidden="true">↗</span>
+</a>
+
                 </div>
 
                 <div className={styles.s3Frame}>
