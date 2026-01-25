@@ -13,6 +13,18 @@ function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
 
+type S3VideoItem = {
+  id: number;
+  src: string;
+  poster?: string;
+  label: string;
+};
+
+function buildWatchUrl(src: string) {
+  // Open a dedicated watch page to avoid direct-download behavior from S3 headers
+  return `/watch?src=${encodeURIComponent(src)}`;
+}
+
 export default function GalleryPage() {
   const { language, t } = useI18n();
 
@@ -23,39 +35,23 @@ export default function GalleryPage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const s3ShowcaseRef = useRef<HTMLElement>(null);
 
-  // --- VIDEO CAROUSEL (3 videos) ---
+  // --- VIDEO CAROUSEL ---
   const videoItems = useMemo(
     () => [
-      {
-        id: 1,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_0395.MOV",
-        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
-        label: language === "en" ? "PPF Installation" : "تركيب PPF",
-      },
-      {
-        id: 2,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1006.MOV",
-        poster: "/videos/poster-2.jpg",
-        label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
-      },
-            {
-        id: 3,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1098.MOV",
-        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
-        label: language === "en" ? "PPF Installation" : "تركيب PPF",
-      },
-
+      { id: 1, src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_0395.MOV", poster: "/videos/poster-1.jpg" },
+      { id: 2, src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1006.MOV", poster: "/videos/poster-2.jpg" },
+      { id: 3, src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1098.MOV", poster: "/videos/poster-1.jpg" },
     ],
-    [language]
+    []
   );
 
-  // ✅ S3 Showcase videos (REPLACE with your real S3 URLs)
-  const s3Videos = useMemo(
+  // ✅ S3 Showcase videos
+  const s3Videos: S3VideoItem[] = useMemo(
     () => [
       {
         id: 1,
         src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1119.MOV",
-        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
+        poster: "/videos/poster-1.jpg",
         label: language === "en" ? "PPF Installation" : "تركيب PPF",
       },
       {
@@ -64,17 +60,17 @@ export default function GalleryPage() {
         poster: "/videos/poster-2.jpg",
         label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
       },
-            {
+      {
         id: 3,
         src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_9060.MOV",
-        poster: "/videos/poster-1.jpg", // optional local poster, or use S3 poster
-        label: language === "en" ? "PPF Installation" : "تركيب PPF",
+        poster: "/videos/poster-1.jpg",
+        label: language === "en" ? "PPF / Protection" : "PPF / حماية",
       },
       {
         id: 4,
         src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1445.MOV",
         poster: "/videos/poster-2.jpg",
-        label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
+        label: language === "en" ? "Detailing Results" : "نتائج التفصيل",
       },
     ],
     [language]
@@ -121,7 +117,7 @@ export default function GalleryPage() {
     };
   }, [language]);
 
-  // Safe labels (no crash if translation missing)
+  // Safe labels
   const labels = useMemo(() => {
     const gallery = (t as any)?.gallery ?? {};
     const beforeAfter = (t as any)?.beforeAfter ?? {};
@@ -142,7 +138,6 @@ export default function GalleryPage() {
       afterLabel: safeText(beforeAfter.after, language === "en" ? "After" : "بعد"),
       beforeAfterDesc: safeText(galleryPage.description, language === "en" ? "Real transformations by our team." : "تحولات حقيقية من فريقنا."),
 
-      // ✅ S3 section labels
       s3Title: safeText(galleryPage.s3Title, language === "en" ? "Work Showcase" : "عرض الأعمال"),
       s3Subtitle: safeText(galleryPage.s3Subtitle, language === "en" ? "Real videos from our workshop" : "فيديوهات حقيقية من الورشة"),
       watchFull: safeText(galleryPage.watchFull, language === "en" ? "Watch Full" : "شاهد كامل"),
@@ -182,7 +177,7 @@ export default function GalleryPage() {
     [language]
   );
 
-  // --- Autoplay: attempt play videos in carousel + S3 showcase ---
+  // Autoplay attempt
   useEffect(() => {
     const allVideos = Array.from(document.querySelectorAll("video"));
     if (!allVideos.length) return;
@@ -199,7 +194,7 @@ export default function GalleryPage() {
         try {
           await v.play();
         } catch {
-          // Autoplay can be blocked; user gesture fallback below
+          // ignored
         }
       }
     };
@@ -221,7 +216,7 @@ export default function GalleryPage() {
     };
   }, [language]);
 
-  // --- GSAP animations (removed gallery-grid animations; keep others) ---
+  // GSAP
   useEffect(() => {
     if (!rootRef.current) return;
 
@@ -289,7 +284,6 @@ export default function GalleryPage() {
         });
       }
 
-      // ✅ Animate S3 showcase cards (nice entrance)
       if (s3ShowcaseRef.current) {
         const cards = s3ShowcaseRef.current.querySelectorAll(`.${styles.s3Card}`);
         gsap.fromTo(
@@ -314,7 +308,7 @@ export default function GalleryPage() {
 
   return (
     <main className={styles.galleryPage} ref={rootRef}>
-      {/* VIDEO CAROUSEL (under navbar) */}
+      {/* VIDEO CAROUSEL */}
       <section className={styles.videoCarouselSection} ref={videoCarouselRef} aria-label="Video carousel">
         <div className={styles.videoCarouselHeader}>
           <h2 className={styles.videoCarouselTitle}>{labels.videosTitle}</h2>
@@ -420,7 +414,13 @@ export default function GalleryPage() {
                 <div className={styles.s3Top}>
                   <span className={styles.s3Pill}>{v.label}</span>
 
-                  <a className={styles.s3Link} href={v.src} target="_blank" rel="noopener noreferrer">
+                  {/* ✅ Open WATCH PAGE in a new tab (no direct download link) */}
+                  <a
+                    className={styles.s3Link}
+                    href={buildWatchUrl(v.src)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {labels.watchFull}
                     <span className={styles.s3Arrow} aria-hidden="true">↗</span>
                   </a>
