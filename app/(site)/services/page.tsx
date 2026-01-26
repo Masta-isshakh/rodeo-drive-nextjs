@@ -3,6 +3,7 @@
 
 import React, { useLayoutEffect, useMemo, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./services.module.css";
@@ -29,8 +30,19 @@ function safeText(v: unknown, fallback: string) {
   return typeof v === "string" && v.trim() ? v : fallback;
 }
 
+function getMotionFlags() {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return { reduced: false, lite: false };
+  }
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lite =
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+  return { reduced, lite };
+}
+
 function GoldBadgeIcon() {
-  // Premium “crown/star” style icon (gold)
   return (
     <svg
       width="18"
@@ -74,7 +86,10 @@ export default function ServicesPage() {
     const footer = (t as any)?.footer ?? {};
 
     return {
-      kicker: safeText((services as any).kicker, language === "en" ? "Luxury Car Care" : "عناية فاخرة بالسيارات"),
+      kicker: safeText(
+        (services as any).kicker,
+        language === "en" ? "Luxury Car Care" : "عناية فاخرة بالسيارات"
+      ),
       heroTitle: safeText(services.title, language === "en" ? "Premium Services" : "خدمات مميزة"),
       heroSubtitle: safeText(
         services.subtitle,
@@ -92,12 +107,7 @@ export default function ServicesPage() {
       standardTitle: safeText(packagesNew.standardTitle, "Standard Packages"),
       premiumTitle: safeText(packagesNew.premiumTitle, "Premium Packages"),
 
-      featuredBadge: safeText(
-        packagesNew.featuredBadge,
-        language === "en" ? "Most Popular" : "الأكثر طلبًا"
-      ),
-
-      // Optional: used in CTA arrow label
+      featuredBadge: safeText(packagesNew.featuredBadge, language === "en" ? "Most Popular" : "الأكثر طلبًا"),
       learnMore: safeText(services.learnMore, language === "en" ? "Explore" : "استكشاف"),
       rights: safeText(footer.rights, "All rights reserved."),
     };
@@ -223,67 +233,104 @@ export default function ServicesPage() {
     const root = rootRef.current;
     if (!root) return;
 
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const { reduced, lite } = getMotionFlags();
 
-    if (prefersReduced) return;
+    // Step-4: do not run ScrollTrigger animations in reduced OR lite mode.
+    if (reduced || lite) {
+      // Ensure nothing gets stuck if any inline styles existed
+      const heroContent = heroRef.current?.querySelector(`.${styles.heroContent}`) as HTMLElement | null;
+      if (heroContent) {
+        heroContent.style.opacity = "1";
+        heroContent.style.transform = "none";
+      }
+      return;
+    }
 
-    ScrollTrigger.config({ ignoreMobileResize: true });
+    // Perf: reduce refresh churn + callback noise
+    ScrollTrigger.config({ ignoreMobileResize: true, limitCallbacks: true });
 
     const ctx = gsap.context(() => {
-      // HERO (quick)
+      // HERO (fast)
       if (heroRef.current) {
-        const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
+        const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`) as HTMLElement | null;
         if (heroContent) {
-          gsap.fromTo(
-            heroContent,
-            { autoAlpha: 0, y: 18 },
-            { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }
-          );
+          gsap.set(heroContent, { autoAlpha: 0, y: 18, willChange: "transform,opacity" });
+          gsap.to(heroContent, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            onComplete: () => { gsap.set(heroContent, { clearProps: "willChange" }); },
+          });
         }
       }
 
-      // PACKAGES
+      // PACKAGES (batch, once)
       if (packagesRef.current) {
-        const cards = packagesRef.current.querySelectorAll(`.${styles.packageCard}`);
-        gsap.fromTo(
-          cards,
-          { autoAlpha: 0, y: 14 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.42,
-            stagger: 0.06,
-            ease: "power2.out",
-            scrollTrigger: { trigger: packagesRef.current, start: "top 85%", once: true },
-          }
+        const cards = Array.from(
+          packagesRef.current.querySelectorAll<HTMLElement>(`.${styles.packageCard}`)
         );
+
+        gsap.set(cards, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+        ScrollTrigger.batch(cards, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.06,
+              onComplete: () => { batch.forEach((el) => gsap.set(el, { clearProps: "willChange" })); },
+            });
+          },
+        });
       }
 
-      // SERVICES
+      // SERVICES (batch, once)
       if (servicesRef.current) {
-        const items = servicesRef.current.querySelectorAll(`.${styles.serviceCard}`);
-        gsap.fromTo(
-          items,
-          { autoAlpha: 0, y: 14 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.42,
-            stagger: 0.06,
-            ease: "power2.out",
-            scrollTrigger: { trigger: servicesRef.current, start: "top 85%", once: true },
-          }
+        const items = Array.from(
+          servicesRef.current.querySelectorAll<HTMLElement>(`.${styles.serviceCard}`)
         );
-      }
 
-      requestAnimationFrame(() => ScrollTrigger.refresh());
+        gsap.set(items, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+        ScrollTrigger.batch(items, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.06,
+              onComplete: () => batch.forEach((el) => gsap.set(el, { clearProps: "willChange" })),
+            });
+          },
+        });
+      }
     }, root);
 
-    return () => ctx.revert();
-  }, [language]);
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+
+      // Extra safety: kill triggers whose trigger is inside this page root
+      try {
+        ScrollTrigger.getAll().forEach((st) => {
+          const trig = st.trigger as Element | null;
+          if (trig && root.contains(trig)) st.kill(false);
+        });
+      } catch {
+        // ignore
+      }
+    };
+  }, [labels]);
 
   return (
     <main className={styles.servicesPage} ref={rootRef}>
@@ -304,12 +351,11 @@ export default function ServicesPage() {
           <h2 className={styles.sectionTitle}>{labels.packagesTitle}</h2>
 
           <div className={styles.packagesGrid}>
-            {packages.map((pkg) => (
+            {packages.map((pkg, pkgIndex) => (
               <article
-                key={pkg.title}
+                key={`${pkg.title}-${pkgIndex}`}
                 className={`${styles.packageCard} ${pkg.badge ? styles.featured : ""}`}
               >
-                {/* Gold sticker top-right (never overlaps title) */}
                 {pkg.badge && (
                   <div className={styles.popularSticker} aria-label={pkg.badge}>
                     <span className={styles.stickerPin} aria-hidden="true" />
@@ -326,8 +372,8 @@ export default function ServicesPage() {
                 </div>
 
                 <ul className={styles.packageFeatures}>
-                  {pkg.features.map((f) => (
-                    <li key={f} className={styles.packageFeature}>
+                  {pkg.features.map((f, i) => (
+                    <li key={`${pkg.title}-${i}-${f}`} className={styles.packageFeature}>
                       <span className={styles.featureDot} aria-hidden="true" />
                       <span className={styles.featureText}>{f}</span>
                     </li>
@@ -336,7 +382,9 @@ export default function ServicesPage() {
 
                 <Link href="/contact" className={styles.packageButton}>
                   {labels.getQuote}
-                  <span className={styles.btnArrow} aria-hidden="true">→</span>
+                  <span className={styles.btnArrow} aria-hidden="true">
+                    →
+                  </span>
                 </Link>
               </article>
             ))}
@@ -363,12 +411,15 @@ export default function ServicesPage() {
                   <div className={styles.mediaOverlay} aria-hidden="true" />
 
                   <span className={styles.serviceIcon} aria-hidden="true">
-                    <img
+                    <Image
                       src={svc.imageSrc}
                       alt=""
+                      width={48}
+                      height={48}
                       className={styles.serviceIconImage}
                       loading="lazy"
                       decoding="async"
+                      priority={false}
                     />
                   </span>
                 </div>
@@ -383,7 +434,9 @@ export default function ServicesPage() {
                     aria-label={`${svc.title} - ${labels.exploreBtn}`}
                   >
                     {labels.exploreBtn}
-                    <span className={styles.btnArrow} aria-hidden="true">→</span>
+                    <span className={styles.btnArrow} aria-hidden="true">
+                      →
+                    </span>
                   </Link>
                 </div>
               </article>

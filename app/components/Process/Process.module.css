@@ -1,10 +1,9 @@
 /* ============================================
    PROCESS — SILVER SHOWROOM (LUX + FAST)
-   Consistent with other silver sections:
-   - Bright silver base
-   - Navy typography
-   - Subtle burgundy accent
-   - GSAP handles reveal; CSS adds premium micro-motion
+   Step-4 optimized:
+   - Disable expensive/infinite micro-motion on mobile/coarse pointer
+   - Respect prefers-reduced-motion
+   - Keep visual design identical
    ============================================ */
 
 .processSection{
@@ -12,8 +11,6 @@
   padding: var(--spacing-4xl) 0;
   overflow: hidden;
   isolation: isolate;
-
-  /* Silver showroom base */
 
   /* Perf: isolate layout/paint */
   contain: layout paint style;
@@ -36,7 +33,7 @@
   opacity: 0.85;
 }
 
-/* Top accent line (silver) — lightweight */
+/* Top accent line */
 .processSection::after{
   content:"";
   position:absolute;
@@ -82,7 +79,7 @@
   overflow: hidden;
 }
 
-/* Single shimmer sweep (not infinite) — triggers on hover only */
+/* Shimmer sweep (hover only) */
 .sectionHeader::before{
   content:"";
   position:absolute;
@@ -115,7 +112,6 @@
   letter-spacing: 0.14em;
   margin-bottom: 14px;
 
-  /* Metallic silver gradient */
   background: linear-gradient(
     135deg,
     #f2f2f2 0%,
@@ -128,17 +124,14 @@
   background-clip: text;
   color: transparent;
 
-  /* CRITICAL: clarity on black */
   text-shadow:
     0 1px 1px rgba(0, 0, 0, 0.9),
     0 2px 4px rgba(0, 0, 0, 0.7),
     0 6px 14px rgba(0, 0, 0, 0.55);
 
-  /* Rendering quality */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Motion safety */
   will-change: transform, opacity;
 }
 
@@ -148,7 +141,6 @@
   letter-spacing: 0.14em;
   margin-bottom: 14px;
 
-  /* Metallic silver gradient */
   background: linear-gradient(
     135deg,
     #f2f2f2 0%,
@@ -161,22 +153,19 @@
   background-clip: text;
   color: transparent;
 
-  /* CRITICAL: clarity on black */
   text-shadow:
     0 1px 1px rgba(0, 0, 0, 0.9),
     0 2px 4px rgba(0, 0, 0, 0.7),
     0 6px 14px rgba(0, 0, 0, 0.55);
 
-  /* Rendering quality */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Motion safety */
   will-change: transform, opacity;
 }
 
 /* ============================================
-   Floating car decoration (subtle, consistent)
+   Floating car decoration
    ============================================ */
 
 .floatingProcessCar{
@@ -190,7 +179,6 @@
   pointer-events: none;
   opacity: 0;
 
-  /* Very light float: transform only */
   animation: floatCar 7.2s ease-in-out infinite;
   will-change: transform, opacity;
 }
@@ -206,7 +194,6 @@
   object-fit: cover;
   border-radius: 34px;
 
-  /* keep filter static (do not animate) */
   filter: blur(3.2px) brightness(0.92) saturate(0.95);
   box-shadow: 0 35px 90px rgba(0, 0, 0, 0.22);
   opacity: 0.45;
@@ -229,12 +216,10 @@
   height: 2px;
   transform: scaleX(1);
   transform-origin: 0% 50%;
-
   background: rgba(11,18,34,0.12);
   z-index: 0;
 }
 
-/* highlight sweep — on hover of timeline only (not infinite) */
 .timelineLine::after{
   content:"";
   position:absolute;
@@ -278,7 +263,6 @@
   z-index: 1;
 }
 
-/* Step card — silver panel (no blur) */
 .step{
   border-radius: 18px;
   padding: 18px 18px 16px;
@@ -298,7 +282,6 @@
   overflow: hidden;
 }
 
-/* specular highlight (hover only, once) */
 .step::before{
   content:"";
   position:absolute;
@@ -332,7 +315,6 @@
   margin-bottom: var(--spacing-sm);
 }
 
-/* Step number — metallic medallion */
 .stepNumber{
   width: 72px;
   height: 72px;
@@ -384,7 +366,6 @@
   z-index: 1;
 }
 
-/* Icon ring */
 .stepIcon{
   width: 56px;
   height: 56px;
@@ -425,7 +406,6 @@
   border-radius: 999px;
 }
 
-/* Hover micro-interactions */
 @media (hover:hover) and (pointer:fine){
   .step{
     transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease, filter 260ms ease;
@@ -480,12 +460,44 @@
 }
 
 /* ============================================
+   Step-4: Motion Lite (mobile/coarse pointer)
+   Disable ongoing animations & heavy hover sweeps
+   ============================================ */
+@media (max-width: 768px), (pointer: coarse){
+  .floatingProcessCar{ animation: none !important; }
+
+  .sectionHeader::before,
+  .step::before,
+  .stepNumber::after,
+  .timelineLine::after{
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .step{
+    transition: none !important;
+  }
+  .stepIcon{
+    transition: none !important;
+  }
+}
+
+/* ============================================
    Reduced motion (accessibility)
    ============================================ */
 @media (prefers-reduced-motion: reduce){
   .floatingProcessCar{ animation: none !important; }
+
   .sectionHeader::before,
   .step::before,
   .stepNumber::after,
-  .timelineLine::after{ animation: none !important; opacity: 0 !important; }
+  .timelineLine::after{
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .step,
+  .stepIcon{
+    transition: none !important;
+  }
 }

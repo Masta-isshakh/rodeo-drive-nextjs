@@ -63,7 +63,31 @@
   margin-bottom: 16px;
 }
 
-/* Brand column now used only for socials */
+/* ===== Added to match your JSX (no design change) ===== */
+.footerIntro{
+  max-width: 420px;
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+  gap: 12px;
+}
+
+.footerMiniBrand{
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(15,15,30,0.92);
+}
+
+.socialBlock{
+  display:flex;
+  flex-direction: column;
+  align-items:flex-start;
+}
+/* ===== End added ===== */
+
+/* Brand column (kept for backward compatibility if you used it elsewhere) */
 .footerBrand{
   max-width: 420px;
   display:flex;
@@ -85,6 +109,7 @@
   position: relative;
   display:inline-block;
 }
+
 .mapsCta{
   font-size: 18px;
   color: rgba(15,15,30,0.78);
@@ -95,12 +120,9 @@
   align-items: center;
 
   padding: 6px 10px;
-  margin-left: -10px;          /* keeps alignment while padding adds “hit area” */
+  margin-left: -10px;
   border-radius: 10px;
   margin-top: 10px;
-
-
-
 }
 
 /* Social */
@@ -187,7 +209,6 @@
    LUXURY LINK HOVER (FAST)
 ========================= */
 
-/* MAIN LIST LINKS */
 .footerLink{
   color: rgba(15, 15, 30, 0.78);
   font-size: 13px;
@@ -199,7 +220,7 @@
   align-items: center;
 
   padding: 6px 10px;
-  margin-left: -10px;          /* keeps alignment while padding adds “hit area” */
+  margin-left: -10px;
   border-radius: 10px;
 
   position: relative;
@@ -358,7 +379,6 @@
   }
 }
 
-/* Keep your helper rules */
 .footerBottomLinks a.footerBottomLink{ color:inherit; text-decoration:none; }
 .footerBottomLinks a.footerBottomLink:hover{ text-decoration:none; }
 
@@ -397,7 +417,6 @@
     justify-content: center;
     gap: 10px;
   }
-  /* No horizontal shift on small screens */
   .footerLink{ margin-left: 0; padding-left: 0; }
   .footerLink::before{ display:none; }
   .footerLink::after{ left: 0; right: 0; }
@@ -439,5 +458,3 @@
     transition: none !important;
   }
 }
-
-

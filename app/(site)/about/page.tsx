@@ -1,17 +1,30 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./about.module.css";
 import { Award, Users, Target, Trophy, Shield, Zap } from "lucide-react";
 import { useI18n } from "../../lib/i18n";
-import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function getMotionFlags() {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return { reduced: false, lite: false };
+  }
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lite =
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+  return { reduced, lite };
+}
+
 export default function AboutPage() {
-  const { language, t } = useI18n();
+  const { language } = useI18n();
 
   const rootRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLElement>(null);
@@ -32,13 +45,23 @@ export default function AboutPage() {
       theMission: isEn ? "The Mission" : "المهمة",
       theEvolution: isEn ? "The Evolution" : "التطور",
       valuesTitle: isEn ? "Our Values" : "قيمنا",
-      valuesSubtitle: isEn ? "The principles that guide everything we do" : "المبادئ التي توجه كل ما نقوم به",
+      valuesSubtitle: isEn
+        ? "The principles that guide everything we do"
+        : "المبادئ التي توجه كل ما نقوم به",
       teamTitle: isEn ? "Meet Our Team" : "تعرف على فريقنا",
-      teamSubtitle: isEn ? "Expert craftsmen dedicated to automotive excellence" : "حرفيون خبراء مكرسون للتميز في العناية بالسيارات",
+      teamSubtitle: isEn
+        ? "Expert craftsmen dedicated to automotive excellence"
+        : "حرفيون خبراء مكرسون للتميز في العناية بالسيارات",
       journeyTitle: isEn ? "Our Journey" : "رحلتنا",
-      journeySubtitle: isEn ? "Milestones that define our commitment to excellence" : "معالم تحدد التزامنا بالتميز",
-      ctaTitle: isEn ? "Experience the Rodeo Drive Difference" : "اختبر فرق روديو درايف",
-      ctaSubtitle: isEn ? "Join the elite community of luxury car owners who trust us" : "انضم إلى مجتمع النخبة من أصحاب السيارات الفاخرة الذين يثقون بنا",
+      journeySubtitle: isEn
+        ? "Milestones that define our commitment to excellence"
+        : "معالم تحدد التزامنا بالتميز",
+      ctaTitle: isEn
+        ? "Experience the Rodeo Drive Difference"
+        : "اختبر فرق روديو درايف",
+      ctaSubtitle: isEn
+        ? "Join the elite community of luxury car owners who trust us"
+        : "انضم إلى مجتمع النخبة من أصحاب السيارات الفاخرة الذين يثقون بنا",
       ctaButton: isEn ? "Book Now" : "احجز الآن",
     };
   }, [language]);
@@ -97,167 +120,247 @@ export default function AboutPage() {
     [language]
   );
 
-  const teamMembers = useMemo(
-    () => [
-      {
-        name: "Mohammed Al-Rashid",
-        role: language === "en" ? "Founder & CEO" : "المؤسس والرئيس التنفيذي",
-        image:
-          "https://images.unsplash.com/photo-1761942943722-fb696d8a9a9d?auto=format&fit=crop&w=1200&q=80",
-        description:
-          language === "en"
-            ? "15+ years of experience in luxury automotive care"
-            : "خبرة +15 سنة في العناية بالسيارات الفاخرة",
-      },
-      {
-        name: "Ahmed Hassan",
-        role: language === "en" ? "Master Detailer" : "خبير تفصيل سيارات",
-        image:
-          "https://images.unsplash.com/photo-1746079074371-e28f14c76e37?auto=format&fit=crop&w=1200&q=80",
-        description:
-          language === "en"
-            ? "Certified ceramic coating specialist with 500+ installations"
-            : "مختص معتمد في السيراميك مع +500 تطبيق",
-      },
-      {
-        name: "Khalid Ibrahim",
-        role: language === "en" ? "PPF Specialist" : "مختص PPF",
-        image:
-          "https://images.unsplash.com/photo-1606235994317-b517abfd89cf?auto=format&fit=crop&w=1200&q=80",
-        description:
-          language === "en"
-            ? "Expert in paint protection film application and customization"
-            : "خبير في تطبيق وحلول حماية الطلاء والتخصيص",
-      },
-      {
-        name: "Youssef Malik",
-        role: language === "en" ? "Interior Specialist" : "مختص داخليات",
-        image:
-          "https://images.unsplash.com/photo-1661336878277-1d0078e7b3e4?auto=format&fit=crop&w=1200&q=80",
-        description:
-          language === "en"
-            ? "Master of luxury interior restoration and leather care"
-            : "متخصص في ترميم الداخليات الفاخرة والعناية بالجلد",
-      },
-    ],
-    [language]
-  );
-
   const achievements = useMemo(
     () => [
-      { year: "2015", title: language === "en" ? "Company Founded" : "تأسيس الشركة", description: language === "en" ? "Rodeo Drive established in Doha" : "تأسست روديو درايف في الدوحة" },
-      { year: "2017", title: language === "en" ? "500 Cars Milestone" : "500 سيارة", description: language === "en" ? "Served our 500th luxury vehicle" : "خدمة السيارة الفاخرة رقم 500" },
-      { year: "2019", title: language === "en" ? "Facility Expansion" : "توسعة المنشأة", description: language === "en" ? "Opened state-of-the-art workshop" : "افتتاح ورشة حديثة" },
-      { year: "2021", title: language === "en" ? "Excellence Award" : "جائزة التميّز", description: language === "en" ? "Qatar Automotive Excellence Award" : "جائزة التميّز في قطر" },
-      { year: "2023", title: language === "en" ? "1000+ Clients" : "+1000 عميل", description: language === "en" ? "Trusted by luxury car owners across Qatar" : "ثقة ملاك السيارات الفاخرة في قطر" },
-      { year: "2024", title: language === "en" ? "Innovation Leader" : "ريادة الابتكار", description: language === "en" ? "First to offer advanced nano-ceramic technology" : "الأوائل في تقديم تقنيات نانو سيراميك متقدمة" },
+      {
+        year: "2015",
+        title: language === "en" ? "Company Founded" : "تأسيس الشركة",
+        description:
+          language === "en"
+            ? "Rodeo Drive established in Doha"
+            : "تأسست روديو درايف في الدوحة",
+      },
+      {
+        year: "2017",
+        title: language === "en" ? "500 Cars Milestone" : "500 سيارة",
+        description:
+          language === "en"
+            ? "Served our 500th luxury vehicle"
+            : "خدمة السيارة الفاخرة رقم 500",
+      },
+      {
+        year: "2019",
+        title: language === "en" ? "Facility Expansion" : "توسعة المنشأة",
+        description:
+          language === "en" ? "Opened state-of-the-art workshop" : "افتتاح ورشة حديثة",
+      },
+      {
+        year: "2021",
+        title: language === "en" ? "Excellence Award" : "جائزة التميّز",
+        description:
+          language === "en"
+            ? "Qatar Automotive Excellence Award"
+            : "جائزة التميّز في قطر",
+      },
+      {
+        year: "2023",
+        title: language === "en" ? "1000+ Clients" : "+1000 عميل",
+        description:
+          language === "en"
+            ? "Trusted by luxury car owners across Qatar"
+            : "ثقة ملاك السيارات الفاخرة في قطر",
+      },
+      {
+        year: "2024",
+        title: language === "en" ? "Innovation Leader" : "ريادة الابتكار",
+        description:
+          language === "en"
+            ? "First to offer advanced nano-ceramic technology"
+            : "الأوائل في تقديم تقنيات نانو سيراميك متقدمة",
+      },
     ],
     [language]
   );
 
-  useEffect(() => {
-    if (!rootRef.current) return;
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const { reduced, lite } = getMotionFlags();
+
+    // Step-4: no GSAP/ScrollTrigger animation in reduced OR lite mode
+    if (reduced || lite) {
+      const heroContent = heroRef.current?.querySelector(
+        `.${styles.heroContent}`
+      ) as HTMLElement | null;
+
+      if (heroContent) {
+        heroContent.style.opacity = "1";
+        heroContent.style.transform = "none";
+      }
+      return;
+    }
+
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+      limitCallbacks: true,
+    });
 
     const ctx = gsap.context(() => {
-      // HERO
+      // HERO (fast, lightweight)
       if (heroRef.current) {
-        const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
+        const heroContent = heroRef.current.querySelector(
+          `.${styles.heroContent}`
+        ) as HTMLElement | null;
+
         if (heroContent) {
-          gsap.fromTo(heroContent, { opacity: 0, y: 120, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power3.out", delay: 0.15 });
+          gsap.set(heroContent, {
+            autoAlpha: 0,
+            y: 18,
+            willChange: "transform,opacity",
+          });
+
+          gsap.to(heroContent, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            delay: 0.08,
+            onComplete: () => { gsap.set(heroContent, { clearProps: "willChange" }); },
+          });
         }
       }
 
-      // STORY
+      // STORY (batch, once)
       if (storyRef.current) {
-        const blocks = storyRef.current.querySelectorAll(`.${styles.storyBlock}`);
-        gsap.fromTo(
-          blocks,
-          { opacity: 0, x: -80, rotateY: -10 },
-          {
-            opacity: 1,
-            x: 0,
-            rotateY: 0,
-            duration: 0.9,
-            stagger: 0.18,
-            ease: "power3.out",
-            scrollTrigger: { trigger: storyRef.current, start: "top 75%", toggleActions: "play none none reverse" },
-          }
+        const blocks = Array.from(
+          storyRef.current.querySelectorAll<HTMLElement>(`.${styles.storyBlock}`)
         );
+        gsap.set(blocks, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+        ScrollTrigger.batch(blocks, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.07,
+              onComplete: () => {
+                batch.forEach((el) => { gsap.set(el as any, { clearProps: "willChange" }); });
+              },
+            });
+          },
+        });
       }
 
-      // VALUES
+      // VALUES (batch, once)
       if (valuesRef.current) {
-        const cards = valuesRef.current.querySelectorAll(`.${styles.valueCard}`);
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 60, scale: 0.92 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: "power3.out",
-            scrollTrigger: { trigger: valuesRef.current, start: "top 78%", toggleActions: "play none none reverse" },
-          }
+        const cards = Array.from(
+          valuesRef.current.querySelectorAll<HTMLElement>(`.${styles.valueCard}`)
         );
+        gsap.set(cards, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+        ScrollTrigger.batch(cards, {
+          start: "top 88%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.06,
+              onComplete: () =>
+                batch.forEach((el) => gsap.set(el as any, { clearProps: "willChange" })),
+            });
+          },
+        });
       }
 
-      // TEAM
+      // TEAM (batch, once) — safe even if section is not rendered yet
       if (teamRef.current) {
-        const members = teamRef.current.querySelectorAll(`.${styles.teamMember}`);
-        gsap.fromTo(
-          members,
-          { opacity: 0, y: 50, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: { trigger: teamRef.current, start: "top 78%", toggleActions: "play none none reverse" },
-          }
+        const members = Array.from(
+          teamRef.current.querySelectorAll<HTMLElement>(`.${styles.teamMember}`)
         );
+        if (members.length) {
+          gsap.set(members, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+          ScrollTrigger.batch(members, {
+            start: "top 88%",
+            once: true,
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.45,
+                ease: "power2.out",
+                stagger: 0.06,
+                onComplete: () =>
+                  batch.forEach((el) => gsap.set(el as any, { clearProps: "willChange" })),
+              });
+            },
+          });
+        }
       }
 
-      // ACHIEVEMENTS
+      // ACHIEVEMENTS (batch, once)
       if (achievementsRef.current) {
-        const items = achievementsRef.current.querySelectorAll(`.${styles.achievementCard}`);
-        gsap.fromTo(
-          items,
-          { opacity: 0, scale: 0.92, rotation: -6 },
-          {
-            opacity: 1,
-            scale: 1,
-            rotation: 0,
-            duration: 0.7,
-            stagger: 0.1,
-            ease: "power2.out",
-            scrollTrigger: { trigger: achievementsRef.current, start: "top 80%", toggleActions: "play none none reverse" },
-          }
+        const items = Array.from(
+          achievementsRef.current.querySelectorAll<HTMLElement>(
+            `.${styles.achievementCard}`
+          )
         );
+        gsap.set(items, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+        ScrollTrigger.batch(items, {
+          start: "top 90%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.06,
+              onComplete: () =>
+                batch.forEach((el) => gsap.set(el as any, { clearProps: "willChange" })),
+            });
+          },
+        });
       }
 
-      // TITLES
-      const titles = document.querySelectorAll(`.${styles.sectionTitle}`);
-      titles.forEach((title) => {
-        gsap.fromTo(
-          title,
-          { opacity: 0, y: 26 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power2.out",
-            scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none reverse" },
-          }
-        );
-      });
-    }, rootRef);
+      // SECTION TITLES (batch, once) — scoped to root (no document.querySelectorAll)
+      const titles = Array.from(
+        root.querySelectorAll<HTMLElement>(`.${styles.sectionTitle}`)
+      );
+      gsap.set(titles, { autoAlpha: 0, y: 12, willChange: "transform,opacity" });
 
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+      ScrollTrigger.batch(titles, {
+        start: "top 92%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.38,
+            ease: "power2.out",
+            stagger: 0.05,
+            onComplete: () =>
+              batch.forEach((el) => gsap.set(el as any, { clearProps: "willChange" })),
+          });
+        },
+      });
+    }, root);
+
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+
+      // Safety: kill triggers that belong to this page root
+      try {
+        ScrollTrigger.getAll().forEach((st) => {
+          const trig = st.trigger as Element | null;
+          if (trig && root.contains(trig)) st.kill(false);
+        });
+      } catch {
+        // ignore
+      }
+    };
   }, [language]);
 
   return (
@@ -348,7 +451,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-
+      {/* If you add the Team section later, keep ref={teamRef} on the section wrapper */}
 
       {/* Achievements */}
       <section className={styles.achievementsSection} ref={achievementsRef}>
@@ -362,7 +465,9 @@ export default function AboutPage() {
                 <div className={styles.achievementYear}>{achievement.year}</div>
                 <div className={styles.achievementContent}>
                   <h3 className={styles.achievementTitle}>{achievement.title}</h3>
-                  <p className={styles.achievementDescription}>{achievement.description}</p>
+                  <p className={styles.achievementDescription}>
+                    {achievement.description}
+                  </p>
                 </div>
                 <div className={styles.achievementConnector} />
               </div>
@@ -377,9 +482,10 @@ export default function AboutPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>{copy.ctaTitle}</h2>
             <p className={styles.ctaSubtitle}>{copy.ctaSubtitle}</p>
-<Link href="/contact" className={styles.ctaButton}>
-  {copy.ctaButton}
-</Link>
+
+            <Link href="/contact" className={styles.ctaButton}>
+              {copy.ctaButton}
+            </Link>
           </div>
         </div>
       </section>

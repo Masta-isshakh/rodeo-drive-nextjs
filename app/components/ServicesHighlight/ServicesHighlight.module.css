@@ -1,8 +1,8 @@
 /* =========================================================
    SERVICES HIGHLIGHT — SILVER SHOWROOM LUX (BRIGHT)
-   - Matches the silver-focused system used on your Contact page
-   - Static premium lighting, no infinite animation
+   Step-4 optimized:
    - Reveal once via IntersectionObserver (class .in)
+   - Lite mode + reduced motion disables micro-motion
 ========================================================= */
 
 .section{
@@ -10,9 +10,6 @@
   padding: clamp(72px, 7vw, 110px) 0;
   overflow: hidden;
   isolation: isolate;
-
-  /* Bright silver showroom background */
-
 
   /* Perf */
   contain: layout paint style;
@@ -70,6 +67,7 @@
   transform: translateY(0);
 }
 
+/* Reduced motion: always visible */
 @media (prefers-reduced-motion: reduce){
   .ready [data-reveal]{
     opacity: 1 !important;
@@ -134,12 +132,17 @@
   letter-spacing: 0.12em;
   margin-bottom: 12px;
 
-  background: linear-gradient(135deg, #aaaaaa 0%, #aaaaaa 28%, #aaaaaa 55%, #aaaaaa 100%);
+  /* FIX: allow the gradient to actually show */
+  background: linear-gradient(135deg, #f2f2f2 0%, #bdbdbd 40%, #ffffff 60%, #cfcfcf 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  color: black;
+  color: transparent;
 
-  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.10));
+  text-shadow:
+    0 1px 1px rgba(0,0,0,0.35),
+    0 8px 18px rgba(0,0,0,0.14);
+
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.08));
 }
 
 .lead{
@@ -237,7 +240,7 @@
   gap: clamp(14px, 2vw, 22px);
 }
 
-/* Card base: polished white/silver */
+/* Card base */
 .card{
   border-radius: 22px;
   overflow: hidden;
@@ -253,10 +256,7 @@
   transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
 }
 
-/* Tone variations:
-   - Silver: neutral steel highlight
-   - Burgundy: premium wine accent (still on silver base)
-*/
+/* Tone variations */
 .toneS{ --accent: rgba(11,18,34,0.70); --accentSoft: rgba(11,18,34,0.20); }
 .toneB{ --accent: rgba(107,15,26,0.92); --accentSoft: rgba(107,15,26,0.20); }
 
@@ -325,7 +325,6 @@
   box-shadow: 0 0 18px rgba(0,0,0,0.12);
 }
 
-/* Image zoom on hover */
 @media (hover:hover) and (pointer:fine){
   .card:hover .image{
     transform: scale(1.08);
@@ -366,7 +365,8 @@
   line-height: 1.7;
   font-size: 0.98rem;
   margin: 12px 0 14px;
-text-shadow: #7e7e7e 0px 0px 1px;
+  text-shadow: #7e7e7e 0px 0px 1px;
+
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -499,4 +499,17 @@ text-shadow: #7e7e7e 0px 0px 1px;
     align-items: flex-start;
   }
   .bottomLine{ width: 100%; }
+}
+
+/* Step-4: disable micro-motion on mobile/coarse pointer */
+@media (max-width: 768px), (pointer: coarse){
+  .card,
+  .image,
+  .primaryCta,
+  .secondaryCta,
+  .link,
+  .ctaArrow,
+  .arrow{
+    transition: none !important;
+  }
 }

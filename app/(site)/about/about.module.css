@@ -587,3 +587,31 @@
   .achievementCard{ padding: 18px; }
   .achievementYear{ font-size: 34px; }
 }
+
+
+/* =========================
+   STEP-4: REDUCED MOTION
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .storyBlock,
+  .valueCard,
+  .valueIcon,
+  .achievementCard,
+  .ctaButton {
+    transition: none !important;
+  }
+}
+
+/* =========================
+   STEP-4: LITE MODE (mobile/coarse)
+   Disable micro-motion transitions for performance
+========================= */
+@media (max-width: 768px), (pointer: coarse) {
+  .storyBlock,
+  .valueCard,
+  .valueIcon,
+  .achievementCard,
+  .ctaButton {
+    transition: none !important;
+  }
+}

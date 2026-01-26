@@ -1,10 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./faq.module.css";
-import { ChevronDown, MessageCircle, Clock, CreditCard, Shield, Wrench, Star } from "lucide-react";
+import {
+  ChevronDown,
+  MessageCircle,
+  Clock,
+  CreditCard,
+  Shield,
+  Wrench,
+  Star,
+} from "lucide-react";
 import { useI18n } from "../../lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +25,19 @@ type FAQItem = {
   answer: string;
   icon: React.ElementType;
 };
+
+function getMotionFlags() {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return { reduced: false, lite: false };
+  }
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lite =
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+  return { reduced, lite };
+}
 
 export default function FAQPage() {
   const { language, t } = useI18n();
@@ -133,83 +154,162 @@ export default function FAQPage() {
     return faqs.filter((f) => f.category === activeCategory);
   }, [faqs, activeCategory]);
 
-  // Mount animations
-  useEffect(() => {
-    if (!rootRef.current) return;
+  // Step-4: Mount animations (batched + guarded)
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const { reduced, lite } = getMotionFlags();
+
+    // Step-4: Disable GSAP on reduced motion OR lite mode
+    if (reduced || lite) {
+      const heroContent = heroRef.current?.querySelector(`.${styles.heroContent}`) as HTMLElement | null;
+      if (heroContent) {
+        heroContent.style.opacity = "1";
+        heroContent.style.transform = "none";
+      }
+      return;
+    }
+
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+      limitCallbacks: true,
+    });
 
     const ctx = gsap.context(() => {
       // HERO
       if (heroRef.current) {
-        const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
+        const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`) as HTMLElement | null;
         if (heroContent) {
-          gsap.fromTo(heroContent, { opacity: 0, y: 90, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: "power3.out", delay: 0.12 });
+          gsap.set(heroContent, { autoAlpha: 0, y: 18, willChange: "transform,opacity" });
+          gsap.to(heroContent, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            delay: 0.08,
+            onComplete: () => {
+              gsap.set(heroContent, { clearProps: "willChange" });
+            },
+          });
         }
       }
 
-      // Categories
+      // CATEGORIES (batch once)
       if (categoriesRef.current) {
-        const cards = categoriesRef.current.querySelectorAll(`.${styles.categoryCard}`);
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 40, scale: 0.96 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power2.out",
-            scrollTrigger: { trigger: categoriesRef.current, start: "top 82%", toggleActions: "play none none reverse" },
-          }
+        const cards = Array.from(
+          categoriesRef.current.querySelectorAll<HTMLElement>(`.${styles.categoryCard}`)
         );
+
+        if (cards.length) {
+          gsap.set(cards, { autoAlpha: 0, y: 14, willChange: "transform,opacity" });
+
+          ScrollTrigger.batch(cards, {
+            start: "top 88%",
+            once: true,
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.45,
+                ease: "power2.out",
+                stagger: 0.06,
+                onComplete: () => {
+                  batch.forEach((el) => {
+                    gsap.set(el as any, { clearProps: "willChange" });
+                  });
+                },
+              });
+            },
+          });
+        }
       }
 
-      // FAQ Items
+      // FAQ ITEMS (batch once)
       if (faqGridRef.current) {
-        const items = faqGridRef.current.querySelectorAll(`.${styles.faqItem}`);
-        gsap.fromTo(
-          items,
-          { opacity: 0, x: -30 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.65,
-            stagger: 0.06,
-            ease: "power2.out",
-            scrollTrigger: { trigger: faqGridRef.current, start: "top 78%", toggleActions: "play none none reverse" },
-          }
-        );
+        const items = Array.from(faqGridRef.current.querySelectorAll<HTMLElement>(`.${styles.faqItem}`));
+
+        if (items.length) {
+          gsap.set(items, { autoAlpha: 0, y: 12, willChange: "transform,opacity" });
+
+          ScrollTrigger.batch(items, {
+            start: "top 90%",
+            once: true,
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.42,
+                ease: "power2.out",
+                stagger: 0.05,
+                onComplete: () =>
+                  batch.forEach((el) => gsap.set(el as any, { clearProps: "willChange" })),
+              });
+            },
+          });
+        }
       }
 
-      // Titles
-      const titles = document.querySelectorAll(`.${styles.sectionTitle}`);
-      titles.forEach((title) => {
-        gsap.fromTo(
-          title,
-          { opacity: 0, y: 22 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none reverse" },
-          }
-        );
-      });
-    }, rootRef);
+      // TITLES (scoped to root, batch once)
+      const titles = Array.from(root.querySelectorAll<HTMLElement>(`.${styles.sectionTitle}`));
+      if (titles.length) {
+        gsap.set(titles, { autoAlpha: 0, y: 10, willChange: "transform,opacity" });
 
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+        ScrollTrigger.batch(titles, {
+          start: "top 92%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.38,
+              ease: "power2.out",
+              stagger: 0.05,
+              onComplete: () =>
+                batch.forEach((el) => gsap.set(el as any, { clearProps: "willChange" })),
+            });
+          },
+        });
+      }
+    }, root);
+
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+
+      // Safety: kill triggers tied to this root
+      try {
+        ScrollTrigger.getAll().forEach((st) => {
+          const trig = st.trigger as Element | null;
+          if (trig && root.contains(trig)) st.kill(false);
+        });
+      } catch {
+        // ignore
+      }
+    };
   }, [language]);
 
-  // Re-animate on category change
-  useEffect(() => {
-    if (!faqGridRef.current) return;
+  // Step-4: Re-animate FAQ list on category change (cheap, no ScrollTrigger)
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    const grid = faqGridRef.current;
+    if (!root || !grid) return;
+
+    const { reduced, lite } = getMotionFlags();
+    if (reduced || lite) return;
+
+    const items = Array.from(grid.querySelectorAll<HTMLElement>(`.${styles.faqItem}`));
+    if (!items.length) return;
 
     const ctx = gsap.context(() => {
-      const items = faqGridRef.current!.querySelectorAll(`.${styles.faqItem}`);
-      gsap.fromTo(items, { opacity: 0, y: 10, scale: 0.99 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.03, ease: "power2.out" });
-    }, faqGridRef);
+      gsap.fromTo(
+        items,
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, duration: 0.22, stagger: 0.03, ease: "power2.out", clearProps: "willChange" }
+      );
+    }, grid);
 
     return () => ctx.revert();
   }, [activeCategory, filteredFaqs.length]);
@@ -224,9 +324,13 @@ export default function FAQPage() {
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
-          <h1 className={styles.title}>{t.faq?.title ?? (language === "en" ? "FAQ" : "الأسئلة الشائعة")}</h1>
+          <h1 className={styles.title}>
+            {t.faq?.title ?? (language === "en" ? "FAQ" : "الأسئلة الشائعة")}
+          </h1>
           <p className={styles.subtitle}>
-            {language === "en" ? "Find answers to common questions about our services" : "اعثر على إجابات للأسئلة الشائعة حول خدماتنا"}
+            {language === "en"
+              ? "Find answers to common questions about our services"
+              : "اعثر على إجابات للأسئلة الشائعة حول خدماتنا"}
           </p>
 
           <div className={styles.heroDecoration}>
@@ -240,7 +344,9 @@ export default function FAQPage() {
       {/* Categories */}
       <section className={styles.categoriesSection} ref={categoriesRef}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>{language === "en" ? "Browse by Category" : "تصفح حسب الفئة"}</h2>
+          <h2 className={styles.sectionTitle}>
+            {language === "en" ? "Browse by Category" : "تصفح حسب الفئة"}
+          </h2>
 
           <div className={styles.categoriesGrid}>
             {categories.map((category) => {
@@ -249,7 +355,9 @@ export default function FAQPage() {
                 <button
                   key={category.id}
                   type="button"
-                  className={`${styles.categoryCard} ${activeCategory === category.id ? styles.active : ""}`}
+                  className={`${styles.categoryCard} ${
+                    activeCategory === category.id ? styles.active : ""
+                  }`}
                   onClick={() => {
                     setActiveCategory(category.id);
                     setActiveIndex(null);
@@ -275,8 +383,16 @@ export default function FAQPage() {
               const open = activeIndex === index;
 
               return (
-                <div key={`${faq.category}-${index}`} className={`${styles.faqItem} ${open ? styles.active : ""}`}>
-                  <button className={styles.faqQuestion} onClick={() => toggleFAQ(index)} type="button" aria-expanded={open}>
+                <div
+                  key={`${faq.category}-${index}`}
+                  className={`${styles.faqItem} ${open ? styles.active : ""}`}
+                >
+                  <button
+                    className={styles.faqQuestion}
+                    onClick={() => toggleFAQ(index)}
+                    type="button"
+                    aria-expanded={open}
+                  >
                     <div className={styles.questionIcon}>
                       <IconComponent size={24} strokeWidth={1.5} />
                     </div>
@@ -302,17 +418,29 @@ export default function FAQPage() {
       <section className={styles.ctaSection}>
         <div className={styles.container}>
           <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>{language === "en" ? "Still Have Questions?" : "لا تزال لديك أسئلة؟"}</h2>
+            <h2 className={styles.ctaTitle}>
+              {language === "en" ? "Still Have Questions?" : "لا تزال لديك أسئلة؟"}
+            </h2>
             <p className={styles.ctaSubtitle}>
-              {language === "en" ? "Our team is here to help. Contact us for personalized assistance." : "فريقنا هنا للمساعدة. تواصل معنا للحصول على دعم مخصص."}
+              {language === "en"
+                ? "Our team is here to help. Contact us for personalized assistance."
+                : "فريقنا هنا للمساعدة. تواصل معنا للحصول على دعم مخصص."}
             </p>
 
             <div className={styles.ctaButtons}>
-              <button className={styles.ctaButton} type="button" onClick={() => window.open("tel:+97433202409", "_self")}>
+              <button
+                className={styles.ctaButton}
+                type="button"
+                onClick={() => window.open("tel:+97433202409", "_self")}
+              >
                 {language === "en" ? "Contact Us" : "اتصل بنا"}
               </button>
 
-              <button className={styles.whatsappButton} type="button" onClick={() => window.open("https://wa.me/97433202409", "_blank")}>
+              <button
+                className={styles.whatsappButton}
+                type="button"
+                onClick={() => window.open("https://wa.me/97433202409", "_blank")}
+              >
                 <MessageCircle size={20} />
                 WhatsApp
               </button>

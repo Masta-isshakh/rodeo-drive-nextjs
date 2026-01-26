@@ -627,3 +627,41 @@
   .mapSection{ padding: 56px 20px; }
   .quickContactSection{ padding: 72px 20px; }
 }
+
+
+/* =========================
+   STEP-4: REDUCED MOTION
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .infoCard,
+  .infoCard::before,
+  .infoIcon,
+  .input,
+  .select,
+  .textarea,
+  .submitButton,
+  .directionsButton,
+  .phoneButton,
+  .whatsappButtonLarge {
+    transition: none !important;
+  }
+}
+
+/* =========================
+   STEP-4: LITE MODE (mobile/coarse)
+   Disable micro-motion transitions for performance
+========================= */
+@media (max-width: 768px), (pointer: coarse) {
+  .infoCard,
+  .infoCard::before,
+  .infoIcon,
+  .input,
+  .select,
+  .textarea,
+  .submitButton,
+  .directionsButton,
+  .phoneButton,
+  .whatsappButtonLarge {
+    transition: none !important;
+  }
+}

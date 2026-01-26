@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { motion } from "framer-motion";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import BeforeAfterSlider from "@/app/components/BeforeAfterSlider/BeforeAfterSlider";
 import { SITE } from "@/app/config/site";
 import styles from "./serviceRoute.module.css";
@@ -22,17 +28,37 @@ function findSub(service: Service, subSlug: string): Subservice | undefined {
   return service.subservices.find((x) => x.slug === subSlug);
 }
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 14 },
   visible: { opacity: 1, y: 0 },
 };
 
+const viewportOnce = { once: true, amount: 0.22 };
+
 export default function ServiceRoutePage() {
   const params = useParams<{ slugs: string[] }>();
   const slugs = (params?.slugs ?? []) as string[];
+
   const { language } = useI18n();
   const lang = (language === "ar" ? "ar" : "en") as Lang;
   const dir = lang === "ar" ? "rtl" : "ltr";
+
+  // Step-4: Respect reduced motion + skip motion on mobile/coarse pointer
+  const prefersReduced = useReducedMotion();
+  const [enableMotion, setEnableMotion] = useState(false);
+
+  useEffect(() => {
+    // Client-only guards
+    const isMobile =
+      typeof window !== "undefined" &&
+      !!window.matchMedia &&
+      (window.matchMedia("(max-width: 768px)").matches ||
+        window.matchMedia("(pointer: coarse)").matches);
+
+    setEnableMotion(!prefersReduced && !isMobile);
+  }, [prefersReduced]);
+
+  const slugsKey = useMemo(() => (slugs ?? []).join("/"), [slugs]);
 
   const view = useMemo(() => {
     const serviceSlug = slugs?.[0];
@@ -48,7 +74,73 @@ export default function ServiceRoutePage() {
     if (!sub) return { kind: "notfound" as const };
 
     return { kind: "sub" as const, service, sub };
-  }, [slugs]);
+  }, [slugsKey]);
+
+  // Helper renderers (no design change)
+  const renderFadeBlock = (
+    children: React.ReactNode,
+    className?: string,
+    opts?: { delay?: number; duration?: number; inView?: boolean }
+  ) => {
+    const delay = opts?.delay ?? 0;
+    const duration = opts?.duration ?? 0.35;
+    const inView = opts?.inView ?? false;
+
+    if (!enableMotion) {
+      return <div className={className}>{children}</div>;
+    }
+
+    if (inView) {
+      return (
+        <m.div
+          className={className}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={fadeUp}
+          transition={{ duration, delay }}
+        >
+          {children}
+        </m.div>
+      );
+    }
+
+    return (
+      <m.div
+        className={className}
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        transition={{ duration, delay }}
+      >
+        {children}
+      </m.div>
+    );
+  };
+
+  const renderFadeParagraph = (text: string, idx: number) => {
+    if (!enableMotion) {
+      return (
+        <p key={idx} className={styles.paragraph}>
+          {text}
+        </p>
+      );
+    }
+
+    return (
+      <m.p
+        key={idx}
+        className={styles.paragraph}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+        variants={fadeUp}
+        transition={{ duration: 0.32, delay: idx * 0.04 }}
+      >
+        {text}
+      </m.p>
+    );
+  };
 
   if (view.kind === "notfound") {
     return (
@@ -75,7 +167,8 @@ export default function ServiceRoutePage() {
             </div>
 
             <p className={styles.hint}>
-              If you reached this page from a link, please let us know and we will fix it.
+              If you reached this page from a link, please let us know and we
+              will fix it.
             </p>
           </div>
         </div>
@@ -97,176 +190,208 @@ export default function ServiceRoutePage() {
     const afterSrc = `/proof/${proofKey}-after.png`;
 
     return (
-      <main className={styles.page} dir={dir}>
-        <div className={styles.hero}>
-          <div className={styles.heroBg} />
-          <div className={styles.container}>
-            <Link
-              href="/services"
-              className={styles.backArrow}
-              aria-label={lang === "ar" ? "الرجوع إلى صفحة الخدمات" : "Back to Services"}
-            >
-              <span className={styles.backIcon} aria-hidden="true">
-                {lang === "ar" ? "→" : "←"}
-              </span>
-              <span className={styles.backText}>
-                {lang === "ar" ? "رجوع للخدمات" : "Back to Services"}
-              </span>
-            </Link>
+      <LazyMotion features={domAnimation}>
+        <main className={styles.page} dir={dir}>
+          <div className={styles.hero}>
+            <div className={styles.heroBg} />
+            <div className={styles.container}>
+              <Link
+                href="/services"
+                className={styles.backArrow}
+                aria-label={
+                  lang === "ar"
+                    ? "الرجوع إلى صفحة الخدمات"
+                    : "Back to Services"
+                }
+              >
+                <span className={styles.backIcon} aria-hidden="true">
+                  {lang === "ar" ? "→" : "←"}
+                </span>
+                <span className={styles.backText}>
+                  {lang === "ar" ? "رجوع للخدمات" : "Back to Services"}
+                </span>
+              </Link>
 
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-            >
-              <h1 className={styles.h1}>{title}</h1>
-              <p className={styles.subtitle}>{subtitle}</p>
+              {renderFadeBlock(
+                <>
+                  <h1 className={styles.h1}>{title}</h1>
+                  <p className={styles.subtitle}>{subtitle}</p>
 
-              <div className={styles.ctaRow}>
-                <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
-                  {lang === "ar" ? "احجز الآن" : "Book Now"}
-                </Link>
-                <a
-                  className={`${styles.btnGhost} ${styles.ctaBtn}`}
-                  href={SITE.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {lang === "ar" ? "واتساب" : "WhatsApp"}
-                </a>
-                <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={`tel:${SITE.phoneTel}`}>
-                  {lang === "ar" ? "اتصال" : "Call"}
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        <section className={styles.section}>
-          <div className={styles.container}>
-            <div className={styles.split}>
-              <div>
-                {overview.map((p, idx) => (
-                  <motion.p
-                    key={idx}
-                    className={styles.paragraph}
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeUp}
-                    transition={{ duration: 0.35, delay: idx * 0.04 }}
-                  >
-                    {p}
-                  </motion.p>
-                ))}
-
-                <div className={styles.trustStrip}>
-                  <div className={styles.trustItem}>
-                    {lang === "ar" ? "ضمان على جميع الخدمات" : "Warranty on all services"}
+                  <div className={styles.ctaRow}>
+                    <Link
+                      className={`${styles.btnPrimary} ${styles.ctaBtn}`}
+                      href="/book"
+                    >
+                      {lang === "ar" ? "احجز الآن" : "Book Now"}
+                    </Link>
+                    <a
+                      className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                      href={SITE.whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {lang === "ar" ? "واتساب" : "WhatsApp"}
+                    </a>
+                    <a
+                      className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                      href={`tel:${SITE.phoneTel}`}
+                    >
+                      {lang === "ar" ? "اتصال" : "Call"}
+                    </a>
                   </div>
-                  <div className={styles.trustItem}>
-                    {lang === "ar" ? "فحص جودة متعدد" : "Multi-step quality control"}
-                  </div>
-                  <div className={styles.trustItem}>
-                    {lang === "ar" ? "مناسب لظروف قطر" : "Optimized for Qatar conditions"}
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.mediaCard}>
-                <div className={styles.sliderWrap}>
-                  <BeforeAfterSlider
-                    beforeSrc={beforeSrc}
-                    afterSrc={afterSrc}
-                    alt={`${title} before/after`}
-                    height={320}
-                  />
-                </div>
-
-                <p className={styles.mutedSmall}>
-                  {lang === "ar"
-                    ? "صور توضيحية — استبدلها بصور الورشة الحقيقية لزيادة التحويل."
-                    : "Illustrative images — replace with real workshop photos for maximum conversion."}
-                </p>
-              </div>
+                </>,
+                undefined,
+                { duration: 0.5, inView: false }
+              )}
             </div>
           </div>
-        </section>
 
-        <section className={styles.sectionAlt}>
-          <div className={styles.container}>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.h2}>{lang === "ar" ? "الخدمات الفرعية" : "Subservices"}</h2>
-              <p className={styles.muted}>
-                {lang === "ar"
-                  ? "اختر خدمة فرعية لعرض التفاصيل الكاملة والخطوات والمواصفات."
-                  : "Choose a subservice to see full details, process, specifications, and FAQs."}
-              </p>
-            </div>
+          <section className={styles.section}>
+            <div className={styles.container}>
+              <div className={styles.split}>
+                <div>
+                  {overview.map((p, idx) => renderFadeParagraph(p, idx))}
 
-            <div className={styles.grid}>
-              {s.subservices.map((sub, idx) => (
-                <motion.div
-                  key={sub.slug}
-                  className={styles.card}
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  transition={{ duration: 0.28, delay: idx * 0.03 }}
-                >
-                  <div className={styles.cardTop}>
-                    <img
-                      src={sub.heroImage || "/services/placeholder.png"}
-                      alt=""
-                      className={styles.cardImg}
+                  <div className={styles.trustStrip}>
+                    <div className={styles.trustItem}>
+                      {lang === "ar"
+                        ? "ضمان على جميع الخدمات"
+                        : "Warranty on all services"}
+                    </div>
+                    <div className={styles.trustItem}>
+                      {lang === "ar"
+                        ? "فحص جودة متعدد"
+                        : "Multi-step quality control"}
+                    </div>
+                    <div className={styles.trustItem}>
+                      {lang === "ar"
+                        ? "مناسب لظروف قطر"
+                        : "Optimized for Qatar conditions"}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.mediaCard}>
+                  <div className={styles.sliderWrap}>
+                    <BeforeAfterSlider
+                      beforeSrc={beforeSrc}
+                      afterSrc={afterSrc}
+                      alt={`${title} before/after`}
+                      height={320}
                     />
                   </div>
 
-                  <div className={styles.cardBody}>
-                    <div className={styles.cardHeader}>
-                      <h3 className={styles.h3}>{getText(sub.title, lang)}</h3>
-                      <p className={styles.cardText}>{getText(sub.intro, lang)[0]}</p>
-                    </div>
-
-                    <Link className={styles.cardBtn} href={`/services/${s.slug}/${sub.slug}`}>
-                      {lang === "ar" ? "عرض التفاصيل" : "View details"}
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.section}>
-          <div className={styles.container}>
-            <div className={styles.finalCta}>
-              <h2 className={styles.h2}>
-                {lang === "ar" ? "هل تريد توصية دقيقة؟" : "Want an accurate recommendation?"}
-              </h2>
-              <p className={styles.muted}>
-                {lang === "ar"
-                  ? "احجز فحصًا سريعًا أو أرسل صورًا عبر واتساب للحصول على عرض سعر."
-                  : "Book a quick inspection or send photos on WhatsApp to get a quote."}
-              </p>
-
-              <div className={styles.ctaRow}>
-                <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
-                  {lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}
-                </Link>
-                <a
-                  className={`${styles.btnGhost} ${styles.ctaBtn}`}
-                  href={SITE.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {lang === "ar" ? "واتساب" : "WhatsApp"}
-                </a>
+                  <p className={styles.mutedSmall}>
+                    {lang === "ar"
+                      ? "صور توضيحية — استبدلها بصور الورشة الحقيقية لزيادة التحويل."
+                      : "Illustrative images — replace with real workshop photos for maximum conversion."}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+
+          <section className={styles.sectionAlt}>
+            <div className={styles.container}>
+              <div className={styles.sectionHeader}>
+                <h2 className={styles.h2}>
+                  {lang === "ar" ? "الخدمات الفرعية" : "Subservices"}
+                </h2>
+                <p className={styles.muted}>
+                  {lang === "ar"
+                    ? "اختر خدمة فرعية لعرض التفاصيل الكاملة والخطوات والمواصفات."
+                    : "Choose a subservice to see full details, process, specifications, and FAQs."}
+                </p>
+              </div>
+
+              <div className={styles.grid}>
+                {s.subservices.map((sub, idx) => {
+                  const Card = enableMotion ? m.div : "div";
+                  const cardProps = enableMotion
+                    ? {
+                        initial: "hidden",
+                        whileInView: "visible",
+                        viewport: viewportOnce,
+                        variants: fadeUp,
+                        transition: { duration: 0.28, delay: idx * 0.03 },
+                      }
+                    : {};
+
+                  return (
+                    <Card
+                      key={sub.slug}
+                      className={styles.card}
+                      {...(cardProps as any)}
+                    >
+                      <div className={styles.cardTop}>
+                        <img
+                          src={sub.heroImage || "/services/placeholder.png"}
+                          alt=""
+                          className={styles.cardImg}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+
+                      <div className={styles.cardBody}>
+                        <div className={styles.cardHeader}>
+                          <h3 className={styles.h3}>
+                            {getText(sub.title, lang)}
+                          </h3>
+                          <p className={styles.cardText}>
+                            {getText(sub.intro, lang)[0]}
+                          </p>
+                        </div>
+
+                        <Link
+                          className={styles.cardBtn}
+                          href={`/services/${s.slug}/${sub.slug}`}
+                        >
+                          {lang === "ar" ? "عرض التفاصيل" : "View details"}
+                        </Link>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <div className={styles.container}>
+              <div className={styles.finalCta}>
+                <h2 className={styles.h2}>
+                  {lang === "ar"
+                    ? "هل تريد توصية دقيقة؟"
+                    : "Want an accurate recommendation?"}
+                </h2>
+                <p className={styles.muted}>
+                  {lang === "ar"
+                    ? "احجز فحصًا سريعًا أو أرسل صورًا عبر واتساب للحصول على عرض سعر."
+                    : "Book a quick inspection or send photos on WhatsApp to get a quote."}
+                </p>
+
+                <div className={styles.ctaRow}>
+                  <Link
+                    className={`${styles.btnPrimary} ${styles.ctaBtn}`}
+                    href="/book"
+                  >
+                    {lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}
+                  </Link>
+                  <a
+                    className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                    href={SITE.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "ar" ? "واتساب" : "WhatsApp"}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </LazyMotion>
     );
   }
 
@@ -286,201 +411,216 @@ export default function ServiceRoutePage() {
   const timeline = getText(sub.timeline, lang);
 
   return (
-    <main className={styles.page} dir={dir}>
-      <div className={styles.heroSmall}>
-        <div className={styles.container}>
-          <Link
-            href={`/services/${s.slug}`}
-            className={styles.backArrow}
-            aria-label={lang === "ar" ? "الرجوع إلى صفحة الخدمة" : "Back to Service"}
-          >
-            <span className={styles.backIcon} aria-hidden="true">
-              {lang === "ar" ? "→" : "←"}
-            </span>
-            <span className={styles.backText}>{lang === "ar" ? "رجوع" : "Back"}</span>
-          </Link>
+    <LazyMotion features={domAnimation}>
+      <main className={styles.page} dir={dir}>
+        <div className={styles.heroSmall}>
+          <div className={styles.container}>
+            <Link
+              href={`/services/${s.slug}`}
+              className={styles.backArrow}
+              aria-label={
+                lang === "ar" ? "الرجوع إلى صفحة الخدمة" : "Back to Service"
+              }
+            >
+              <span className={styles.backIcon} aria-hidden="true">
+                {lang === "ar" ? "→" : "←"}
+              </span>
+              <span className={styles.backText}>
+                {lang === "ar" ? "رجوع" : "Back"}
+              </span>
+            </Link>
 
-          <div className={styles.breadcrumbs}>
-            <Link href="/services">{lang === "ar" ? "الخدمات" : "Services"}</Link>
-            <span className={styles.sep}>/</span>
-            <Link href={`/services/${s.slug}`}>{getText(s.title, lang)}</Link>
-            <span className={styles.sep}>/</span>
-            <span>{title}</span>
-          </div>
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            transition={{ duration: 0.45 }}
-          >
-            <h1 className={styles.h1}>{title}</h1>
-            <p className={styles.subtitle}>{intro[0]}</p>
-
-            <div className={styles.ctaRow}>
-              <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
-                {lang === "ar" ? "احجز الآن" : "Book Now"}
-              </Link>
-              <a
-                className={`${styles.btnGhost} ${styles.ctaBtn}`}
-                href={SITE.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {lang === "ar" ? "واتساب" : "WhatsApp"}
-              </a>
-              <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={`tel:${SITE.phoneTel}`}>
-                {lang === "ar" ? "اتصال" : "Call"}
-              </a>
+            <div className={styles.breadcrumbs}>
+              <Link href="/services">{lang === "ar" ? "الخدمات" : "Services"}</Link>
+              <span className={styles.sep}>/</span>
+              <Link href={`/services/${s.slug}`}>{getText(s.title, lang)}</Link>
+              <span className={styles.sep}>/</span>
+              <span>{title}</span>
             </div>
-          </motion.div>
+
+            {renderFadeBlock(
+              <>
+                <h1 className={styles.h1}>{title}</h1>
+                <p className={styles.subtitle}>{intro[0]}</p>
+
+                <div className={styles.ctaRow}>
+                  <Link
+                    className={`${styles.btnPrimary} ${styles.ctaBtn}`}
+                    href="/book"
+                  >
+                    {lang === "ar" ? "احجز الآن" : "Book Now"}
+                  </Link>
+                  <a
+                    className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                    href={SITE.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "ar" ? "واتساب" : "WhatsApp"}
+                  </a>
+                  <a
+                    className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                    href={`tel:${SITE.phoneTel}`}
+                  >
+                    {lang === "ar" ? "اتصال" : "Call"}
+                  </a>
+                </div>
+              </>,
+              undefined,
+              { duration: 0.45, inView: false }
+            )}
+          </div>
         </div>
-      </div>
 
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <div className={styles.split}>
-            <div>
-              {intro.slice(0, 2).map((p, idx) => (
-                <motion.p
-                  key={idx}
-                  className={styles.paragraph}
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  transition={{ duration: 0.32, delay: idx * 0.04 }}
-                >
-                  {p}
-                </motion.p>
-              ))}
+        <section className={styles.section}>
+          <div className={styles.container}>
+            <div className={styles.split}>
+              <div>
+                {intro.slice(0, 2).map((p, idx) => renderFadeParagraph(p, idx))}
 
-              <div className={styles.kpiRow}>
-                <div className={styles.kpi}>
-                  <span>{lang === "ar" ? "المدة" : "Timeline"}</span>
-                  <strong>{timeline}</strong>
-                </div>
-                <div className={styles.kpi}>
-                  <span>{lang === "ar" ? "ضمان" : "Warranty"}</span>
-                  <strong>{lang === "ar" ? "متوفر" : "Included"}</strong>
-                </div>
-                <div className={styles.kpi}>
-                  <span>{lang === "ar" ? "المنطقة" : "Location"}</span>
-                  <strong>{lang === "ar" ? "الدوحة" : "Doha"}</strong>
+                <div className={styles.kpiRow}>
+                  <div className={styles.kpi}>
+                    <span>{lang === "ar" ? "المدة" : "Timeline"}</span>
+                    <strong>{timeline}</strong>
+                  </div>
+                  <div className={styles.kpi}>
+                    <span>{lang === "ar" ? "ضمان" : "Warranty"}</span>
+                    <strong>{lang === "ar" ? "متوفر" : "Included"}</strong>
+                  </div>
+                  <div className={styles.kpi}>
+                    <span>{lang === "ar" ? "المنطقة" : "Location"}</span>
+                    <strong>{lang === "ar" ? "الدوحة" : "Doha"}</strong>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className={styles.cardTopsub}>
-              <img
-                src={sub.heroImage || "/services/placeholder.png"}
-                alt=""
-                className={styles.cardImgsub}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.sectionAlt}>
-        <div className={styles.container}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.h2}>{lang === "ar" ? "مناسب لـ" : "Best for"}</h2>
-          </div>
-          <ul className={styles.bullets}>
-            {bestFor.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <div className={styles.threeCols}>
-            <div className={styles.panel}>
-              <h2 className={styles.h2}>{lang === "ar" ? "المواصفات" : "Specifications"}</h2>
-              <ul className={styles.bullets}>
-                {specs.map((x) => (
-                  <li key={x}>{x}</li>
-                ))}
-              </ul>
-            </div>
-            <div className={styles.panel}>
-              <h2 className={styles.h2}>{lang === "ar" ? "يشمل" : "What’s included"}</h2>
-              <ul className={styles.bullets}>
-                {included.map((x) => (
-                  <li key={x}>{x}</li>
-                ))}
-              </ul>
-            </div>
-            <div className={styles.panel}>
-              <h2 className={styles.h2}>{lang === "ar" ? "بعد الخدمة" : "Aftercare"}</h2>
-              <ul className={styles.bullets}>
-                {aftercare.map((x) => (
-                  <li key={x}>{x}</li>
-                ))}
-              </ul>
+              <div className={styles.cardTopsub}>
+                <img
+                  src={sub.heroImage || "/services/placeholder.png"}
+                  alt=""
+                  className={styles.cardImgsub}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className={styles.sectionAlt}>
-        <div className={styles.container}>
-          <h2 className={styles.h2}>{lang === "ar" ? "العملية" : "Our process"}</h2>
-          <ol className={styles.timeline}>
-            {process.map((step, i) => (
-              <motion.li
-                key={i}
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                transition={{ duration: 0.26, delay: i * 0.03 }}
-              >
-                <span className={styles.stepIndex}>{i + 1}</span>
-                <span className={styles.stepText}>{step}</span>
-              </motion.li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <h2 className={styles.h2}>{lang === "ar" ? "الأسئلة الشائعة" : "FAQs"}</h2>
-          <div className={styles.faqGrid}>
-            {sub.faqs.map((f, idx) => (
-              <details key={idx} className={styles.faq}>
-                <summary>{getText(f.q, lang)}</summary>
-                <p className={styles.faqAns}>{getText(f.a, lang)}</p>
-              </details>
-            ))}
+        <section className={styles.sectionAlt}>
+          <div className={styles.container}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.h2}>{lang === "ar" ? "مناسب لـ" : "Best for"}</h2>
+            </div>
+            <ul className={styles.bullets}>
+              {bestFor.map((x) => (
+                <li key={x}>{x}</li>
+              ))}
+            </ul>
           </div>
+        </section>
 
-          <div className={styles.finalCta}>
-            <h3 className={styles.h3}>{lang === "ar" ? "جاهز للبدء؟" : "Ready to start?"}</h3>
-            <p className={styles.muted}>
-              {lang === "ar"
-                ? "أرسل صورًا عبر واتساب للحصول على عرض سعر سريع."
-                : "Send photos on WhatsApp for a fast quote."}
-            </p>
-
-            <div className={styles.ctaRow}>
-              <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
-                {lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}
-              </Link>
-              <a
-                className={`${styles.btnGhost} ${styles.ctaBtn}`}
-                href={SITE.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {lang === "ar" ? "واتساب" : "WhatsApp"}
-              </a>
+        <section className={styles.section}>
+          <div className={styles.container}>
+            <div className={styles.threeCols}>
+              <div className={styles.panel}>
+                <h2 className={styles.h2}>
+                  {lang === "ar" ? "المواصفات" : "Specifications"}
+                </h2>
+                <ul className={styles.bullets}>
+                  {specs.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className={styles.panel}>
+                <h2 className={styles.h2}>
+                  {lang === "ar" ? "يشمل" : "What’s included"}
+                </h2>
+                <ul className={styles.bullets}>
+                  {included.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className={styles.panel}>
+                <h2 className={styles.h2}>{lang === "ar" ? "بعد الخدمة" : "Aftercare"}</h2>
+                <ul className={styles.bullets}>
+                  {aftercare.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+        <section className={styles.sectionAlt}>
+          <div className={styles.container}>
+            <h2 className={styles.h2}>{lang === "ar" ? "العملية" : "Our process"}</h2>
+
+            <ol className={styles.timeline}>
+              {process.map((step, i) => {
+                const Item = enableMotion ? m.li : "li";
+                const itemProps = enableMotion
+                  ? {
+                      initial: "hidden",
+                      whileInView: "visible",
+                      viewport: viewportOnce,
+                      variants: fadeUp,
+                      transition: { duration: 0.26, delay: i * 0.03 },
+                    }
+                  : {};
+
+                return (
+                  <Item key={i} {...(itemProps as any)}>
+                    <span className={styles.stepIndex}>{i + 1}</span>
+                    <span className={styles.stepText}>{step}</span>
+                  </Item>
+                );
+              })}
+            </ol>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <div className={styles.container}>
+            <h2 className={styles.h2}>{lang === "ar" ? "الأسئلة الشائعة" : "FAQs"}</h2>
+
+            <div className={styles.faqGrid}>
+              {sub.faqs.map((f, idx) => (
+                <details key={idx} className={styles.faq}>
+                  <summary>{getText(f.q, lang)}</summary>
+                  <p className={styles.faqAns}>{getText(f.a, lang)}</p>
+                </details>
+              ))}
+            </div>
+
+            <div className={styles.finalCta}>
+              <h3 className={styles.h3}>{lang === "ar" ? "جاهز للبدء؟" : "Ready to start?"}</h3>
+              <p className={styles.muted}>
+                {lang === "ar"
+                  ? "أرسل صورًا عبر واتساب للحصول على عرض سعر سريع."
+                  : "Send photos on WhatsApp for a fast quote."}
+              </p>
+
+              <div className={styles.ctaRow}>
+                <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href="/book">
+                  {lang === "ar" ? "احصل على عرض سعر" : "Get a Quote"}
+                </Link>
+                <a
+                  className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                  href={SITE.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {lang === "ar" ? "واتساب" : "WhatsApp"}
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </LazyMotion>
   );
 }

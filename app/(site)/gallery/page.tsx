@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./gallery.module.css";
 import { useI18n } from "../../lib/i18n";
 import Link from "next/link";
-
-gsap.registerPlugin(ScrollTrigger);
 
 function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
@@ -21,7 +17,6 @@ type S3VideoItem = {
 };
 
 function buildWatchUrl(src: string) {
-  // Open a dedicated watch page to avoid direct-download behavior from S3 headers
   return `/watch?src=${encodeURIComponent(src)}`;
 }
 
@@ -38,9 +33,21 @@ export default function GalleryPage() {
   // --- VIDEO CAROUSEL ---
   const videoItems = useMemo(
     () => [
-      { id: 1, src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_0395.MOV", poster: "/videos/poster-1.jpg" },
-      { id: 2, src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1006.MOV", poster: "/videos/poster-2.jpg" },
-      { id: 3, src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1098.MOV", poster: "/videos/poster-1.jpg" },
+      {
+        id: 1,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image9.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image9-poster.png",
+      },
+      {
+        id: 2,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image8.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image8-poster.png",
+      },
+      {
+        id: 3,
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image7.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image7-poster.png",
+      },
     ],
     []
   );
@@ -50,26 +57,26 @@ export default function GalleryPage() {
     () => [
       {
         id: 1,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1119.MOV",
-        poster: "/videos/poster-1.jpg",
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image6.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image6-poster.png",
         label: language === "en" ? "PPF Installation" : "تركيب PPF",
       },
       {
         id: 2,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_2217.MOV",
-        poster: "/videos/poster-2.jpg",
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image5.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image5-poster.png",
         label: language === "en" ? "Detailing & Coating" : "تفصيل وسيراميك",
       },
       {
         id: 3,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_9060.MOV",
-        poster: "/videos/poster-1.jpg",
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image4.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image4-poster.png",
         label: language === "en" ? "PPF / Protection" : "PPF / حماية",
       },
       {
         id: 4,
-        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/IMG_1445.MOV",
-        poster: "/videos/poster-2.jpg",
+        src: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image3.mp4",
+        poster: "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image3-poster.png",
         label: language === "en" ? "Detailing Results" : "نتائج التفصيل",
       },
     ],
@@ -128,7 +135,10 @@ export default function GalleryPage() {
 
     return {
       galleryTitle: safeText(gallery.title, language === "en" ? "Gallery" : "المعرض"),
-      gallerySubtitle: safeText(gallery.subtitle, language === "en" ? "Our recent work and transformations" : "أعمالنا والتحولات"),
+      gallerySubtitle: safeText(
+        gallery.subtitle,
+        language === "en" ? "Our recent work and transformations" : "أعمالنا والتحولات"
+      ),
       carsDetailedLabel: safeText(cinematic.carsDetailedLabel, language === "en" ? "Cars detailed" : "سيارات تم تفصيلها"),
       filterCeramic: safeText(galleryPage.filterCeramic, language === "en" ? "Ceramic projects" : "مشاريع سيراميك"),
       filterProtection: safeText(galleryPage.filterProtection, language === "en" ? "Protection installs" : "تركيبات حماية"),
@@ -136,14 +146,20 @@ export default function GalleryPage() {
       beforeAfterTitle: safeText(beforeAfter.title, language === "en" ? "Before / After" : "قبل / بعد"),
       beforeLabel: safeText(beforeAfter.before, language === "en" ? "Before" : "قبل"),
       afterLabel: safeText(beforeAfter.after, language === "en" ? "After" : "بعد"),
-      beforeAfterDesc: safeText(galleryPage.description, language === "en" ? "Real transformations by our team." : "تحولات حقيقية من فريقنا."),
+      beforeAfterDesc: safeText(
+        galleryPage.description,
+        language === "en" ? "Real transformations by our team." : "تحولات حقيقية من فريقنا."
+      ),
 
       s3Title: safeText(galleryPage.s3Title, language === "en" ? "Work Showcase" : "عرض الأعمال"),
       s3Subtitle: safeText(galleryPage.s3Subtitle, language === "en" ? "Real videos from our workshop" : "فيديوهات حقيقية من الورشة"),
       watchFull: safeText(galleryPage.watchFull, language === "en" ? "Watch Full" : "شاهد كامل"),
 
       ctaTitle: safeText((t as any)?.finalCta?.title, language === "en" ? "Ready to protect your car?" : "جاهز لحماية سيارتك؟"),
-      ctaSubtitle: safeText(galleryPage.description, language === "en" ? "Contact us for a tailored quote." : "تواصل معنا للحصول على عرض سعر."),
+      ctaSubtitle: safeText(
+        galleryPage.description,
+        language === "en" ? "Contact us for a tailored quote." : "تواصل معنا للحصول على عرض سعر."
+      ),
       bookNow: safeText(nav.bookNow, language === "en" ? "Book Now" : "احجز الآن"),
       videosTitle: safeText(galleryPage.videosTitle, language === "en" ? "Video Gallery" : "معرض الفيديو"),
       videosSubtitle: safeText(galleryPage.videosSubtitle, language === "en" ? "Highlights from our latest work" : "لقطات من أحدث أعمالنا"),
@@ -162,14 +178,14 @@ export default function GalleryPage() {
       {
         id: 2,
         before: "/before1.png",
-        after: "after1.png",
+        after: "/after1.png",
         title: language === "en" ? "Interior Restoration" : "ترميم الداخلية",
         description: language === "en" ? "Premium leather treatment and deep cleaning" : "عناية جلد + تنظيف عميق",
       },
       {
         id: 3,
-        before: "before2.png",
-        after: "after2.png",
+        before: "/before2.png",
+        after: "/after2.png",
         title: language === "en" ? "PPF Installation" : "تركيب PPF",
         description: language === "en" ? "Full body PPF with flawless application" : "PPF كامل بتطبيق مثالي",
       },
@@ -177,32 +193,76 @@ export default function GalleryPage() {
     [language]
   );
 
-  // Autoplay attempt
+  // ✅ Step 3: Play only when visible (scope to gallery videos only)
   useEffect(() => {
-    const allVideos = Array.from(document.querySelectorAll("video"));
-    if (!allVideos.length) return;
+    const videos = Array.from(document.querySelectorAll<HTMLVideoElement>("video[data-gallery-video]"));
+    if (!videos.length) return;
 
-    allVideos.forEach((v) => {
+    const shouldPlay = new Set<HTMLVideoElement>();
+
+    for (const v of videos) {
       v.muted = true;
-      (v as any).playsInline = true;
       v.loop = true;
-      v.preload = "metadata";
-    });
+      v.playsInline = true;
+      (v as any).playsInline = true;
+      v.preload = "none";
+      v.controls = false;
 
-    const tryPlayAll = async () => {
-      for (const v of allVideos) {
-        try {
-          await v.play();
-        } catch {
-          // ignored
-        }
+      try {
+        v.pause();
+      } catch {
+        // ignore
       }
+    }
+
+    // allow only the first one to fetch metadata earlier (optional)
+    if (videos[0]) videos[0].preload = "metadata";
+
+    const safePlay = async (v: HTMLVideoElement) => {
+      if (v.preload === "none") {
+        v.preload = "metadata";
+        try {
+          v.load();
+        } catch {}
+      }
+      try {
+        if (!shouldPlay.has(v)) return;
+        await v.play();
+      } catch {}
     };
 
-    tryPlayAll();
+    const safePause = (v: HTMLVideoElement) => {
+      try {
+        v.pause();
+      } catch {}
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const v = entry.target as HTMLVideoElement;
+          const visibleEnough = entry.isIntersecting && entry.intersectionRatio >= 0.4;
+
+          if (visibleEnough) {
+            shouldPlay.add(v);
+            void safePlay(v);
+          } else {
+            shouldPlay.delete(v);
+            safePause(v);
+          }
+        }
+      },
+      {
+        root: null,
+        rootMargin: "200px 0px 200px 0px",
+        threshold: [0, 0.2, 0.4, 0.6, 0.8],
+      }
+    );
+
+    for (const v of videos) observer.observe(v);
 
     const onFirstGesture = () => {
-      tryPlayAll();
+      shouldPlay.forEach((v) => void safePlay(v));
       window.removeEventListener("click", onFirstGesture);
       window.removeEventListener("touchstart", onFirstGesture);
     };
@@ -213,97 +273,221 @@ export default function GalleryPage() {
     return () => {
       window.removeEventListener("click", onFirstGesture);
       window.removeEventListener("touchstart", onFirstGesture);
+      observer.disconnect();
+
+      for (const v of videos) {
+        shouldPlay.delete(v);
+        safePause(v);
+      }
     };
   }, [language]);
 
-  // GSAP
+  // ✅ Step 4: GSAP/ScrollTrigger optimized (dynamic import + reduced motion + mobile guard)
   useEffect(() => {
     if (!rootRef.current) return;
 
-    const ctx = gsap.context(() => {
-      if (videoCarouselRef.current) {
-        const slides = videoCarouselRef.current.querySelectorAll(`.${styles.videoSlide}`);
-        gsap.fromTo(
-          slides,
-          { opacity: 0, y: 20, scale: 0.98 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power2.out",
-            scrollTrigger: { trigger: videoCarouselRef.current, start: "top 85%" },
-          }
-        );
-      }
+    let cancelled = false;
+    let ctx: any = null;
+    let ScrollTriggerRef: any = null;
 
-      if (heroRef.current) {
-        const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
-        if (heroContent) {
-          gsap.fromTo(
-            heroContent,
-            { opacity: 0, y: 80, scale: 0.95 },
-            { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: "power3.out", delay: 0.12 }
-          );
+    const prefersReducedMotion = () =>
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const isMobile = () =>
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(max-width: 768px)").matches;
+
+    const setStatsInstant = () => {
+      if (!statsRef.current) return;
+      const statNumbers = statsRef.current.querySelectorAll(`.${styles.statNumber}`);
+      statNumbers.forEach((node) => {
+        const target = node.getAttribute("data-target") || "0";
+        node.textContent = target;
+      });
+    };
+
+    const scheduleIdle = (fn: () => void) => {
+      const w = window as any;
+      if (typeof w.requestIdleCallback === "function") {
+        return w.requestIdleCallback(fn, { timeout: 1500 });
+      }
+      return window.setTimeout(fn, 250);
+    };
+
+    const cleanup = () => {
+      try {
+        ctx?.revert?.();
+      } catch {}
+
+      try {
+        if (ScrollTriggerRef?.getAll) {
+          ScrollTriggerRef.getAll().forEach((st: any) => st.kill());
         }
+      } catch {}
+    };
+
+    const run = async () => {
+      // Respect reduced motion: skip heavy animations entirely.
+      // (Your elements should still render normally via CSS.)
+      if (prefersReducedMotion()) {
+        setStatsInstant();
+        return;
       }
 
-      if (beforeAfterRef.current) {
-        const cards = beforeAfterRef.current.querySelectorAll(`.${styles.comparisonCard}`);
-        gsap.fromTo(
-          cards,
-          { opacity: 0, x: -60, rotateY: -8 },
-          {
-            opacity: 1,
-            x: 0,
-            rotateY: 0,
-            duration: 0.9,
-            stagger: 0.12,
-            ease: "power2.out",
-            scrollTrigger: { trigger: beforeAfterRef.current, start: "top 75%", toggleActions: "play none none reverse" },
+      // Defer GSAP load to reduce TBT during first paint
+      scheduleIdle(async () => {
+        if (cancelled) return;
+
+        const gsapModule = await import("gsap");
+        const stModule = await import("gsap/ScrollTrigger");
+
+        if (cancelled) return;
+
+        const gsap = gsapModule.default;
+        const ScrollTrigger = (stModule as any).ScrollTrigger || (stModule as any).default || stModule;
+        ScrollTriggerRef = ScrollTrigger;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Helpful perf tweak
+        if (ScrollTrigger.config) {
+          ScrollTrigger.config({ ignoreMobileResize: true });
+        }
+
+        const mobile = isMobile();
+
+        cleanup(); // ensure no duplicate triggers on language changes
+
+        ctx = gsap.context(() => {
+          // VIDEO CAROUSEL reveal (lighter on mobile)
+          if (videoCarouselRef.current) {
+            const slides = videoCarouselRef.current.querySelectorAll(`.${styles.videoSlide}`);
+            gsap.fromTo(
+              slides,
+              { opacity: 0, y: mobile ? 10 : 20 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: mobile ? 0.45 : 0.7,
+                stagger: mobile ? 0.04 : 0.08,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: videoCarouselRef.current,
+                  start: "top 88%",
+                },
+              }
+            );
           }
-        );
-      }
 
-      if (statsRef.current) {
-        const statNumbers = statsRef.current.querySelectorAll(`.${styles.statNumber}`);
-        statNumbers.forEach((node) => {
-          const target = Number(node.getAttribute("data-target") || "0");
-          const obj = { val: 0 };
+          // HERO entrance (optional; lighter on mobile)
+          if (heroRef.current) {
+            const heroContent = heroRef.current.querySelector(`.${styles.heroContent}`);
+            if (heroContent) {
+              gsap.fromTo(
+                heroContent,
+                { opacity: 0, y: mobile ? 30 : 80 },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: mobile ? 0.6 : 1.0,
+                  ease: "power3.out",
+                  delay: 0.08,
+                }
+              );
+            }
+          }
 
-          gsap.to(obj, {
-            val: target,
-            duration: 1.8,
-            ease: "power2.out",
-            onUpdate: () => {
-              node.textContent = String(Math.round(obj.val));
-            },
-            scrollTrigger: { trigger: statsRef.current, start: "top 82%", toggleActions: "play none none reverse" },
-          });
+          // BEFORE/AFTER cards (avoid 3D on mobile)
+          if (beforeAfterRef.current) {
+            const cards = beforeAfterRef.current.querySelectorAll(`.${styles.comparisonCard}`);
+            gsap.fromTo(
+              cards,
+              mobile
+                ? { opacity: 0, y: 16 }
+                : { opacity: 0, x: -60, rotateY: -8 },
+              {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                rotateY: 0,
+                duration: mobile ? 0.55 : 0.9,
+                stagger: mobile ? 0.08 : 0.12,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: beforeAfterRef.current,
+                  start: "top 80%",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          }
+
+          // STATS count-up (skip on mobile to reduce main-thread work)
+          if (statsRef.current) {
+            if (mobile) {
+              setStatsInstant();
+            } else {
+              const statNumbers = statsRef.current.querySelectorAll(`.${styles.statNumber}`);
+              statNumbers.forEach((node) => {
+                const target = Number(node.getAttribute("data-target") || "0");
+                const obj = { val: 0 };
+
+                gsap.to(obj, {
+                  val: target,
+                  duration: 1.4,
+                  ease: "power2.out",
+                  onUpdate: () => {
+                    node.textContent = String(Math.round(obj.val));
+                  },
+                  scrollTrigger: {
+                    trigger: statsRef.current,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse",
+                  },
+                });
+              });
+            }
+          }
+
+          // S3 cards
+          if (s3ShowcaseRef.current) {
+            const cards = s3ShowcaseRef.current.querySelectorAll(`.${styles.s3Card}`);
+            gsap.fromTo(
+              cards,
+              { opacity: 0, y: mobile ? 14 : 26 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: mobile ? 0.55 : 0.75,
+                stagger: mobile ? 0.06 : 0.1,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: s3ShowcaseRef.current,
+                  start: "top 84%",
+                },
+              }
+            );
+          }
+        }, rootRef);
+
+        // Avoid forcing sync layout immediately; refresh next frame
+        requestAnimationFrame(() => {
+          try {
+            ScrollTrigger.refresh();
+          } catch {}
         });
-      }
+      });
+    };
 
-      if (s3ShowcaseRef.current) {
-        const cards = s3ShowcaseRef.current.querySelectorAll(`.${styles.s3Card}`);
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 26, scale: 0.98 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.75,
-            stagger: 0.10,
-            ease: "power2.out",
-            scrollTrigger: { trigger: s3ShowcaseRef.current, start: "top 80%" },
-          }
-        );
-      }
-    }, rootRef);
+    void run();
 
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
   }, [language]);
 
   return (
@@ -319,7 +503,16 @@ export default function GalleryPage() {
           {videoItems.map((v) => (
             <div className={styles.videoSlide} key={v.id} role="listitem">
               <div className={styles.videoFrame}>
-                <video className={styles.video} src={v.src} poster={v.poster} muted playsInline loop preload="metadata" />
+                <video
+                  data-gallery-video
+                  className={styles.video}
+                  src={v.src}
+                  poster={v.poster}
+                  muted
+                  playsInline
+                  loop
+                  preload="none"
+                />
               </div>
             </div>
           ))}
@@ -346,19 +539,27 @@ export default function GalleryPage() {
         <div className={styles.container}>
           <div className={styles.statsGrid}>
             <div className={styles.statCard}>
-              <div className={styles.statNumber} data-target="850">0</div>
+              <div className={styles.statNumber} data-target="850">
+                0
+              </div>
               <div className={styles.statLabel}>{labels.carsDetailedLabel}</div>
             </div>
             <div className={styles.statCard}>
-              <div className={styles.statNumber} data-target="500">0</div>
+              <div className={styles.statNumber} data-target="500">
+                0
+              </div>
               <div className={styles.statLabel}>{labels.filterCeramic}</div>
             </div>
             <div className={styles.statCard}>
-              <div className={styles.statNumber} data-target="300">0</div>
+              <div className={styles.statNumber} data-target="300">
+                0
+              </div>
               <div className={styles.statLabel}>{labels.filterProtection}</div>
             </div>
             <div className={styles.statCard}>
-              <div className={styles.statNumber} data-target="98">0</div>
+              <div className={styles.statNumber} data-target="98">
+                0
+              </div>
               <div className={styles.statLabel}>{labels.satisfaction} %</div>
             </div>
           </div>
@@ -402,7 +603,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* ✅ S3 VIDEOS (horizontal frames) */}
+      {/* ✅ S3 VIDEOS */}
       <section className={styles.s3Section} ref={s3ShowcaseRef} aria-label="Work showcase videos">
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>{labels.s3Title}</h2>
@@ -414,28 +615,21 @@ export default function GalleryPage() {
                 <div className={styles.s3Top}>
                   <span className={styles.s3Pill}>{v.label}</span>
 
-                  {/* ✅ Open WATCH PAGE in a new tab (no direct download link) */}
-<a
-  className={styles.s3Link}
-  href={`/watch?src=${encodeURIComponent(v.src)}`}
-  target="_blank"
-  rel="noopener noreferrer"
->
-  {labels.watchFull} <span aria-hidden="true">↗</span>
-</a>
-
+                  <a className={styles.s3Link} href={buildWatchUrl(v.src)} target="_blank" rel="noopener noreferrer">
+                    {labels.watchFull} <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
 
                 <div className={styles.s3Frame}>
                   <video
+                    data-gallery-video
                     className={styles.s3Video}
                     src={v.src}
                     poster={v.poster}
                     muted
                     playsInline
                     loop
-                    controls
-                    preload="metadata"
+                    preload="none"
                   />
                 </div>
               </article>

@@ -1,110 +1,116 @@
 /* ============================================
-   RODEO DRIVE LUXURY CAR DETAILING
-   Global Styles & Design System
-   Next.js App Router | CSS Modules Only
+   RODEO DRIVE — GLOBAL DESIGN SYSTEM (OPTIMIZED)
+   Next.js App Router | Global CSS
    ============================================ */
 
-/* === DESIGN TOKENS === */
+/* =========================
+   DESIGN TOKENS
+========================= */
 :root {
   --header-height: 30px; /* adjust if header differs */
 
   /* Color Palette - Luxury Automotive */
-  --color-primary-silver: #C0C0C0;
-  --color-primary-silver-light: #E8E8E8;
-  --color-primary-silver-dark: #A0A0A0;
-  --color-primary-silver-bright: #F5F5F5;
-  --color-primary-silver-shine: #FFFFFF;
+  --color-primary-silver: #c0c0c0;
+  --color-primary-silver-light: #e8e8e8;
+  --color-primary-silver-dark: #a0a0a0;
+  --color-primary-silver-bright: #f5f5f5;
+  --color-primary-silver-shine: #ffffff;
 
-  --color-secondary-navy: #0A1929;
-  --color-secondary-navy-light: #1A2939;
-  --color-secondary-navy-dark: #050D15;
+  --color-secondary-navy: #0a1929;
+  --color-secondary-navy-light: #1a2939;
+  --color-secondary-navy-dark: #050d15;
 
-  --color-accent-burgundy: #6B0F1A;
-  --color-accent-burgundy-light: #8B1F2A;
-  --color-accent-burgundy-dark: #4B0510;
+  --color-accent-burgundy: #6b0f1a;
+  --color-accent-burgundy-light: #8b1f2a;
+  --color-accent-burgundy-dark: #4b0510;
 
-  --color-charcoal: #2C2C2C;
+  --color-charcoal: #2c2c2c;
   --color-black: #000000;
-  --color-white: #FFFFFF;
-  --color-off-white: #F8F8F8;
+  --color-white: #ffffff;
+  --color-off-white: #f8f8f8;
 
   /* Metallic Gradients */
-  --gradient-silver: linear-gradient(135deg, #E8E8E8 0%, #C0C0C0 50%, #A0A0A0 100%);
-  --gradient-silver-shine: linear-gradient(135deg, #FFFFFF 0%, #E8E8E8 25%, #C0C0C0 50%, #A0A0A0 75%, #C0C0C0 100%);
-  --gradient-silver-intense: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 20%, #E8E8E8 40%, #C0C0C0 60%, #A0A0A0 80%, #C0C0C0 100%);
-  --gradient-silver-metallic: linear-gradient(145deg, #FFFFFF 0%, #F8F8F8 10%, #E8E8E8 20%, #D0D0D0 40%, #C0C0C0 50%, #A8A8A8 60%, #A0A0A0 80%, #B0B0B0 90%, #C0C0C0 100%);
+  --gradient-silver: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 50%, #a0a0a0 100%);
+  --gradient-silver-shine: linear-gradient(135deg, #ffffff 0%, #e8e8e8 25%, #c0c0c0 50%, #a0a0a0 75%, #c0c0c0 100%);
+  --gradient-silver-intense: linear-gradient(135deg, #ffffff 0%, #f5f5f5 20%, #e8e8e8 40%, #c0c0c0 60%, #a0a0a0 80%, #c0c0c0 100%);
+  --gradient-silver-metallic: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f8f8 10%,
+    #e8e8e8 20%,
+    #d0d0d0 40%,
+    #c0c0c0 50%,
+    #a8a8a8 60%,
+    #a0a0a0 80%,
+    #b0b0b0 90%,
+    #c0c0c0 100%
+  );
   --gradient-silver-subtle: linear-gradient(180deg, rgba(192, 192, 192, 0.1) 0%, rgba(192, 192, 192, 0.05) 100%);
 
   --gradient-navy-overlay: linear-gradient(180deg, rgba(10, 25, 41, 0.8) 0%, rgba(10, 25, 41, 0.95) 100%);
   --gradient-dark-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
-  --gradient-burgundy: linear-gradient(135deg, #8B1F2A 0%, #6B0F1A 50%, #4B0510 100%);
-  --gradient-luxury: linear-gradient(135deg, #0A1929 0%, #6B0F1A 50%, #C0C0C0 100%);
-  --gradient-animated: linear-gradient(270deg, #0A1929, #6B0F1A, #C0C0C0, #0A1929);
+  --gradient-burgundy: linear-gradient(135deg, #8b1f2a 0%, #6b0f1a 50%, #4b0510 100%);
+  --gradient-luxury: linear-gradient(135deg, #0a1929 0%, #6b0f1a 50%, #c0c0c0 100%);
+  --gradient-animated: linear-gradient(270deg, #0a1929, #6b0f1a, #c0c0c0, #0a1929);
 
   /* Spacing System */
-  --spacing-xs: 0.5rem;      /* 8px */
-  --spacing-sm: 1rem;        /* 16px */
-  --spacing-md: 1.5rem;      /* 24px */
-  --spacing-lg: 2rem;        /* 32px */
-  --spacing-xl: 3rem;        /* 48px */
-  --spacing-2xl: 4rem;       /* 64px */
-  --spacing-3xl: 6rem;       /* 96px */
-  --spacing-4xl: 8rem;       /* 128px */
+  --spacing-xs: 0.5rem;  /* 8px */
+  --spacing-sm: 1rem;    /* 16px */
+  --spacing-md: 1.5rem;  /* 24px */
+  --spacing-lg: 2rem;    /* 32px */
+  --spacing-xl: 3rem;    /* 48px */
+  --spacing-2xl: 4rem;   /* 64px */
+  --spacing-3xl: 6rem;   /* 96px */
+  --spacing-4xl: 8rem;   /* 128px */
 
-  /* Typography Scale */
-  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-family-arabic: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+  /* Typography */
+  --font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-arabic: "IBM Plex Sans Arabic", "Tajawal", sans-serif;
 
-  /* Font Sizes */
-  --font-size-h1: 4rem;      /* 64px */
-  --font-size-h2: 3rem;      /* 48px */
-  --font-size-h3: 2.25rem;   /* 36px */
-  --font-size-h4: 1.875rem;  /* 30px */
-  --font-size-h5: 1.5rem;    /* 24px */
-  --font-size-h6: 1.25rem;   /* 20px */
-  --font-size-body-lg: 1.125rem; /* 18px */
-  --font-size-body: 1rem;    /* 16px */
-  --font-size-body-sm: 0.875rem; /* 14px */
+  --font-size-h1: 4rem;         /* 64px */
+  --font-size-h2: 3rem;         /* 48px */
+  --font-size-h3: 2.25rem;      /* 36px */
+  --font-size-h4: 1.875rem;     /* 30px */
+  --font-size-h5: 1.5rem;       /* 24px */
+  --font-size-h6: 1.25rem;      /* 20px */
+  --font-size-body-lg: 1.125rem;/* 18px */
+  --font-size-body: 1rem;       /* 16px */
+  --font-size-body-sm: 0.875rem;/* 14px */
   --font-size-caption: 0.75rem; /* 12px */
 
-  /* Font Weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Line Heights */
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
 
-  /* Letter Spacing */
   --letter-spacing-tight: -0.02em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.05em;
 
-  /* Transitions */
-  --transition-fast: 200ms ease-in-out;
-  --transition-normal: 350ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
-  --transition-luxury: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitions (avoid transition: all) */
+  --transition-fast: 180ms ease-in-out;
+  --transition-normal: 280ms ease-in-out;
+  --transition-slow: 420ms ease-in-out;
+  --transition-luxury: 520ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Shadows - Luxury Depth */
+  /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
   --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.24);
   --shadow-silver-glow: 0 0 40px rgba(192, 192, 192, 0.3);
 
-  /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  /* Z-Index Layers */
   --z-base: 1;
   --z-dropdown: 1000;
   --z-sticky: 1100;
@@ -112,100 +118,128 @@
   --z-tooltip: 1400;
 }
 
-/* RTL Adjustments */
+/* RTL: swap primary font family */
 [dir="rtl"] {
   --font-family-primary: var(--font-family-arabic);
 }
 
-/* === CSS RESET & BASE STYLES === */
-* {
-  margin: 0;
-  padding: 0;
+/* =========================
+   RESET + BASE
+========================= */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
+  margin: 0;
   font-family: var(--font-family-primary);
   font-size: var(--font-size-body);
   line-height: var(--line-height-normal);
   color: var(--color-primary-silver);
   background: var(--color-secondary-navy);
-  overflow-x: hidden;
+  overflow-x: clip; /* safer than hidden for fixed layers */
   position: relative;
 }
 
-/* =========================================================
-   BACKGROUND LAYERS (NO OVERRIDE CONFLICTS)
-   - base navy gradient (all pages)
-   - home image layer (home only via body.route-home)
-   - glow layer (all pages)
-   - animated gradient layer (all pages, very subtle)
-   ========================================================= */
+/* Respect reduced motion for smooth scroll */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
+
+/* Media elements */
+
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* =========================
+   BACKGROUND LAYERS
+   (performance-safe, no conflicts)
+========================= */
 
 /* Base deep background for all pages */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
+  z-index: -4;
+  pointer-events: none;
+
   background: linear-gradient(
     135deg,
     rgba(10, 25, 41, 0.95) 0%,
     rgba(10, 25, 41, 0.98) 50%,
     rgba(10, 25, 41, 1) 100%
   );
-  z-index: -4;
-  pointer-events: none;
+
+  /* reduce repaint impact */
+  contain: paint;
+  transform: translateZ(0);
 }
 
-/* HOME PAGE: background image + overlay
-   Put image in /public/home-bg.jpg (or change URL below) */
+/* HOME PAGE: image + overlay (only when .route-home is on body) */
 body.route-home::after {
   content: "";
   position: fixed;
   inset: 0;
+  z-index: -3;
+  pointer-events: none;
 
-  /* image first, overlay second (overlay on top of image) */
   background-image:
-    url("/home-bg.png"),
+    url("/home-bg.avif"),
     linear-gradient(
       180deg,
       rgba(10, 25, 41, 0.55) 0%,
       rgba(10, 25, 41, 0.82) 65%,
       rgba(10, 25, 41, 0.95) 100%
     );
-
   background-size: cover, cover;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
 
-  /* GPU-friendly, low-cost */
+  /* IMPORTANT: do not keep will-change permanently (battery drain) */
   transform: translateZ(0);
-  will-change: transform;
-  animation: homeBgFloat 18s ease-in-out infinite;
-
-  z-index: -3;
-  pointer-events: none;
+  contain: paint;
 }
 
-/* Glow layer for all pages (kept independent from body layers) */
+/* Glow layer for all pages */
 html::before {
   content: "";
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(192, 192, 192, 0.10) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(192, 192, 192, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
   z-index: -2;
   pointer-events: none;
-  animation: pulseGlow 10s ease-in-out infinite, moveGlow 20s ease-in-out infinite;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.10) 0%, transparent 42%),
+    radial-gradient(circle at 80% 70%, rgba(192, 192, 192, 0.08) 0%, transparent 42%),
+    radial-gradient(circle at 50% 50%, rgba(192, 192, 192, 0.06) 0%, transparent 62%),
+    radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 52%);
+
+  contain: paint;
+  transform: translateZ(0);
 }
 
 /* Subtle animated gradient film for all pages */
@@ -213,48 +247,82 @@ html::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: var(--gradient-animated);
-  background-size: 400% 400%;
-  animation: gradientFlow 15s ease infinite;
-  opacity: 0.03;
   z-index: -1;
   pointer-events: none;
+
+  background: var(--gradient-animated);
+  background-size: 400% 400%;
+  opacity: 0.025; /* even lighter */
+
+  contain: paint;
+  transform: translateZ(0);
 }
 
-/* Background animations */
+/* Background animations (desktop only by default) */
+@media (hover: hover) and (pointer: fine) {
+  body.route-home::after {
+    animation: homeBgFloat 18s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  html::before {
+    animation: pulseGlow 10s ease-in-out infinite, moveGlow 20s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+
+  html::after {
+    animation: gradientFlow 15s ease infinite;
+    will-change: background-position;
+  }
+}
+
+/* Background keyframes */
 @keyframes homeBgFloat {
-  0%, 100% { transform: scale(1) translateY(0); }
-  50% { transform: scale(1.03) translateY(-8px); }
+  0%, 100% { transform: scale(1) translateY(0) translateZ(0); }
+  50%      { transform: scale(1.02) translateY(-6px) translateZ(0); }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.95; }
 }
 
 @keyframes moveGlow {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -30px) scale(1.05); }
-  50% { transform: translate(-20px, 40px) scale(1.1); }
-  75% { transform: translate(40px, 20px) scale(1.05); }
+  0%, 100% { transform: translate(0, 0) scale(1) translateZ(0); }
+  25%      { transform: translate(24px, -24px) scale(1.04) translateZ(0); }
+  50%      { transform: translate(-16px, 32px) scale(1.08) translateZ(0); }
+  75%      { transform: translate(32px, 16px) scale(1.04) translateZ(0); }
 }
 
 @keyframes gradientFlow {
   0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  50%      { background-position: 100% 50%; }
 }
 
-/* Reduced motion */
+/* Reduced motion: kill animations + will-change */
 @media (prefers-reduced-motion: reduce) {
   body.route-home::after,
   html::before,
   html::after {
     animation: none !important;
     transform: none !important;
+    will-change: auto !important;
   }
 }
 
-/* === TYPOGRAPHY HIERARCHY === */
+/* Lite mode: disable background animations for mobile/coarse pointer */
+@media (max-width: 768px), (pointer: coarse) {
+  body.route-home::after,
+  html::before,
+  html::after {
+    animation: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
 h1, .h1 {
   font-size: var(--font-size-h1);
   font-weight: var(--font-weight-bold);
@@ -302,17 +370,23 @@ h6, .h6 {
 }
 
 p {
-  margin-bottom: var(--spacing-md);
+  margin: 0 0 var(--spacing-md) 0;
   line-height: var(--line-height-relaxed);
 }
 
+/* Links: avoid transition: all */
 a {
   color: inherit;
   text-decoration: none;
-  transition: all var(--transition-normal);
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+@media (hover:hover) and (pointer:fine){
+  a:hover { opacity: 0.92; }
 }
 
-/* === UTILITY CLASSES === */
+/* =========================
+   UTILITIES
+========================= */
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -332,33 +406,18 @@ a {
   padding: var(--spacing-3xl) 0;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.text-silver {
-  color: var(--color-primary-silver);
-}
-
-.text-navy {
-  color: var(--color-secondary-navy);
-}
+.text-center { text-align: center; }
+.text-silver { color: var(--color-primary-silver); }
+.text-navy { color: var(--color-secondary-navy); }
 
 .bg-navy {
-  background: linear-gradient(135deg,
-    var(--color-secondary-navy) 0%,
-    var(--color-secondary-navy-dark) 100%
-  );
+  background: linear-gradient(135deg, var(--color-secondary-navy) 0%, var(--color-secondary-navy-dark) 100%);
 }
 
 .bg-dark {
-  background: linear-gradient(135deg,
-    var(--color-charcoal) 0%,
-    var(--color-secondary-navy) 100%
-  );
+  background: linear-gradient(135deg, var(--color-charcoal) 0%, var(--color-secondary-navy) 100%);
 }
 
-/* Silver accent elements */
 .accent-line {
   width: 60px;
   height: 3px;
@@ -367,7 +426,9 @@ a {
   box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
 }
 
-/* === RESPONSIVE TYPOGRAPHY === */
+/* =========================
+   RESPONSIVE TYPOGRAPHY
+========================= */
 @media (max-width: 1024px) {
   :root {
     --font-size-h1: 3rem;
@@ -400,17 +461,19 @@ a {
   }
 }
 
-/* === ANIMATIONS (GSAP-READY) === */
+/* =========================
+   GSAP-READY HELPERS
+========================= */
 .fade-in { opacity: 0; }
 .slide-up { opacity: 0; transform: translateY(40px); }
 .slide-left { opacity: 0; transform: translateX(40px); }
 .slide-right { opacity: 0; transform: translateX(-40px); }
 .scale-in { opacity: 0; transform: scale(0.95); }
-
-/* Mask reveal for hero text */
 .mask-reveal { clip-path: inset(0 100% 0 0); }
 
-/* === ACCESSIBILITY === */
+/* =========================
+   ACCESSIBILITY
+========================= */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -420,14 +483,20 @@ a {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border-width: 0;
+  border: 0;
 }
 
-/* Focus visible for keyboard navigation */
+/* Focus visible for keyboard navigation (keep it strict) */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--color-primary-silver);
   outline-offset: 2px;
+}
+
+/* Optional: improve button tap feel */
+button {
+  -webkit-tap-highlight-color: transparent;
 }

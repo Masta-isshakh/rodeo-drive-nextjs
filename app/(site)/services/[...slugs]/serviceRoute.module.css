@@ -1,5 +1,5 @@
 /* =========================================================
-   serviceRoute.module.css — FINAL FIX
+   serviceRoute.module.css — FINAL FIX + GLOBALS FILLED
    Goals:
    1) No empty space at bottom when you scroll to the end
    2) No unwanted horizontal scroll / right-side scroll indicator
@@ -8,9 +8,6 @@
 
 /* ---------- GLOBAL FIX (safe inside CSS Modules) ---------- */
 /* Removes default margins + kills horizontal overflow caused by any child */
-
-
-/* Prevents iOS/Chrome “rubber band” showing blank area beyond content */
 
 
 /* =========================
@@ -32,21 +29,19 @@
   padding-bottom: 0 !important;
   margin: 0 !important;
 
-  /* ✅ IMPORTANT: don’t force a bigger height than content (causes bottom “gap” on some layouts) */
   min-height: auto !important;
 
-  /* ✅ kill horizontal scroll at source */
   overflow-x: hidden !important;
   max-width: 100%;
   position: relative;
   isolation: isolate;
 }
 
-/* Silver background for this page (kept INSIDE bounds so it can't create scrollbars) */
+/* Silver background for this page */
 .page::before{
   content:"";
   position:absolute;
-  inset: 0;                /* ✅ do not use negative inset (can create overflow on some browsers) */
+  inset: 0;
   z-index:-1;
   pointer-events:none;
   background:
@@ -58,11 +53,10 @@
     repeating-linear-gradient(135deg, rgba(255,255,255,0.10) 0 2px, transparent 2px 14px),
     repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 16px),
     linear-gradient(180deg, #aaaaaa 0%, #aaaaaa 52%, #aaaaaa 100%);
-  transform: scale(1.06);  /* ✅ “larger” look without overflow */
+  transform: scale(1.06);
   transform-origin: 50% 20%;
 }
 
-/* Subtle top accent line */
 .page::after{
   content:"";
   position:absolute;
@@ -83,7 +77,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 28px 20px;
-  padding-bottom: 0 !important; /* ✅ key */
+  padding-bottom: 0 !important;
   max-width: 100%;
 }
 
@@ -100,7 +94,6 @@
 .hero{ padding: 70px 0 56px; }
 .heroSmall{ padding: 56px 0 28px; }
 
-/* Background stays behind and NEVER blocks clicks */
 .heroBg{
   position:absolute;
   inset:0;
@@ -251,7 +244,6 @@
   margin: 0 !important;
 }
 
-/* ✅ Hard-stop for any last spacing */
 .page > .section:last-of-type,
 .page > .sectionAlt:last-of-type{
   border-bottom: 0 !important;
@@ -259,7 +251,6 @@
   margin-bottom: 0 !important;
 }
 
-/* ✅ If your last element is inside the last section, remove its margin too */
 .page :where(section, main, div):last-child{
   margin-bottom: 0 !important;
 }
@@ -340,7 +331,6 @@
   .grid{ grid-template-columns: 1fr; gap: 12px; }
 }
 
-/* Cards */
 .card{
   border: 1px solid transparent;
   border-radius: 18px;
@@ -619,7 +609,7 @@
 ========================= */
 .finalCta{
   margin-top: 18px;
-  margin-bottom: 0 !important; /* ✅ key */
+  margin-bottom: 0 !important;
   border: 1px solid rgba(11,18,34,0.14);
   background:
     radial-gradient(circle at 20% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.35) 100%),

@@ -13,6 +13,19 @@ function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
 
+function getMotionFlags() {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return { reduced: false, lite: false };
+  }
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lite =
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+  return { reduced, lite };
+}
+
 export default function CinematicShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -31,10 +44,7 @@ export default function CinematicShowcase() {
     const cs = (t as any)?.cinematicShowcase ?? {};
     return {
       title: safeText(cs.title, "Excellence in Every Detail"),
-      subtitle: safeText(
-        cs.subtitle,
-        "Experience automotive perfection through our signature services"
-      ),
+      subtitle: safeText(cs.subtitle, "Experience automotive perfection through our signature services"),
       premiumDetailingTitle: safeText(cs.premiumDetailingTitle, "Premium Detailing"),
       premiumDetailingDesc: safeText(cs.premiumDetailingDesc, "Meticulous care for every surface."),
       ceramicCoatingTitle: safeText(cs.ceramicCoatingTitle, "Ceramic Coating"),
@@ -54,105 +64,85 @@ export default function CinematicShowcase() {
     const sectionEl = sectionRef.current;
     if (!sectionEl) return;
 
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const { reduced, lite } = getMotionFlags();
 
-    // Perf: reduce refresh churn on mobile
+    // Reduce refresh churn on mobile
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    const ctx = gsap.context(() => {
-      // Default state for reduced motion
-      if (prefersReducedMotion) {
-        if (titleRef.current) gsap.set(titleRef.current, { opacity: 1, y: 0, clearProps: "transform" });
-        if (subtitleRef.current) gsap.set(subtitleRef.current, { opacity: 1, y: 0, clearProps: "transform" });
+    // Clear any leftover inline props (prevents “stuck” states after navigation)
+    if (titleRef.current) gsap.set(titleRef.current, { clearProps: "opacity,transform,visibility" });
+    if (subtitleRef.current) gsap.set(subtitleRef.current, { clearProps: "opacity,transform,visibility" });
+    if (cardsContainerRef.current) {
+      const cards = cardsContainerRef.current.querySelectorAll(`.${styles.card}`);
+      gsap.set(cards, { clearProps: "opacity,transform,visibility" });
+    }
+    if (statsRef.current) gsap.set(statsRef.current, { clearProps: "opacity,transform,visibility" });
 
-        if (cardsContainerRef.current) {
-          const cards = cardsContainerRef.current.querySelectorAll(`.${styles.card}`);
-          gsap.set(cards, { opacity: 1, y: 0, clearProps: "transform" });
-        }
+    // Lite mode OR reduced motion: no triggers, everything visible, numbers set immediately
+    if (reduced || lite) {
+      if (titleRef.current) gsap.set(titleRef.current, { autoAlpha: 1, y: 0 });
+      if (subtitleRef.current) gsap.set(subtitleRef.current, { autoAlpha: 1, y: 0 });
 
-        if (statsRef.current) gsap.set(statsRef.current, { opacity: 1, y: 0, clearProps: "transform" });
-
-        if (carsNumRef.current) carsNumRef.current.textContent = "5,000+";
-        if (clientsNumRef.current) clientsNumRef.current.textContent = "10,000+";
-        if (yearsNumRef.current) yearsNumRef.current.textContent = "15+";
-        if (ratingNumRef.current) ratingNumRef.current.textContent = "4.9";
-        return;
-      }
-
-      // Title
-      if (titleRef.current) {
-        gsap.fromTo(
-          titleRef.current,
-          { opacity: 0, y: 18 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.65,
-            ease: "power2.out",
-            scrollTrigger: { trigger: sectionEl, start: "top 82%", once: true },
-            onComplete: () => { gsap.set(titleRef.current, { clearProps: "willChange" }); },
-          }
-        );
-      }
-
-      // Subtitle
-      if (subtitleRef.current) {
-        gsap.fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: { trigger: sectionEl, start: "top 82%", once: true },
-            onComplete: () => { gsap.set(subtitleRef.current, { clearProps: "willChange" }); },
-          }
-        );
-      }
-
-      // Cards (batch for perf)
       if (cardsContainerRef.current) {
-        const cards = Array.from(cardsContainerRef.current.querySelectorAll(`.${styles.card}`));
-
-        ScrollTrigger.batch(cards, {
-          start: "top 88%",
-          once: true,
-          onEnter: (batch) => {
-            gsap.fromTo(
-              batch,
-              { opacity: 0, y: 14 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.55,
-                ease: "power2.out",
-                stagger: 0.08,
-                onComplete: () => batch.forEach((el) => gsap.set(el, { clearProps: "willChange" })),
-              }
-            );
-          },
-        });
+        const cards = cardsContainerRef.current.querySelectorAll(`.${styles.card}`);
+        gsap.set(cards, { autoAlpha: 1, y: 0, scale: 1 });
       }
 
-      // Stats count (DOM update only, once)
-      if (statsRef.current) {
-        gsap.fromTo(
-          statsRef.current,
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.55,
-            ease: "power2.out",
-            scrollTrigger: { trigger: statsRef.current, start: "top 90%", once: true },
-          }
-        );
+      if (statsRef.current) gsap.set(statsRef.current, { autoAlpha: 1, y: 0 });
 
+      if (carsNumRef.current) carsNumRef.current.textContent = "5,000+";
+      if (clientsNumRef.current) clientsNumRef.current.textContent = "10,000+";
+      if (yearsNumRef.current) yearsNumRef.current.textContent = "15+";
+      if (ratingNumRef.current) ratingNumRef.current.textContent = "4.9";
+
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      const cards = cardsContainerRef.current
+        ? Array.from(cardsContainerRef.current.querySelectorAll(`.${styles.card}`))
+        : [];
+
+      // ONE lightweight section timeline (replaces multiple ScrollTriggers + batch)
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: {
+          trigger: sectionEl,
+          start: "top 82%",
+          once: true,
+          invalidateOnRefresh: false,
+        },
+      });
+
+      if (titleRef.current) {
+        tl.fromTo(titleRef.current, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.65 }, 0);
+      }
+
+      if (subtitleRef.current) {
+        tl.fromTo(subtitleRef.current, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.08);
+      }
+
+      if (cards.length) {
+        tl.fromTo(
+          cards,
+          { autoAlpha: 0, y: 14, scale: 0.995 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.08 },
+          0.18
+        );
+      }
+
+      if (statsRef.current) {
+        tl.fromTo(statsRef.current, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.3);
+      }
+
+      // Numbers count (DOM update only, once) — scoped to stats block
+      if (statsRef.current) {
         const obj = { cars: 0, clients: 0, years: 0, rating: 0 };
+
+        let lastCars = -1;
+        let lastClients = -1;
+        let lastYears = -1;
+        let lastRating = "";
 
         ScrollTrigger.create({
           trigger: statsRef.current,
@@ -164,13 +154,30 @@ export default function CinematicShowcase() {
               clients: 10000,
               years: 15,
               rating: 4.9,
-              duration: 1.35,
+              duration: 1.25,
               ease: "power2.out",
               onUpdate: () => {
-                if (carsNumRef.current) carsNumRef.current.textContent = `${Math.floor(obj.cars).toLocaleString()}+`;
-                if (clientsNumRef.current) clientsNumRef.current.textContent = `${Math.floor(obj.clients).toLocaleString()}+`;
-                if (yearsNumRef.current) yearsNumRef.current.textContent = `${Math.floor(obj.years)}+`;
-                if (ratingNumRef.current) ratingNumRef.current.textContent = obj.rating.toFixed(1);
+                const cars = Math.floor(obj.cars);
+                const clients = Math.floor(obj.clients);
+                const years = Math.floor(obj.years);
+                const rating = obj.rating.toFixed(1);
+
+                if (cars !== lastCars && carsNumRef.current) {
+                  carsNumRef.current.textContent = `${cars.toLocaleString()}+`;
+                  lastCars = cars;
+                }
+                if (clients !== lastClients && clientsNumRef.current) {
+                  clientsNumRef.current.textContent = `${clients.toLocaleString()}+`;
+                  lastClients = clients;
+                }
+                if (years !== lastYears && yearsNumRef.current) {
+                  yearsNumRef.current.textContent = `${years}+`;
+                  lastYears = years;
+                }
+                if (rating !== lastRating && ratingNumRef.current) {
+                  ratingNumRef.current.textContent = rating;
+                  lastRating = rating;
+                }
               },
             });
           },
@@ -178,12 +185,19 @@ export default function CinematicShowcase() {
       }
     }, sectionEl);
 
-    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    // Light refresh after first paint (guarded)
+    const raf = requestAnimationFrame(() => {
+      try {
+        if (sectionRef.current) ScrollTrigger.refresh();
+      } catch {
+        // ignore
+      }
+    });
 
     return () => {
       cancelAnimationFrame(raf);
-      ctx.revert();
-      // also kill any remaining triggers created by batch/create
+
+      // Kill ONLY triggers that belong to this section
       try {
         ScrollTrigger.getAll().forEach((st) => {
           const trig = st.trigger as Element | null;
@@ -192,6 +206,22 @@ export default function CinematicShowcase() {
       } catch {
         // ignore
       }
+
+      // Revert GSAP context
+      try {
+        ctx.revert();
+      } catch {
+        // ignore
+      }
+
+      // Clear inline props again (prevents sticky styles)
+      if (titleRef.current) gsap.set(titleRef.current, { clearProps: "opacity,transform,visibility" });
+      if (subtitleRef.current) gsap.set(subtitleRef.current, { clearProps: "opacity,transform,visibility" });
+      if (cardsContainerRef.current) {
+        const cards = cardsContainerRef.current.querySelectorAll(`.${styles.card}`);
+        gsap.set(cards, { clearProps: "opacity,transform,visibility" });
+      }
+      if (statsRef.current) gsap.set(statsRef.current, { clearProps: "opacity,transform,visibility" });
     };
   }, [labels]);
 
@@ -243,22 +273,30 @@ export default function CinematicShowcase() {
 
         <div className={styles.stats} ref={statsRef}>
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={carsNumRef}>0+</div>
+            <div className={styles.statNumber} ref={carsNumRef}>
+              0+
+            </div>
             <div className={styles.statLabel}>{labels.carsDetailedLabel}</div>
           </div>
 
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={clientsNumRef}>0+</div>
+            <div className={styles.statNumber} ref={clientsNumRef}>
+              0+
+            </div>
             <div className={styles.statLabel}>{labels.happyClientsLabel}</div>
           </div>
 
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={yearsNumRef}>0+</div>
+            <div className={styles.statNumber} ref={yearsNumRef}>
+              0+
+            </div>
             <div className={styles.statLabel}>{labels.yearsExperienceLabel}</div>
           </div>
 
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={ratingNumRef}>0</div>
+            <div className={styles.statNumber} ref={ratingNumRef}>
+              0
+            </div>
             <div className={styles.statLabel}>{labels.averageRatingLabel}</div>
           </div>
         </div>

@@ -13,82 +13,86 @@ type Service = {
   tone?: "silver" | "burgundy";
 };
 
+function safeText(v: unknown, fallback: string) {
+  return typeof v === "string" && v.trim() ? v : fallback;
+}
+
+function getMotionFlags() {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return { reduced: false, lite: false };
+  }
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lite =
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches;
+
+  return { reduced, lite };
+}
+
 export default function ServicesHighlight() {
   const { t } = useI18n();
-
   const sectionRef = useRef<HTMLElement>(null);
 
-  const services: Service[] = useMemo(
-    () => [
+  const services: Service[] = useMemo(() => {
+    const s = (t as any)?.services ?? {};
+    const list = s?.list ?? {};
+    const desc = s?.descriptions ?? {};
+
+    return [
       {
-        title: t.services.list.paintProtection,
-        description:
-          t.services.descriptions.paintProtectionDesc ??
-          t.services.descriptions.paintProtection,
+        title: safeText(list.paintProtection, "Paint Protection"),
+        description: safeText(desc.paintProtectionDesc ?? desc.paintProtection, "Premium protection for your paint."),
         image: "/ppf.png",
         tone: "silver",
       },
       {
-        title: t.services.list.ceramicCoating,
-        description:
-          t.services.descriptions.ceramicCoatingDesc ??
-          t.services.descriptions.ceramicCoating,
+        title: safeText(list.ceramicCoating, "Ceramic Coating"),
+        description: safeText(desc.ceramicCoatingDesc ?? desc.ceramicCoating, "Long-lasting hydrophobic gloss."),
         image: "/ceramic.PNG",
         tone: "burgundy",
       },
       {
-        title: t.services.list.polish,
-        description:
-          t.services.descriptions.polishDesc ?? t.services.descriptions.polish,
+        title: safeText(list.polish, "Polish"),
+        description: safeText(desc.polishDesc ?? desc.polish, "Refined clarity and depth."),
         image: "/polish2.png",
         tone: "silver",
       },
       {
-        title: t.services.list.blackEdition,
-        description:
-          t.services.descriptions.blackEditionDesc ??
-          t.services.descriptions.blackEdition,
+        title: safeText(list.blackEdition, "Black Edition"),
+        description: safeText(desc.blackEditionDesc ?? desc.blackEdition, "Deep, uniform, luxury finish."),
         image: "/defenderchangedcolor.PNG",
         tone: "burgundy",
       },
       {
-        title: t.services.list.smartRepair,
-        description:
-          t.services.descriptions.smartRepairDesc ??
-          t.services.descriptions.smartRepair,
+        title: safeText(list.smartRepair, "Smart Repair"),
+        description: safeText(desc.smartRepairDesc ?? desc.smartRepair, "Targeted repair for minor defects."),
         image: "/paintoriginal.png",
         tone: "silver",
       },
       {
-        title: t.services.list.nanoLeather,
-        description:
-          t.services.descriptions.nanoLeatherDesc ??
-          t.services.descriptions.nanoLeather,
+        title: safeText(list.nanoLeather, "Nano Leather"),
+        description: safeText(desc.nanoLeatherDesc ?? desc.nanoLeather, "Interior protection and care."),
         image: "/solar.PNG",
         tone: "burgundy",
       },
-    ],
-    [t]
-  );
+    ];
+  }, [t]);
 
   useEffect(() => {
     const root = sectionRef.current;
     if (!root) return;
 
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const { reduced, lite } = getMotionFlags();
 
-    // If reduced motion, just show everything
-    if (reduce) {
-      root.classList.add(styles.ready);
-      const items = root.querySelectorAll("[data-reveal]");
+    // Always mark ready to enable CSS reveal system
+    root.classList.add(styles.ready);
+
+    // Reduced or Lite mode: show everything instantly (no observers)
+    if (reduced || lite) {
+      const items = root.querySelectorAll<HTMLElement>("[data-reveal]");
       items.forEach((el) => el.classList.add(styles.in));
       return;
     }
-
-    root.classList.add(styles.ready);
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -104,7 +108,9 @@ export default function ServicesHighlight() {
     const targets = root.querySelectorAll<HTMLElement>("[data-reveal]");
     targets.forEach((el) => io.observe(el));
 
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+    };
   }, []);
 
   return (
@@ -123,7 +129,9 @@ export default function ServicesHighlight() {
           <div className={styles.headerRight}>
             <Link href="/services" className={styles.primaryCta}>
               {t.services.viewAll}
-              <span className={styles.ctaArrow} aria-hidden="true">→</span>
+              <span className={styles.ctaArrow} aria-hidden="true">
+                →
+              </span>
             </Link>
 
             <div className={styles.meta}>
@@ -145,7 +153,7 @@ export default function ServicesHighlight() {
           </div>
         </header>
 
-        {/* Showcase rail (new layout) */}
+        {/* Showcase grid */}
         <div className={styles.grid} data-reveal>
           {services.map((s, i) => (
             <article
@@ -159,6 +167,9 @@ export default function ServicesHighlight() {
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className={styles.image}
+                  priority={false}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className={styles.mediaOverlay} aria-hidden="true" />
                 <div className={styles.badge}>
@@ -174,7 +185,9 @@ export default function ServicesHighlight() {
                 <div className={styles.actions}>
                   <Link href="/services" className={styles.link}>
                     {t.services.learnMore}
-                    <span className={styles.arrow} aria-hidden="true">→</span>
+                    <span className={styles.arrow} aria-hidden="true">
+                      →
+                    </span>
                   </Link>
 
                   <span className={styles.pill} aria-hidden="true">
@@ -186,7 +199,7 @@ export default function ServicesHighlight() {
           ))}
         </div>
 
-        {/* Bottom CTA (short, professional) */}
+        {/* Bottom CTA */}
         <div className={styles.bottomRow} data-reveal>
           <div className={styles.bottomLine} />
           <p className={styles.bottomText}>
@@ -194,7 +207,9 @@ export default function ServicesHighlight() {
           </p>
           <Link href="/contact" className={styles.secondaryCta}>
             Contact
-            <span className={styles.ctaArrow} aria-hidden="true">→</span>
+            <span className={styles.ctaArrow} aria-hidden="true">
+              →
+            </span>
           </Link>
         </div>
       </div>

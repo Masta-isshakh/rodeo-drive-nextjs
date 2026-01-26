@@ -1,15 +1,16 @@
 /* app/(site)/services/services.module.css
    BRIGHT SILVER SHOWROOM — Premium + Performant
-   - No infinite animations
-   - No backdrop-filter
-   - No heavy blur
-   - Hover effects only: transform/opacity/box-shadow
+   Step-4 updates:
+   - Micro-motion gated on mobile/coarse pointer
+   - Reduced-motion disables transitions
+   - Keep animations transform/opacity/box-shadow only
 */
 
 /* =========================
    PAGE
 ========================= */
 .servicesPage {
+  position: relative;
   padding-top: 80px;
   min-height: 100vh;
   color: #0b1222;
@@ -20,21 +21,20 @@
     radial-gradient(900px 640px at 18% 18%, rgba(255,255,255,0.70), transparent 62%),
     radial-gradient(900px 660px at 82% 14%, rgba(255,255,255,0.62), transparent 64%),
     radial-gradient(980px 720px at 50% 120%, rgba(210,210,210,0.28), transparent 70%),
-
-    /* subtle “brushed metal” static texture lines */
     repeating-linear-gradient(135deg, rgba(255,255,255,0.14) 0 2px, transparent 2px 14px),
     repeating-linear-gradient(45deg, rgba(255,255,255,0.10) 0 2px, transparent 2px 16px),
-
     linear-gradient(180deg, #adadad 0%, #adadad 46%, #adadad 100%);
 }
 
-/* Soft vignette for contrast, still bright */
+/* Soft vignette for contrast (lightweight) */
 .servicesPage::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-
+  background:
+    radial-gradient(1100px 720px at 50% 0%, rgba(255,255,255,0.14), transparent 70%),
+    radial-gradient(1200px 820px at 50% 120%, rgba(0,0,0,0.10), transparent 68%);
   opacity: 1;
 }
 
@@ -49,8 +49,7 @@
   place-items: center;
   overflow: hidden;
 
-  background-image:
-    url("/bureau.png");
+  background-image: url("/bureau.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -58,16 +57,15 @@
   border-bottom: 1px solid rgba(10,16,32,0.10);
 }
 
-/* Bright silver overlay */
 .heroOverlay {
   position: absolute;
   inset: 0;
   pointer-events: none;
-
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.18) 100%);
   opacity: 1;
 }
 
-/* Optional extra spotlights layer from your JSX */
 .heroSpotlights {
   position: absolute;
   inset: 0;
@@ -105,13 +103,15 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 16px;
-      text-shadow:
+
+  text-shadow:
     0 1px 1px rgba(0, 0, 0, 0.9),
     0 2px 4px rgba(0, 0, 0, 0.7),
     0 6px 14px rgba(0, 0, 0, 0.55);
 }
 
 .heroTitle {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
@@ -128,16 +128,15 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: clamp(2.1rem, 3.3vw, 3.9rem);
-    text-shadow:
+
+  text-shadow:
     0 1px 1px rgba(0, 0, 0, 0.9),
     0 2px 4px rgba(0, 0, 0, 0.7),
     0 6px 14px rgba(0, 0, 0, 0.55);
 
-  /* Rendering quality */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Motion safety */
   will-change: transform, opacity;
 }
 
@@ -159,7 +158,8 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-size: 18px;
-      text-shadow:
+
+  text-shadow:
     0 1px 1px rgba(0, 0, 0, 0.9),
     0 2px 4px rgba(0, 0, 0, 0.7),
     0 6px 14px rgba(0, 0, 0, 0.55);
@@ -239,7 +239,6 @@
   gap: clamp(16px, 2vw, 22px);
 }
 
-/* Package Card */
 .packageCard {
   position: relative;
   border-radius: 26px;
@@ -259,7 +258,6 @@
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
-/* Inner panel */
 .packageCard::before {
   content: "";
   position: absolute;
@@ -280,21 +278,18 @@
   }
 }
 
-/* Featured card slightly stronger frame */
 .featured {
   background:
     linear-gradient(135deg, rgba(255,255,255,0.99), rgba(244,246,250,0.98), rgba(232,236,244,0.99)) padding-box,
     linear-gradient(135deg, rgba(11,18,34,0.26), rgba(11,18,34,0.08), rgba(11,18,34,0.24)) border-box;
 }
 
-/* Header wrapper you added */
 .packageHeader {
   position: relative;
   z-index: 2;
   padding-top: 6px;
 }
 
-/* Title */
 .packageName {
   font-size: 1.42rem;
   font-weight: 950;
@@ -304,7 +299,6 @@
   margin: 16px 0 10px;
 }
 
-/* Features list (custom layout you added) */
 .packageFeatures {
   position: relative;
   z-index: 2;
@@ -343,7 +337,6 @@
   line-height: 1.6;
 }
 
-/* Button (dark premium) */
 .packageButton {
   position: relative;
   z-index: 2;
@@ -377,7 +370,6 @@
   }
 }
 
-/* shared arrow for buttons */
 .btnArrow {
   display: inline-block;
   font-weight: 900;
@@ -394,8 +386,6 @@
 
 /* =========================
    MOST POPULAR STICKER (GOLD)
-   - Top-right
-   - Never overlaps the title (sits outside card)
 ========================= */
 .popularSticker {
   position: absolute;
@@ -410,7 +400,6 @@
   padding: 10px 12px;
   border-radius: 14px;
 
-  /* Bright premium sticker base */
   background: linear-gradient(135deg, #ffffff 0%, #f2f5fb 35%, #e4eaf6 100%);
   border: 1px solid rgba(11,18,34,0.14);
 
@@ -427,18 +416,15 @@
   box-shadow: 0 8px 18px rgba(0,0,0,0.16);
 }
 
-/* Gold icon color */
 .stickerIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #caa24b; /* gold */
+  color: #caa24b;
   filter: drop-shadow(0 8px 18px rgba(0,0,0,0.18));
 }
 
-.badgeIcon {
-  display: block;
-}
+.badgeIcon { display: block; }
 
 .stickerText {
   font-size: 0.78rem;
@@ -466,7 +452,6 @@
   gap: clamp(16px, 2vw, 28px);
 }
 
-/* Service card: silver frame */
 .serviceCard {
   border-radius: 26px;
   overflow: hidden;
@@ -493,13 +478,11 @@
   }
 }
 
-/* Media wrapper */
 .serviceMedia {
   position: relative;
   overflow: hidden;
 }
 
-/* Premium overlay on top of slider (static) */
 .mediaOverlay {
   position: absolute;
   inset: 0;
@@ -509,7 +492,6 @@
     linear-gradient(180deg, rgba(255,255,255,0.00) 0%, rgba(0,0,0,0.30) 100%);
 }
 
-/* Icon chip */
 .serviceIcon {
   position: absolute;
   left: 14px;
@@ -532,7 +514,6 @@
   filter: drop-shadow(0 10px 18px rgba(0,0,0,0.14));
 }
 
-/* Body */
 .serviceBody {
   padding: 18px 18px 20px;
 }
@@ -559,7 +540,6 @@
   overflow: hidden;
 }
 
-/* Service button: silver pill */
 .serviceButton {
   display: inline-flex;
   align-items: center;
@@ -594,52 +574,22 @@
    RESPONSIVE
 ========================= */
 @media (max-width: 1024px) {
-  .packagesGrid {
-    grid-template-columns: 1fr;
-  }
-  .servicesGrid {
-    grid-template-columns: 1fr;
-  }
+  .packagesGrid { grid-template-columns: 1fr; }
+  .servicesGrid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-  .servicesPage {
-    padding-top: 70px;
-  }
-  .servicesHero {
-    height: 58vh;
-    min-height: 360px;
-  }
+  .servicesPage { padding-top: 70px; }
+  .servicesHero { height: 58vh; min-height: 360px; }
 
-  .container {
-    padding: 0 var(--spacing-md);
-  }
+  .container { padding: 0 var(--spacing-md); }
 
-  .popularSticker {
-    top: -14px;
-    right: 12px;
-    padding: 9px 12px;
-  }
-  .stickerText {
-    font-size: 0.74rem;
-  }
-    .heroKicker {
-    font-size: 13px;
-    padding: 8px 14px;
-    letter-spacing: 0.16em;
-  }
+  .popularSticker { top: -14px; right: 12px; padding: 9px 12px; }
+  .stickerText { font-size: 0.74rem; }
 
-  .heroTitle {
-    font-size: clamp(1.7rem, 4.8vw, 2.6rem);
-    padding: 8px 14px;
-    letter-spacing: 0.18em;
-  }
-
-  .heroSubtitle {
-    font-size: 14px;
-    padding: 8px 14px;
-    letter-spacing: 0.16em;
-  }
+  .heroKicker { font-size: 13px; padding: 8px 14px; letter-spacing: 0.16em; }
+  .heroTitle { font-size: clamp(1.7rem, 4.8vw, 2.6rem); padding: 8px 14px; letter-spacing: 0.18em; }
+  .heroSubtitle { font-size: 14px; padding: 8px 14px; letter-spacing: 0.16em; }
 }
 
 @media (max-width: 480px) {
@@ -658,41 +608,36 @@
       0 2px 6px rgba(0, 0, 0, 0.55);
   }
 
-  .heroKicker {
-    font-size: 11px;
-  }
-
-  .heroTitle {
-    font-size: clamp(1.35rem, 4.5vw, 1.9rem);
-  }
-
-  .heroSubtitle {
-    font-size: 12px;
-  }
+  .heroKicker { font-size: 11px; }
+  .heroTitle { font-size: clamp(1.35rem, 4.5vw, 1.9rem); }
+  .heroSubtitle { font-size: 12px; }
 }
-
 
 /* =========================
    RTL SUPPORT
 ========================= */
-[dir="rtl"] .heroContent {
-  direction: rtl;
-}
-
-[dir="rtl"] .popularSticker {
-  right: auto;
-  left: 18px;
-}
-
-[dir="rtl"] .serviceIcon {
-  left: auto;
-  right: 14px;
-}
+[dir="rtl"] .heroContent { direction: rtl; }
+[dir="rtl"] .popularSticker { right: auto; left: 18px; }
+[dir="rtl"] .serviceIcon { left: auto; right: 14px; }
 
 /* =========================
    REDUCED MOTION
 ========================= */
 @media (prefers-reduced-motion: reduce) {
+  .packageCard,
+  .serviceCard,
+  .packageButton,
+  .serviceButton,
+  .btnArrow {
+    transition: none !important;
+  }
+}
+
+/* =========================
+   STEP-4: LITE MODE (mobile/coarse)
+   Disable micro-motion transitions for performance
+========================= */
+@media (max-width: 768px), (pointer: coarse) {
   .packageCard,
   .serviceCard,
   .packageButton,
