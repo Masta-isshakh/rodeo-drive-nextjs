@@ -138,14 +138,14 @@ export default function Header() {
           <div className={styles.logoo}>
             <a
               className={styles.whatsappButtonn}
-              href={phoneWa}
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
               title="WhatsApp"
             >
               <Image
-                src="/logo.jpeg"
+                src="/logo.avif"
                 alt=""
                 width={54}
                 height={54}
@@ -213,7 +213,7 @@ export default function Header() {
               title="WhatsApp"
             >
               <Image
-                src="/whatsapp.png"
+                src="/whatsapp.avif"
                 alt=""
                 width={40}
                 height={40}
@@ -295,7 +295,7 @@ export default function Header() {
               title="WhatsApp"
             >
               <Image
-                src="/whatsapp.png"
+                src="/whatsapp.avif"
                 alt=""
                 width={40}
                 height={40}

@@ -240,7 +240,7 @@ export default function CinematicShowcase() {
         <div className={styles.cardsGrid} ref={cardsContainerRef}>
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image src="/10.png" alt="" width={44} height={44} priority={false} />
+              <Image src="/10.avif" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.premiumDetailingTitle}</h3>
             <p className={styles.cardDesc}>{labels.premiumDetailingDesc}</p>
@@ -248,7 +248,7 @@ export default function CinematicShowcase() {
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image src="/11.png" alt="" width={44} height={44} priority={false} />
+              <Image src="/11.avif" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.ceramicCoatingTitle}</h3>
             <p className={styles.cardDesc}>{labels.ceramicCoatingDesc}</p>
@@ -256,7 +256,7 @@ export default function CinematicShowcase() {
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image src="/12.png" alt="" width={44} height={44} priority={false} />
+              <Image src="/12.avif" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.paintCorrectionTitle}</h3>
             <p className={styles.cardDesc}>{labels.paintCorrectionDesc}</p>
@@ -264,7 +264,7 @@ export default function CinematicShowcase() {
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
-              <Image src="/13.png" alt="" width={44} height={44} priority={false} />
+              <Image src="/13.avif" alt="" width={44} height={44} priority={false} />
             </div>
             <h3 className={styles.cardTitle}>{labels.interiorLuxuryTitle}</h3>
             <p className={styles.cardDesc}>{labels.interiorLuxuryDesc}</p>
