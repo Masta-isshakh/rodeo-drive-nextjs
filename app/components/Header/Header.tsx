@@ -138,7 +138,7 @@ export default function Header() {
           <div className={styles.logoo}>
             <a
               className={styles.whatsappButtonn}
-              href="/"
+              href={phoneWa}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
