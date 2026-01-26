@@ -170,22 +170,22 @@ export default function GalleryPage() {
     () => [
       {
         id: 1,
-        before: "/before.jpg",
-        after: "/after.jpg",
+        before: "/before.avif",
+        after: "/after.avif",
         title: language === "en" ? "Color PPF Upgrade" : "ترقية بـ PPF الملون",
         description: language === "en" ? "Full-body color film wrap" : "تغليف كامل بفيلم ملون",
       },
       {
         id: 2,
-        before: "/before1.png",
-        after: "/after1.png",
+        before: "/before1.avif",
+        after: "/after1.avif",
         title: language === "en" ? "Interior Restoration" : "ترميم الداخلية",
         description: language === "en" ? "Premium leather treatment and deep cleaning" : "عناية جلد + تنظيف عميق",
       },
       {
         id: 3,
-        before: "/before2.png",
-        after: "/after2.png",
+        before: "/before2.avif",
+        after: "/after2.avif",
         title: language === "en" ? "PPF Installation" : "تركيب PPF",
         description: language === "en" ? "Full body PPF with flawless application" : "PPF كامل بتطبيق مثالي",
       },

@@ -402,8 +402,8 @@ export default function ServicesPage() {
               <article key={svc.slug} className={styles.serviceCard}>
                 <div className={styles.serviceMedia}>
                   <BeforeAfterSlider
-                    beforeSrc={`/proof/${svc.slug}-before.png`}
-                    afterSrc={`/proof/${svc.slug}-after.png`}
+                    beforeSrc={`/proof/${svc.slug}-before.avif`}
+                    afterSrc={`/proof/${svc.slug}-after.avif`}
                     alt={`${svc.title} before/after`}
                     height={320}
                   />

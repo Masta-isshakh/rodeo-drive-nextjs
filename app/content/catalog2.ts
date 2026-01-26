@@ -42,7 +42,7 @@ export const CATALOG: { services: Service[] } = {
         "en": "Optically clear protection against chips, scratches, and sand abrasion—built for Doha driving.",
         "ar": "حماية شفافة ضد ضربات الحصى والخدوش وخدوش الرمال—مناسبة لقيادة الدوحة."
       },
-      "heroImage": "/services/full-protection-ppf/hero.svg",
+      "heroImage": "/services/full-protection-ppf/hero.avif",
       "overview": {
         "en": [
           "Optically clear protection against chips, scratches, and sand abrasion—built for Doha driving.",
@@ -60,7 +60,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Full Body PPF",
             "ar": "PPF حماية كاملة"
           },
-          "heroImage": "/full-body.png",
+          "heroImage": "/full-body.avif",
           "intro": {
             "en": [
               "Full-vehicle coverage designed to shield every painted panel from chips, scratches, and sand abrasion—ideal for brand-new cars and long-term ownership in Qatar.",
@@ -251,7 +251,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Front-End PPF",
             "ar": "PPF للواجهة الأمامية"
           },
-          "heroImage": "/front-ppff.PNG",
+          "heroImage": "/front-ppff.avif",
           "intro": {
             "en": [
               "Focused protection for the highest-impact zones (bumper, hood, fenders, mirrors) to stop stone chips and road rash before they start.",
@@ -428,12 +428,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/front-end-ppf/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/front-end-ppf/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/front-end-ppf/before.avif",
+          "afterImage": "/proof/full-protection-ppf/front-end-ppf/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/front-end-ppf/mini-1.jpg",
-            "/proof/full-protection-ppf/front-end-ppf/mini-2.jpg",
-            "/proof/full-protection-ppf/front-end-ppf/mini-3.jpg"
+            "/proof/full-protection-ppf/front-end-ppf/mini-1.avif",
+            "/proof/full-protection-ppf/front-end-ppf/mini-2.avif",
+            "/proof/full-protection-ppf/front-end-ppf/mini-3.avif"
           ]
         },
         {
@@ -442,7 +442,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Partial Front PPF",
             "ar": "PPF جزئي أمامي"
           },
-          "heroImage": "/frontend-partial.jpg",
+          "heroImage": "/frontend-partial.avif",
           "intro": {
             "en": [
               "Entry-level chip protection for key front areas, typically covering the bumper and targeted hood/fender sections where damage happens most.",
@@ -619,12 +619,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/partial-front-ppf/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/partial-front-ppf/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/partial-front-ppf/before.avif",
+          "afterImage": "/proof/full-protection-ppf/partial-front-ppf/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/partial-front-ppf/mini-1.jpg",
-            "/proof/full-protection-ppf/partial-front-ppf/mini-2.jpg",
-            "/proof/full-protection-ppf/partial-front-ppf/mini-3.jpg"
+            "/proof/full-protection-ppf/partial-front-ppf/mini-1.avif",
+            "/proof/full-protection-ppf/partial-front-ppf/mini-2.avif",
+            "/proof/full-protection-ppf/partial-front-ppf/mini-3.avif"
           ]
         },
         {
@@ -633,7 +633,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Gloss PPF",
             "ar": "PPF لامع"
           },
-          "heroImage": "/gloss-ppff.JPG",
+          "heroImage": "/gloss-ppff.avif",
           "intro": {
             "en": [
               "High-clarity gloss PPF that preserves the original paint color while adding a deep, wet-look finish and strong impact resistance.",
@@ -810,12 +810,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/gloss-ppf/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/gloss-ppf/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/gloss-ppf/before.avif",
+          "afterImage": "/proof/full-protection-ppf/gloss-ppf/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/gloss-ppf/mini-1.jpg",
-            "/proof/full-protection-ppf/gloss-ppf/mini-2.jpg",
-            "/proof/full-protection-ppf/gloss-ppf/mini-3.jpg"
+            "/proof/full-protection-ppf/gloss-ppf/mini-1.avif",
+            "/proof/full-protection-ppf/gloss-ppf/mini-2.avif",
+            "/proof/full-protection-ppf/gloss-ppf/mini-3.avif"
           ]
         },
         {
@@ -824,7 +824,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Matte PPF",
             "ar": "PPF مطفي"
           },
-          "heroImage": "/matte-ppf.PNG",
+          "heroImage": "/matte-ppf.avif",
           "intro": {
             "en": [
               "Matte PPF transforms gloss paint into a premium satin-matte appearance while defending against chips, scratches, and harsh washing marks.",
@@ -1001,12 +1001,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/matte-ppf/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/matte-ppf/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/matte-ppf/before.avif",
+          "afterImage": "/proof/full-protection-ppf/matte-ppf/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/matte-ppf/mini-1.jpg",
-            "/proof/full-protection-ppf/matte-ppf/mini-2.jpg",
-            "/proof/full-protection-ppf/matte-ppf/mini-3.jpg"
+            "/proof/full-protection-ppf/matte-ppf/mini-1.avif",
+            "/proof/full-protection-ppf/matte-ppf/mini-2.avif",
+            "/proof/full-protection-ppf/matte-ppf/mini-3.avif"
           ]
         },
         {
@@ -1015,7 +1015,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Satin PPF",
             "ar": "PPF ساتان"
           },
-          "heroImage": "/satin-ppf.PNG",
+          "heroImage": "/satin-ppf.avif",
           "intro": {
             "en": [
               "Satin PPF delivers a refined, semi-matte finish—more depth than matte, less glare than gloss—while keeping strong impact protection.",
@@ -1192,12 +1192,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/satin-ppf/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/satin-ppf/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/satin-ppf/before.avif",
+          "afterImage": "/proof/full-protection-ppf/satin-ppf/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/satin-ppf/mini-1.jpg",
-            "/proof/full-protection-ppf/satin-ppf/mini-2.jpg",
-            "/proof/full-protection-ppf/satin-ppf/mini-3.jpg"
+            "/proof/full-protection-ppf/satin-ppf/mini-1.avif",
+            "/proof/full-protection-ppf/satin-ppf/mini-2.avif",
+            "/proof/full-protection-ppf/satin-ppf/mini-3.avif"
           ]
         },
 
@@ -1207,7 +1207,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Headlight & Taillight Protection Film",
             "ar": "حماية الأنوار"
           },
-          "heroImage": "/headlight-ppf.jpeg",
+          "heroImage": "/headlight-ppf.avif",
           "intro": {
             "en": [
               "Clear or lightly-tinted lens film that protects headlights and taillights from pitting, sandblasting, and surface scratches.",
@@ -1384,12 +1384,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/headlight-taillight-film/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/headlight-taillight-film/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/headlight-taillight-film/before.avif",
+          "afterImage": "/proof/full-protection-ppf/headlight-taillight-film/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/headlight-taillight-film/mini-1.jpg",
-            "/proof/full-protection-ppf/headlight-taillight-film/mini-2.jpg",
-            "/proof/full-protection-ppf/headlight-taillight-film/mini-3.jpg"
+            "/proof/full-protection-ppf/headlight-taillight-film/mini-1.avif",
+            "/proof/full-protection-ppf/headlight-taillight-film/mini-2.avif",
+            "/proof/full-protection-ppf/headlight-taillight-film/mini-3.avif"
           ]
         },
         {
@@ -1398,7 +1398,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Screen Protection Film",
             "ar": "حماية الشاشات"
           },
-          "heroImage": "/interior-ppf.PNG",
+          "heroImage": "/interior-ppf.avif",
           "intro": {
             "en": [
               "Precision-cut protection for infotainment screens, clusters, and glossy trim to prevent scratches, fingerprints, and daily wear.",
@@ -1575,12 +1575,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/interior-screen-protection/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/interior-screen-protection/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/interior-screen-protection/before.avif",
+          "afterImage": "/proof/full-protection-ppf/interior-screen-protection/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/interior-screen-protection/mini-1.jpg",
-            "/proof/full-protection-ppf/interior-screen-protection/mini-2.jpg",
-            "/proof/full-protection-ppf/interior-screen-protection/mini-3.jpg"
+            "/proof/full-protection-ppf/interior-screen-protection/mini-1.avif",
+            "/proof/full-protection-ppf/interior-screen-protection/mini-2.avif",
+            "/proof/full-protection-ppf/interior-screen-protection/mini-3.avif"
           ]
         },
         {
@@ -1589,7 +1589,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "PPF Removal & Replacement",
             "ar": "إزالة واستبدال PPF"
           },
-          "heroImage": "/remove.jpg",
+          "heroImage": "/remove.avif",
           "intro": {
             "en": [
               "Safe removal of old or damaged PPF with controlled heat and adhesive cleanup to protect the original paint underneath.",
@@ -1766,12 +1766,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/full-protection-ppf/ppf-removal-replacement/before.jpg",
-          "afterImage": "/proof/full-protection-ppf/ppf-removal-replacement/after.jpg",
+          "beforeImage": "/proof/full-protection-ppf/ppf-removal-replacement/before.avif",
+          "afterImage": "/proof/full-protection-ppf/ppf-removal-replacement/after.avif",
           "miniImages": [
-            "/proof/full-protection-ppf/ppf-removal-replacement/mini-1.jpg",
-            "/proof/full-protection-ppf/ppf-removal-replacement/mini-2.jpg",
-            "/proof/full-protection-ppf/ppf-removal-replacement/mini-3.jpg"
+            "/proof/full-protection-ppf/ppf-removal-replacement/mini-1.avif",
+            "/proof/full-protection-ppf/ppf-removal-replacement/mini-2.avif",
+            "/proof/full-protection-ppf/ppf-removal-replacement/mini-3.avif"
           ]
         }
       ]
@@ -1786,7 +1786,7 @@ export const CATALOG: { services: Service[] } = {
         "en": "Heat and UV control with clean edges and clarity—ideal for Qatar sun.",
         "ar": "تحكم بالحرارة وUV مع إنهاء نظيف ووضوح—مثالي لشمس قطر."
       },
-      "heroImage": "/window-solar.jpg",
+      "heroImage": "/window-solar.avif",
       "overview": {
         "en": [
           "Heat and UV control with clean edges and clarity—ideal for Qatar sun.",
@@ -1981,12 +1981,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/window-solar-film/nano-ceramic-tint/before.jpg",
-          "afterImage": "/proof/window-solar-film/nano-ceramic-tint/after.jpg",
+          "beforeImage": "/proof/window-solar-film/nano-ceramic-tint/before.avif",
+          "afterImage": "/proof/window-solar-film/nano-ceramic-tint/after.avif",
           "miniImages": [
-            "/proof/window-solar-film/nano-ceramic-tint/mini-1.jpg",
-            "/proof/window-solar-film/nano-ceramic-tint/mini-2.jpg",
-            "/proof/window-solar-film/nano-ceramic-tint/mini-3.jpg"
+            "/proof/window-solar-film/nano-ceramic-tint/mini-1.avif",
+            "/proof/window-solar-film/nano-ceramic-tint/mini-2.avif",
+            "/proof/window-solar-film/nano-ceramic-tint/mini-3.avif"
           ]
         },
         {
@@ -1995,7 +1995,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Heat & UV Protection Film",
             "ar": "فيلم حماية حرارة وUV"
           },
-          "heroImage": "/uv-protection.PNG",
+          "heroImage": "/uv-protection.avif",
           "intro": {
             "en": [
               "High-performance film focused on blocking UV and reducing infrared heat to protect interiors from fading and cracking.",
@@ -2172,12 +2172,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/window-solar-film/heat-uv-protection-film/before.jpg",
-          "afterImage": "/proof/window-solar-film/heat-uv-protection-film/after.jpg",
+          "beforeImage": "/proof/window-solar-film/heat-uv-protection-film/before.avif",
+          "afterImage": "/proof/window-solar-film/heat-uv-protection-film/after.avif",
           "miniImages": [
-            "/proof/window-solar-film/heat-uv-protection-film/mini-1.jpg",
-            "/proof/window-solar-film/heat-uv-protection-film/mini-2.jpg",
-            "/proof/window-solar-film/heat-uv-protection-film/mini-3.jpg"
+            "/proof/window-solar-film/heat-uv-protection-film/mini-1.avif",
+            "/proof/window-solar-film/heat-uv-protection-film/mini-2.avif",
+            "/proof/window-solar-film/heat-uv-protection-film/mini-3.avif"
           ]
         },
         {
@@ -2186,7 +2186,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Clear Protection",
             "ar": "حماية شفافة للزجاج الأمامي"
           },
-          "heroImage": "/windshield-clear.PNG",
+          "heroImage": "/windshield-clear.avif",
           "intro": {
             "en": [
               "Optically clear film for the front windshield that defends against sand pitting and light impacts while keeping full visibility.",
@@ -2363,12 +2363,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/window-solar-film/windshield-clear-protection/before.jpg",
-          "afterImage": "/proof/window-solar-film/windshield-clear-protection/after.jpg",
+          "beforeImage": "/proof/window-solar-film/windshield-clear-protection/before.avif",
+          "afterImage": "/proof/window-solar-film/windshield-clear-protection/after.avif",
           "miniImages": [
-            "/proof/window-solar-film/windshield-clear-protection/mini-1.jpg",
-            "/proof/window-solar-film/windshield-clear-protection/mini-2.jpg",
-            "/proof/window-solar-film/windshield-clear-protection/mini-3.jpg"
+            "/proof/window-solar-film/windshield-clear-protection/mini-1.avif",
+            "/proof/window-solar-film/windshield-clear-protection/mini-2.avif",
+            "/proof/window-solar-film/windshield-clear-protection/mini-3.avif"
           ]
         },
         {
@@ -2377,7 +2377,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Sunroof & Panoramic Roof Tint",
             "ar": "تظليل سقف بانوراما"
           },
-          "heroImage": "/sunroof.PNG",
+          "heroImage": "/sunroof.avif",
           "intro": {
             "en": [
               "Specialized tint for sunroofs and panoramic glass to cut heat and glare from above—improving comfort for front and rear passengers.",
@@ -2554,12 +2554,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/window-solar-film/sunroof-panorama-tint/before.jpg",
-          "afterImage": "/proof/window-solar-film/sunroof-panorama-tint/after.jpg",
+          "beforeImage": "/proof/window-solar-film/sunroof-panorama-tint/before.avif",
+          "afterImage": "/proof/window-solar-film/sunroof-panorama-tint/after.avif",
           "miniImages": [
-            "/proof/window-solar-film/sunroof-panorama-tint/mini-1.jpg",
-            "/proof/window-solar-film/sunroof-panorama-tint/mini-2.jpg",
-            "/proof/window-solar-film/sunroof-panorama-tint/mini-3.jpg"
+            "/proof/window-solar-film/sunroof-panorama-tint/mini-1.avif",
+            "/proof/window-solar-film/sunroof-panorama-tint/mini-2.avif",
+            "/proof/window-solar-film/sunroof-panorama-tint/mini-3.avif"
           ]
         },
         {
@@ -2568,7 +2568,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Tint Removal & Reinstallation",
             "ar": "إزالة وإعادة تظليل"
           },
-          "heroImage": "/tint-removal.PNG",
+          "heroImage": "/tint-removal.avif",
           "intro": {
             "en": [
               "Professional tint removal that protects defroster lines and trims, followed by clean reinstallation with a fresh finish.",
@@ -2745,12 +2745,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/window-solar-film/tint-removal-reinstallation/before.jpg",
-          "afterImage": "/proof/window-solar-film/tint-removal-reinstallation/after.jpg",
+          "beforeImage": "/proof/window-solar-film/tint-removal-reinstallation/before.avif",
+          "afterImage": "/proof/window-solar-film/tint-removal-reinstallation/after.avif",
           "miniImages": [
-            "/proof/window-solar-film/tint-removal-reinstallation/mini-1.jpg",
-            "/proof/window-solar-film/tint-removal-reinstallation/mini-2.jpg",
-            "/proof/window-solar-film/tint-removal-reinstallation/mini-3.jpg"
+            "/proof/window-solar-film/tint-removal-reinstallation/mini-1.avif",
+            "/proof/window-solar-film/tint-removal-reinstallation/mini-2.avif",
+            "/proof/window-solar-film/tint-removal-reinstallation/mini-3.avif"
           ]
         }
       ]
@@ -2765,7 +2765,7 @@ export const CATALOG: { services: Service[] } = {
         "en": "Paint correction, deep cleaning, and protective coating systems for a premium finish.",
         "ar": "تصحيح طلاء وتنظيف عميق وطلاءات حماية لنتيجة فاخرة."
       },
-      "heroImage": "/lexus1.png",
+      "heroImage": "/lexus1.avif",
       "overview": {
         "en": [
           "Paint correction, deep cleaning, and protective coating systems for a premium finish.",
@@ -2960,12 +2960,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/detailing-coating/exterior-detailing-paint-correction/before.jpg",
-          "afterImage": "/proof/detailing-coating/exterior-detailing-paint-correction/after.jpg",
+          "beforeImage": "/proof/detailing-coating/exterior-detailing-paint-correction/before.avif",
+          "afterImage": "/proof/detailing-coating/exterior-detailing-paint-correction/after.avif",
           "miniImages": [
-            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-1.jpg",
-            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-2.jpg",
-            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-3.jpg"
+            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-1.avif",
+            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-2.avif",
+            "/proof/detailing-coating/exterior-detailing-paint-correction/mini-3.avif"
           ]
         },
         {
@@ -2974,7 +2974,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Deep Cleaning",
             "ar": "تنظيف داخلي عميق"
           },
-          "heroImage": "/interior-deep.png",
+          "heroImage": "/interior-deep.avif",
           "intro": {
             "en": [
               "Deep interior cleaning for seats, carpets, plastics, and vents—removing stains, odors, and embedded dust safely.",
@@ -3151,12 +3151,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/detailing-coating/interior-deep-cleaning/before.jpg",
-          "afterImage": "/proof/detailing-coating/interior-deep-cleaning/after.jpg",
+          "beforeImage": "/proof/detailing-coating/interior-deep-cleaning/before.avif",
+          "afterImage": "/proof/detailing-coating/interior-deep-cleaning/after.avif",
           "miniImages": [
-            "/proof/detailing-coating/interior-deep-cleaning/mini-1.jpg",
-            "/proof/detailing-coating/interior-deep-cleaning/mini-2.jpg",
-            "/proof/detailing-coating/interior-deep-cleaning/mini-3.jpg"
+            "/proof/detailing-coating/interior-deep-cleaning/mini-1.avif",
+            "/proof/detailing-coating/interior-deep-cleaning/mini-2.avif",
+            "/proof/detailing-coating/interior-deep-cleaning/mini-3.avif"
           ]
         },
         {
@@ -3165,7 +3165,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Ceramic & Graphene Coating",
             "ar": "طلاء سيراميك وجرافين"
           },
-          "heroImage": "/nano.png",
+          "heroImage": "/nano.avif",
           "intro": {
             "en": [
               "Long-lasting ceramic or graphene coating that boosts gloss, adds hydrophobic behavior, and improves resistance to chemicals and UV.",
@@ -3342,12 +3342,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/detailing-coating/ceramic-graphene-coating/before.jpg",
-          "afterImage": "/proof/detailing-coating/ceramic-graphene-coating/after.jpg",
+          "beforeImage": "/proof/detailing-coating/ceramic-graphene-coating/before.avif",
+          "afterImage": "/proof/detailing-coating/ceramic-graphene-coating/after.avif",
           "miniImages": [
-            "/proof/detailing-coating/ceramic-graphene-coating/mini-1.jpg",
-            "/proof/detailing-coating/ceramic-graphene-coating/mini-2.jpg",
-            "/proof/detailing-coating/ceramic-graphene-coating/mini-3.jpg"
+            "/proof/detailing-coating/ceramic-graphene-coating/mini-1.avif",
+            "/proof/detailing-coating/ceramic-graphene-coating/mini-2.avif",
+            "/proof/detailing-coating/ceramic-graphene-coating/mini-3.avif"
           ]
         },
         {
@@ -3356,7 +3356,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Glass, Wheel & Interior Coating",
             "ar": "طلاءات للزجاج والجنوط والداخل"
           },
-          "heroImage": "/nano-interior.png",
+          "heroImage": "/nano-interior.avif",
           "intro": {
             "en": [
               "Targeted coatings for glass, wheels, and interior surfaces to reduce staining, ease cleaning, and improve daily durability.",
@@ -3533,12 +3533,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/detailing-coating/glass-wheel-interior-coating/before.jpg",
-          "afterImage": "/proof/detailing-coating/glass-wheel-interior-coating/after.jpg",
+          "beforeImage": "/proof/detailing-coating/glass-wheel-interior-coating/before.avif",
+          "afterImage": "/proof/detailing-coating/glass-wheel-interior-coating/after.avif",
           "miniImages": [
-            "/proof/detailing-coating/glass-wheel-interior-coating/mini-1.jpg",
-            "/proof/detailing-coating/glass-wheel-interior-coating/mini-2.jpg",
-            "/proof/detailing-coating/glass-wheel-interior-coating/mini-3.jpg"
+            "/proof/detailing-coating/glass-wheel-interior-coating/mini-1.avif",
+            "/proof/detailing-coating/glass-wheel-interior-coating/mini-2.avif",
+            "/proof/detailing-coating/glass-wheel-interior-coating/mini-3.avif"
           ]
         }
       ]
@@ -3553,7 +3553,7 @@ export const CATALOG: { services: Service[] } = {
         "en": "Smart repairs, refinishing, and dent solutions with quality control and clean results.",
         "ar": "إصلاحات ذكية ودهان وحلول صدمات مع فحص جودة ونتائج نظيفة."
       },
-      "heroImage": "/paintoriginal1.png",
+      "heroImage": "/paintoriginal1.avif",
       "overview": {
         "en": [
           "Smart repairs, refinishing, and dent solutions with quality control and clean results.",
@@ -3571,7 +3571,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Smart Paint Repair",
             "ar": "إصلاح طلاء ذكي"
           },
-          "heroImage": "/smart-paint2.png",
+          "heroImage": "/smart-paint2.avif",
           "intro": {
             "en": [
               "Localized paint repair for scuffs, scratches, and bumper damage—minimizing repaint area while restoring a clean OEM look.",
@@ -3748,12 +3748,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/paint-repair-services/smart-paint-repair/before.jpg",
-          "afterImage": "/proof/paint-repair-services/smart-paint-repair/after.jpg",
+          "beforeImage": "/proof/paint-repair-services/smart-paint-repair/before.avif",
+          "afterImage": "/proof/paint-repair-services/smart-paint-repair/after.avif",
           "miniImages": [
-            "/proof/paint-repair-services/smart-paint-repair/mini-1.jpg",
-            "/proof/paint-repair-services/smart-paint-repair/mini-2.jpg",
-            "/proof/paint-repair-services/smart-paint-repair/mini-3.jpg"
+            "/proof/paint-repair-services/smart-paint-repair/mini-1.avif",
+            "/proof/paint-repair-services/smart-paint-repair/mini-2.avif",
+            "/proof/paint-repair-services/smart-paint-repair/mini-3.avif"
           ]
         },
         {
@@ -3762,7 +3762,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Rubber / Peelable Paint",
             "ar": "دهان مطاطي قابل للإزالة"
           },
-          "heroImage": "/paintoriginal2.PNG",
+          "heroImage": "/paintoriginal2.avif",
           "intro": {
             "en": [
               "Peelable rubberized paint for temporary color change or protection—reversible when you want to return to original paint.",
@@ -3939,12 +3939,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/paint-repair-services/rubber-peelable-paint/before.jpg",
-          "afterImage": "/proof/paint-repair-services/rubber-peelable-paint/after.jpg",
+          "beforeImage": "/proof/paint-repair-services/rubber-peelable-paint/before.avif",
+          "afterImage": "/proof/paint-repair-services/rubber-peelable-paint/after.avif",
           "miniImages": [
-            "/proof/paint-repair-services/rubber-peelable-paint/mini-1.jpg",
-            "/proof/paint-repair-services/rubber-peelable-paint/mini-2.jpg",
-            "/proof/paint-repair-services/rubber-peelable-paint/mini-3.jpg"
+            "/proof/paint-repair-services/rubber-peelable-paint/mini-1.avif",
+            "/proof/paint-repair-services/rubber-peelable-paint/mini-2.avif",
+            "/proof/paint-repair-services/rubber-peelable-paint/mini-3.avif"
           ]
         },
         {
@@ -3953,7 +3953,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Normal & Full Repaint",
             "ar": "دهان عادي أو كامل"
           },
-          "heroImage": "/smart-paint.PNG",
+          "heroImage": "/smart-paint.avif",
           "intro": {
             "en": [
               "Full-panel or full-body repaint with professional preparation and controlled application to restore a uniform, premium finish.",
@@ -4130,12 +4130,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/paint-repair-services/normal-full-repaint/before.jpg",
-          "afterImage": "/proof/paint-repair-services/normal-full-repaint/after.jpg",
+          "beforeImage": "/proof/paint-repair-services/normal-full-repaint/before.avif",
+          "afterImage": "/proof/paint-repair-services/normal-full-repaint/after.avif",
           "miniImages": [
-            "/proof/paint-repair-services/normal-full-repaint/mini-1.jpg",
-            "/proof/paint-repair-services/normal-full-repaint/mini-2.jpg",
-            "/proof/paint-repair-services/normal-full-repaint/mini-3.jpg"
+            "/proof/paint-repair-services/normal-full-repaint/mini-1.avif",
+            "/proof/paint-repair-services/normal-full-repaint/mini-2.avif",
+            "/proof/paint-repair-services/normal-full-repaint/mini-3.avif"
           ]
         },
         {
@@ -4144,7 +4144,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Paintless Dent Repair (PDR)",
             "ar": "إصلاح صدمات بدون دهان"
           },
-          "heroImage": "/pdr-paint.PNG",
+          "heroImage": "/pdr-paint.avif",
           "intro": {
             "en": [
               "Paintless Dent Repair (PDR) removes dents from panels without repainting—preserving the original factory paint whenever possible.",
@@ -4321,12 +4321,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/paint-repair-services/paintless-dent-repair-pdr/before.jpg",
-          "afterImage": "/proof/paint-repair-services/paintless-dent-repair-pdr/after.jpg",
+          "beforeImage": "/proof/paint-repair-services/paintless-dent-repair-pdr/before.avif",
+          "afterImage": "/proof/paint-repair-services/paintless-dent-repair-pdr/after.avif",
           "miniImages": [
-            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-1.jpg",
-            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-2.jpg",
-            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-3.jpg"
+            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-1.avif",
+            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-2.avif",
+            "/proof/paint-repair-services/paintless-dent-repair-pdr/mini-3.avif"
           ]
         },
         {
@@ -4335,7 +4335,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Color Matching & Panel Painting",
             "ar": "مطابقة لون ودهان ألواح"
           },
-          "heroImage": "/color-matching.png",
+          "heroImage": "/color-matching.avif",
           "intro": {
             "en": [
               "Accurate color matching and panel painting using blending techniques to ensure seamless transitions between panels.",
@@ -4512,12 +4512,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/paint-repair-services/color-matching-panel-painting/before.jpg",
-          "afterImage": "/proof/paint-repair-services/color-matching-panel-painting/after.jpg",
+          "beforeImage": "/proof/paint-repair-services/color-matching-panel-painting/before.avif",
+          "afterImage": "/proof/paint-repair-services/color-matching-panel-painting/after.avif",
           "miniImages": [
-            "/proof/paint-repair-services/color-matching-panel-painting/mini-1.jpg",
-            "/proof/paint-repair-services/color-matching-panel-painting/mini-2.jpg",
-            "/proof/paint-repair-services/color-matching-panel-painting/mini-3.jpg"
+            "/proof/paint-repair-services/color-matching-panel-painting/mini-1.avif",
+            "/proof/paint-repair-services/color-matching-panel-painting/mini-2.avif",
+            "/proof/paint-repair-services/color-matching-panel-painting/mini-3.avif"
           ]
         }
       ]
@@ -4532,7 +4532,7 @@ export const CATALOG: { services: Service[] } = {
         "en": "Safe wash methods designed to preserve protected finishes and keep your vehicle presentable.",
         "ar": "طرق غسيل آمنة للحفاظ على الأسطح المحمية وإظهار السيارة بأفضل شكل."
       },
-      "heroImage": "/car-wash.png",
+      "heroImage": "/car-wash.avif",
       "overview": {
         "en": [
           "Safe wash methods designed to preserve protected finishes and keep your vehicle presentable.",
@@ -4550,7 +4550,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Basic & Premium Hand Wash",
             "ar": "غسيل يدوي أساسي وبريميوم"
           },
-          "heroImage": "/hand-wash.PNG",
+          "heroImage": "/hand-wash.avif",
           "intro": {
             "en": [
               "Safe hand wash using proper wash media and drying methods to reduce swirls—choose Basic for maintenance or Premium for extra finishing touches.",
@@ -4727,12 +4727,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/car-wash-services/basic-premium-hand-wash/before.jpg",
-          "afterImage": "/proof/car-wash-services/basic-premium-hand-wash/after.jpg",
+          "beforeImage": "/proof/car-wash-services/basic-premium-hand-wash/before.avif",
+          "afterImage": "/proof/car-wash-services/basic-premium-hand-wash/after.avif",
           "miniImages": [
-            "/proof/car-wash-services/basic-premium-hand-wash/mini-1.jpg",
-            "/proof/car-wash-services/basic-premium-hand-wash/mini-2.jpg",
-            "/proof/car-wash-services/basic-premium-hand-wash/mini-3.jpg"
+            "/proof/car-wash-services/basic-premium-hand-wash/mini-1.avif",
+            "/proof/car-wash-services/basic-premium-hand-wash/mini-2.avif",
+            "/proof/car-wash-services/basic-premium-hand-wash/mini-3.avif"
           ]
         },
         {
@@ -4741,7 +4741,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Foam Wash",
             "ar": "غسيل رغوي"
           },
-          "heroImage": "/foam-wash.PNG",
+          "heroImage": "/foam-wash.avif",
           "intro": {
             "en": [
               "Thick snow-foam pre-wash that loosens dirt and sand before contact—reducing swirl risk in dusty conditions.",
@@ -4918,12 +4918,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/car-wash-services/foam-wash/before.jpg",
-          "afterImage": "/proof/car-wash-services/foam-wash/after.jpg",
+          "beforeImage": "/proof/car-wash-services/foam-wash/before.avif",
+          "afterImage": "/proof/car-wash-services/foam-wash/after.avif",
           "miniImages": [
-            "/proof/car-wash-services/foam-wash/mini-1.jpg",
-            "/proof/car-wash-services/foam-wash/mini-2.jpg",
-            "/proof/car-wash-services/foam-wash/mini-3.jpg"
+            "/proof/car-wash-services/foam-wash/mini-1.avif",
+            "/proof/car-wash-services/foam-wash/mini-2.avif",
+            "/proof/car-wash-services/foam-wash/mini-3.avif"
           ]
         },
         {
@@ -4932,7 +4932,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Engine Bay Cleaning",
             "ar": "تنظيف حجرة المحرك"
           },
-          "heroImage": "/engine-wash.png",
+          "heroImage": "/engine-wash.avif",
           "intro": {
             "en": [
               "Controlled engine bay cleaning and degreasing to remove dust buildup and oil residue without harming sensitive components.",
@@ -5109,12 +5109,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/car-wash-services/engine-bay-cleaning/before.jpg",
-          "afterImage": "/proof/car-wash-services/engine-bay-cleaning/after.jpg",
+          "beforeImage": "/proof/car-wash-services/engine-bay-cleaning/before.avif",
+          "afterImage": "/proof/car-wash-services/engine-bay-cleaning/after.avif",
           "miniImages": [
-            "/proof/car-wash-services/engine-bay-cleaning/mini-1.jpg",
-            "/proof/car-wash-services/engine-bay-cleaning/mini-2.jpg",
-            "/proof/car-wash-services/engine-bay-cleaning/mini-3.jpg"
+            "/proof/car-wash-services/engine-bay-cleaning/mini-1.avif",
+            "/proof/car-wash-services/engine-bay-cleaning/mini-2.avif",
+            "/proof/car-wash-services/engine-bay-cleaning/mini-3.avif"
           ]
         },
         {
@@ -5123,7 +5123,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Interior Vacuum & Sanitization",
             "ar": "شفط وتعقيم داخلي"
           },
-          "heroImage": "/vacuum.png",
+          "heroImage": "/vacuum.avif",
           "intro": {
             "en": [
               "Thorough vacuuming plus sanitization of high-touch areas to reduce odors, dust, and bacteria for a fresher cabin.",
@@ -5300,12 +5300,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/car-wash-services/interior-vacuum-sanitization/before.jpg",
-          "afterImage": "/proof/car-wash-services/interior-vacuum-sanitization/after.jpg",
+          "beforeImage": "/proof/car-wash-services/interior-vacuum-sanitization/before.avif",
+          "afterImage": "/proof/car-wash-services/interior-vacuum-sanitization/after.avif",
           "miniImages": [
-            "/proof/car-wash-services/interior-vacuum-sanitization/mini-1.jpg",
-            "/proof/car-wash-services/interior-vacuum-sanitization/mini-2.jpg",
-            "/proof/car-wash-services/interior-vacuum-sanitization/mini-3.jpg"
+            "/proof/car-wash-services/interior-vacuum-sanitization/mini-1.avif",
+            "/proof/car-wash-services/interior-vacuum-sanitization/mini-2.avif",
+            "/proof/car-wash-services/interior-vacuum-sanitization/mini-3.avif"
           ]
         }
       ]
@@ -5320,7 +5320,7 @@ export const CATALOG: { services: Service[] } = {
         "en": "Repair, polishing, water repellency and replacement for maximum visibility and safety.",
         "ar": "إصلاح وتلميع وطبقة طاردة للماء واستبدال لأقصى وضوح وسلامة."
       },
-      "heroImage": "/rollsroyce.png",
+      "heroImage": "/rollsroyce.avif",
       "overview": {
         "en": [
           "Repair, polishing, water repellency and replacement for maximum visibility and safety.",
@@ -5339,7 +5339,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Glass Polishing",
             "ar": "تلميع الزجاج"
           },
-          "heroImage": "/glass-polishing.PNG",
+          "heroImage": "/glass-polishing.avif",
           "intro": {
             "en": [
               "Glass polishing to reduce wiper marks, water spots, and light scratches—improving visibility and overall appearance.",
@@ -5516,12 +5516,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/windshield-services/glass-polishing/before.jpg",
-          "afterImage": "/proof/windshield-services/glass-polishing/after.jpg",
+          "beforeImage": "/proof/windshield-services/glass-polishing/before.avif",
+          "afterImage": "/proof/windshield-services/glass-polishing/after.avif",
           "miniImages": [
-            "/proof/windshield-services/glass-polishing/mini-1.jpg",
-            "/proof/windshield-services/glass-polishing/mini-2.jpg",
-            "/proof/windshield-services/glass-polishing/mini-3.jpg"
+            "/proof/windshield-services/glass-polishing/mini-1.avif",
+            "/proof/windshield-services/glass-polishing/mini-2.avif",
+            "/proof/windshield-services/glass-polishing/mini-3.avif"
           ]
         },
         {
@@ -5530,7 +5530,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Water Repellent Treatment",
             "ar": "طبقة طاردة للماء"
           },
-          "heroImage": "/water.png",
+          "heroImage": "/water.avif",
           "intro": {
             "en": [
               "Hydrophobic treatment that makes water bead and slide off the windshield—improving visibility at speed and reducing wiper chatter.",
@@ -5707,12 +5707,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/windshield-services/water-repellent-treatment/before.jpg",
-          "afterImage": "/proof/windshield-services/water-repellent-treatment/after.jpg",
+          "beforeImage": "/proof/windshield-services/water-repellent-treatment/before.avif",
+          "afterImage": "/proof/windshield-services/water-repellent-treatment/after.avif",
           "miniImages": [
-            "/proof/windshield-services/water-repellent-treatment/mini-1.jpg",
-            "/proof/windshield-services/water-repellent-treatment/mini-2.jpg",
-            "/proof/windshield-services/water-repellent-treatment/mini-3.jpg"
+            "/proof/windshield-services/water-repellent-treatment/mini-1.avif",
+            "/proof/windshield-services/water-repellent-treatment/mini-2.avif",
+            "/proof/windshield-services/water-repellent-treatment/mini-3.avif"
           ]
         },
 
@@ -5722,7 +5722,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Protection – Light",
             "ar": "حماية الزجاج – لايت"
           },
-          "heroImage": "/light.jpg",
+          "heroImage": "/light.avif",
           "intro": {
             "en": [
               "Light-level windshield protection film for basic defense against sand pitting and minor surface wear.",
@@ -5899,12 +5899,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/windshield-services/windshield-light/before.jpg",
-          "afterImage": "/proof/windshield-services/windshield-light/after.jpg",
+          "beforeImage": "/proof/windshield-services/windshield-light/before.avif",
+          "afterImage": "/proof/windshield-services/windshield-light/after.avif",
           "miniImages": [
-            "/proof/windshield-services/windshield-light/mini-1.jpg",
-            "/proof/windshield-services/windshield-light/mini-2.jpg",
-            "/proof/windshield-services/windshield-light/mini-3.jpg"
+            "/proof/windshield-services/windshield-light/mini-1.avif",
+            "/proof/windshield-services/windshield-light/mini-2.avif",
+            "/proof/windshield-services/windshield-light/mini-3.avif"
           ]
         },
         {
@@ -5913,7 +5913,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Protection – City",
             "ar": "حماية الزجاج – سيتي"
           },
-          "heroImage": "/city.png",
+          "heroImage": "/city.avif",
           "intro": {
             "en": [
               "City-level windshield protection with enhanced durability for frequent road use, keeping glass clearer despite dust and traffic exposure.",
@@ -6090,12 +6090,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/windshield-services/windshield-city/before.jpg",
-          "afterImage": "/proof/windshield-services/windshield-city/after.jpg",
+          "beforeImage": "/proof/windshield-services/windshield-city/before.avif",
+          "afterImage": "/proof/windshield-services/windshield-city/after.avif",
           "miniImages": [
-            "/proof/windshield-services/windshield-city/mini-1.jpg",
-            "/proof/windshield-services/windshield-city/mini-2.jpg",
-            "/proof/windshield-services/windshield-city/mini-3.jpg"
+            "/proof/windshield-services/windshield-city/mini-1.avif",
+            "/proof/windshield-services/windshield-city/mini-2.avif",
+            "/proof/windshield-services/windshield-city/mini-3.avif"
           ]
         },
         {
@@ -6104,7 +6104,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Windshield Protection – Extreme",
             "ar": "حماية الزجاج – إكستريم"
           },
-          "heroImage": "/extreme.png",
+          "heroImage": "/extreme.avif",
           "intro": {
             "en": [
               "Extreme-level windshield protection built for heavy highway use and harsh conditions—maximum resistance against pitting and impacts.",
@@ -6281,12 +6281,12 @@ export const CATALOG: { services: Service[] } = {
               }
             }
           ],
-          "beforeImage": "/proof/windshield-services/windshield-extreme/before.jpg",
-          "afterImage": "/proof/windshield-services/windshield-extreme/after.jpg",
+          "beforeImage": "/proof/windshield-services/windshield-extreme/before.avif",
+          "afterImage": "/proof/windshield-services/windshield-extreme/after.avif",
           "miniImages": [
-            "/proof/windshield-services/windshield-extreme/mini-1.jpg",
-            "/proof/windshield-services/windshield-extreme/mini-2.jpg",
-            "/proof/windshield-services/windshield-extreme/mini-3.jpg"
+            "/proof/windshield-services/windshield-extreme/mini-1.avif",
+            "/proof/windshield-services/windshield-extreme/mini-2.avif",
+            "/proof/windshield-services/windshield-extreme/mini-3.avif"
           ]
         }
       ]

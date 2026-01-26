@@ -42,37 +42,37 @@ export default function ServicesHighlight() {
       {
         title: safeText(list.paintProtection, "Paint Protection"),
         description: safeText(desc.paintProtectionDesc ?? desc.paintProtection, "Premium protection for your paint."),
-        image: "/ppf.png",
+        image: "/ppf.avif",
         tone: "silver",
       },
       {
         title: safeText(list.ceramicCoating, "Ceramic Coating"),
         description: safeText(desc.ceramicCoatingDesc ?? desc.ceramicCoating, "Long-lasting hydrophobic gloss."),
-        image: "/ceramic.PNG",
+        image: "/ceramic.avif",
         tone: "burgundy",
       },
       {
         title: safeText(list.polish, "Polish"),
         description: safeText(desc.polishDesc ?? desc.polish, "Refined clarity and depth."),
-        image: "/polish2.png",
+        image: "/polish2.avif",
         tone: "silver",
       },
       {
         title: safeText(list.blackEdition, "Black Edition"),
         description: safeText(desc.blackEditionDesc ?? desc.blackEdition, "Deep, uniform, luxury finish."),
-        image: "/defenderchangedcolor.PNG",
+        image: "/defenderchangedcolor.avif",
         tone: "burgundy",
       },
       {
         title: safeText(list.smartRepair, "Smart Repair"),
         description: safeText(desc.smartRepairDesc ?? desc.smartRepair, "Targeted repair for minor defects."),
-        image: "/paintoriginal.png",
+        image: "/paintoriginal.avif",
         tone: "silver",
       },
       {
         title: safeText(list.nanoLeather, "Nano Leather"),
         description: safeText(desc.nanoLeatherDesc ?? desc.nanoLeather, "Interior protection and care."),
-        image: "/solar.PNG",
+        image: "/solar.avif",
         tone: "burgundy",
       },
     ];

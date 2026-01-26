@@ -186,8 +186,8 @@ export default function ServiceRoutePage() {
     const overview = getText(s.overview, lang);
 
     const proofKey = s.slug.replace(/\//g, "-");
-    const beforeSrc = `/proof/${proofKey}-before.png`;
-    const afterSrc = `/proof/${proofKey}-after.png`;
+    const beforeSrc = `/proof/${proofKey}-before.avif`;
+    const afterSrc = `/proof/${proofKey}-after.avif`;
 
     return (
       <LazyMotion features={domAnimation}>
@@ -325,7 +325,7 @@ export default function ServiceRoutePage() {
                     >
                       <div className={styles.cardTop}>
                         <img
-                          src={sub.heroImage || "/services/placeholder.png"}
+                          src={sub.heroImage || "/services/placeholder.avif"}
                           alt=""
                           className={styles.cardImg}
                           loading="lazy"

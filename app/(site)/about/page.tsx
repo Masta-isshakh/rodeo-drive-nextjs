@@ -370,7 +370,7 @@ export default function AboutPage() {
         <div className={styles.heroOverlay} />
         <div className={styles.heroBackground}>
           <img
-            src="about.JPG"
+            src="about.avif"
             alt="Rodeo Drive Showroom"
             className={styles.heroImage}
           />
