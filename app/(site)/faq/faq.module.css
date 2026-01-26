@@ -692,3 +692,26 @@
     animation: none !important;
   }
 }
+/* Remove default disclosure marker */
+.faqQuestion {
+  list-style: none;
+}
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+/* Rotate chevron when open */
+.faqItem[open] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Optional: smooth open/close without JS (keep light) */
+@media (prefers-reduced-motion: no-preference) {
+  .faqAnswer {
+    animation: faqOpen 160ms ease-out;
+  }
+  @keyframes faqOpen {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

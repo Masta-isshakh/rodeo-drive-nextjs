@@ -1080,3 +1080,17 @@
     contain-intrinsic-size: 800px;
   }
 }
+
+
+/* gallery.module.css */
+.videoTrack{
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.videoSlide{
+  scroll-snap-align: start; /* or center */
+  scroll-snap-stop: always;
+}
