@@ -78,7 +78,6 @@
 }
 
 .heroContent {
-  position: relative;
   z-index: 2;
   max-width: 980px;
   text-align: center;
@@ -111,7 +110,6 @@
 }
 
 .heroTitle {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
 

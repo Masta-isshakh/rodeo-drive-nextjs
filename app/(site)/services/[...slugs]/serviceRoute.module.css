@@ -33,8 +33,7 @@
 
   overflow-x: hidden !important;
   max-width: 100%;
-  position: relative;
-  isolation: isolate;
+
 }
 
 /* Silver background for this page */

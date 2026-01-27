@@ -1804,7 +1804,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Nano Ceramic Tint",
             "ar": "تظليل نانو سيراميك"
           },
-          "heroImage": "/nanoceramic.png",
+          "heroImage": "/nanoceramic.avif",
           "intro": {
             "en": [
               "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility—ideal for Qatar’s intense sun.",
@@ -2783,7 +2783,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Exterior Detailing & Paint Correction",
             "ar": "تفصيل خارجي وتصحيح طلاء"
           },
-          "heroImage": "/exterior-detailing.PNG",
+          "heroImage": "/exterior-detailing.avif",
           "intro": {
             "en": [
               "Multi-step exterior detailing and paint correction to remove swirls, haze, and defects—restoring true gloss and clarity.",
@@ -3762,7 +3762,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Rubber / Peelable Paint",
             "ar": "دهان مطاطي قابل للإزالة"
           },
-          "heroImage": "/paintoriginal2.avif",
+          "heroImage": "/paintoriginall.avif",
           "intro": {
             "en": [
               "Peelable rubberized paint for temporary color change or protection—reversible when you want to return to original paint.",
