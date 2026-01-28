@@ -31,9 +31,11 @@
 }
 
 .transparent {
-  background: rgba(10, 25, 41, 0.35);
+  background: rgba(10, 25, 41, 0); /* ✅ true transparent */
   box-shadow: none;
 }
+
+
 
 .solid {
   background: rgba(10, 25, 41, 0.78);
@@ -44,15 +46,14 @@
    Layout: Grid (no collision)
 -------------------------------- */
 .headerContainer {
-  max-width: 1440px;
+  max-width: 100%;              /* ✅ was 1440px */
   margin: 0 auto;
-  padding: 0 clamp(14px, 2vw, 28px);
+  padding: 0 clamp(5px, 2vw, 20px);
 
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;
   align-items: center;
 
-  column-gap: clamp(10px, 1.6vw, 22px);
   min-width: 0;
 }
 
@@ -378,7 +379,6 @@
 /* Burger (desktop hidden) */
 .mobileMenuToggle {
   display: none;
-
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(192, 192, 192, 0.18);
   color: rgba(175, 175, 175, 0.95);
@@ -633,6 +633,7 @@ border-radius: 15px;
   .mobileMenuToggle {
     width: 40px;
     height: 40px;
+    
   }
 
   .languageSwitch {

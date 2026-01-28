@@ -237,9 +237,7 @@
 }
 
 @media (max-width: 768px) {
-  .heroVideo {
-    padding: 60px 0 30px;
-  }
+
 
   .heroInner {
     width: 100vw;
@@ -259,9 +257,7 @@
 }
 
 @media (max-width: 480px) {
-  .scrollIndicator {
-    padding-top: 10px;
-  }
+
   .heroInner {
     width: 100vw;
     min-height: 500px;

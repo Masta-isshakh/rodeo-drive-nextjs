@@ -8,13 +8,14 @@ import { useI18n } from "../../lib/i18n";
 import Image from "next/image";
 import GoogleReviewsBadge from "@/app/components/GoogleReviewsBadge/GoogleReviewsBadge";
 import { SITE } from "@/app/config/site";
-import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 
-// supprime: import { MessageCircleMore } from "lucide-react";
+const HeaderMotion = dynamic(() => import("./HeaderMotion"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Header() {
-  const router = useRouter();
-
   const pathname = usePathname();
   const { language, setLanguage, t } = useI18n();
 
@@ -26,8 +27,6 @@ export default function Header() {
   const logoRef = useRef<HTMLAnchorElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
-
-  
 
   type NavItem = { label: string; href: string };
 
@@ -43,12 +42,25 @@ export default function Header() {
     [t]
   );
 
-  // Scroll state
+  // ✅ Optimized scroll listener (no extra state updates)
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    let raf = 0;
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const next = window.scrollY > 30;
+        setIsScrolled((prev) => (prev === next ? prev : next));
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // Close mobile menu on route change
@@ -74,55 +86,19 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
-  // GSAP intro (safe)
-useEffect(() => {
-  if (!rootRef.current) return;
-
-  let ctx: any;
-
-  (async () => {
-    const gsapMod = await import("gsap");
-    const gsap = gsapMod.default;
-
-    ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      if (headerRef.current) {
-        tl.fromTo(headerRef.current, { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 });
-      }
-
-      if (logoRef.current) {
-        tl.fromTo(logoRef.current, { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55 }, "-=0.35");
-
-        gsap.to(logoRef.current, {
-          y: "+=2",
-          duration: 2.6,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-      }
-
-      const navItemsEls = navRef.current?.querySelectorAll("li");
-      if (navItemsEls?.length) {
-        tl.fromTo(navItemsEls, { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.06 }, "-=0.25");
-      }
-
-      const actionChildren = actionsRef.current?.children;
-      if (actionChildren?.length) {
-        tl.fromTo(actionChildren, { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, stagger: 0.06 }, "-=0.2");
-      }
-    }, rootRef);
-  })();
-
-  return () => ctx?.revert?.();
-}, []);
-
-
   const phoneWa = SITE.whatsappUrl;
 
   return (
     <div ref={rootRef}>
+      {/* ✅ Step-10: GSAP moved out + code-split + guarded */}
+      <HeaderMotion
+        rootRef={rootRef}
+        headerRef={headerRef}
+        logoRef={logoRef}
+        navRef={navRef}
+        actionsRef={actionsRef}
+      />
+
       <header
         className={`${styles.header} ${isScrolled ? styles.solid : styles.transparent}`}
         ref={headerRef}
@@ -137,16 +113,11 @@ useEffect(() => {
               aria-label="WhatsApp"
               title="WhatsApp"
             >
-              <Image
-                src="/logo.avif"
-                alt=""
-                width={54}
-                height={54}
-                quality={100}
-                priority={false}
-              />
+              <Image src="/logo.avif" alt="" width={54} height={54} quality={100} priority={false} />
             </a>
-            <a href="/" className={styles.logoLink}>
+
+            {/* ✅ Keep same markup; only add ref here for GSAP */}
+            <a href="/" className={styles.logoLink} ref={logoRef}>
               <h4>RODEO DRIVE</h4>
             </a>
           </div>
@@ -154,7 +125,9 @@ useEffect(() => {
           <nav className={styles.nav} ref={navRef} aria-label="Primary">
             <ul className={styles.navList}>
               {navItems.map((item) => {
-                const isActive = item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
+                const isActive =
+                  item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
+
                 return (
                   <li key={item.href}>
                     <Link
@@ -170,31 +143,27 @@ useEffect(() => {
           </nav>
 
           <div className={styles.actions} ref={actionsRef}>
-            {/* ✅ Desktop/tablet: reviews visible here. Mobile: hidden via CSS */}
             <div className={styles.reviewsWrap}>
               <GoogleReviewsBadge />
             </div>
 
-            {/* ✅ Language is always in navbar on mobile (CSS will keep it visible) */}
-<div className={styles.languageSwitch} aria-label="Language">
-  <button
-    className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
-    onClick={() => setLanguage("en")}
-    type="button"
-  >
-    EN
-  </button>
-  <button
-    className={`${styles.langButton} ${language === "ar" ? styles.active : ""}`}
-    onClick={() => setLanguage("ar")}
-    type="button"
-  >
-    AR
-  </button>
-</div>
-
-
-
+            {/* ✅ keep language concept unchanged */}
+            <div className={styles.languageSwitch} aria-label="Language">
+              <button
+                className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
+                onClick={() => setLanguage("en")}
+                type="button"
+              >
+                EN
+              </button>
+              <button
+                className={`${styles.langButton} ${language === "ar" ? styles.active : ""}`}
+                onClick={() => setLanguage("ar")}
+                type="button"
+              >
+                AR
+              </button>
+            </div>
 
             <Link className={styles.ctaButton} href="/book">
               {t.nav.bookNow}
@@ -208,14 +177,7 @@ useEffect(() => {
               aria-label="WhatsApp"
               title="WhatsApp"
             >
-              <Image
-                src="/whatsapp.avif"
-                alt=""
-                width={40}
-                height={40}
-                quality={100}
-                priority={false}
-              />
+              <Image src="/whatsapp.avif" alt="" width={40} height={40} quality={100} priority={false} />
             </a>
 
             <button
@@ -230,17 +192,14 @@ useEffect(() => {
         </div>
       </header>
 
-      {/* Overlay (click to close) */}
+      {/* Overlay */}
       <div
         className={`${styles.mobileOverlay} ${isMobileMenuOpen ? styles.open : ""}`}
         onClick={() => setIsMobileMenuOpen(false)}
         aria-hidden={!isMobileMenuOpen}
       />
 
-      <aside
-        className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.open : ""}`}
-        aria-label="Mobile menu"
-      >
+      <aside className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.open : ""}`} aria-label="Mobile menu">
         <div className={styles.mobileNavContent}>
           <div className={styles.mobileTop}>
             <div className={styles.mobileBrand}>RODEO DRIVE</div>
@@ -254,7 +213,6 @@ useEffect(() => {
             </button>
           </div>
 
-          {/* ✅ Mobile: Reviews INSIDE toggle */}
           <div className={styles.mobileReviews}>
             <GoogleReviewsBadge />
           </div>
@@ -274,11 +232,7 @@ useEffect(() => {
           </ul>
 
           <div className={styles.mobileActions}>
-            <Link
-              className={styles.mobileCta}
-              href="/book"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link className={styles.mobileCta} href="/book" onClick={() => setIsMobileMenuOpen(false)}>
               {t.nav.bookNow}
             </Link>
 
@@ -290,17 +244,9 @@ useEffect(() => {
               aria-label="WhatsApp"
               title="WhatsApp"
             >
-              <Image
-                src="/whatsapp.avif"
-                alt=""
-                width={40}
-                height={40}
-                quality={100}
-                priority={false}
-              />
+              <Image src="/whatsapp.avif" alt="" width={40} height={40} quality={100} priority={false} />
             </a>
 
-            {/* ✅ Remove language from inside toggle (kept class but hidden via CSS) */}
             <div className={styles.mobileLangRow}>
               <button
                 className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}

@@ -217,17 +217,7 @@ export default function ServicesClient({ initialLang, packages, serviceGroups }:
       <section className={styles.servicesHero} data-services-hero>
         <div className={styles.heroOverlay} />
         <div className={styles.heroSpotlights} aria-hidden="true" />
-        <div className={styles.heroContent} data-services-hero-content>
-          <div className={styles.heroKicker} data-services-animate>
-            {labels.kicker}
-          </div>
-          <h1 className={styles.heroTitle} data-services-animate>
-            {labels.heroTitle}
-          </h1>
-          <p className={styles.heroSubtitle} data-services-animate>
-            {labels.heroSubtitle}
-          </p>
-        </div>
+
       </section>
 
       {/* PACKAGES */}

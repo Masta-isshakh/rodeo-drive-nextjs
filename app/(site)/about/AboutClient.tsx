@@ -282,12 +282,7 @@ export default function AboutClient({ initialLang }: { initialLang: Lang }) {
         </div>
 
         <div className={styles.heroContent} data-about-hero-content>
-          <h1 className={styles.title} data-about-animate>
-            {copy.heroTitle}
-          </h1>
-          <p className={styles.subtitle} data-about-animate>
-            {copy.heroSubtitle}
-          </p>
+
 
           <div className={styles.heroDecoration} data-about-animate>
             <div className={styles.decorLine} />
