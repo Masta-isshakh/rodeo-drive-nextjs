@@ -13,7 +13,7 @@
 /* ✅ 70% wrapper centré */
 .heroInner {
   margin: 0 auto;
-  height: 90vh;
+  height: 100vh;
   min-height: 560px;
   display: flex;
   align-items: center;
@@ -230,9 +230,9 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .heroInner {
-    width: min(95vw, 1100px);
+    width:100%;
     min-height: 520px;
-    height: 82vh;
+    height: 100vh;
   }
 }
 
@@ -242,8 +242,8 @@
   }
 
   .heroInner {
-    width: 94vw;
-    height: 80vh;
+    width: 100vw;
+    height: 100vh;
     min-height: 520px;
   }
 
@@ -263,9 +263,9 @@
     padding-top: 10px;
   }
   .heroInner {
-    width: 94vw;
+    width: 100vw;
     min-height: 500px;
-    height: 70vh;
+    height: 100vh;
   }
 }
 
@@ -286,4 +286,16 @@
   .ctaSecondary{
     transition: none !important;
   }
+}
+
+
+/* Smooth anchor scroll without JS */
+
+
+/* Helps GPU */
+.videoElement,
+.videoOverlay,
+.glowOrb,
+.animatedLine {
+  transform: translateZ(0);
 }

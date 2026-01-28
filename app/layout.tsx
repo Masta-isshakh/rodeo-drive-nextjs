@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Providers from "./Provider";
-import BodyRouteClass from "./components/BodyRouteClass";
 
 export const metadata: Metadata = {
   title: "Rodeo Drive | Luxury Car Detailing in Doha, Qatar",
@@ -11,9 +10,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr">
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <body>
-        <BodyRouteClass/>
         <Providers>{children}</Providers>
       </body>
     </html>

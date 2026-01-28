@@ -1,379 +1,413 @@
 /* =========================================================
-   serviceRoute.module.css — FINAL FIX + GLOBALS FILLED
-   Goals:
-   1) No empty space at bottom when you scroll to the end
-   2) No unwanted horizontal scroll / right-side scroll indicator
-   3) Silver-focused theme consistent with other pages
-   ========================================================= */
+   serviceRoute.module.css — RESPONSIVE + CONSISTENT
+   Style aligned with services.module.css:
+   - clamp() spacing
+   - stable grids
+   - no horizontal overflow
+   - RTL safe
+========================================================= */
 
-/* ---------- GLOBAL FIX (safe inside CSS Modules) ---------- */
-/* Removes default margins + kills horizontal overflow caused by any child */
-
-
-/* =========================
-   Base + page sizing (NO BOTTOM GAP)
-========================= */
-.page{
+.page {
   --navy: #0b1222;
   --muted: rgba(11,18,34,0.62);
-  --muted-2: rgba(11,18,34,0.52);
+  --muted2: rgba(11,18,34,0.52);
   --border: rgba(11,18,34,0.12);
-  --border-2: rgba(11,18,34,0.16);
-  --shadow-soft: 0 18px 70px rgba(0,0,0,0.10);
+  --border2: rgba(11,18,34,0.16);
+  --shadow-soft: 0 18px 54px rgba(0,0,0,0.10);
   --shadow-med: 0 22px 80px rgba(0,0,0,0.12);
-  --grad-silver: linear-gradient(135deg, #aaaaaa 0%, #aaaaaa 28%, #aaaaaa 55%, #aaaaaa 100%);
-  --grad-silver-shine: linear-gradient(135deg, rgba(11,18,34,0.96) 0%, rgba(11,18,34,0.72) 58%, rgba(107,15,26,0.74) 140%);
-  --grad-divider: linear-gradient(90deg, transparent, rgba(11,18,34,0.22), rgba(107,15,26,0.14), rgba(11,18,34,0.22), transparent);
+  --grad-silver: linear-gradient(135deg, #d9d9d9 0%, #cfcfcf 35%, #bdbdbd 100%);
+  --grad-ink: linear-gradient(135deg, rgba(11,18,34,0.96) 0%, rgba(11,18,34,0.74) 60%, rgba(107,15,26,0.72) 140%);
 
-  padding-top: 20px;
-  padding-bottom: 0 !important;
-  margin: 0 !important;
+  position: relative;
+  isolation: isolate;
 
-  min-height: auto !important;
+  padding-top: 80px; /* match fixed header */
+  min-height: 100vh;
 
-  overflow-x: hidden !important;
-  max-width: 100%;
+  overflow-x: clip; /* stronger than hidden (prevents scroll indicator) */
+  color: var(--navy);
 
-}
-
-/* Silver background for this page */
-.page::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  z-index:-1;
-  pointer-events:none;
   background:
-    radial-gradient(1200px 720px at 50% -10%, rgba(175, 175, 175, 0.92), rgba(255,255,255,0.18) 58%, transparent 74%),
-    radial-gradient(900px 640px at 18% 18%, rgba(255,255,255,0.62), transparent 62%),
-    radial-gradient(900px 660px at 82% 14%, rgba(255,255,255,0.55), transparent 64%),
-    radial-gradient(980px 720px at 50% 120%, rgba(210,210,210,0.24), transparent 70%),
-    radial-gradient(800px 520px at 78% 40%, rgba(107,15,26,0.09), transparent 62%),
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.10) 0 2px, transparent 2px 14px),
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 16px),
-    linear-gradient(180deg, #aaaaaa 0%, #aaaaaa 52%, #aaaaaa 100%);
-  transform: scale(1.06);
-  transform-origin: 50% 20%;
+    radial-gradient(1200px 720px at 50% -10%, rgba(224,224,224,0.92), rgba(255,255,255,0.12) 58%, transparent 72%),
+    radial-gradient(900px 640px at 18% 18%, rgba(255,255,255,0.70), transparent 62%),
+    radial-gradient(900px 660px at 82% 14%, rgba(255,255,255,0.62), transparent 64%),
+    radial-gradient(980px 720px at 50% 120%, rgba(210,210,210,0.28), transparent 70%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.14) 0 2px, transparent 2px 14px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.10) 0 2px, transparent 2px 16px),
+    linear-gradient(180deg, #adadad 0%, #adadad 52%, #adadad 100%);
 }
 
-.page::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:10%;
-  right:10%;
-  height:2px;
-  background: linear-gradient(90deg, transparent, rgba(11,18,34,0.20), transparent);
-  box-shadow: 0 0 18px rgba(0,0,0,0.08);
-  opacity: 0.8;
-  pointer-events:none;
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 720px at 50% 0%, rgba(255,255,255,0.14), transparent 70%),
+    radial-gradient(1200px 820px at 50% 120%, rgba(0,0,0,0.10), transparent 68%);
+  opacity: 1;
 }
 
 /* =========================
-   Container (NO EXTRA BOTTOM SPACE)
+   Container
 ========================= */
-.container{
+.container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 28px 20px;
-  padding-bottom: 0 !important;
-  max-width: 100%;
+  padding-left: clamp(16px, 3vw, 56px);
+  padding-right: clamp(16px, 3vw, 56px);
 }
 
 /* =========================
-   Hero blocks
+   Hero
 ========================= */
 .hero,
-.heroSmall{
+.heroSmall {
   position: relative;
   border-bottom: 1px solid rgba(11,18,34,0.10);
-  margin: 0 !important;
+  overflow: hidden;
 }
 
-.hero{ padding: 70px 0 56px; }
-.heroSmall{ padding: 56px 0 28px; }
+.hero {
+  padding: clamp(54px, 6vw, 86px) 0 clamp(34px, 4vw, 54px);
+}
 
-.heroBg{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
+.heroSmall {
+  padding: clamp(42px, 5vw, 68px) 0 clamp(18px, 3vw, 34px);
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse at 24% 20%, rgba(255,255,255,0.55) 0%, transparent 62%),
-    radial-gradient(ellipse at 82% 32%, rgba(107,15,26,0.10) 0%, transparent 66%),
-    radial-gradient(ellipse at 50% 92%, rgba(0,0,0,0.10) 0%, transparent 66%),
-    linear-gradient(180deg, rgba(255,255,255,0.00) 0%, rgba(0,0,0,0.04) 92%);
-  opacity: 0.9;
-}
-
-.hero > .container,
-.heroSmall > .container{
-  position: relative;
-  z-index: 1;
+    radial-gradient(520px 320px at 32% 22%, rgba(255,255,255,0.36), transparent 64%),
+    radial-gradient(640px 380px at 70% 18%, rgba(255,255,255,0.28), transparent 66%),
+    radial-gradient(760px 420px at 50% 88%, rgba(0,0,0,0.10), transparent 72%),
+    linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.06) 100%);
 }
 
 /* =========================
    Typography
 ========================= */
-.h1{
-  font-size: 42px;
-  line-height: 1.1;
+.h1 {
   margin: 0 0 12px;
   font-weight: 900;
-  letter-spacing: 0.3px;
-  word-break: break-word;
-  background: var(--grad-silver-shine);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  line-height: 1.1;
+
+  background: var(--grad-ink);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+
   text-shadow: 0 18px 34px rgba(0,0,0,0.10);
+  word-break: break-word;
 }
 
-.h2{
-  font-size: 22px;
+.h2 {
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
   margin: 0 0 12px;
-  font-weight: 850;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: rgba(11,18,34,0.92);
 }
 
-.h3{
-  font-size: 18px;
+.h3 {
+  font-size: 1.05rem;
   margin: 0 0 10px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
   color: rgba(11,18,34,0.92);
 }
 
-.subtitle{
-  font-size: 18px;
+.subtitle {
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
   color: var(--muted);
-  max-width: 820px;
+  max-width: 900px;
   margin: 0 0 18px;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
-.paragraph{
-  color: rgba(11,18,34,0.72);
-  line-height: 1.8;
+.paragraph {
+  color: rgba(11,18,34,0.76);
+  line-height: 1.85;
   margin: 0 0 10px;
   word-break: break-word;
 }
 
-.muted{
-  color: black;
-  margin: 0;
+.muted {
+  color: rgba(11,18,34,0.72);
+  margin: 0 0 10px;
   line-height: 1.65;
-  margin-bottom: 10px;
 }
 
-.mutedSmall{
-  color: black;
-  font-size: 13px;
-  margin: 10px 0 0;
-  line-height: 1.55;
+/* =========================
+   Back arrow
+========================= */
+.backArrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(11,18,34,0.14);
+  background: rgba(255,255,255,0.60);
+  color: rgba(11,18,34,0.86);
+  text-decoration: none;
+
+  width: fit-content;
+  margin-bottom: 12px;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.08);
 }
+
+.backIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(11,18,34,0.08);
+  border: 1px solid rgba(11,18,34,0.14);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.backText {
+  font-weight: 900;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .backArrow {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 14px;
+  }
+}
+
+[dir="rtl"] .backArrow { flex-direction: row-reverse; }
 
 /* =========================
    CTA row
 ========================= */
-.ctaRow{
-  display:flex;
+.ctaRow {
+  display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 16px;
   align-items: stretch;
 }
 
-.ctaBtn{
+.ctaBtn {
   min-height: 46px;
   display: inline-flex;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   white-space: nowrap;
 }
 
-.btnPrimary{
+.btnPrimary {
   background: var(--grad-silver);
   color: rgba(11,18,34,0.92);
   padding: 12px 16px;
   border-radius: 999px;
-  font-weight: 900;
-  text-decoration:none;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+
   border: 1px solid rgba(11,18,34,0.10);
   box-shadow: 0 10px 28px rgba(0,0,0,0.10);
   transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
 }
 
-.btnPrimary:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.14);
-  filter: brightness(1.02);
-}
-
-.btnGhost{
+.btnGhost {
   border: 1px solid rgba(11,18,34,0.14);
   padding: 12px 16px;
   border-radius: 999px;
   color: rgba(11,18,34,0.86);
   background: rgba(255,255,255,0.55);
-  text-decoration:none;
+  text-decoration: none;
+
   box-shadow: 0 10px 26px rgba(0,0,0,0.08);
   transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
 }
 
-.btnGhost:hover{
-  transform: translateY(-2px);
-  background: rgba(175, 175, 175, 0.72);
-  box-shadow: 0 16px 34px rgba(0,0,0,0.12);
+@media (hover:hover) and (pointer:fine) {
+  .btnPrimary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+    filter: brightness(1.02);
+  }
+  .btnGhost:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.72);
+    box-shadow: 0 16px 34px rgba(0,0,0,0.12);
+  }
+}
+
+/* Mobile: make CTA buttons full width like your Services page feel */
+@media (max-width: 640px) {
+  .btnPrimary,
+  .btnGhost {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* =========================
-   Sections (REMOVE BOTTOM GAP)
+   Sections (perf)
 ========================= */
-.section{
-  padding: 34px 0;
+.section,
+.sectionAlt {
+  padding: clamp(42px, 6vw, 84px) 0;
   border-bottom: 1px solid rgba(11,18,34,0.10);
-  margin: 0 !important;
 }
 
-.sectionAlt{
-  padding: 34px 0;
-  background: rgba(255,255,255,0.55);
-  border-bottom: 1px solid rgba(11,18,34,0.10);
-  margin: 0 !important;
+.sectionAlt {
+  background:
+    radial-gradient(1100px 520px at 50% 0%, rgba(255,255,255,0.72), transparent 72%),
+    linear-gradient(180deg, rgba(255,255,255,0.58), rgba(255,255,255,0.10));
 }
 
-.page > .section:last-of-type,
-.page > .sectionAlt:last-of-type{
-  border-bottom: 0 !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 0 !important;
+/* optional: helps performance on long pages */
+.section,
+.sectionAlt {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
 }
 
-.page :where(section, main, div):last-child{
-  margin-bottom: 0 !important;
+.sectionHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: clamp(14px, 2vw, 20px);
 }
 
 /* =========================
    Split layout
 ========================= */
-.split{
-  display:grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 18px;
+.split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(14px, 2vw, 22px);
   align-items: start;
   min-width: 0;
 }
 
-@media (max-width: 900px){
-  .split{ grid-template-columns: 1fr; }
+.textCol { min-width: 0; }
+
+@media (max-width: 1024px) {
+  .split { grid-template-columns: 1fr; }
 }
 
 /* =========================
    Media card (slider)
 ========================= */
-.mediaCard{
+.mediaCard {
   width: 100%;
   min-width: 0;
-  border: 1px solid transparent;
-  border-radius: 18px;
-  padding: 12px;
+
+  border-radius: 26px;
+  padding: 14px;
+
   background:
-    linear-gradient(135deg, rgba(228, 228, 228, 0.98), rgba(228, 228, 228, 0.97), rgba(228, 228, 228, 0.98)) padding-box,
-    linear-gradient(135deg, rgba(11,18,34,0.16), rgba(11,18,34,0.06), rgba(228, 228, 228, 0.14)) border-box;
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,244,248,0.96), rgba(232,236,244,0.98)) padding-box,
+    linear-gradient(135deg, rgba(11,18,34,0.18), rgba(11,18,34,0.06), rgba(11,18,34,0.16)) border-box;
+  border: 1px solid transparent;
+
   box-shadow: var(--shadow-soft);
-  position: relative;
-  z-index: 1;
 }
 
-.sliderWrap{
-  position: relative;
-  z-index: 1;
+.sliderWrap {
   width: 100%;
   min-width: 0;
   touch-action: pan-y;
 }
 
 /* =========================
-   Trust strip
-========================= */
-.trustStrip{
-  display:flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.trustItem{
-  border: 1px solid rgba(11,18,34,0.14);
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.60);
-  font-size: 13px;
-  color: rgba(11,18,34,0.74);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
-}
-
-/* =========================
    Subservices grid
 ========================= */
-.grid{
-  display:grid;
+.grid {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: clamp(14px, 2vw, 22px);
 }
 
-@media (max-width: 1000px){
-  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 640px){
-  .grid{ grid-template-columns: 1fr; gap: 12px; }
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
 }
 
-.card{
-  border: 1px solid transparent;
-  border-radius: 18px;
+.card {
+  border-radius: 26px;
   overflow: hidden;
-  display:flex;
+  display: flex;
   flex-direction: column;
   min-width: 0;
+
   background:
-    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,244,248,0.97), rgba(232,236,244,0.98)) padding-box,
-    linear-gradient(135deg, rgba(11,18,34,0.16), rgba(11,18,34,0.06), rgba(11,18,34,0.14)) border-box;
+    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,244,248,0.97), rgba(232,236,244,0.99)) padding-box,
+    linear-gradient(135deg, rgba(11,18,34,0.18), rgba(11,18,34,0.06), rgba(11,18,34,0.16)) border-box;
+  border: 1px solid transparent;
+
   box-shadow: var(--shadow-soft);
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
-.cardTop{
-  height: 250px;
-  overflow: hidden;
+@media (hover:hover) and (pointer:fine) {
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 86px rgba(0,0,0,0.16);
+  }
+}
+
+.cardTop {
+  position: relative;
+  height: clamp(190px, 18vw, 250px);
   background: rgba(11,18,34,0.04);
   border-bottom: 1px solid rgba(11,18,34,0.08);
 }
 
-.cardImg{
-  width: 100%;
-  height: 100%;
+.cardImg {
   object-fit: cover;
+  object-position: center;
 }
 
-.cardBody{
-  padding: 14px;
-  display:flex;
+.cardBody {
+  padding: 16px;
+  display: flex;
   flex-direction: column;
   gap: 10px;
   flex: 1;
 }
 
-.cardHeader{
-  display:flex;
+.cardHeader {
+  display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.cardText{
-  color: rgba(11,18,34,0.66);
-  line-height: 1.6;
+.cardText {
+  color: rgba(11,18,34,0.72);
+  line-height: 1.65;
   margin: 0;
+
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -381,239 +415,193 @@
   -webkit-box-orient: vertical;
 }
 
-.cardBtn{
+.cardBtn {
   margin-top: auto;
   background: rgba(11,18,34,0.06);
-  border: 1px solid rgba(11,18,34,0.14);
-  color: rgba(11,18,34,0.86);
-  padding: 10px 12px;
+  border: 1px solid rgba(11,18,34,0.18);
+  color: rgba(11,18,34,0.88);
+
+  padding: 11px 14px;
   border-radius: 999px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-weight: 800;
-  text-decoration:none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+
   min-height: 44px;
 }
 
 /* =========================
-   Back arrow
-========================= */
-.backArrow{
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(11,18,34,0.14);
-  background: rgba(255,255,255,0.60);
-  color: rgba(11,18,34,0.86);
-  text-decoration:none;
-  width: fit-content;
-  margin-bottom: 12px;
-  box-shadow: 0 12px 26px rgba(0,0,0,0.08);
-}
-
-.backIcon{
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background: rgba(11,18,34,0.08);
-  border: 1px solid rgba(11,18,34,0.14);
-  font-weight: 900;
-  line-height: 1;
-}
-
-.backText{
-  font-weight: 800;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-@media (max-width: 640px){
-  .backArrow{
-    width: 100%;
-    justify-content:center;
-    padding: 12px 14px;
-  }
-}
-
-[dir="rtl"] .backArrow{ flex-direction: row-reverse; }
-
-/* =========================
-   Breadcrumbs
-========================= */
-.breadcrumbs{
-  display:flex;
-  gap: 8px;
-  align-items:center;
-  color: rgba(11,18,34,0.58);
-  margin-bottom: 10px;
-  padding-top: 30px;
-  flex-wrap: wrap;
-}
-
-.sep{ opacity: 0.5; }
-
-/* =========================
    KPI row
 ========================= */
-.kpiRow{
-  display:grid;
+.kpiRow {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin-top: 16px;
 }
 
-@media (max-width: 640px){
-  .kpiRow{ grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .kpiRow { grid-template-columns: 1fr; }
 }
 
-.kpi{
+.kpi {
   border: 1px solid rgba(11,18,34,0.12);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 12px;
   background: rgba(255,255,255,0.60);
   min-width: 0;
   box-shadow: 0 12px 24px rgba(0,0,0,0.06);
 }
 
-.kpi span{
-  display:block;
+.kpi span {
+  display: block;
   font-size: 12px;
   color: rgba(11,18,34,0.56);
   margin-bottom: 6px;
 }
 
-.kpi strong{
+.kpi strong {
   font-size: 14px;
   color: rgba(11,18,34,0.86);
   word-break: break-word;
 }
 
 /* =========================
-   Bullets + panels
+   Panels (3 cols)
 ========================= */
-.bullets{
-  margin: 0;
-  padding-left: 18px;
-  color: rgba(11,18,34,0.72);
-  line-height: 1.8;
-}
-
-.threeCols{
-  display:grid;
+.threeCols {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: clamp(14px, 2vw, 22px);
 }
 
-@media (max-width: 1000px){
-  .threeCols{ grid-template-columns: 1fr; }
+@media (max-width: 1024px) {
+  .threeCols { grid-template-columns: 1fr; }
 }
 
-.panel{
+.panel {
   border: 1px solid rgba(11,18,34,0.12);
-  border-radius: 18px;
-  padding: 14px;
+  border-radius: 26px;
+  padding: 16px;
   background: rgba(255,255,255,0.60);
   min-width: 0;
   box-shadow: 0 12px 26px rgba(0,0,0,0.06);
+}
+
+.bullets {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(11,18,34,0.78);
+  line-height: 1.85;
+}
+
+[dir="rtl"] .bullets {
+  padding-left: 0;
+  padding-right: 18px;
 }
 
 /* =========================
    Process timeline
 ========================= */
-.timeline{
+.timeline {
   list-style: none;
   padding: 0;
   margin: 14px 0 0;
-  display:flex;
+  display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.timeline li{
-  display:flex;
+.timeline li {
+  display: flex;
   gap: 12px;
-  align-items:flex-start;
+  align-items: flex-start;
+
   border: 1px solid rgba(11,18,34,0.12);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 12px;
+
   background: rgba(255,255,255,0.60);
   min-width: 0;
   box-shadow: 0 12px 26px rgba(0,0,0,0.06);
 }
 
-.stepIndex{
+.stepIndex {
   width: 28px;
   height: 28px;
   border-radius: 10px;
   background: rgba(11,18,34,0.08);
   border: 1px solid rgba(11,18,34,0.14);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 900;
   color: rgba(11,18,34,0.86);
   flex: 0 0 auto;
 }
 
-.stepText{
-  color: rgba(11,18,34,0.72);
-  line-height: 1.7;
+.stepText {
+  color: rgba(11,18,34,0.78);
+  line-height: 1.75;
   word-break: break-word;
 }
 
+[dir="rtl"] .timeline li { flex-direction: row-reverse; }
+[dir="rtl"] .stepText { text-align: right; }
+
 /* =========================
-   FAQ grid
+   FAQ
 ========================= */
-.faqGrid{
-  display:grid;
+.faqGrid {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 10px;
 }
 
-@media (max-width: 900px){
-  .faqGrid{ grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .faqGrid { grid-template-columns: 1fr; }
 }
 
-.faq{
+.faq {
   border: 1px solid rgba(11,18,34,0.12);
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 10px 12px;
   background: rgba(255,255,255,0.60);
   min-width: 0;
   box-shadow: 0 12px 26px rgba(0,0,0,0.06);
 }
 
-.faq summary{
+.faq summary {
   cursor: pointer;
-  font-weight: 850;
-  color: rgba(11,18,34,0.88);
+  font-weight: 900;
+  color: rgba(11,18,34,0.90);
 }
 
-.faqAns{
+.faqAns {
   margin: 8px 0 0;
-  color: rgba(11,18,34,0.70);
+  color: rgba(11,18,34,0.76);
   line-height: 1.75;
   word-break: break-word;
 }
 
 /* =========================
-   Final CTA (NO BOTTOM GAP)
+   Final CTA
 ========================= */
-.finalCta{
+.finalCta {
   margin-top: 18px;
-  margin-bottom: 0 !important;
   border: 1px solid rgba(11,18,34,0.14);
+
   background:
     radial-gradient(circle at 20% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.55) 55%, rgba(255,255,255,0.35) 100%),
     linear-gradient(135deg, rgba(107,15,26,0.08), rgba(11,18,34,0.04));
-  border-radius: 18px;
+  border-radius: 26px;
   padding: 16px;
   box-shadow: 0 16px 44px rgba(0,0,0,0.08);
 }
@@ -621,74 +609,75 @@
 /* =========================
    Subservice image block
 ========================= */
-.cardTopsub{
+.cardTopsub {
+  position: relative;
   width: 100%;
   height: clamp(220px, 22vw, 360px);
-  border-radius: 18px;
+  border-radius: 26px;
   overflow: hidden;
+
   border: 1px solid rgba(11,18,34,0.12);
   background: rgba(255,255,255,0.60);
   box-shadow: 0 18px 60px rgba(0,0,0,0.10);
 }
 
-.cardImgsub{
-  width: 100%;
-  height: 100%;
-  display:block;
+.cardImgsub {
   object-fit: cover;
   object-position: center;
-  transform: scale(1.01);
 }
 
-/* Mobile polish */
-@media (max-width: 640px){
-  .container{
-    padding: 20px 14px;
-    padding-bottom: 0 !important;
-  }
-
-  .hero{ padding: 52px 0 40px; }
-  .heroSmall{ padding: 44px 0 20px; }
-
-  .h1{ font-size: 30px; line-height: 1.15; }
-  .subtitle{ font-size: 15px; }
-
-  .h2{ font-size: 20px; }
-
-  .ctaRow{ gap: 8px; }
-
-  .btnPrimary,
-  .btnGhost{
-    width: 100%;
-    text-align:center;
-  }
-
-  .section,
-  .sectionAlt{ padding: 26px 0; }
-
-  .mediaCard{ padding: 10px; }
-
-  .cardTopsub{
-    height: clamp(180px, 55vw, 260px);
-    border-radius: 16px;
-  }
+/* =========================
+   404 small helpers
+========================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(11,18,34,0.08);
+  border: 1px solid rgba(11,18,34,0.14);
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  margin-bottom: 12px;
 }
 
-/* RTL improvements */
-[dir="rtl"] .bullets{
-  padding-left: 0;
-  padding-right: 18px;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
 }
-[dir="rtl"] .timeline li{ flex-direction: row-reverse; }
-[dir="rtl"] .stepText{ text-align: right; }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
+/* =========================
+   Mobile tweaks
+========================= */
+@media (max-width: 768px) {
+  .page { padding-top: 70px; }
+  .hero { padding: 44px 0 34px; }
+  .heroSmall { padding: 38px 0 20px; }
+}
+
+@media (max-width: 480px) {
+  .cardTop { height: clamp(180px, 56vw, 230px); }
+}
+
+/* =========================
+   Reduced motion + mobile lite mode
+========================= */
+@media (prefers-reduced-motion: reduce) {
   .btnPrimary,
   .btnGhost,
-  .card,
-  .cardBtn,
-  .backArrow{
+  .card {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .btnPrimary,
+  .btnGhost,
+  .card {
     transition: none !important;
   }
 }

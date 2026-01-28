@@ -447,7 +447,12 @@
 
 @media (max-width: 768px){
   .processSection{ padding: var(--spacing-3xl) 0; }
-  .container{ padding: 0 var(--spacing-md); }
+  .container{
+    width: 97%;
+    max-width: 97%;
+    padding: 0;
+    margin: 0 auto;
+  }
 
   .steps{
     grid-template-columns: 1fr;

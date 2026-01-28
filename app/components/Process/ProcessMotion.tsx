@@ -2,12 +2,24 @@
 
 import { useEffect } from "react";
 
-type Props = { motionKey: string };
+type Ids = {
+  section: string;
+  header: string;
+  line: string;
+  steps: string;
+  float: string;
+
+  title: string;
+  subtitle: string;
+
+  s1t: string; s1d: string;
+  s2t: string; s2d: string;
+  s3t: string; s3d: string;
+  s4t: string; s4d: string;
+};
 
 function getMotionFlags() {
-  if (typeof window === "undefined" || !window.matchMedia) {
-    return { reduced: false, lite: false };
-  }
+  if (typeof window === "undefined" || !window.matchMedia) return { reduced: false, lite: false };
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const lite =
     window.matchMedia("(max-width: 768px)").matches ||
@@ -21,16 +33,18 @@ function resolveMod<T = any>(m: any, key?: string): T {
   return m.default ?? m;
 }
 
-export default function ProcessMotion({ motionKey }: Props) {
+export default function ProcessEnhance({ ids }: { ids: Ids }) {
   useEffect(() => {
-    const root = document.querySelector<HTMLElement>("[data-process-root]");
+    const root = document.getElementById(ids.section);
     if (!root) return;
 
     const { reduced, lite } = getMotionFlags();
-    if (reduced) return; // fully skip
-    // in lite we can still show content without heavy triggers
-    // (we’ll just not init GSAP in lite)
-    if (lite) return;
+    if (reduced || lite) {
+      // ✅ Ensure floating car doesn't stay at opacity 0 on desktop if GSAP skipped
+      const car = document.getElementById(ids.float);
+      if (car) car.style.opacity = "0.12";
+      return;
+    }
 
     let io: IntersectionObserver | null = null;
     let cleanup: (() => void) | null = null;
@@ -39,7 +53,6 @@ export default function ProcessMotion({ motionKey }: Props) {
     const init = async () => {
       const gsapMod = await import("gsap");
       const stMod = await import("gsap/ScrollTrigger");
-
       if (cancelled) return;
 
       const gsap = resolveMod(gsapMod, "gsap");
@@ -48,23 +61,21 @@ export default function ProcessMotion({ motionKey }: Props) {
       gsap.registerPlugin(ScrollTrigger);
       ScrollTrigger.config({ ignoreMobileResize: true });
 
-      const header = root.querySelector<HTMLElement>("[data-process-header]");
-      const line = root.querySelector<HTMLElement>("[data-process-line]");
-      const floatCar = root.querySelector<HTMLElement>("[data-process-float]");
-      const steps = Array.from(
-        root.querySelectorAll<HTMLElement>("[data-process-step]")
-      );
-      const headerBits = Array.from(
-        root.querySelectorAll<HTMLElement>("[data-process-animate]")
-      );
+      const headerBits: HTMLElement[] = [
+        document.getElementById(ids.title) as HTMLElement | null,
+        document.getElementById(ids.subtitle) as HTMLElement | null,
+      ].filter(Boolean) as HTMLElement[];
+
+      const line = document.getElementById(ids.line) as HTMLElement | null;
+      const floatCar = document.getElementById(ids.float) as HTMLElement | null;
+      const stepsWrap = document.getElementById(ids.steps);
+      const steps = stepsWrap ? Array.from(stepsWrap.children) as HTMLElement[] : [];
 
       const clear = (els: HTMLElement[]) => {
         if (!els.length) return;
         try {
           gsap.set(els, { clearProps: "opacity,transform,visibility" });
-        } catch {
-          // ignore
-        }
+        } catch {}
       };
 
       clear(headerBits);
@@ -88,13 +99,6 @@ export default function ProcessMotion({ motionKey }: Props) {
             headerBits,
             { autoAlpha: 0, y: 22 },
             { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.08 },
-            0
-          );
-        } else if (header) {
-          tl.fromTo(
-            header,
-            { autoAlpha: 0, y: 22 },
-            { autoAlpha: 1, y: 0, duration: 0.55 },
             0
           );
         }
@@ -128,30 +132,18 @@ export default function ProcessMotion({ motionKey }: Props) {
       }, root);
 
       const raf = requestAnimationFrame(() => {
-        try {
-          ScrollTrigger.refresh();
-        } catch {
-          // ignore
-        }
+        try { ScrollTrigger.refresh(); } catch {}
       });
 
       cleanup = () => {
         cancelAnimationFrame(raf);
-
         try {
           ScrollTrigger.getAll().forEach((st: any) => {
             const trig = st?.trigger as Element | null;
             if (trig && root.contains(trig)) st.kill(false);
           });
-        } catch {
-          // ignore
-        }
-
-        try {
-          ctx.revert();
-        } catch {
-          // ignore
-        }
+        } catch {}
+        try { ctx.revert(); } catch {}
 
         clear(headerBits);
         clear(steps);
@@ -160,7 +152,7 @@ export default function ProcessMotion({ motionKey }: Props) {
       };
     };
 
-    // ✅ only load when near viewport
+    // ✅ only load GSAP when close to viewport
     io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
@@ -178,7 +170,7 @@ export default function ProcessMotion({ motionKey }: Props) {
       io?.disconnect();
       cleanup?.();
     };
-  }, [motionKey]);
+  }, [ids]);
 
   return null;
 }

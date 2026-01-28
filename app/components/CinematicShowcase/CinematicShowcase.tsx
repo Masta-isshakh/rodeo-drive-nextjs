@@ -1,163 +1,93 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { useMemo, useRef } from "react";
 import styles from "./CinematicShowcase.module.css";
-import { useI18n } from "../../lib/i18n";
 import Image from "next/image";
 
-const CinematicShowcaseMotion = dynamic(() => import("./CinematiqueShowcaseClient"), {
-  ssr: false,
-  loading: () => null,
-});
-
-function safeText(value: unknown, fallback: string) {
-  return typeof value === "string" && value.trim() ? value : fallback;
-}
+import CinematicShowcaseText from "./CinematiqueShowcaseClient";
+import CinematicShowcaseEnhance from "./CinematiqueShowcaseEnhance";
 
 export default function CinematicShowcase() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-
-  const carsNumRef = useRef<HTMLDivElement>(null);
-  const clientsNumRef = useRef<HTMLDivElement>(null);
-  const yearsNumRef = useRef<HTMLDivElement>(null);
-  const ratingNumRef = useRef<HTMLDivElement>(null);
-
-  // ✅ KEEP your translation method as-is
-  const { t } = useI18n();
-
-  const labels = useMemo(() => {
-    const cs = (t as any)?.cinematicShowcase ?? {};
-    return {
-      title: safeText(cs.title, "Excellence in Every Detail"),
-      subtitle: safeText(cs.subtitle, "Experience automotive perfection through our signature services"),
-      premiumDetailingTitle: safeText(cs.premiumDetailingTitle, "Premium Detailing"),
-      premiumDetailingDesc: safeText(cs.premiumDetailingDesc, "Meticulous care for every surface."),
-      ceramicCoatingTitle: safeText(cs.ceramicCoatingTitle, "Ceramic Coating"),
-      ceramicCoatingDesc: safeText(cs.ceramicCoatingDesc, "Long-lasting brilliance and durability."),
-      paintCorrectionTitle: safeText(cs.paintCorrectionTitle, "Paint Correction"),
-      paintCorrectionDesc: safeText(cs.paintCorrectionDesc, "Eliminate imperfections for a mirror finish."),
-      interiorLuxuryTitle: safeText(cs.interiorLuxuryTitle, "Interior Luxury"),
-      interiorLuxuryDesc: safeText(cs.interiorLuxuryDesc, "Deep clean and premium leather care."),
-      carsDetailedLabel: safeText(cs.carsDetailedLabel, "Cars Detailed"),
-      happyClientsLabel: safeText(cs.happyClientsLabel, "Happy Clients"),
-      yearsExperienceLabel: safeText(cs.yearsExperienceLabel, "Years Experience"),
-      averageRatingLabel: safeText(cs.averageRatingLabel, "Average Rating"),
-    };
-  }, [t]);
-
-  // Small key to re-init animations if language changes
-  const motionKey = useMemo(
-    () =>
-      [
-        labels.title,
-        labels.subtitle,
-        labels.premiumDetailingTitle,
-        labels.ceramicCoatingTitle,
-        labels.paintCorrectionTitle,
-        labels.interiorLuxuryTitle,
-        labels.carsDetailedLabel,
-        labels.happyClientsLabel,
-        labels.yearsExperienceLabel,
-        labels.averageRatingLabel,
-      ].join("|"),
-    [labels]
-  );
+  const ids = {
+    section: "cs-section",
+    title: "cs-title",
+    subtitle: "cs-subtitle",
+    cards: "cs-cards",
+    stats: "cs-stats",
+    cars: "cs-cars",
+    clients: "cs-clients",
+    years: "cs-years",
+    rating: "cs-rating",
+  } as const;
 
   return (
-    <section className={styles.showcase} ref={sectionRef}>
-      {/* ✅ GSAP code is moved out + code-split + lazy-loaded */}
-      <CinematicShowcaseMotion
-        motionKey={motionKey}
-        sectionRef={sectionRef}
-        titleRef={titleRef}
-        subtitleRef={subtitleRef}
-        cardsContainerRef={cardsContainerRef}
-        statsRef={statsRef}
-        carsNumRef={carsNumRef}
-        clientsNumRef={clientsNumRef}
-        yearsNumRef={yearsNumRef}
-        ratingNumRef={ratingNumRef}
-      />
+    <section className={styles.showcase} id={ids.section}>
+      {/* ✅ Client: translation injection only (same concept, very small JS) */}
+      <CinematicShowcaseText ids={ids} />
 
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title} ref={titleRef}>
-            {labels.title}
-          </h2>
-          <p className={styles.subtitle} ref={subtitleRef}>
-            {labels.subtitle}
-          </p>
+          {/* Text will be injected by CinematicShowcaseText */}
+          <h2 className={styles.title} id={ids.title} />
+          <p className={styles.subtitle} id={ids.subtitle} />
         </div>
 
-        <div className={styles.cardsGrid} ref={cardsContainerRef}>
+        <div className={styles.cardsGrid} id={ids.cards}>
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
               <Image src="/10.avif" alt="" width={44} height={44} priority={false} />
             </div>
-            <h3 className={styles.cardTitle}>{labels.premiumDetailingTitle}</h3>
-            <p className={styles.cardDesc}>{labels.premiumDetailingDesc}</p>
+            <h3 className={styles.cardTitle} data-k="premiumDetailingTitle" />
+            <p className={styles.cardDesc} data-k="premiumDetailingDesc" />
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
               <Image src="/11.avif" alt="" width={44} height={44} priority={false} />
             </div>
-            <h3 className={styles.cardTitle}>{labels.ceramicCoatingTitle}</h3>
-            <p className={styles.cardDesc}>{labels.ceramicCoatingDesc}</p>
+            <h3 className={styles.cardTitle} data-k="ceramicCoatingTitle" />
+            <p className={styles.cardDesc} data-k="ceramicCoatingDesc" />
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
               <Image src="/12.avif" alt="" width={44} height={44} priority={false} />
             </div>
-            <h3 className={styles.cardTitle}>{labels.paintCorrectionTitle}</h3>
-            <p className={styles.cardDesc}>{labels.paintCorrectionDesc}</p>
+            <h3 className={styles.cardTitle} data-k="paintCorrectionTitle" />
+            <p className={styles.cardDesc} data-k="paintCorrectionDesc" />
           </div>
 
           <div className={styles.card}>
             <div className={styles.cardIcon} aria-hidden="true">
               <Image src="/13.avif" alt="" width={44} height={44} priority={false} />
             </div>
-            <h3 className={styles.cardTitle}>{labels.interiorLuxuryTitle}</h3>
-            <p className={styles.cardDesc}>{labels.interiorLuxuryDesc}</p>
+            <h3 className={styles.cardTitle} data-k="interiorLuxuryTitle" />
+            <p className={styles.cardDesc} data-k="interiorLuxuryDesc" />
           </div>
         </div>
 
-        <div className={styles.stats} ref={statsRef}>
+        <div className={styles.stats} id={ids.stats}>
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={carsNumRef}>
-              0+
-            </div>
-            <div className={styles.statLabel}>{labels.carsDetailedLabel}</div>
+            <div className={styles.statNumber} id={ids.cars}>0+</div>
+            <div className={styles.statLabel} data-k="carsDetailedLabel" />
           </div>
 
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={clientsNumRef}>
-              0+
-            </div>
-            <div className={styles.statLabel}>{labels.happyClientsLabel}</div>
+            <div className={styles.statNumber} id={ids.clients}>0+</div>
+            <div className={styles.statLabel} data-k="happyClientsLabel" />
           </div>
 
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={yearsNumRef}>
-              0+
-            </div>
-            <div className={styles.statLabel}>{labels.yearsExperienceLabel}</div>
+            <div className={styles.statNumber} id={ids.years}>0+</div>
+            <div className={styles.statLabel} data-k="yearsExperienceLabel" />
           </div>
 
           <div className={styles.statItem}>
-            <div className={styles.statNumber} ref={ratingNumRef}>
-              0
-            </div>
-            <div className={styles.statLabel}>{labels.averageRatingLabel}</div>
+            <div className={styles.statNumber} id={ids.rating}>0</div>
+            <div className={styles.statLabel} data-k="averageRatingLabel" />
           </div>
         </div>
       </div>
+
+      {/* ✅ Client: GSAP/ScrollTrigger lazy-loaded only when near viewport */}
+      <CinematicShowcaseEnhance ids={ids} />
     </section>
   );
 }

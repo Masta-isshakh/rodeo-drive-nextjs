@@ -5,6 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./ServicesHighlight.module.css";
 import { useI18n } from "../../lib/i18n";
+import type { getTranslation } from "../../lib/translations";
+
+type T = ReturnType<typeof getTranslation>;
 
 type Service = {
   title: string;
@@ -31,6 +34,7 @@ function getMotionFlags() {
 
 export default function ServicesHighlight() {
   const { t } = useI18n();
+
   const sectionRef = useRef<HTMLElement>(null);
 
   const services: Service[] = useMemo(() => {
@@ -83,11 +87,8 @@ export default function ServicesHighlight() {
     if (!root) return;
 
     const { reduced, lite } = getMotionFlags();
-
-    // Always mark ready to enable CSS reveal system
     root.classList.add(styles.ready);
 
-    // Reduced or Lite mode: show everything instantly (no observers)
     if (reduced || lite) {
       const items = root.querySelectorAll<HTMLElement>("[data-reveal]");
       items.forEach((el) => el.classList.add(styles.in));
@@ -102,25 +103,22 @@ export default function ServicesHighlight() {
           io.unobserve(entry.target);
         }
       },
-      { root: null, threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
     );
 
     const targets = root.querySelectorAll<HTMLElement>("[data-reveal]");
     targets.forEach((el) => io.observe(el));
 
-    return () => {
-      io.disconnect();
-    };
+    return () => io.disconnect();
   }, []);
 
   return (
     <section className={styles.section} ref={sectionRef}>
       <div className={styles.container}>
-        {/* Header row */}
         <header className={styles.header} data-reveal>
           <div className={styles.headerLeft}>
-            <p className={styles.kicker}>{t.services.subtitle}</p>
-            <h2 className={styles.title}>{t.services.title}</h2>
+            <p className={styles.kicker}>{t?.services?.subtitle ?? "Comprehensive automotive care solutions"}</p>
+            <h2 className={styles.title}>{t?.services?.title ?? "Premium Services"}</h2>
             <p className={styles.lead}>
               Precision. Protection. Performance — engineered finishes for Qatar’s roads and sun.
             </p>
@@ -128,10 +126,8 @@ export default function ServicesHighlight() {
 
           <div className={styles.headerRight}>
             <Link href="/services" className={styles.primaryCta}>
-              {t.services.viewAll}
-              <span className={styles.ctaArrow} aria-hidden="true">
-                →
-              </span>
+              {t?.services?.viewAll ?? "View All Services"}
+              <span className={styles.ctaArrow} aria-hidden="true">→</span>
             </Link>
 
             <div className={styles.meta}>
@@ -153,7 +149,6 @@ export default function ServicesHighlight() {
           </div>
         </header>
 
-        {/* Showcase grid */}
         <div className={styles.grid} data-reveal>
           {services.map((s, i) => (
             <article
@@ -165,7 +160,7 @@ export default function ServicesHighlight() {
                   src={s.image}
                   alt={s.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 97vw, 33vw"
                   className={styles.image}
                   priority={false}
                   loading="lazy"
@@ -184,22 +179,17 @@ export default function ServicesHighlight() {
 
                 <div className={styles.actions}>
                   <Link href="/services" className={styles.link}>
-                    {t.services.learnMore}
-                    <span className={styles.arrow} aria-hidden="true">
-                      →
-                    </span>
+                    {t?.services?.learnMore ?? "Learn More"}
+                    <span className={styles.arrow} aria-hidden="true">→</span>
                   </Link>
 
-                  <span className={styles.pill} aria-hidden="true">
-                    Doha • Qatar
-                  </span>
+                  <span className={styles.pill} aria-hidden="true">Doha • Qatar</span>
                 </div>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Bottom CTA */}
         <div className={styles.bottomRow} data-reveal>
           <div className={styles.bottomLine} />
           <p className={styles.bottomText}>
@@ -207,9 +197,7 @@ export default function ServicesHighlight() {
           </p>
           <Link href="/contact" className={styles.secondaryCta}>
             Contact
-            <span className={styles.ctaArrow} aria-hidden="true">
-              →
-            </span>
+            <span className={styles.ctaArrow} aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

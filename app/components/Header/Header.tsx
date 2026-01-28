@@ -3,15 +3,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
 import styles from "./Header.module.css";
 import { useI18n } from "../../lib/i18n";
 import Image from "next/image";
 import GoogleReviewsBadge from "@/app/components/GoogleReviewsBadge/GoogleReviewsBadge";
 import { SITE } from "@/app/config/site";
+import { useRouter } from "next/navigation";
+
 // supprime: import { MessageCircleMore } from "lucide-react";
 
 export default function Header() {
+  const router = useRouter();
+
   const pathname = usePathname();
   const { language, setLanguage, t } = useI18n();
 
@@ -23,6 +26,8 @@ export default function Header() {
   const logoRef = useRef<HTMLAnchorElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
+
+  
 
   type NavItem = { label: string; href: string };
 
@@ -70,29 +75,25 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   // GSAP intro (safe)
-  useEffect(() => {
-    if (!rootRef.current) return;
+useEffect(() => {
+  if (!rootRef.current) return;
 
-    const ctx = gsap.context(() => {
+  let ctx: any;
+
+  (async () => {
+    const gsapMod = await import("gsap");
+    const gsap = gsapMod.default;
+
+    ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       if (headerRef.current) {
-        tl.fromTo(
-          headerRef.current,
-          { y: -80, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7 }
-        );
+        tl.fromTo(headerRef.current, { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 });
       }
 
       if (logoRef.current) {
-        tl.fromTo(
-          logoRef.current,
-          { x: -30, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.55 },
-          "-=0.35"
-        );
+        tl.fromTo(logoRef.current, { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55 }, "-=0.35");
 
-        // Subtle floating for logo
         gsap.to(logoRef.current, {
           y: "+=2",
           duration: 2.6,
@@ -104,27 +105,19 @@ export default function Header() {
 
       const navItemsEls = navRef.current?.querySelectorAll("li");
       if (navItemsEls?.length) {
-        tl.fromTo(
-          navItemsEls,
-          { y: -12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.35, stagger: 0.06 },
-          "-=0.25"
-        );
+        tl.fromTo(navItemsEls, { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.06 }, "-=0.25");
       }
 
       const actionChildren = actionsRef.current?.children;
       if (actionChildren?.length) {
-        tl.fromTo(
-          actionChildren,
-          { scale: 0.94, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.35, stagger: 0.06 },
-          "-=0.2"
-        );
+        tl.fromTo(actionChildren, { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, stagger: 0.06 }, "-=0.2");
       }
     }, rootRef);
+  })();
 
-    return () => ctx.revert();
-  }, []);
+  return () => ctx?.revert?.();
+}, []);
+
 
   const phoneWa = SITE.whatsappUrl;
 
@@ -183,22 +176,25 @@ export default function Header() {
             </div>
 
             {/* ✅ Language is always in navbar on mobile (CSS will keep it visible) */}
-            <div className={styles.languageSwitch} aria-label="Language">
-              <button
-                className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
-                onClick={() => setLanguage("en")}
-                type="button"
-              >
-                EN
-              </button>
-              <button
-                className={`${styles.langButton} ${language === "ar" ? styles.active : ""}`}
-                onClick={() => setLanguage("ar")}
-                type="button"
-              >
-                AR
-              </button>
-            </div>
+<div className={styles.languageSwitch} aria-label="Language">
+  <button
+    className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
+    onClick={() => setLanguage("en")}
+    type="button"
+  >
+    EN
+  </button>
+  <button
+    className={`${styles.langButton} ${language === "ar" ? styles.active : ""}`}
+    onClick={() => setLanguage("ar")}
+    type="button"
+  >
+    AR
+  </button>
+</div>
+
+
+
 
             <Link className={styles.ctaButton} href="/book">
               {t.nav.bookNow}

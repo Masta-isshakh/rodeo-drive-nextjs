@@ -19,7 +19,16 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null);
 
-function safeGetStoredLang(): Language | null {
+function readCookieLang(): Language | null {
+  try {
+    const m = document.cookie.match(/(?:^|;\s*)lang=(en|ar)(?:;|$)/);
+    return (m?.[1] as Language) || null;
+  } catch {
+    return null;
+  }
+}
+
+function readStorageLang(): Language | null {
   try {
     const v = localStorage.getItem("lang");
     return v === "en" || v === "ar" ? v : null;
@@ -28,41 +37,40 @@ function safeGetStoredLang(): Language | null {
   }
 }
 
-function safeSetStoredLang(lang: Language) {
+function writeLang(lang: Language) {
   try {
     localStorage.setItem("lang", lang);
-  } catch {
-    // ignore
-  }
+  } catch {}
+  try {
+    document.cookie = `lang=${lang}; path=/; max-age=${60 * 60 * 24 * 365}`;
+  } catch {}
+}
+
+function applyHtml(lang: Language) {
+  document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+  document.documentElement.setAttribute("lang", lang);
 }
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [language, _setLanguage] = useState<Language>("en");
+  const [language, _setLanguage] = useState<Language>(() => {
+    if (typeof window === "undefined") return "en";
+    return readStorageLang() ?? readCookieLang() ?? "en";
+  });
 
-  // 1) Charger la langue depuis localStorage (client-only)
   useEffect(() => {
-    const saved = safeGetStoredLang();
-    if (saved) _setLanguage(saved);
-  }, []);
-
-  // 2) Appliquer dir/lang + persister
-  useEffect(() => {
-    document.documentElement.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
-    document.documentElement.setAttribute("lang", language);
-    safeSetStoredLang(language);
+    applyHtml(language);
+    writeLang(language);
   }, [language]);
 
-  // Setter stable
   const setLanguage = useCallback((lang: Language) => {
+    // make persistence instant
+    writeLang(lang);
+    applyHtml(lang);
     _setLanguage(lang);
   }, []);
 
   const value = useMemo<I18nContextValue>(() => {
-    return {
-      language,
-      setLanguage,
-      t: getTranslation(language),
-    };
+    return { language, setLanguage, t: getTranslation(language) };
   }, [language, setLanguage]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

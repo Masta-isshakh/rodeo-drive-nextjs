@@ -296,7 +296,12 @@
 
 @media (max-width: 768px){
   .showcase{ padding: 76px 0; }
-  .container{ padding: 0 16px; }
+  .container{
+    width: 97%;
+    max-width: 97%;
+    padding: 0;
+    margin: 0 auto;
+  }
   .cardsGrid{ grid-template-columns: 1fr; }
 
   .stats{

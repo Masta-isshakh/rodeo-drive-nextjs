@@ -1,8 +1,8 @@
-// app/(site)/services/[...slugs]/ServiceRouteClient.tsx
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import styles from "./serviceRoute.module.css";
@@ -33,14 +33,13 @@ export default function ServiceRouteClient({
 }) {
   const i18n = useI18n() as any;
 
-  // ✅ This is the key: react to your header language button (i18n state)
+  // ✅ React to header language button
   const [runtimeLang, setRuntimeLang] = useState<Lang>("en");
 
   useEffect(() => {
     const fromI18n =
       i18n?.lang ?? i18n?.locale ?? i18n?.language ?? i18n?.currentLang ?? "";
-    const fromHtml =
-      typeof document !== "undefined" ? document.documentElement.lang : "";
+    const fromHtml = typeof document !== "undefined" ? document.documentElement.lang : "";
     const guess = String(fromI18n || fromHtml || "en").toLowerCase();
     setRuntimeLang(guess.startsWith("ar") ? "ar" : "en");
   }, [i18n?.lang, i18n?.locale, i18n?.language, i18n?.currentLang, i18n?.dir]);
@@ -51,10 +50,9 @@ export default function ServiceRouteClient({
   const serviceSlug = slugs?.[0];
   const subSlug = slugs?.[1];
 
-  // ✅ Your project has NO /[lang] in the URL for this route
   const baseServices = `/services`;
   const baseContact = `/contact`;
-  const baseBook = `/book`; // ✅ fixed (no //book)
+  const baseBook = `/book`;
   const baseHome = `/`;
 
   const motionKey = `${lang}|${slugs.join("/") || "root"}`;
@@ -89,6 +87,10 @@ export default function ServiceRouteClient({
       getQuote: isAr ? "احصل على عرض سعر" : "Get a Quote",
       notFoundHintServiceMissing: isAr ? "الخدمة غير موجودة." : "Service not found.",
       notFoundHintSubMissing: isAr ? "الخدمة الفرعية غير موجودة." : "Subservice not found.",
+      timeline: isAr ? "المدة" : "Timeline",
+      warranty: isAr ? "الضمان" : "Warranty",
+      location: isAr ? "الموقع" : "Location",
+      doha: isAr ? "الدوحة" : "Doha",
     };
   }, [lang]);
 
@@ -97,7 +99,7 @@ export default function ServiceRouteClient({
   // ---------------------------
   if (!serviceSlug) {
     return (
-      <main className={styles.page} dir={dir} data-sr-root>
+      <main className={styles.page} dir={dir} data-sr-root key={motionKey}>
         <ServiceRouteMotion motionKey={motionKey} />
         <div className={styles.container}>
           <div className={styles.card} role="status" aria-live="polite">
@@ -127,7 +129,7 @@ export default function ServiceRouteClient({
   // ---------------------------
   if (!service) {
     return (
-      <main className={styles.page} dir={dir} data-sr-root>
+      <main className={styles.page} dir={dir} data-sr-root key={motionKey}>
         <ServiceRouteMotion motionKey={motionKey} />
         <div className={styles.container}>
           <div className={styles.card} role="status" aria-live="polite">
@@ -162,11 +164,12 @@ export default function ServiceRouteClient({
     const afterSrc = `/proof/${proofKey}-after.avif`;
 
     return (
-      <main className={styles.page} dir={dir} data-sr-root>
+      <main className={styles.page} dir={dir} data-sr-root key={motionKey}>
         <ServiceRouteMotion motionKey={motionKey} />
 
-        <div className={styles.hero} data-sr-reveal>
-          <div className={styles.heroBg} />
+        {/* HERO */}
+        <header className={styles.hero} data-sr-reveal>
+          <div className={styles.heroBg} aria-hidden="true" />
           <div className={styles.container}>
             <Link
               href={baseServices}
@@ -188,7 +191,12 @@ export default function ServiceRouteClient({
                 <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href={baseBook}>
                   {ui.bookNow}
                 </Link>
-                <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                  href={SITE.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {ui.whatsapp}
                 </a>
                 <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={`tel:${SITE.phoneTel}`}>
@@ -197,12 +205,13 @@ export default function ServiceRouteClient({
               </div>
             </div>
           </div>
-        </div>
+        </header>
 
+        {/* OVERVIEW + SLIDER */}
         <section className={styles.section} data-sr-reveal>
           <div className={styles.container}>
             <div className={styles.split}>
-              <div>
+              <div className={styles.textCol}>
                 {overview.map((p, idx) => (
                   <p key={idx} className={styles.paragraph} data-sr-reveal-item>
                     {p}
@@ -210,7 +219,7 @@ export default function ServiceRouteClient({
                 ))}
               </div>
 
-              <div className={styles.mediaCard} data-sr-reveal-item>
+              <aside className={styles.mediaCard} data-sr-reveal-item>
                 <div className={styles.sliderWrap}>
                   <BeforeAfterSlider
                     beforeSrc={beforeSrc}
@@ -219,11 +228,12 @@ export default function ServiceRouteClient({
                     height={320}
                   />
                 </div>
-              </div>
+              </aside>
             </div>
           </div>
         </section>
 
+        {/* SUBSERVICES */}
         <section className={styles.sectionAlt} data-sr-reveal>
           <div className={styles.container}>
             <div className={styles.sectionHeader} data-sr-reveal-item>
@@ -234,12 +244,13 @@ export default function ServiceRouteClient({
               {service.subservices.map((s) => (
                 <article key={s.slug} className={styles.card} data-sr-reveal-item>
                   <div className={styles.cardTop}>
-                    <img
+                    <Image
                       src={s.heroImage || "/services/placeholder.avif"}
                       alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
                       className={styles.cardImg}
-                      loading="lazy"
-                      decoding="async"
+                      priority={false}
                     />
                   </div>
 
@@ -249,7 +260,6 @@ export default function ServiceRouteClient({
                       <p className={styles.cardText}>{getText(s.intro, lang)?.[0]}</p>
                     </div>
 
-                    {/* ✅ No /[lang] in your route */}
                     <Link className={styles.cardBtn} href={`/services/${service.slug}/${s.slug}`}>
                       {ui.viewDetails}
                     </Link>
@@ -268,7 +278,7 @@ export default function ServiceRouteClient({
   // ===========================
   if (!sub) {
     return (
-      <main className={styles.page} dir={dir} data-sr-root>
+      <main className={styles.page} dir={dir} data-sr-root key={motionKey}>
         <ServiceRouteMotion motionKey={motionKey} />
         <div className={styles.container}>
           <div className={styles.card} role="status" aria-live="polite">
@@ -303,10 +313,11 @@ export default function ServiceRouteClient({
   const timeline = getText(sub.timeline, lang);
 
   return (
-    <main className={styles.page} dir={dir} data-sr-root>
+    <main className={styles.page} dir={dir} data-sr-root key={motionKey}>
       <ServiceRouteMotion motionKey={motionKey} />
 
-      <div className={styles.heroSmall} data-sr-reveal>
+      {/* HERO SMALL */}
+      <header className={styles.heroSmall} data-sr-reveal>
         <div className={styles.container}>
           <Link
             href={`/services/${service.slug}`}
@@ -328,7 +339,12 @@ export default function ServiceRouteClient({
               <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href={baseBook}>
                 {ui.bookNow}
               </Link>
-              <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                href={SITE.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {ui.whatsapp}
               </a>
               <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={`tel:${SITE.phoneTel}`}>
@@ -337,12 +353,13 @@ export default function ServiceRouteClient({
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
+      {/* INTRO + IMAGE */}
       <section className={styles.section} data-sr-reveal>
         <div className={styles.container}>
           <div className={styles.split}>
-            <div>
+            <div className={styles.textCol}>
               {intro.slice(0, 2).map((p, idx) => (
                 <p key={idx} className={styles.paragraph} data-sr-reveal-item>
                   {p}
@@ -351,33 +368,35 @@ export default function ServiceRouteClient({
 
               <div className={styles.kpiRow} data-sr-reveal-item>
                 <div className={styles.kpi}>
-                  <span>{lang === "ar" ? "المدة" : "Timeline"}</span>
+                  <span>{ui.timeline}</span>
                   <strong>{timeline}</strong>
                 </div>
                 <div className={styles.kpi}>
-                  <span>{lang === "ar" ? "ضمان" : "Warranty"}</span>
+                  <span>{ui.warranty}</span>
                   <strong>{lang === "ar" ? "متوفر" : "Included"}</strong>
                 </div>
                 <div className={styles.kpi}>
-                  <span>{lang === "ar" ? "المنطقة" : "Location"}</span>
-                  <strong>{lang === "ar" ? "الدوحة" : "Doha"}</strong>
+                  <span>{ui.location}</span>
+                  <strong>{ui.doha}</strong>
                 </div>
               </div>
             </div>
 
-            <div className={styles.cardTopsub} data-sr-reveal-item>
-              <img
+            <aside className={styles.cardTopsub} data-sr-reveal-item>
+              <Image
                 src={sub.heroImage || "/services/placeholder.png"}
                 alt=""
+                fill
+                sizes="(max-width: 900px) 100vw, 40vw"
                 className={styles.cardImgsub}
-                loading="lazy"
-                decoding="async"
+                priority={false}
               />
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
+      {/* BEST FOR */}
       <section className={styles.sectionAlt} data-sr-reveal>
         <div className={styles.container}>
           <div className={styles.sectionHeader} data-sr-reveal-item>
@@ -393,6 +412,7 @@ export default function ServiceRouteClient({
         </div>
       </section>
 
+      {/* SPECS / INCLUDED / AFTERCARE */}
       <section className={styles.section} data-sr-reveal>
         <div className={styles.container}>
           <div className={styles.threeCols}>
@@ -426,6 +446,7 @@ export default function ServiceRouteClient({
         </div>
       </section>
 
+      {/* PROCESS */}
       <section className={styles.sectionAlt} data-sr-reveal>
         <div className={styles.container}>
           <h2 className={styles.h2} data-sr-reveal-item>
@@ -443,6 +464,7 @@ export default function ServiceRouteClient({
         </div>
       </section>
 
+      {/* FAQ + CTA */}
       <section className={styles.section} data-sr-reveal>
         <div className={styles.container}>
           <h2 className={styles.h2} data-sr-reveal-item>
@@ -466,7 +488,12 @@ export default function ServiceRouteClient({
               <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href={baseBook}>
                 {ui.getQuote}
               </Link>
-              <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                className={`${styles.btnGhost} ${styles.ctaBtn}`}
+                href={SITE.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {ui.whatsapp}
               </a>
             </div>
