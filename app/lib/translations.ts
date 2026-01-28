@@ -44,6 +44,26 @@ export const translations = {
         customization: 'Customization',
         repair: 'Repair',
       },
+      highlight: {
+  kicker: "Comprehensive automotive care solutions",
+  title: "Premium Services",
+  lead: "Precision. Protection. Performance — engineered finishes for Qatar’s roads and sun.",
+  viewAll: "View All Services",
+  learnMore: "Learn More",
+  signatureBadge: "Signature Service",
+  dohaPill: "Doha • Qatar",
+  bottomText: "Need the right package for your vehicle? Explore services and book a consultation.",
+  contactCta: "Contact",
+  meta: {
+    premiumTop: "Premium",
+    premiumBottom: "Materials",
+    expertTop: "Expert",
+    expertBottom: "Technicians",
+    luxuryTop: "Luxury",
+    luxuryBottom: "Finish",
+  },
+},
+
       list: {
         polish: 'Polish',
         detailing: 'Detailing services',
@@ -559,6 +579,28 @@ servicesGroups: {
         customization: 'التخصيص',
         repair: 'الإصلاح',
       },
+
+      highlight: {
+  kicker: "حلول متكاملة للعناية بالسيارات",
+  title: "خدماتنا المميزة",
+  lead: "دقة. حماية. أداء — تشطيبات مصممة لتناسب طرق قطر وحرارة الشمس.",
+  viewAll: "عرض جميع الخدمات",
+  learnMore: "اعرف المزيد",
+  signatureBadge: "خدمة مميزة",
+  dohaPill: "الدوحة • قطر",
+  bottomText: "تحتاج الباقة المناسبة لسيارتك؟ استكشف الخدمات واحجز استشارة.",
+  contactCta: "تواصل معنا",
+  meta: {
+    premiumTop: "مواد",
+    premiumBottom: "فاخرة",
+    expertTop: "فنيون",
+    expertBottom: "محترفون",
+    luxuryTop: "تشطيب",
+    luxuryBottom: "فاخر",
+  },
+},
+
+      
       list: {
         polish: 'تلميع',
         detailing: 'خدمات إصلاح الانبعاجات بدون دهان وخدمات الطلاء',
