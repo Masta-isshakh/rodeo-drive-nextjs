@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Providers from "./Provider";
+import NoImageDownload from "./components/NoImageDownload";
 
 export const metadata: Metadata = {
   title: "Rodeo Drive | Luxury Car Detailing in Doha, Qatar",
@@ -12,7 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <NoImageDownload />
+          {children}
+        </Providers>
       </body>
     </html>
   );
