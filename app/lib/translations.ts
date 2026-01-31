@@ -47,7 +47,7 @@ export const translations = {
       highlight: {
   kicker: "Comprehensive automotive care solutions",
   title: "Premium Services",
-  lead: "Precision. Protection. Performance — engineered finishes for Qatar’s roads and sun.",
+  lead: "Precision. Protection. Performance engineered finishes for Qatar’s roads and sun.",
   viewAll: "View All Services",
   learnMore: "Learn More",
   signatureBadge: "Signature Service",

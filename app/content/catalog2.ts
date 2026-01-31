@@ -39,13 +39,13 @@ export const CATALOG: { services: Service[] } = {
         "ar": "حماية الطلاء (PPF)"
       },
       "subtitle": {
-        "en": "Optically clear protection against chips, scratches, and sand abrasion—built for Doha driving.",
+        "en": "Optically clear protection against chips, scratches, and sand abrasion built for Doha driving.",
         "ar": "حماية شفافة ضد ضربات الحصى والخدوش وخدوش الرمال—مناسبة لقيادة الدوحة."
       },
       "heroImage": "/services/full-protection-ppf/hero.avif",
       "overview": {
         "en": [
-          "Optically clear protection against chips, scratches, and sand abrasion—built for Doha driving.",
+          "Optically clear protection against chips, scratches, and sand abrasion built for Doha driving.",
           "Explore options below and book an inspection for an accurate recommendation and quote."
         ],
         "ar": [
@@ -63,7 +63,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/full-body.avif",
           "intro": {
             "en": [
-              "Full-vehicle coverage designed to shield every painted panel from chips, scratches, and sand abrasion—ideal for brand-new cars and long-term ownership in Qatar.",
+              "Full-vehicle coverage designed to shield every painted panel from chips, scratches, and sand abrasion ideal for brand-new cars and long-term ownership in Qatar.",
               "Installed with precise panel alignment, wrapped edges where possible, and workshop-controlled finishing for a seamless, factory-clean look."
             ],
             "ar": [
@@ -172,7 +172,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -212,7 +212,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -222,7 +222,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -363,7 +363,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -403,7 +403,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -413,7 +413,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -446,7 +446,7 @@ export const CATALOG: { services: Service[] } = {
           "intro": {
             "en": [
               "Entry-level chip protection for key front areas, typically covering the bumper and targeted hood/fender sections where damage happens most.",
-              "Perfect for commuters and city driving—clean installs, minimal visual lines, and easy maintenance."
+              "Perfect for commuters and city driving clean installs, minimal visual lines, and easy maintenance."
             ],
             "ar": [
               "حماية أساسية من ضربات الحصى لأهم أجزاء الواجهة الأمامية، غالبًا للصدام وأجزاء محددة من غطاء المحرك/الرفارف حيث يحدث الضرر أكثر.",
@@ -554,7 +554,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -594,7 +594,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -604,7 +604,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -745,7 +745,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -785,7 +785,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -795,7 +795,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -936,7 +936,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -976,7 +976,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -986,7 +986,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -1018,7 +1018,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/satin-ppf.avif",
           "intro": {
             "en": [
-              "Satin PPF delivers a refined, semi-matte finish—more depth than matte, less glare than gloss—while keeping strong impact protection.",
+              "Satin PPF delivers a refined, semi-matte finish more depth than matte, less glare than gloss while keeping strong impact protection.",
               "Ideal for luxury cars seeking a modern, understated look with easy cleaning."
             ],
             "ar": [
@@ -1127,7 +1127,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -1167,7 +1167,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -1177,7 +1177,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -1319,7 +1319,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -1359,7 +1359,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -1369,7 +1369,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -1510,7 +1510,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -1550,7 +1550,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -1560,7 +1560,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -1701,7 +1701,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -1741,7 +1741,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -1751,7 +1751,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -1807,7 +1807,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/nanoceramic.avif",
           "intro": {
             "en": [
-              "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility—ideal for Qatar’s intense sun.",
+              "Premium nano-ceramic tint engineered for maximum heat rejection without sacrificing visibility ideal for Qatar’s intense sun.",
               "Reduces cabin temperature, glare, and UV exposure while keeping a clean, high-end appearance."
             ],
             "ar": [
@@ -1916,7 +1916,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -1956,7 +1956,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -1966,7 +1966,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -2107,7 +2107,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -2147,7 +2147,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -2157,7 +2157,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -2298,8 +2298,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -2338,7 +2338,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
                 "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
               }
             },
@@ -2348,7 +2348,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
                 "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
@@ -2380,11 +2380,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/sunroof.avif",
           "intro": {
             "en": [
-              "Specialized tint for sunroofs and panoramic glass to cut heat and glare from above—improving comfort for front and rear passengers.",
+              "Specialized tint for sunroofs and panoramic glass to cut heat and glare from above improving comfort for front and rear passengers.",
               "Helps protect the headliner and interior trims from UV damage while maintaining a premium look."
             ],
             "ar": [
-              "تظليل مخصص لفتحات السقف والسقف البانورامي لتقليل الحرارة والوهج من الأعلى—لراحة أفضل للركاب.",
+              "تظليل مخصص لفتحات السقف والسقف البانورامي لتقليل الحرارة والوهج من الأعلى لراحة أفضل للركاب.",
               "يساعد على حماية سقف السيارة والديكورات الداخلية من UV مع مظهر فاخر."
             ]
           },
@@ -2489,8 +2489,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -2529,8 +2529,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -2539,8 +2539,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -2572,11 +2572,11 @@ export const CATALOG: { services: Service[] } = {
           "intro": {
             "en": [
               "Professional tint removal that protects defroster lines and trims, followed by clean reinstallation with a fresh finish.",
-              "Best for bubbling, purple tint, poor visibility, or non-compliant film—restored clarity and comfort."
+              "Best for bubbling, purple tint, poor visibility, or non-compliant film restored clarity and comfort."
             ],
             "ar": [
               "إزالة تظليل احترافية تحافظ على خطوط التسخين والديكورات، ثم إعادة تركيب نظيفة بنتيجة جديدة.",
-              "مناسب للتظليل المتقشر أو المتغير اللون أو ضعف الرؤية أو عدم المطابقة—وضوح وراحة أفضل."
+              "مناسب للتظليل المتقشر أو المتغير اللون أو ضعف الرؤية أو عدم المطابقة وضوح وراحة أفضل."
             ]
           },
           "bestFor": {
@@ -2680,8 +2680,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -2720,8 +2720,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -2730,8 +2730,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -2786,11 +2786,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/exterior-detailing.avif",
           "intro": {
             "en": [
-              "Multi-step exterior detailing and paint correction to remove swirls, haze, and defects—restoring true gloss and clarity.",
+              "Multi-step exterior detailing and paint correction to remove swirls, haze, and defects restoring true gloss and clarity.",
               "The ideal foundation before ceramic/graphene coating for maximum durability and a flawless finish."
             ],
             "ar": [
-              "تنظيف خارجي متقدم وتصحيح طلاء متعدد المراحل لإزالة الدوامات والبهتان والعيوب—لاستعادة اللمعة والوضوح.",
+              "تنظيف خارجي متقدم وتصحيح طلاء متعدد المراحل لإزالة الدوامات والبهتان والعيوب لاستعادة اللمعة والوضوح.",
               "أساس مثالي قبل تطبيق السيراميك/الجرافين لتحقيق أفضل متانة ونتيجة مثالية."
             ]
           },
@@ -2895,8 +2895,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -2945,8 +2945,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -2977,7 +2977,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/interior-deep.avif",
           "intro": {
             "en": [
-              "Deep interior cleaning for seats, carpets, plastics, and vents—removing stains, odors, and embedded dust safely.",
+              "Deep interior cleaning for seats, carpets, plastics, and vents removing stains, odors, and embedded dust safely.",
               "Includes conditioning where needed for a fresh, hygienic cabin feel suited to Doha’s dusty environment."
             ],
             "ar": [
@@ -3086,8 +3086,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3126,8 +3126,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -3136,8 +3136,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3277,8 +3277,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3317,8 +3317,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -3327,8 +3327,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3468,8 +3468,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3508,8 +3508,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -3518,8 +3518,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3574,7 +3574,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/smart-paint2.avif",
           "intro": {
             "en": [
-              "Localized paint repair for scuffs, scratches, and bumper damage—minimizing repaint area while restoring a clean OEM look.",
+              "Localized paint repair for scuffs, scratches, and bumper damage minimizing repaint area while restoring a clean OEM look.",
               "Fast turnaround with precise blending to match surrounding paint and preserve vehicle value."
             ],
             "ar": [
@@ -3683,8 +3683,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3723,8 +3723,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -3733,8 +3733,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3765,11 +3765,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/paintoriginall.avif",
           "intro": {
             "en": [
-              "Peelable rubberized paint for temporary color change or protection—reversible when you want to return to original paint.",
+              "Peelable rubberized paint for temporary color change or protection reversible when you want to return to original paint.",
               "Great for styling, seasonal looks, or protecting panels without permanent modifications."
             ],
             "ar": [
-              "طلاء مطاطي قابل للإزالة لتغيير اللون مؤقتًا أو للحماية—يمكن نزعه والعودة للون الأصلي متى ما رغبت.",
+              "طلاء مطاطي قابل للإزالة لتغيير اللون مؤقتًا أو للحماية يمكن نزعه والعودة للون الأصلي متى ما رغبت.",
               "مناسب للتغيير الشكلي أو الحماية بدون تعديل دائم على السيارة."
             ]
           },
@@ -3874,8 +3874,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3914,8 +3914,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -3924,8 +3924,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -3957,11 +3957,11 @@ export const CATALOG: { services: Service[] } = {
           "intro": {
             "en": [
               "Full-panel or full-body repaint with professional preparation and controlled application to restore a uniform, premium finish.",
-              "Ideal for faded paint, multiple panel damage, or a complete refresh—quality-focused and color-consistent."
+              "Ideal for faded paint, multiple panel damage, or a complete refresh quality-focused and color-consistent."
             ],
             "ar": [
               "إعادة رش كاملة للوحة أو للسيارة مع تجهيز احترافي وتطبيق مضبوط لاستعادة نتيجة موحدة وفاخرة.",
-              "مناسب للطلاء الباهت أو الأضرار المتعددة أو تجديد كامل—مع جودة عالية وتناسق لون."
+              "مناسب للطلاء الباهت أو الأضرار المتعددة أو تجديد كامل مع جودة عالية وتناسق لون."
             ]
           },
           "bestFor": {
@@ -4065,8 +4065,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4105,8 +4105,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -4115,8 +4115,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4147,11 +4147,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/pdr-paint.avif",
           "intro": {
             "en": [
-              "Paintless Dent Repair (PDR) removes dents from panels without repainting—preserving the original factory paint whenever possible.",
+              "Paintless Dent Repair (PDR) removes dents from panels without repainting preserving the original factory paint whenever possible.",
               "Perfect for door dings and small impacts with faster service and excellent cosmetic results."
             ],
             "ar": [
-              "إصلاح الصدمات بدون رش (PDR) يزيل الانبعاجات دون إعادة طلاء—مع الحفاظ على طلاء المصنع قدر الإمكان.",
+              "إصلاح الصدمات بدون رش (PDR) يزيل الانبعاجات دون إعادة طلاء مع الحفاظ على طلاء المصنع قدر الإمكان.",
               "مناسب لنقرات الأبواب والصدمات الخفيفة مع وقت أسرع ونتائج شكلية ممتازة."
             ]
           },
@@ -4256,8 +4256,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4296,8 +4296,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -4306,8 +4306,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4447,8 +4447,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4487,8 +4487,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -4497,8 +4497,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4553,11 +4553,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/hand-wash.avif",
           "intro": {
             "en": [
-              "Safe hand wash using proper wash media and drying methods to reduce swirls—choose Basic for maintenance or Premium for extra finishing touches.",
+              "Safe hand wash using proper wash media and drying methods to reduce swirls choose Basic for maintenance or Premium for extra finishing touches.",
               "A clean, consistent wash routine that keeps your car presentable between detailing sessions."
             ],
             "ar": [
-              "غسيل يدوي آمن باستخدام أدوات وغسيل وتجفيف صحيح لتقليل الدوامات—اختر العادي للصيانة أو البريميوم لتفاصيل إضافية.",
+              "غسيل يدوي آمن باستخدام أدوات وغسيل وتجفيف صحيح لتقليل الدوامات اختر العادي للصيانة أو البريميوم لتفاصيل إضافية.",
               "روتين غسيل ثابت يحافظ على نظافة السيارة بين جلسات العناية."
             ]
           },
@@ -4662,8 +4662,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4702,8 +4702,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -4712,8 +4712,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4744,7 +4744,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/foam-wash.avif",
           "intro": {
             "en": [
-              "Thick snow-foam pre-wash that loosens dirt and sand before contact—reducing swirl risk in dusty conditions.",
+              "Thick snow-foam pre-wash that loosens dirt and sand before contact reducing swirl risk in dusty conditions.",
               "Ideal as a first step before a hand wash for a safer, more thorough clean."
             ],
             "ar": [
@@ -4853,8 +4853,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -4893,8 +4893,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -4903,8 +4903,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -5044,8 +5044,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -5084,8 +5084,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -5094,8 +5094,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -5235,8 +5235,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -5275,8 +5275,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -5285,8 +5285,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -5342,11 +5342,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/glass-polishing.avif",
           "intro": {
             "en": [
-              "Glass polishing to reduce wiper marks, water spots, and light scratches—improving visibility and overall appearance.",
+              "Glass polishing to reduce wiper marks, water spots, and light scratches improving visibility and overall appearance.",
               "Best paired with water-repellent treatment for smoother driving in rain and easier cleaning."
             ],
             "ar": [
-              "تلميع الزجاج لتقليل آثار المساحات وبقع الماء والخدوش الخفيفة—لرؤية أفضل ومظهر أنظف.",
+              "تلميع الزجاج لتقليل آثار المساحات وبقع الماء والخدوش الخفيفة لرؤية أفضل ومظهر أنظف.",
               "يفضل مع علاج طارد للماء لقيادة أسهل في المطر وتنظيف أسرع."
             ]
           },
@@ -5451,8 +5451,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -5491,8 +5491,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -5501,8 +5501,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -5533,7 +5533,7 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/water.avif",
           "intro": {
             "en": [
-              "Hydrophobic treatment that makes water bead and slide off the windshield—improving visibility at speed and reducing wiper chatter.",
+              "Hydrophobic treatment that makes water bead and slide off the windshield improving visibility at speed and reducing wiper chatter.",
               "Helps keep glass cleaner for longer and makes bug and dust removal easier."
             ],
             "ar": [
@@ -5642,8 +5642,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -5682,8 +5682,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -5692,8 +5692,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -5834,8 +5834,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -5874,8 +5874,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -5884,8 +5884,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -6025,8 +6025,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
-                "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "ar": "نعم كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
             {
@@ -6065,8 +6065,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -6075,8 +6075,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
@@ -6107,11 +6107,11 @@ export const CATALOG: { services: Service[] } = {
           "heroImage": "/extreme.avif",
           "intro": {
             "en": [
-              "Extreme-level windshield protection built for heavy highway use and harsh conditions—maximum resistance against pitting and impacts.",
+              "Extreme-level windshield protection built for heavy highway use and harsh conditions maximum resistance against pitting and impacts.",
               "Ideal for long-distance driving and high-speed roads, with careful installation for optical clarity."
             ],
             "ar": [
-              "حماية قصوى للزجاج الأمامي للطرق السريعة والظروف القاسية—أعلى مقاومة للتآكل والصدمات.",
+              "حماية قصوى للزجاج الأمامي للطرق السريعة والظروف القاسية أعلى مقاومة للتآكل والصدمات.",
               "مناسب للقيادة الطويلة والسرعات العالية مع تركيب دقيق للحفاظ على الوضوح."
             ]
           },
@@ -6216,7 +6216,7 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يوجد ضمان؟"
               },
               "a": {
-                "en": "Yes—every service includes warranty coverage; terms depend on the chosen option and scope.",
+                "en": "Yes every service includes warranty coverage; terms depend on the chosen option and scope.",
                 "ar": "نعم—كل خدمة تشمل ضمانًا؛ الشروط تختلف حسب الخيار والنطاق."
               }
             },
@@ -6256,8 +6256,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يمكن الإزالة أو التعديل لاحقًا؟"
               },
               "a": {
-                "en": "Where applicable, yes—procedures are performed with controlled methods to protect surfaces.",
-                "ar": "عند الإمكان نعم—تتم بطرق مدروسة لحماية السطح."
+                "en": "Where applicable, yes procedures are performed with controlled methods to protect surfaces.",
+                "ar": "عند الإمكان نعم تتم بطرق مدروسة لحماية السطح."
               }
             },
             {
@@ -6266,8 +6266,8 @@ export const CATALOG: { services: Service[] } = {
                 "ar": "هل يناسب حرارة قطر؟"
               },
               "a": {
-                "en": "Yes—our spec choices and process are designed around high heat and dust exposure.",
-                "ar": "نعم—نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
+                "en": "Yes our spec choices and process are designed around high heat and dust exposure.",
+                "ar": "نعم نختار المواصفات وطريقة التنفيذ بما يناسب الحرارة والغبار."
               }
             },
             {
