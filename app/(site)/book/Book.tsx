@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import styles from "./book.module.css";
+import { useI18n } from "../../lib/i18n";
 
 const MAX_BOOKINGS_PER_DAY = 10;
 
@@ -11,7 +12,7 @@ const MAX_BOOKINGS_PER_DAY = 10;
 const OPEN_TIME_24 = "09:00";
 const CLOSE_TIME_24 = "20:00";
 
-const OPEN_MINUTES = 9 * 60;   // 09:00
+const OPEN_MINUTES = 9 * 60; // 09:00
 const CLOSE_MINUTES = 20 * 60; // 20:00
 
 function formatLocalDateYYYYMMDD(d: Date) {
@@ -61,6 +62,15 @@ function toAmPm(time24: string) {
   return `${String(hour12).padStart(2, "0")}:${mm} ${period}`;
 }
 
+function safeText(value: unknown, fallback: string) {
+  return typeof value === "string" && value.trim() ? value : fallback;
+}
+
+const AR_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"] as const;
+function toArabicIndic(input: string) {
+  return input.replace(/\d/g, (d) => AR_DIGITS[Number(d)]);
+}
+
 type MultiSelectProps = {
   label: string;
   options: string[];
@@ -76,6 +86,46 @@ function MultiSelectDropdown({
   placeholder = "Select services (optional)",
   onChange,
 }: MultiSelectProps) {
+  const i18n = useI18n() as any;
+  const t = i18n?.t;
+
+  const [runtimeLang, setRuntimeLang] = React.useState<"en" | "ar">("en");
+  React.useEffect(() => {
+    const fromI18n =
+      i18n?.lang ??
+      i18n?.locale ??
+      i18n?.language ??
+      i18n?.currentLang ??
+      "";
+    const fromHtml =
+      typeof document !== "undefined" ? document.documentElement.lang : "";
+    const guess = String(fromI18n || fromHtml || "en").toLowerCase();
+    setRuntimeLang(guess.startsWith("ar") ? "ar" : "en");
+  }, [t, i18n?.lang, i18n?.locale, i18n?.language, i18n?.dir]);
+
+  const msT = useMemo(() => {
+    return (
+      (t as any)?.book?.multiSelect ??
+      (t as any)?.booking?.multiSelect ??
+      (t as any)?.appointment?.multiSelect ??
+      (t as any)?.pages?.book?.multiSelect ??
+      (t as any)?.pages?.booking?.multiSelect ??
+      {}
+    );
+  }, [t]);
+
+  const isAr = runtimeLang === "ar";
+  const l10nDigits = (s: string) => (isAr ? toArabicIndic(s) : s);
+
+  const ui = useMemo(() => {
+    return {
+      clear: safeText(msT?.clear, isAr ? "مسح" : "Clear"),
+      done: safeText(msT?.done, isAr ? "تم" : "Done"),
+      remove: safeText(msT?.remove, isAr ? "إزالة" : "Remove"),
+      selected: safeText(msT?.selected, isAr ? "تم اختيار" : "selected"),
+    };
+  }, [msT, isAr]);
+
   const [open, setOpen] = React.useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
@@ -103,7 +153,9 @@ function MultiSelectDropdown({
   const clearAll = () => onChange([]);
 
   const selectedText =
-    value.length === 0 ? placeholder : `${value.length} selected`;
+    value.length === 0
+      ? placeholder
+      : `${l10nDigits(String(value.length))} ${ui.selected}`;
 
   return (
     <div className={styles.msRoot} ref={rootRef}>
@@ -131,7 +183,7 @@ function MultiSelectDropdown({
               onClick={clearAll}
               disabled={value.length === 0}
             >
-              Clear
+              {ui.clear}
             </button>
 
             <button
@@ -139,7 +191,7 @@ function MultiSelectDropdown({
               className={styles.msDone}
               onClick={() => setOpen(false)}
             >
-              Done
+              {ui.done}
             </button>
           </div>
 
@@ -169,7 +221,7 @@ function MultiSelectDropdown({
               key={v}
               className={styles.msChip}
               onClick={() => toggleValue(v)}
-              title="Remove"
+              title={ui.remove}
             >
               {v} <span aria-hidden="true">×</span>
             </button>
@@ -183,17 +235,150 @@ function MultiSelectDropdown({
 export default function BookAppointment() {
   const client = useMemo(() => generateClient<Schema>(), []);
 
-  const serviceOptions = useMemo(
-    () => [
-      "Full Protection – PPF",
-      "Window Solar Film",
-      "Detailing & Coating",
-      "Paint & Repair Services",
-      "Car Wash Services",
-      "Windshield Services",
-    ],
-    []
-  );
+  const i18n = useI18n() as any;
+  const t = i18n?.t;
+
+  const [runtimeLang, setRuntimeLang] = useState<"en" | "ar">("en");
+  useEffect(() => {
+    const fromI18n =
+      i18n?.lang ??
+      i18n?.locale ??
+      i18n?.language ??
+      i18n?.currentLang ??
+      "";
+    const fromHtml =
+      typeof document !== "undefined" ? document.documentElement.lang : "";
+    const guess = String(fromI18n || fromHtml || "en").toLowerCase();
+    setRuntimeLang(guess.startsWith("ar") ? "ar" : "en");
+  }, [t, i18n?.lang, i18n?.locale, i18n?.language, i18n?.dir]);
+
+  const lang = runtimeLang;
+  const dir = lang === "ar" ? "rtl" : "ltr";
+  const isAr = lang === "ar";
+  const l10nDigits = (s: string) => (isAr ? toArabicIndic(s) : s);
+
+  const bookT = useMemo(() => {
+    return (
+      (t as any)?.book ??
+      (t as any)?.booking ??
+      (t as any)?.appointment ??
+      (t as any)?.pages?.book ??
+      (t as any)?.pages?.booking ??
+      (t as any)?.pages?.appointment ??
+      {}
+    );
+  }, [t]);
+
+  const copy = useMemo(() => {
+    const openClose = `${OPEN_TIME_24}–${CLOSE_TIME_24}`;
+    const openCloseL10n = l10nDigits(openClose);
+
+    return {
+      title: safeText(bookT?.title, isAr ? "احجز موعدًا" : "Book an Appointment"),
+
+      notePrefix: safeText(bookT?.notePrefix, isAr ? "ساعات الحجز:" : "Booking hours:"),
+      noteHours: safeText(bookT?.noteHours, openCloseL10n),
+      noteClosedOn: safeText(bookT?.noteClosedOn, isAr ? "مغلق يوم" : "Closed on"),
+      friday: safeText(bookT?.friday, isAr ? "الجمعة" : "Friday"),
+
+      successMessage: safeText(
+        bookT?.successMessage,
+        isAr
+          ? "شكرًا لك! تم حجز موعدك بنجاح. سيتواصل معك أحد فريق خدمة العملاء قريبًا."
+          : "Thank you! Your appointment has been booked successfully. One of our customer service will call you soon."
+      ),
+
+      // placeholders
+      phName: safeText(bookT?.phName, isAr ? "اسمك" : "Your Name"),
+      phEmail: safeText(bookT?.phEmail, isAr ? "بريدك الإلكتروني" : "Your Email"),
+      phPhone: safeText(bookT?.phPhone, isAr ? "رقم الهاتف" : "Phone Number"),
+      phCarModel: safeText(
+        bookT?.phCarModel,
+        isAr ? "موديل السيارة (مثال: لاندكروزر، BMW X5)" : "Car Model (e.g., Land Cruiser, BMW X5)"
+      ),
+
+      servicesLabel: safeText(bookT?.servicesLabel, isAr ? "الخدمات (اختياري)" : "Services (optional)"),
+      servicesPlaceholder: safeText(
+        bookT?.servicesPlaceholder,
+        isAr ? "اختر الخدمات (اختياري)" : "Select services (optional)"
+      ),
+
+      btnBooking: safeText(bookT?.btnBooking, isAr ? "جارٍ الحجز..." : "Booking..."),
+      btnBook: safeText(bookT?.btnBook, isAr ? "احجز" : "Book"),
+
+      // errors
+      errPastShort: safeText(
+        bookT?.errPastShort,
+        isAr ? "لا يمكنك الحجز في تاريخ سابق. الرجاء اختيار تاريخ قادم." : "You cannot book in the past. Please select a future date."
+      ),
+      errFridayShort: safeText(
+        bookT?.errFridayShort,
+        isAr ? "نحن مغلقون يوم الجمعة. الرجاء اختيار يوم آخر." : "We are closed on Friday. Please choose another day."
+      ),
+      errHours: safeText(
+        bookT?.errHours,
+        isAr
+          ? `ساعات الحجز من ${l10nDigits(OPEN_TIME_24)} إلى ${l10nDigits(CLOSE_TIME_24)}. الرجاء اختيار وقت صحيح.`
+          : `Booking hours are ${OPEN_TIME_24} to ${CLOSE_TIME_24}. Please select a valid time.`
+      ),
+
+      ruleChooseDate: safeText(bookT?.ruleChooseDate, isAr ? "يرجى اختيار التاريخ." : "Please choose a date."),
+      rulePast: safeText(
+        bookT?.rulePast,
+        isAr ? "لا يمكنك حجز موعد في تاريخ سابق. الرجاء اختيار تاريخ قادم." : "You cannot book an appointment in the past. Please select a future date."
+      ),
+      ruleFriday: safeText(
+        bookT?.ruleFriday,
+        isAr ? "نحن مغلقون يوم الجمعة. الرجاء اختيار يوم آخر." : "We are closed on Friday. Please choose another day."
+      ),
+
+      ruleChooseTime: safeText(bookT?.ruleChooseTime, isAr ? "يرجى اختيار الوقت." : "Please choose a time."),
+      ruleHours: safeText(
+        bookT?.ruleHours,
+        isAr
+          ? `ساعات الحجز من ${l10nDigits(OPEN_TIME_24)} إلى ${l10nDigits(CLOSE_TIME_24)}. الرجاء اختيار وقت صحيح.`
+          : `Booking hours are ${OPEN_TIME_24} to ${CLOSE_TIME_24}. Please select a valid time.`
+      ),
+
+      errFullyBooked: safeText(
+        bookT?.errFullyBooked,
+        isAr ? "عذرًا، هذا التاريخ ممتلئ بالكامل. الرجاء اختيار يوم آخر." : "Sorry, this date is fully booked. Please choose another day."
+      ),
+
+      errGeneric: safeText(
+        bookT?.errGeneric,
+        isAr ? "حدث خطأ أثناء الحجز، يرجى المحاولة مرة أخرى." : "Error while booking, please try again."
+      ),
+
+      na: safeText(bookT?.na, isAr ? "غير متوفر" : "N/A"),
+
+      // service options (fallbacks)
+      serviceOptionsEn: [
+        "Full Protection – PPF",
+        "Window Solar Film",
+        "Detailing & Coating",
+        "Paint & Repair Services",
+        "Car Wash Services",
+        "Windshield Services",
+      ],
+      serviceOptionsAr: [
+        "حماية كاملة – PPF",
+        "تظليل/حماية زجاج (سولار)",
+        "تفصيل وتلميع + طلاء حماية",
+        "دهان وإصلاحات",
+        "خدمات غسيل السيارات",
+        "خدمات الزجاج الأمامي",
+      ],
+    };
+  }, [bookT, isAr]);
+
+  const fromDictArray = (x: any) => (Array.isArray(x) ? x.filter(Boolean) : null);
+
+  const serviceOptions = useMemo(() => {
+    const fromDict = fromDictArray(bookT?.serviceOptions);
+    if (fromDict) return fromDict;
+    return isAr ? copy.serviceOptionsAr : copy.serviceOptionsEn;
+  }, [bookT, isAr, copy.serviceOptionsAr, copy.serviceOptionsEn]);
 
   const [form, setForm] = useState({
     name: "",
@@ -228,13 +413,13 @@ export default function BookAppointment() {
 
     if (isDateInPast(nextDate)) {
       setForm((prev) => ({ ...prev, date: "" }));
-      setErrorMsg("You cannot book in the past. Please select a future date.");
+      setErrorMsg(copy.errPastShort);
       return;
     }
 
     if (isFriday(nextDate)) {
       setForm((prev) => ({ ...prev, date: "" }));
-      setErrorMsg("We are closed on Friday. Please choose another day.");
+      setErrorMsg(copy.errFridayShort);
       return;
     }
 
@@ -249,7 +434,7 @@ export default function BookAppointment() {
 
     if (!isTimeInRange(nextTime)) {
       setForm((prev) => ({ ...prev, time: nextTime }));
-      setErrorMsg(`Booking hours are ${OPEN_TIME_24} to ${CLOSE_TIME_24}. Please select a valid time.`);
+      setErrorMsg(copy.errHours);
       return;
     }
 
@@ -269,12 +454,12 @@ export default function BookAppointment() {
   };
 
   const validateBusinessRules = () => {
-    if (!form.date) return "Please choose a date.";
-    if (isDateInPast(form.date)) return "You cannot book an appointment in the past. Please select a future date.";
-    if (isFriday(form.date)) return "We are closed on Friday. Please choose another day.";
+    if (!form.date) return copy.ruleChooseDate;
+    if (isDateInPast(form.date)) return copy.rulePast;
+    if (isFriday(form.date)) return copy.ruleFriday;
 
-    if (!form.time) return "Please choose a time.";
-    if (!isTimeInRange(form.time)) return `Booking hours are ${OPEN_TIME_24} to ${CLOSE_TIME_24}. Please select a valid time.`;
+    if (!form.time) return copy.ruleChooseTime;
+    if (!isTimeInRange(form.time)) return copy.ruleHours;
 
     return "";
   };
@@ -295,7 +480,7 @@ export default function BookAppointment() {
     try {
       const count = await getBookingsCountForDate(form.date);
       if (count >= MAX_BOOKINGS_PER_DAY) {
-        setErrorMsg("Sorry, this date is fully booked. Please choose another day.");
+        setErrorMsg(copy.errFullyBooked);
         setLoading(false);
         return;
       }
@@ -319,7 +504,7 @@ export default function BookAppointment() {
         body: JSON.stringify({
           ...form,
           time: timeAmPm,
-          servicesText: form.services.length ? form.services.join(", ") : "N/A",
+          servicesText: form.services.length ? form.services.join(", ") : copy.na,
         }),
       });
 
@@ -339,24 +524,26 @@ export default function BookAppointment() {
       });
     } catch (err: any) {
       console.error("Booking error:", err);
-      setErrorMsg(err?.message ?? "Error while booking, please try again.");
+      setErrorMsg(err?.message ?? copy.errGeneric);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={styles.appointmentContainer}>
-      <h1>Book an Appointment</h1>
+    <div className={styles.appointmentContainer} dir={dir} lang={lang}>
+      <h1>{copy.title}</h1>
 
       <div className={styles.note}>
-        Booking hours: <strong>09:00–20:00</strong>. Closed on <strong>Friday</strong>.
+        {copy.notePrefix}{" "}
+        <strong>
+          <bdi dir="ltr">{copy.noteHours}</bdi>
+        </strong>
+        . {copy.noteClosedOn} <strong>{copy.friday}</strong>.
       </div>
 
       {success && (
-        <div className={styles.successMessage}>
-          Thank you! Your appointment has been booked successfully. One of our customer service will call you soon.
-        </div>
+        <div className={styles.successMessage}>{copy.successMessage}</div>
       )}
 
       {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
@@ -365,7 +552,7 @@ export default function BookAppointment() {
         <input
           type="text"
           name="name"
-          placeholder="Your Name"
+          placeholder={copy.phName}
           value={form.name}
           onChange={handleInputChange}
           required
@@ -374,7 +561,7 @@ export default function BookAppointment() {
         <input
           type="email"
           name="email"
-          placeholder="Your Email"
+          placeholder={copy.phEmail}
           value={form.email}
           onChange={handleInputChange}
           required
@@ -383,7 +570,7 @@ export default function BookAppointment() {
         <input
           type="tel"
           name="phone"
-          placeholder="Phone Number"
+          placeholder={copy.phPhone}
           value={form.phone}
           onChange={handleInputChange}
           required
@@ -392,7 +579,7 @@ export default function BookAppointment() {
         <input
           type="text"
           name="carModel"
-          placeholder="Car Model (e.g., Land Cruiser, BMW X5)"
+          placeholder={copy.phCarModel}
           value={form.carModel}
           onChange={handleInputChange}
           required
@@ -400,11 +587,11 @@ export default function BookAppointment() {
 
         <div className={styles.servicesBlock}>
           <MultiSelectDropdown
-            label="Services (optional)"
+            label={copy.servicesLabel}
             options={serviceOptions}
             value={form.services}
             onChange={(next) => setForm((prev) => ({ ...prev, services: next }))}
-            placeholder="Select services (optional)"
+            placeholder={copy.servicesPlaceholder}
           />
         </div>
 
@@ -429,7 +616,7 @@ export default function BookAppointment() {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "Booking..." : "Book"}
+          {loading ? copy.btnBooking : copy.btnBook}
         </button>
       </form>
     </div>

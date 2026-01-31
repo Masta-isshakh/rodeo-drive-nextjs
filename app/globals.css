@@ -118,6 +118,20 @@
   --z-tooltip: 1400;
 }
 
+/* Reduce easy save actions on mobile Safari/Chrome */
+img, picture, [data-protect-image] img {
+  -webkit-touch-callout: none; /* iOS: disables long-press menu */
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: auto;
+}
+
+/* Block image dragging (some browsers still allow without JS) */
+img {
+  -webkit-user-drag: none;
+}
+
+
 /* RTL: swap primary font family */
 [dir="rtl"] {
   --font-family-primary: var(--font-family-arabic);

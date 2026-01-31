@@ -76,7 +76,7 @@ export default function Footer() {
 
               <div className={styles.socialLinks}>
                 <a
-                  href="https://www.instagram.com/YOUR_INSTAGRAM_USERNAME"
+                  href="https://www.instagram.com/rodeo.drive.qtr/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.socialLink}
@@ -90,7 +90,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://www.facebook.com/YOUR_FACEBOOK_PAGE"
+                  href="https://www.facebook.com/RodeoDriveCare"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.socialLink}
@@ -102,7 +102,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://x.com"
+                  href="https://x.com/RodeoDriveCare"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.socialLink}
@@ -114,7 +114,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://www.snapchat.com/add/YOUR_USERNAME"
+                  href="https://www.snapchat.com/add/rodeo.drive.qtr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.socialLink}

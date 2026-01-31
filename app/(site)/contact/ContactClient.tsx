@@ -26,6 +26,35 @@ function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
 
+// ✅ convert western digits to Arabic-Indic digits for display (keeps hrefs unchanged)
+const AR_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"] as const;
+function toArabicIndic(input: string) {
+  return input.replace(/\d/g, (d) => AR_DIGITS[Number(d)]);
+}
+
+// ✅ detect phone-like strings (works with 0-9 and Arabic-Indic ٠-٩)
+function isPhoneLike(s: string) {
+  const v = String(s || "").trim();
+  // allows +, spaces, hyphens, parentheses, and digits (latin + arabic-indic)
+  return /^[+()\s\-0-9٠-٩]{7,}$/.test(v) && /[0-9٠-٩]/.test(v);
+}
+
+// ✅ make number direction correct inside RTL layouts (prevents + and digits flipping)
+function NumberBidi({
+  children,
+  forceLtr,
+}: {
+  children: string;
+  forceLtr: boolean;
+}) {
+  if (!forceLtr) return <>{children}</>;
+  return (
+    <bdi style={{ direction: "ltr", unicodeBidi: "plaintext", display: "inline-block" }}>
+      {children}
+    </bdi>
+  );
+}
+
 const ContactMotion = dynamic(() => import("./ContactMotion"), {
   ssr: false,
   loading: () => null,
@@ -68,6 +97,7 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
 
   const copy = useMemo(() => {
     const isAr = lang === "ar";
+    const l10n = (s: string) => (isAr ? toArabicIndic(s) : s);
 
     return {
       heroTitle: safeText(contactT?.heroTitle, isAr ? "اتصل بنا" : "Contact"),
@@ -77,6 +107,7 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
       ),
 
       phone: safeText(contactT?.phone, isAr ? "الهاتف" : "Phone"),
+      whatsapp: safeText(contactT?.whatsapp, isAr ? "واتساب" : "WhatsApp"),
       email: safeText(contactT?.email, isAr ? "البريد الإلكتروني" : "Email"),
       location: safeText(contactT?.location, isAr ? "الموقع" : "Location"),
       workingHours: safeText(
@@ -86,7 +117,9 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
 
       hoursLine: safeText(
         contactT?.hoursLine,
-        isAr ? "السبت - الخميس: 9 صباحاً - 9 مساءً" : "Saturday - Thursday: 9AM - 9PM"
+        isAr
+          ? "السبت - الخميس: 9 صباحاً - 9 مساءً"
+          : "Saturday - Thursday: 9AM - 9PM"
       ),
 
       visitTitle: safeText(
@@ -95,12 +128,17 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
       ),
       mapTitle: safeText(
         contactT?.mapTitle,
-        "Rodeo Drive Car Care Center"
+        isAr ? "مركز روديو درايف للعناية بالسيارات" : "Rodeo Drive Car Care Center"
       ),
-      mapAddressLine1: safeText(contactT?.mapAddressLine1, "Doha, Qatar"),
+      mapAddressLine1: safeText(
+        contactT?.mapAddressLine1,
+        isAr ? "الدوحة، قطر" : "Doha, Qatar"
+      ),
       mapAddressLine2: safeText(
         contactT?.mapAddressLine2,
-        "Block 2, Shop No SYS 066, Block 21, Near Dragon Mart Al Sayer, Doha"
+        isAr
+          ? "البلوك 2، محل رقم SYS 066، بلوك 21، قرب دراغون مارت الساير، الدوحة"
+          : "Block 2, Shop No SYS 066, Block 21, Near Dragon Mart Al Sayer, Doha"
       ),
 
       directions: safeText(
@@ -119,23 +157,27 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
           : "Our team is available to answer your questions and schedule appointments."
       ),
       callNow: safeText(contactT?.callNow, isAr ? "اتصل الآن" : "Call Now"),
+
+      // ✅ displayed numbers are fully translatable + localized digits for Arabic UI
+      phoneNumber: l10n(safeText(contactT?.phoneNumber, "+97433202409")),
+      whatsappNumber: l10n(safeText(contactT?.whatsappNumber, "+97433202409")),
     };
   }, [contactT, lang]);
 
-  // Localize contact info cards fully
+  // Localize contact info cards fully (including displayed numbers)
   const contactInfo: InfoItem[] = useMemo(
     () => [
       {
         icon: Phone,
         title: copy.phone,
-        details: ["+974 3320 2409"],
+        details: [copy.phoneNumber],
         href: "tel:+97433202409",
         target: "_self",
       },
       {
         icon: MessageCircle,
-        title: "WhatsApp",
-        details: ["+974 3320 2409"],
+        title: copy.whatsapp,
+        details: [copy.whatsappNumber],
         href: "https://wa.me/97433202409",
         target: "_blank",
         rel: "noopener noreferrer",
@@ -168,7 +210,6 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
   const motionKey = `${lang}|contact`;
 
   // Optional: if you want link to be localized like /en/contact, /ar/contact
-  // (not strictly needed on contact page itself but kept consistent)
   const pathname = usePathname();
   const rootHref = useMemo(() => {
     const clean = (pathname || "").split("?")[0];
@@ -222,11 +263,14 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
                   </div>
                   <h3 className={styles.infoTitle}>{info.title}</h3>
                   <div className={styles.infoDetails}>
-                    {info.details.map((detail, idx) => (
-                      <p key={idx} className={styles.infoDetail}>
-                        {detail}
-                      </p>
-                    ))}
+                    {info.details.map((detail, idx) => {
+                      const forceLtr = lang === "ar" && isPhoneLike(detail);
+                      return (
+                        <p key={idx} className={styles.infoDetail}>
+                          <NumberBidi forceLtr={forceLtr}>{detail}</NumberBidi>
+                        </p>
+                      );
+                    })}
                   </div>
                 </>
               );
@@ -316,7 +360,7 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
                 rel="noopener noreferrer"
               >
                 <MessageCircle size={20} />
-                WhatsApp
+                {copy.whatsapp}
               </a>
             </div>
           </div>

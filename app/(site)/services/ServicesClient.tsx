@@ -95,41 +95,90 @@ export default function ServicesClient({ initialLang, packages, serviceGroups }:
   }, [servicesT, lang]);
 
   // Packages text
-  const packageCards = useMemo(() => {
-    const isAr = lang === "ar";
-    const vipFeatures = servicesT?.packageFeatures?.vip;
-    const standardFeatures = servicesT?.packageFeatures?.standard;
-    const premiumFeatures = servicesT?.packageFeatures?.premium;
+const packageCards = useMemo(() => {
+  const isAr = lang === "ar";
+  const vipFeatures = servicesT?.packageFeatures?.vip;
+  const standardFeatures = servicesT?.packageFeatures?.standard;
+  const premiumFeatures = servicesT?.packageFeatures?.premium;
 
-    const fromDictArray = (x: any) => (Array.isArray(x) ? x.filter(Boolean) : null);
+  const fromDictArray = (x: any) => (Array.isArray(x) ? x.filter(Boolean) : null);
 
-    const vipF =
-      fromDictArray(vipFeatures) ??
-      (isAr
-        ? ["تنظيف داخلي عميق", "تلميع خارجي", "نانو للجنوط", "نانو للجلد", "نانو للبودي"]
-        : ["Interior deep cleaning", "Exterior polishing", "Rim nano coating", "Leather nano coating", "Body nano coating"]);
+  const vipF =
+    fromDictArray(vipFeatures) ??
+    (isAr
+      ? [
+          "تنظيف داخلي عميق",
+          "تلميع خارجي",
+          "نانو للجنوط",
+          "نانو للجلد",
+          "نانو للبودي",
+          "نانو للزجاج",
+          "تعقيم وإزالة الروائح",
+        ]
+      : [
+          "Interior deep cleaning",
+          "Exterior polishing",
+          "Rim nano coating",
+          "Leather nano coating",
+          "Body nano coating",
+          "Glass nano coating",
+          "Sanitization & odor removal",
+        ]);
 
-    const standardF =
-      fromDictArray(standardFeatures) ??
-      (isAr
-        ? ["تركيب PPF كامل", "طبقة سيراميك", "حماية الجنوط", "حماية الجلد", "تظليل/حماية زجاج", "حماية زجاج أمامي (لايت)"]
-        : ["Full car PPF installation", "Ceramic coating", "Rim protection", "Leather protection", "Solar window film", "Windshield (light)"]);
+  const standardF =
+    fromDictArray(standardFeatures) ??
+    (isAr
+      ? [
+          "تركيب PPF كامل",
+          "طبقة سيراميك",
+          "حماية الجنوط",
+          "حماية الجلد",
+          "تظليل/حماية زجاج",
+          "حماية زجاج أمامي (لايت)",
+          "تلميع تحضيري قبل الحماية",
+        ]
+      : [
+          "Full car PPF installation",
+          "Ceramic coating",
+          "Rim protection",
+          "Leather protection",
+          "Solar window film",
+          "Windshield (light)",
+          "Preparation polish before protection",
+        ]);
 
-    const premiumF =
-      fromDictArray(premiumFeatures) ??
-      (isAr
-        ? ["حماية الداخلية", "تركيب PPF خارجي كامل", "تظليل (إكسترا كول)", "زجاج أمامي (إكستريم)", "نانو للجلد", "نانو للجنوط", "غسيل إضافي مجاني مرة واحدة"]
-        : ["Interior protection", "Full exterior PPF installation", "Solar window film (extra cool)", "Windshield (extreme)", "Leather nano coating", "Rim nano coating", "One free service extra wash"]);
+  const premiumF =
+    fromDictArray(premiumFeatures) ??
+    (isAr
+      ? [
+          "حماية الداخلية",
+          "تركيب PPF خارجي كامل",
+          "تظليل (إكسترا كول)",
+          "زجاج أمامي (إكستريم)",
+          "نانو للجلد",
+          "نانو للجنوط",
+          "غسيل إضافي مجاني مرة واحدة",
+        ]
+      : [
+          "Interior protection",
+          "Full exterior PPF installation",
+          "Solar window film (extra cool)",
+          "Windshield (extreme)",
+          "Leather nano coating",
+          "Rim nano coating",
+          "One free service extra wash",
+        ]);
 
-    const cards = [
-      { key: "vip" as const, title: labels.vipTitle, features: vipF, badge: undefined },
-      { key: "standard" as const, title: labels.standardTitle, features: standardF, badge: labels.featuredBadge },
-      { key: "premium" as const, title: labels.premiumTitle, features: premiumF, badge: undefined },
-    ];
+  const cards = [
+    { key: "vip" as const, title: labels.vipTitle, features: vipF, badge: undefined },
+    { key: "standard" as const, title: labels.standardTitle, features: standardF, badge: labels.featuredBadge },
+    { key: "premium" as const, title: labels.premiumTitle, features: premiumF, badge: undefined },
+  ];
 
-    const order = new Map(packages.map((k, i) => [k, i]));
-    return cards.sort((a, b) => (order.get(a.key) ?? 0) - (order.get(b.key) ?? 0));
-  }, [servicesT, lang, labels, packages]);
+  const order = new Map(packages.map((k, i) => [k, i]));
+  return cards.sort((a, b) => (order.get(a.key) ?? 0) - (order.get(b.key) ?? 0));
+}, [servicesT, lang, labels, packages]);
+
 
   // Services list translation by slug (dict overrides supported)
   const localizedGroups = useMemo(() => {
