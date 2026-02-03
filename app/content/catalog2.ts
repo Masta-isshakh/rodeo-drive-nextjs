@@ -1995,7 +1995,7 @@ export const CATALOG: { services: Service[] } = {
             "en": "Heat & UV Protection Film",
             "ar": "فيلم حماية حرارة وUV"
           },
-          "heroImage": "/uv-protection.avif",
+          "heroImage": "/uv.avif",
           "intro": {
             "en": [
               "High-performance film focused on blocking UV and reducing infrared heat to protect interiors from fading and cracking.",
