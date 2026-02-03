@@ -202,15 +202,17 @@ body::before {
   z-index: -4;
   pointer-events: none;
 
-  background:
-    radial-gradient(1200px 720px at 50% -10%, rgba(172, 172, 172, 0.92), rgba(255,255,255,0.18) 58%, transparent 72%),
-    radial-gradient(900px 640px at 18% 18%, rgba(255,255,255,0.68), transparent 62%),
-    radial-gradient(900px 660px at 82% 14%, rgba(255,255,255,0.60), transparent 64%),
-    radial-gradient(980px 720px at 50% 120%, rgba(210,210,210,0.26), transparent 70%),
-    repeating-linear-gradient(135deg, rgba(255,255,255,0.12) 0 2px, transparent 2px 14px),
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 16px),
-    linear-gradient(180deg, #7e7e7e 0%, #9b9b9b 46%, #a1a1a1 100%);
-
+  background-image:
+    url("/home-bg.avif"),
+    linear-gradient(
+      180deg,
+      rgba(10, 25, 41, 0.55) 0%,
+      rgba(10, 25, 41, 0.82) 65%,
+      rgba(10, 25, 41, 0.95) 100%
+    );
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
   /* reduce repaint impact */
   contain: paint;
   transform: translateZ(0);
@@ -224,17 +226,6 @@ body.route-home::after {
   z-index: -3;
   pointer-events: none;
 
-  background-image:
-    url("/home-bg.avif"),
-    linear-gradient(
-      180deg,
-      rgba(10, 25, 41, 0.55) 0%,
-      rgba(10, 25, 41, 0.82) 65%,
-      rgba(10, 25, 41, 0.95) 100%
-    );
-  background-size: cover, cover;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
 
   /* IMPORTANT: do not keep will-change permanently (battery drain) */
   transform: translateZ(0);
