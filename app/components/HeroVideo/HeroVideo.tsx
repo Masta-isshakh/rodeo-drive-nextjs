@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+// components/HeroVideo/HeroVideo.tsx
 import styles from "./HeroVideo.module.css";
 import HeroVideoContent from "./HeroVideoClient";
 import HeroVideoEnhance from "./HeroVideoEnhance";
@@ -13,7 +13,7 @@ type Orb = {
 };
 type Line = { left: string; delay: string; duration: string; opacity: number };
 
-// deterministic RNG so SSR output is stable (no hydration issues)
+// deterministic RNG so output is stable
 function mulberry32(seed: number) {
   return function () {
     let t = (seed += 0x6d2b79f5);
@@ -57,10 +57,12 @@ function buildLines(seed = 4242): Line[] {
 export default function HeroVideo() {
   const orbs = buildOrbs();
   const lines = buildLines();
-    const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
+  // IMPORTANT: replace with your real URL (CloudFront recommended)
+  const VIDEO_URL =
+    "https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image10.mp4";
 
-  // IDs so client enhancer can target DOM without refs/hydration
+  // IDs so client enhancer can target DOM
   const ids = {
     root: "hero-root",
     video: "hero-video",
@@ -71,12 +73,6 @@ export default function HeroVideo() {
     actions: "hero-actions",
     scroll: "hero-scroll",
   } as const;
-
-    useEffect(() => {
-    // Load video AFTER initial render (reduces LCP + TBT)
-    const t = setTimeout(() => setShouldLoadVideo(true), 1200);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <section className={styles.heroVideo} id={ids.root}>
@@ -121,26 +117,22 @@ export default function HeroVideo() {
             <video
               id={ids.video}
               className={styles.videoElement}
-              autoPlay
               muted
               loop
               playsInline
-        preload="none"
-              // optional but recommended: create this file in /public
+              preload="none"
               poster="/hero-poster.avif"
-            >
-        {shouldLoadVideo ? (
-          <source src="https://YOUR_CLOUDFRONT_OR_S3/video.mp4" type="video/mp4" />
-        ) : null}
-            </video>
+              // we DON'T set <source> here (prevents big download on first paint)
+              data-src={VIDEO_URL}
+            />
           </div>
 
           <div className={styles.videoOverlay} id={ids.overlay} />
 
-          {/* ✅ ONLY text is client (translation) */}
+          {/* Text (client for translations) */}
           <HeroVideoContent ids={ids} />
 
-          {/* ✅ ONLY behavior is client (video + GSAP), GSAP loads dynamically */}
+          {/* Behavior (client): loads video intelligently + GSAP */}
           <HeroVideoEnhance ids={ids} />
         </div>
       </div>

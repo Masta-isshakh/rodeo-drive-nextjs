@@ -14,7 +14,8 @@ type Ids = {
 
 export default function HeroVideoContent({ ids }: { ids: Ids }) {
   const { t, language } = useI18n() as any;
-  const dir = language === "ar" ? "rtl" : "ltr";
+  const lang = language === "ar" ? "ar" : "en";
+  const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
     <>
@@ -33,16 +34,15 @@ export default function HeroVideoContent({ ids }: { ids: Ids }) {
         </p>
 
         <div className={styles.heroActions} id={ids.actions}>
-          <Link href="/book" className={styles.ctaPrimary}>
+          <Link href={`/${lang}/book`} className={styles.ctaPrimary}>
             {t.hero.cta1}
           </Link>
-          <Link href="/services" className={styles.ctaSecondary}>
+          <Link href={`/${lang}/services`} className={styles.ctaSecondary}>
             {t.hero.cta2}
           </Link>
         </div>
       </div>
 
-      {/* keep same UX, but no JS needed */}
       <a className={styles.scrollIndicator} href="#after-hero" id={ids.scroll}>
         <span>Scroll</span>
         <span className={styles.scrollIcon}>↓</span>

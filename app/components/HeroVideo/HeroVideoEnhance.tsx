@@ -22,8 +22,30 @@ function isLiteOrReduced() {
   );
 }
 
+function once(el: EventTarget, event: string, fn: () => void, opts?: AddEventListenerOptions) {
+  const handler = () => {
+    fn();
+    el.removeEventListener(event, handler as any);
+  };
+  el.addEventListener(event, handler as any, opts);
+}
+
+function injectSourceIfMissing(v: HTMLVideoElement) {
+  const src = v.dataset.src;
+  if (!src) return;
+  // prevent duplicate injection
+  const already = Array.from(v.querySelectorAll("source")).some((s) => s.src === src);
+  if (already) return;
+
+  const source = document.createElement("source");
+  source.src = src;
+  source.type = "video/mp4";
+  v.appendChild(source);
+  v.load();
+}
+
 export default function HeroVideoEnhance({ ids }: { ids: Ids }) {
-  // video autoplay retry + pause when tab hidden (performance)
+  // VIDEO LOADING STRATEGY (biggest Lighthouse win)
   useEffect(() => {
     const v = document.getElementById(ids.video) as HTMLVideoElement | null;
     if (!v) return;
@@ -31,43 +53,80 @@ export default function HeroVideoEnhance({ ids }: { ids: Ids }) {
     v.muted = true;
     v.playsInline = true;
 
+    const lite = isLiteOrReduced();
+
     const tryPlay = async () => {
       try {
         await v.play();
-      } catch {}
+      } catch {
+        // ignore
+      }
     };
 
-    tryPlay();
-
-    const onFirst = () => {
+    const loadAndPlay = () => {
+      injectSourceIfMissing(v);
       tryPlay();
-      window.removeEventListener("touchstart", onFirst);
-      window.removeEventListener("click", onFirst);
     };
 
-    window.addEventListener("touchstart", onFirst, { passive: true });
-    window.addEventListener("click", onFirst);
+    if (lite) {
+      // MOBILE/LITE: do NOT autoplay or auto-load the heavy mp4.
+      // Load only on first user interaction.
+      const onFirstInteract = () => loadAndPlay();
+      once(window, "touchstart", onFirstInteract, { passive: true });
+      once(window, "click", onFirstInteract);
+    } else {
+      // DESKTOP: load after idle (or 1200ms fallback)
+      const idle = (cb: () => void) => {
+        const ric = (window as any).requestIdleCallback;
+        if (typeof ric === "function") return ric(cb, { timeout: 1200 });
+        return window.setTimeout(cb, 900);
+      };
+      const cancelIdle = (id: any) => {
+        const cic = (window as any).cancelIdleCallback;
+        if (typeof cic === "function") return cic(id);
+        clearTimeout(id);
+      };
 
+      const id = idle(() => loadAndPlay());
+      // also allow early load on interaction
+      const onFirstInteract = () => loadAndPlay();
+      once(window, "mousemove", onFirstInteract, { passive: true });
+      once(window, "scroll", onFirstInteract, { passive: true });
+
+      // visibility pause/resume
+      const onVis = () => {
+        if (document.visibilityState === "hidden") {
+          try {
+            v.pause();
+          } catch {}
+        } else {
+          tryPlay();
+        }
+      };
+      document.addEventListener("visibilitychange", onVis);
+
+      return () => {
+        cancelIdle(id);
+        document.removeEventListener("visibilitychange", onVis);
+      };
+    }
+
+    // pause/resume for both modes
     const onVis = () => {
       if (document.visibilityState === "hidden") {
         try {
           v.pause();
         } catch {}
-      } else {
-        tryPlay();
       }
     };
-
     document.addEventListener("visibilitychange", onVis);
 
     return () => {
-      window.removeEventListener("touchstart", onFirst);
-      window.removeEventListener("click", onFirst);
       document.removeEventListener("visibilitychange", onVis);
     };
   }, [ids.video]);
 
-  // GSAP only on desktop + not reduced motion, loaded dynamically (NOT in main bundle)
+  // GSAP only on desktop + not reduced motion (loaded dynamically)
   useEffect(() => {
     if (isLiteOrReduced()) return;
 
