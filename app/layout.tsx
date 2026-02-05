@@ -42,6 +42,11 @@ export const metadata: Metadata = {
   creator: BRAND_EN,
   publisher: BRAND_EN,
 
+
+    other: {
+    "link:preconnect": "https://mastatiktok.s3.us-east-1.amazonaws.com",
+  },
+
   // Favicons / app icons
   icons: {
     icon: [
@@ -112,6 +117,13 @@ function jsonLdLocalBusiness(lang: Lang) {
     ],
   };
 }
+
+export function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "ar" }];
+}
+
+
+
 
 export default function RootLayout({
   children,

@@ -224,33 +224,33 @@ export default function ServicesHighlight() {
               key={`${s.title}-${i}`}
               className={`${styles.card} ${s.tone === "burgundy" ? styles.toneB : styles.toneS}`}
             >
-<div className={styles.media}>
-  <Image
-    src={s.image}
-    alt={s.title}
-    fill
-    sizes="(max-width: 768px) 97vw, 33vw"
-    className={styles.image}
-    priority={false}
-    loading="lazy"
-    decoding="async"
-  />
+              <div className={styles.media}>
+                <Image
+                  src={s.image}
+                  alt={s.title}
+                  fill
+                  sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 380px"
+                  className={styles.image}
+                  priority={false}
+                  loading="lazy"
+                  decoding="async"
+                />
 
-  <div className={styles.mediaOverlay} aria-hidden="true" />
+                <div className={styles.mediaOverlay} aria-hidden="true" />
 
-  <div className={styles.badge}>
-    <span className={styles.badgeDot} />
-    {ui.signatureBadge}
-  </div>
+                <div className={styles.badge}>
+                  <span className={styles.badgeDot} />
+                  {ui.signatureBadge}
+                </div>
 
-  {/* ✅ Invisible click layer (doesn't affect image rendering) */}
-  <button
-    type="button"
-    className={styles.mediaClickArea}
-    onClick={() => openLightbox(i)}
-    aria-label={`Open ${s.title}`}
-  />
-</div>
+                {/* ✅ Invisible click layer (doesn't affect image rendering) */}
+                <button
+                  type="button"
+                  className={styles.mediaClickArea}
+                  onClick={() => openLightbox(i)}
+                  aria-label={`Open ${s.title}`}
+                />
+              </div>
 
 
               <div className={styles.body}>

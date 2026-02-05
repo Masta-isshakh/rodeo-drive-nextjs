@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styles from "./HeroVideo.module.css";
 import HeroVideoContent from "./HeroVideoClient";
 import HeroVideoEnhance from "./HeroVideoEnhance";
@@ -56,6 +57,8 @@ function buildLines(seed = 4242): Line[] {
 export default function HeroVideo() {
   const orbs = buildOrbs();
   const lines = buildLines();
+    const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
 
   // IDs so client enhancer can target DOM without refs/hydration
   const ids = {
@@ -68,6 +71,12 @@ export default function HeroVideo() {
     actions: "hero-actions",
     scroll: "hero-scroll",
   } as const;
+
+    useEffect(() => {
+    // Load video AFTER initial render (reduces LCP + TBT)
+    const t = setTimeout(() => setShouldLoadVideo(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section className={styles.heroVideo} id={ids.root}>
@@ -116,14 +125,13 @@ export default function HeroVideo() {
               muted
               loop
               playsInline
-              preload="metadata"
+        preload="none"
               // optional but recommended: create this file in /public
               poster="/hero-poster.avif"
             >
-              <source
-                src="https://mastatiktok.s3.us-east-1.amazonaws.com/videos/image10.mp4"
-                type="video/mp4"
-              />
+        {shouldLoadVideo ? (
+          <source src="https://YOUR_CLOUDFRONT_OR_S3/video.mp4" type="video/mp4" />
+        ) : null}
             </video>
           </div>
 

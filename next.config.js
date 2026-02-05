@@ -4,6 +4,7 @@ const nextConfig = {
   output: "standalone",
 
   images: {
+      minimumCacheTTL: 31536000, // 1 year
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "cdn.coverr.co" },
@@ -13,16 +14,32 @@ const nextConfig = {
     ],
   },
 
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-        ],
-      },
-    ];
-  },
+async headers() {
+  return [
+    // Static Next assets (JS/CSS) cache forever
+    {
+      source: "/_next/static/:path*",
+      headers: [
+        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+      ],
+    },
+    // Public assets (images in /public)
+    {
+      source: "/:path*.(avif|webp|png|jpg|jpeg|svg|ico)",
+      headers: [
+        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+      ],
+    },
+    // Keep your existing header
+    {
+      source: "/:path*",
+      headers: [
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      ],
+    },
+  ];
+},
+
 };
 
 module.exports = nextConfig;
