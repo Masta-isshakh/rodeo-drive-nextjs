@@ -3,17 +3,30 @@ import React from "react";
 import ServiceRouteClient from "./ServiceRoute";
 import { CATALOG, Service, Subservice } from "../../../content/catalog2";
 
+// ✅ Prebuild all routes:
+// /services/<serviceSlug>
+// /services/<serviceSlug>/<subSlug>
+export function generateStaticParams() {
+  const params: { slugs: string[] }[] = [];
+
+  for (const s of CATALOG.services as Service[]) {
+    params.push({ slugs: [s.slug] });
+
+    for (const sub of s.subservices as Subservice[]) {
+      params.push({ slugs: [s.slug, sub.slug] });
+    }
+  }
+
+  return params;
+}
+
 function safeSlugArray(input?: string[] | string): string[] {
   if (!input) return [];
   if (Array.isArray(input)) return input;
   return [input];
 }
 
-export default function Page({
-  params,
-}: {
-  params: { slugs?: string[] | string };
-}) {
+export default function Page({ params }: { params: { slugs?: string[] | string } }) {
   const slugs = safeSlugArray(params.slugs);
   const serviceSlug = slugs[0];
   const subSlug = slugs[1];

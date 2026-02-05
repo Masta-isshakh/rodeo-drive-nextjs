@@ -1,70 +1,73 @@
 // app/[lang]/services/page.tsx
+import type { Metadata } from "next";
 import React from "react";
 import ServicesClient from "./ServicesClient";
+import { buildPageMetadata, type Lang } from "../../seo";
 
-export type Lang = "en" | "ar";
 export type PackageKey = "vip" | "standard" | "premium";
 
 export type ServiceGroupBase = {
-  // used for proof images and local assets (your current naming)
   slug: string;
-
-  // ✅ used for routing to /[lang]/services/[...slugs]
-  // MUST match CATALOG.services[].slug
   routeSlug: string;
-
   imageSrc: string;
-
-  // optional defaults (client will translate anyway)
   title?: string;
   description?: string;
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Lang };
+}): Promise<Metadata> {
+  const lang: Lang = params.lang === "ar" ? "ar" : "en";
+
+  return buildPageMetadata({
+    lang,
+    path: "/services",
+    titleEN: "Services – PPF, Ceramic Coating, Tint & Detailing",
+    titleAR: "الخدمات – PPF، طلاء سيراميك، تظليل وتفصيل",
+    descEN:
+      "Explore Rodeo Drive Doha services: full-body PPF, nano-ceramic tint, detailing & coating, paint repair, smart repair, premium wash, and windshield protection—built for Qatar’s sun and roads.",
+    descAR:
+      "استكشف خدمات روديو درايف الدوحة: PPF كامل، تظليل نانو سيراميك، تفصيل وطلاءات حماية، إصلاح طلاء، إصلاحات ذكية، غسيل فاخر، وخدمات الزجاج الأمامي—مناسبة لأجواء قطر.",
+    keywordsEN: [
+      "PPF Doha",
+      "paint protection film Qatar",
+      "ceramic coating Doha",
+      "nano ceramic tint Doha",
+      "paint correction Doha",
+      "car detailing Doha",
+      "smart repair Doha",
+      "Color PPF Doha",
+      "windshield protection Doha",
+    ],
+    keywordsAR: [
+      "PPF الدوحة",
+      "فيلم حماية الطلاء قطر",
+      "طلاء سيراميك الدوحة",
+      "تظليل نانو سيراميك الدوحة",
+      "تصحيح الطلاء الدوحة",
+      "تفصيل سيارات الدوحة",
+      "إصلاحات ذكية الدوحة",
+      "Color PPF قطر",
+      "حماية الزجاج الأمامي الدوحة",
+    ],
+    ogImagePath: "/og/services.jpg",
+  });
+}
+
 export default function ServicesPage({ params }: { params: { lang: string } }) {
   const initialLang: Lang = params.lang === "ar" ? "ar" : "en";
 
-  // keep your package order
   const packages: PackageKey[] = ["vip", "standard", "premium"];
 
-  /**
-   * ✅ IMPORTANT:
-   * - routeSlug must match your catalog2 Service.slug exactly
-   * - slug can stay your "proof file naming" slug
-   *
-   * If your catalog slugs are exactly the same as these, set routeSlug = slug.
-   * If not, map them here.
-   */
   const serviceGroups: ServiceGroupBase[] = [
-    {
-      slug: "full-protection-ppf",
-      routeSlug: "full-protection-ppf",
-      imageSrc: "/ppf-icon.avif",
-    },
-    {
-      slug: "window-solar-film",
-      routeSlug: "window-solar-film",
-      imageSrc: "/SolarWindowTint-icon.avif",
-    },
-    {
-      slug: "detailing-coating",
-      routeSlug: "detailing-coating",
-      imageSrc: "/Exteriordetailing-icon.avif",
-    },
-    {
-      slug: "paint-repair-services",
-      routeSlug: "paint-repair-services",
-      imageSrc: "/paintessdentrepair-icon.avif",
-    },
-    {
-      slug: "car-wash-services",
-      routeSlug: "car-wash-services",
-      imageSrc: "/carwash-icon.avif",
-    },
-    {
-      slug: "windshield-services",
-      routeSlug: "windshield-services",
-      imageSrc: "/windsheild-icon.avif",
-    },
+    { slug: "full-protection-ppf", routeSlug: "full-protection-ppf", imageSrc: "/ppf-icon.avif" },
+    { slug: "window-solar-film", routeSlug: "window-solar-film", imageSrc: "/SolarWindowTint-icon.avif" },
+    { slug: "detailing-coating", routeSlug: "detailing-coating", imageSrc: "/Exteriordetailing-icon.avif" },
+    { slug: "paint-repair-services", routeSlug: "paint-repair-services", imageSrc: "/paintessdentrepair-icon.avif" },
+    { slug: "car-wash-services", routeSlug: "car-wash-services", imageSrc: "/carwash-icon.avif" },
+    { slug: "windshield-services", routeSlug: "windshield-services", imageSrc: "/windsheild-icon.avif" },
   ];
 
   return (

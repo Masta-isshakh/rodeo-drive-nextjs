@@ -1,8 +1,8 @@
 // app/[lang]/gallery/page.tsx
+import type { Metadata } from "next";
 import GalleryClient from "./GalleryClient";
 import { cookies, headers } from "next/headers";
-
-type Lang = "en" | "ar";
+import { buildPageMetadata, type Lang } from "../../seo";
 
 type VideoItem = {
   id: number;
@@ -46,6 +46,42 @@ function detectLanguageFallback(): Lang {
   const accept = headers().get("accept-language")?.toLowerCase() || "";
   if (accept.includes("ar")) return "ar";
   return "en";
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: Lang };
+}): Promise<Metadata> {
+  const lang: Lang = params.lang === "ar" ? "ar" : "en";
+
+  return buildPageMetadata({
+    lang,
+    path: "/gallery",
+    titleEN: "Gallery – Before & After, PPF & Detailing Results",
+    titleAR: "المعرض – قبل وبعد ونتائج PPF والتفصيل",
+    descEN:
+      "Explore real transformations in Doha: PPF installation, ceramic coating, paint correction, interior deep cleaning, tint and premium finishing—photos, before/after and videos.",
+    descAR:
+      "استكشف تحولات حقيقية في الدوحة: تركيب PPF، طلاء سيراميك، تصحيح الطلاء، تنظيف داخلي عميق، تظليل وتشطيب فاخر—صور وفيديوهات وقبل/بعد.",
+    keywordsEN: [
+      "car detailing gallery Doha",
+      "PPF before after Doha",
+      "ceramic coating results Qatar",
+      "paint correction before after Doha",
+      "interior detailing before after Doha",
+      "Color PPF Doha gallery",
+    ],
+    keywordsAR: [
+      "معرض تفصيل سيارات الدوحة",
+      "قبل وبعد PPF الدوحة",
+      "نتائج طلاء السيراميك قطر",
+      "قبل وبعد تصحيح الطلاء الدوحة",
+      "قبل وبعد تنظيف داخلي",
+      "معرض Color PPF قطر",
+    ],
+    ogImagePath: "/og/gallery.jpg",
+  });
 }
 
 export default function GalleryPage({ params }: { params: { lang: string } }) {
@@ -149,7 +185,6 @@ export default function GalleryPage({ params }: { params: { lang: string } }) {
     },
   ];
 
-  // Stats values are fixed; labels translate client-side
   const stats = { cars: 850, ceramic: 500, protection: 300, satisfaction: 98 };
 
   return (

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./ServicesHighlight.module.css";
 import { useI18n } from "../../lib/i18n";
+import { useState } from "react";
 
 type Service = {
   title: string;
@@ -160,6 +161,26 @@ export default function ServicesHighlight() {
     return () => io.disconnect();
   }, []);
 
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  function openLightbox(i: number): void {
+    setLightboxIndex(i);
+  }
+
+  function closeLightbox(): void {
+    setLightboxIndex(null);
+  }
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    if (lightboxIndex !== null) {
+      document.addEventListener("keydown", handleEscape);
+      return () => document.removeEventListener("keydown", handleEscape);
+    }
+  }, [lightboxIndex]);
+
   return (
     <section className={styles.section} ref={sectionRef}>
       <div className={styles.container}>
@@ -203,23 +224,34 @@ export default function ServicesHighlight() {
               key={`${s.title}-${i}`}
               className={`${styles.card} ${s.tone === "burgundy" ? styles.toneB : styles.toneS}`}
             >
-              <div className={styles.media}>
-                <Image
-                  src={s.image}
-                  alt={s.title}
-                  fill
-                  sizes="(max-width: 768px) 97vw, 33vw"
-                  className={styles.image}
-                  priority={false}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className={styles.mediaOverlay} aria-hidden="true" />
-                <div className={styles.badge}>
-                  <span className={styles.badgeDot} />
-                  {ui.signatureBadge}
-                </div>
-              </div>
+<div className={styles.media}>
+  <Image
+    src={s.image}
+    alt={s.title}
+    fill
+    sizes="(max-width: 768px) 97vw, 33vw"
+    className={styles.image}
+    priority={false}
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div className={styles.mediaOverlay} aria-hidden="true" />
+
+  <div className={styles.badge}>
+    <span className={styles.badgeDot} />
+    {ui.signatureBadge}
+  </div>
+
+  {/* ✅ Invisible click layer (doesn't affect image rendering) */}
+  <button
+    type="button"
+    className={styles.mediaClickArea}
+    onClick={() => openLightbox(i)}
+    aria-label={`Open ${s.title}`}
+  />
+</div>
+
 
               <div className={styles.body}>
                 <h3 className={styles.cardTitle}>{s.title}</h3>
@@ -256,3 +288,4 @@ export default function ServicesHighlight() {
     </section>
   );
 }
+

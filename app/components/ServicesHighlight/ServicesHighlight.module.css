@@ -540,3 +540,27 @@
 }
 
 /* keep the rest of your CSS exactly as you have it */
+/* Ensure fill-image parent always works */
+.media{
+  position: relative;
+  aspect-ratio: 16 / 10; /* choose what matches your design */
+}
+
+
+/* Invisible click target over the media */
+.mediaClickArea{
+  position: absolute;
+  inset: 0;
+  z-index: 5;              /* higher than overlay/badge if needed */
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: zoom-in;
+}
+
+/* keyboard focus */
+.mediaClickArea:focus-visible{
+  outline: 2px solid rgba(255,255,255,0.7);
+  outline-offset: -6px;
+  border-radius: 16px;
+}

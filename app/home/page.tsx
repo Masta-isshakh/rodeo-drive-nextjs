@@ -1,7 +1,22 @@
+// app/[lang]/page.tsx (or wherever your home is)
+import dynamic from "next/dynamic";
 import HeroVideo from "../components/HeroVideo/HeroVideo";
-import ServicesHighlight from "../components/ServicesHighlight/ServicesHighlight";
-import Process from "../components/Process/Process";
-import CinematicShowcase from "../components/CinematicShowcase/CinematicShowcase";
+
+// ✅ Load these after initial render (huge speed win)
+const ServicesHighlight = dynamic(
+  () => import("../components/ServicesHighlight/ServicesHighlight"),
+  { ssr: false }
+);
+
+const CinematicShowcase = dynamic(
+  () => import("../components/CinematicShowcase/CinematicShowcase"),
+  { ssr: false }
+);
+
+const Process = dynamic(
+  () => import("../components/Process/Process"),
+  { ssr: false }
+);
 
 export default function HomePage() {
   return (

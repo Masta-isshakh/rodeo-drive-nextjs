@@ -20,7 +20,7 @@ export const translations = {
       subtitle: "in Doha",
       tagline: "Precision. Protection. Performance.",
       description:
-        "Showroom-level detailing, protection, and finishing—engineered for Qatar’s heat, sun, and sand.",
+        "Showroom-level detailing, protection, and finishing engineered for Qatar’s heat, sun, and sand.",
       cta1: "Book Now",
       cta2: "View Services",
     },
@@ -37,7 +37,7 @@ export const translations = {
     services: {
       subservicesLabel: "Subservices",
       title: "Premium Services",
-      subtitle: "Comprehensive automotive care—tailored to your vehicle",
+      subtitle: "Comprehensive automotive care tailored to your vehicle",
       viewAll: "View All Services",
       getQuote: "Get a Quote",
       learnMore: "Learn More",
@@ -53,7 +53,7 @@ export const translations = {
       highlight: {
         kicker: "Comprehensive automotive care",
         title: "Premium Services",
-        lead: "Precision. Protection. Performance—crafted finishes built for Qatar’s roads and sun.",
+        lead: "Precision. Protection. Performance crafted finishes built for Qatar’s roads and sun.",
         viewAll: "View All Services",
         learnMore: "Learn More",
         signatureBadge: "Signature Service",
