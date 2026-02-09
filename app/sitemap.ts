@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { CATALOG } from "./content/catalog2";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://rodeodrive.me";
+  const baseUrl = "https://www.rodeodrive.me";
 
   const items: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, changeFrequency: "weekly", priority: 1 },
