@@ -16,16 +16,11 @@ function pageTitle(lang: Lang, page: string) {
 }
 
 function alternates(path: string) {
-  // path example: "/services"
   return {
-    canonical: path,
-    languages: {
-      "en-QA": `/en${path}`,
-      "ar-QA": `/ar${path}`,
-      "x-default": `/en${path}`,
-    },
+    canonical: path, // e.g. "/services"
   } as const;
 }
+
 
 function ogImage(path: string) {
   return [

@@ -3,17 +3,11 @@ import type { MetadataRoute } from "next";
 import { CATALOG } from "./content/catalog2";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // ✅ Use ONE canonical host everywhere (match your metadataBase)
   const baseUrl = "https://www.rodeodrive.me";
-
-  // ✅ Optional but good: keep a stable lastModified for deployments
-  // If you have CI, you can inject BUILD_DATE. Otherwise "new Date()" is fine.
   const lastModified = new Date();
 
-  const langs = ["en", "ar"] as const;
-
   const staticRoutes = [
-    { path: "", priority: 1.0, changeFrequency: "weekly" as const }, // homepage
+    { path: "", priority: 1.0, changeFrequency: "weekly" as const },
     { path: "/services", priority: 0.95, changeFrequency: "weekly" as const },
     { path: "/book", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "/contact", priority: 0.85, changeFrequency: "monthly" as const },
@@ -27,55 +21,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const items: MetadataRoute.Sitemap = [];
 
-  // ✅ Add homepage root (optional)
-  // If you redirect "/" to "/en", keep "/" but also include /en and /ar below.
-  items.push({
-    url: `${baseUrl}/`,
-    lastModified,
-    changeFrequency: "weekly",
-    priority: 0.6,
-  });
-
-  // ✅ Add language routes
-  for (const lang of langs) {
-    for (const r of staticRoutes) {
-      items.push({
-        url: `${baseUrl}/${lang}${r.path}`,
-        lastModified,
-        changeFrequency: r.changeFrequency,
-        priority: r.priority,
-      });
-    }
+  // static pages
+  for (const r of staticRoutes) {
+    items.push({
+      url: `${baseUrl}${r.path || "/"}`,
+      lastModified,
+      changeFrequency: r.changeFrequency,
+      priority: r.priority,
+    });
   }
 
-  // ✅ Add services + subservices routes for BOTH languages
+  // services + subservices (NO /en or /ar)
   for (const s of CATALOG.services) {
-    for (const lang of langs) {
-      // Service landing page
+    items.push({
+      url: `${baseUrl}/services/${s.slug}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    });
+
+    for (const sub of s.subservices) {
       items.push({
-        url: `${baseUrl}/${lang}/services/${s.slug}`,
+        url: `${baseUrl}/services/${s.slug}/${sub.slug}`,
         lastModified,
         changeFrequency: "weekly",
-        priority: 0.85,
+        priority: 0.78,
       });
-
-      // Subservice pages
-      for (const sub of s.subservices) {
-        items.push({
-          url: `${baseUrl}/${lang}/services/${s.slug}/${sub.slug}`,
-          lastModified,
-          changeFrequency: "weekly",
-          priority: 0.78,
-        });
-      }
     }
   }
 
-  // ✅ Optional: dedupe in case of accidental duplicates
+  // dedupe
   const seen = new Set<string>();
-  return items.filter((x) => {
-    if (seen.has(x.url)) return false;
-    seen.add(x.url);
-    return true;
-  });
+  return items.filter((x) => (seen.has(x.url) ? false : (seen.add(x.url), true)));
 }
