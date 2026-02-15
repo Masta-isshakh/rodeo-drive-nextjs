@@ -1,6 +1,5 @@
-// app/[lang]/book/page.tsx
 import type { Metadata } from "next";
-import BookApp from "./Book";
+import Book from "./Book";
 import { buildPageMetadata, type Lang } from "@/app/seo";
 
 export async function generateMetadata({
@@ -37,6 +36,6 @@ export async function generateMetadata({
   });
 }
 
-export default function Book() {
-  return <BookApp />;
+export default function Page() {
+  return <Book />;
 }

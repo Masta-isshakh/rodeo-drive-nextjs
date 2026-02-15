@@ -11,9 +11,8 @@ const MAX_BOOKINGS_PER_DAY = 10;
 // Business rules
 const OPEN_TIME_24 = "09:00";
 const CLOSE_TIME_24 = "20:00";
-
-const OPEN_MINUTES = 9 * 60; // 09:00
-const CLOSE_MINUTES = 20 * 60; // 20:00
+const OPEN_MINUTES = 9 * 60;
+const CLOSE_MINUTES = 20 * 60;
 
 function formatLocalDateYYYYMMDD(d: Date) {
   const y = d.getFullYear();
@@ -28,11 +27,10 @@ function isDateInPast(dateStr: string) {
   return dateStr < todayStr;
 }
 
-// Friday check (local time)
 function isFriday(dateStr: string) {
   if (!dateStr) return false;
   const d = new Date(`${dateStr}T00:00:00`);
-  return d.getDay() === 5; // 0 Sun ... 5 Fri ... 6 Sat
+  return d.getDay() === 5; // Fri
 }
 
 function parseTimeToMinutes(time24: string) {
@@ -50,7 +48,6 @@ function isTimeInRange(time24: string) {
   return mins >= OPEN_MINUTES && mins <= CLOSE_MINUTES;
 }
 
-// Convert "14:30" -> "02:30 PM"
 function toAmPm(time24: string) {
   if (!time24) return "";
   const [hhStr, mm] = time24.split(":");
@@ -75,61 +72,27 @@ type MultiSelectProps = {
   label: string;
   options: string[];
   value: string[];
-  placeholder?: string;
+  placeholder: string;
   onChange: (next: string[]) => void;
+  ui: { clear: string; done: string; remove: string; selected: string };
+  isAr: boolean;
 };
 
 function MultiSelectDropdown({
   label,
   options,
   value,
-  placeholder = "Select services (optional)",
+  placeholder,
   onChange,
+  ui,
+  isAr,
 }: MultiSelectProps) {
-  const i18n = useI18n() as any;
-  const t = i18n?.t;
-
-  const [runtimeLang, setRuntimeLang] = React.useState<"en" | "ar">("en");
-  React.useEffect(() => {
-    const fromI18n =
-      i18n?.lang ??
-      i18n?.locale ??
-      i18n?.language ??
-      i18n?.currentLang ??
-      "";
-    const fromHtml =
-      typeof document !== "undefined" ? document.documentElement.lang : "";
-    const guess = String(fromI18n || fromHtml || "en").toLowerCase();
-    setRuntimeLang(guess.startsWith("ar") ? "ar" : "en");
-  }, [t, i18n?.lang, i18n?.locale, i18n?.language, i18n?.dir]);
-
-  const msT = useMemo(() => {
-    return (
-      (t as any)?.book?.multiSelect ??
-      (t as any)?.booking?.multiSelect ??
-      (t as any)?.appointment?.multiSelect ??
-      (t as any)?.pages?.book?.multiSelect ??
-      (t as any)?.pages?.booking?.multiSelect ??
-      {}
-    );
-  }, [t]);
-
-  const isAr = runtimeLang === "ar";
-  const l10nDigits = (s: string) => (isAr ? toArabicIndic(s) : s);
-
-  const ui = useMemo(() => {
-    return {
-      clear: safeText(msT?.clear, isAr ? "مسح" : "Clear"),
-      done: safeText(msT?.done, isAr ? "تم" : "Done"),
-      remove: safeText(msT?.remove, isAr ? "إزالة" : "Remove"),
-      selected: safeText(msT?.selected, isAr ? "تم اختيار" : "selected"),
-    };
-  }, [msT, isAr]);
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  const l10nDigits = (s: string) => (isAr ? toArabicIndic(s) : s);
+
+  useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       if (!rootRef.current) return;
       if (!rootRef.current.contains(e.target as Node)) setOpen(false);
@@ -232,29 +195,12 @@ function MultiSelectDropdown({
   );
 }
 
-export default function BookAppointment() {
+export default function Book() {
   const client = useMemo(() => generateClient<Schema>(), []);
+  const { language, t } = useI18n();
 
-  const i18n = useI18n() as any;
-  const t = i18n?.t;
-
-  const [runtimeLang, setRuntimeLang] = useState<"en" | "ar">("en");
-  useEffect(() => {
-    const fromI18n =
-      i18n?.lang ??
-      i18n?.locale ??
-      i18n?.language ??
-      i18n?.currentLang ??
-      "";
-    const fromHtml =
-      typeof document !== "undefined" ? document.documentElement.lang : "";
-    const guess = String(fromI18n || fromHtml || "en").toLowerCase();
-    setRuntimeLang(guess.startsWith("ar") ? "ar" : "en");
-  }, [t, i18n?.lang, i18n?.locale, i18n?.language, i18n?.dir]);
-
-  const lang = runtimeLang;
-  const dir = lang === "ar" ? "rtl" : "ltr";
-  const isAr = lang === "ar";
+  const isAr = language === "ar";
+  const dir = isAr ? "rtl" : "ltr";
   const l10nDigits = (s: string) => (isAr ? toArabicIndic(s) : s);
 
   const bookT = useMemo(() => {
@@ -262,9 +208,6 @@ export default function BookAppointment() {
       (t as any)?.book ??
       (t as any)?.booking ??
       (t as any)?.appointment ??
-      (t as any)?.pages?.book ??
-      (t as any)?.pages?.booking ??
-      (t as any)?.pages?.appointment ??
       {}
     );
   }, [t]);
@@ -288,7 +231,6 @@ export default function BookAppointment() {
           : "Thank you! Your appointment has been booked successfully. One of our customer service will call you soon."
       ),
 
-      // placeholders
       phName: safeText(bookT?.phName, isAr ? "اسمك" : "Your Name"),
       phEmail: safeText(bookT?.phEmail, isAr ? "بريدك الإلكتروني" : "Your Email"),
       phPhone: safeText(bookT?.phPhone, isAr ? "رقم الهاتف" : "Phone Number"),
@@ -306,7 +248,6 @@ export default function BookAppointment() {
       btnBooking: safeText(bookT?.btnBooking, isAr ? "جارٍ الحجز..." : "Booking..."),
       btnBook: safeText(bookT?.btnBook, isAr ? "احجز" : "Book"),
 
-      // errors
       errPastShort: safeText(
         bookT?.errPastShort,
         isAr ? "لا يمكنك الحجز في تاريخ سابق. الرجاء اختيار تاريخ قادم." : "You cannot book in the past. Please select a future date."
@@ -352,7 +293,6 @@ export default function BookAppointment() {
 
       na: safeText(bookT?.na, isAr ? "غير متوفر" : "N/A"),
 
-      // service options (fallbacks)
       serviceOptionsEn: [
         "Full Protection – PPF",
         "Window Solar Film",
@@ -372,13 +312,22 @@ export default function BookAppointment() {
     };
   }, [bookT, isAr]);
 
-  const fromDictArray = (x: any) => (Array.isArray(x) ? x.filter(Boolean) : null);
-
   const serviceOptions = useMemo(() => {
-    const fromDict = fromDictArray(bookT?.serviceOptions);
+    const fromDict = Array.isArray((bookT as any)?.serviceOptions)
+      ? (bookT as any).serviceOptions.filter(Boolean)
+      : null;
     if (fromDict) return fromDict;
     return isAr ? copy.serviceOptionsAr : copy.serviceOptionsEn;
   }, [bookT, isAr, copy.serviceOptionsAr, copy.serviceOptionsEn]);
+
+  const uiMulti = useMemo(() => {
+    return {
+      clear: safeText((bookT as any)?.multiSelect?.clear, isAr ? "مسح" : "Clear"),
+      done: safeText((bookT as any)?.multiSelect?.done, isAr ? "تم" : "Done"),
+      remove: safeText((bookT as any)?.multiSelect?.remove, isAr ? "إزالة" : "Remove"),
+      selected: safeText((bookT as any)?.multiSelect?.selected, isAr ? "تم اختيار" : "selected"),
+    };
+  }, [bookT, isAr]);
 
   const [form, setForm] = useState({
     name: "",
@@ -405,7 +354,6 @@ export default function BookAppointment() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // ✅ Date validation on change (blocks Friday + past)
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextDate = e.target.value;
     setErrorMsg("");
@@ -426,7 +374,6 @@ export default function BookAppointment() {
     setForm((prev) => ({ ...prev, date: nextDate }));
   };
 
-  // ✅ Time validation on change (blocks outside hours)
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextTime = e.target.value;
     setErrorMsg("");
@@ -442,6 +389,8 @@ export default function BookAppointment() {
   };
 
   const getBookingsCountForDate = async (date: string) => {
+    // authMode can be passed here if needed:
+    // await client.models.Appointment.list({ filter: { date: { eq: date } }, authMode: "identityPool" })
     const { data, errors } = await client.models.Appointment.list({
       filter: { date: { eq: date } },
     });
@@ -449,7 +398,6 @@ export default function BookAppointment() {
     if (errors?.length) {
       throw new Error(errors.map((er) => er.message).join(" | "));
     }
-
     return data?.length ?? 0;
   };
 
@@ -487,7 +435,7 @@ export default function BookAppointment() {
 
       const timeAmPm = toAmPm(form.time);
 
-      await client.models.Appointment.create({
+      const createRes = await client.models.Appointment.create({
         name: form.name,
         email: form.email,
         phone: form.phone,
@@ -496,6 +444,10 @@ export default function BookAppointment() {
         date: form.date,
         time: timeAmPm,
       });
+
+      if (createRes.errors?.length) {
+        throw new Error(createRes.errors.map((er) => er.message).join(" | "));
+      }
 
       // Email (optional)
       const res = await fetch("/api/sendAppointmentEmail", {
@@ -531,7 +483,7 @@ export default function BookAppointment() {
   };
 
   return (
-    <div className={styles.appointmentContainer} dir={dir} lang={lang}>
+    <div className={styles.appointmentContainer} dir={dir} lang={language}>
       <h1>{copy.title}</h1>
 
       <div className={styles.note}>
@@ -542,10 +494,7 @@ export default function BookAppointment() {
         . {copy.noteClosedOn} <strong>{copy.friday}</strong>.
       </div>
 
-      {success && (
-        <div className={styles.successMessage}>{copy.successMessage}</div>
-      )}
-
+      {success && <div className={styles.successMessage}>{copy.successMessage}</div>}
       {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
 
       <form className={styles.appointmentForm} onSubmit={handleSubmit}>
@@ -592,6 +541,8 @@ export default function BookAppointment() {
             value={form.services}
             onChange={(next) => setForm((prev) => ({ ...prev, services: next }))}
             placeholder={copy.servicesPlaceholder}
+            ui={uiMulti}
+            isAr={isAr}
           />
         </div>
 
@@ -612,7 +563,7 @@ export default function BookAppointment() {
           required
           min={OPEN_TIME_24}
           max={CLOSE_TIME_24}
-          step={900} // 15 minutes
+          step={900}
         />
 
         <button type="submit" disabled={loading}>

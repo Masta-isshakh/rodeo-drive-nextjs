@@ -5,7 +5,8 @@ const schema = a.schema({
     .model({
       content: a.string(),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    // ✅ keep it public (guest) without API keys
+    .authorization((allow) => [allow.guest().to(["create", "read", "update", "delete"])]),
 
   Appointment: a
     .model({
@@ -13,13 +14,14 @@ const schema = a.schema({
       email: a.string(),
       phone: a.string(),
 
-      carModel: a.string(), // ✅ NEW
-      services: a.string().array(),  // ✅ NEW
+      carModel: a.string(),
+      services: a.string().array(),
 
       date: a.string(),
-      time: a.string(),     // will store "hh:mm AM/PM"
+      time: a.string(), // "hh:mm AM/PM"
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    // ✅ guest can create + read (list)
+    .authorization((allow) => [allow.guest().to(["create", "read"])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -27,7 +29,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
-    apiKeyAuthorizationMode: { expiresInDays: 30 },
+    // ✅ NO API KEY anywhere
+    defaultAuthorizationMode: "identityPool",
   },
 });
