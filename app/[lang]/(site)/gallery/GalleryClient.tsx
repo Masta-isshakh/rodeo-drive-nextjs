@@ -49,8 +49,9 @@ function safeText(value: unknown, fallback: string) {
   return typeof value === "string" && value.trim() ? value : fallback;
 }
 
-function buildWatchUrl(lang: "en" | "ar", src: string) {
-    return `/${lang}/watch?src=${encodeURIComponent(src)}`;
+// ✅ FIX: require lang + src
+function buildWatchUrl(lang: Lang, src: string) {
+  return `/${lang}/watch?src=${encodeURIComponent(src)}`;
 }
 
 // Client-only behaviors (lazy + GSAP code-split)
@@ -102,7 +103,6 @@ export default function GalleryClient({
   const labels = useMemo(() => {
     const isAr = lang === "ar";
 
-    // Optional nested groups:
     const heroT = galleryT?.hero ?? {};
     const statsT = galleryT?.stats ?? {};
     const baT = galleryT?.beforeAfter ?? {};
@@ -111,7 +111,6 @@ export default function GalleryClient({
     const ctaT = galleryT?.cta ?? {};
 
     return {
-      // Carousel
       videosTitle: safeText(
         carouselT?.videosTitle ?? galleryT?.videosTitle,
         isAr ? "معرض الفيديو" : "Video Gallery"
@@ -121,7 +120,6 @@ export default function GalleryClient({
         isAr ? "لقطات من أحدث أعمالنا" : "Highlights from our latest work"
       ),
 
-      // Hero
       galleryTitle: safeText(
         heroT?.title ?? galleryT?.galleryTitle,
         isAr ? "المعرض" : "Gallery"
@@ -131,7 +129,6 @@ export default function GalleryClient({
         isAr ? "أعمالنا والتحولات" : "Our recent work and transformations"
       ),
 
-      // Stats labels
       carsDetailedLabel: safeText(
         statsT?.carsDetailedLabel ?? galleryT?.carsDetailedLabel,
         isAr ? "سيارات تم تفصيلها" : "Cars detailed"
@@ -149,7 +146,6 @@ export default function GalleryClient({
         isAr ? "رضا العملاء" : "Satisfaction"
       ),
 
-      // Before/After
       beforeAfterTitle: safeText(
         baT?.title ?? galleryT?.beforeAfterTitle,
         isAr ? "قبل / بعد" : "Before / After"
@@ -167,7 +163,6 @@ export default function GalleryClient({
         isAr ? "تحولات حقيقية من فريقنا." : "Real transformations by our team."
       ),
 
-      // S3
       s3Title: safeText(
         s3T?.title ?? galleryT?.s3Title,
         isAr ? "عرض الأعمال" : "Work Showcase"
@@ -181,7 +176,6 @@ export default function GalleryClient({
         isAr ? "شاهد كامل" : "Watch Full"
       ),
 
-      // CTA
       ctaTitle: safeText(
         ctaT?.title ?? galleryT?.ctaTitle,
         isAr ? "جاهز لحماية سيارتك؟" : "Ready to protect your car?"
@@ -197,11 +191,8 @@ export default function GalleryClient({
     };
   }, [galleryT, lang]);
 
-  // Translate S3 pills + Before/After titles/descriptions in client so they react to lang toggle
   const localizedS3 = useMemo(() => {
     const isAr = lang === "ar";
-
-    // Optional translation dictionaries:
     const s3LabelsDict = galleryT?.s3Labels ?? galleryT?.labels?.s3 ?? {};
 
     return s3Videos.map((v) => {
@@ -213,9 +204,8 @@ export default function GalleryClient({
 
   const localizedBA = useMemo(() => {
     const isAr = lang === "ar";
-
     const itemsDict = galleryT?.beforeAfter?.items ?? galleryT?.beforeAfterItems ?? {};
-    // If you store by key: itemsDict[color_ppf] = { title, desc }
+
     return beforeAfterComparisons.map((c) => {
       const fallbackTitle = isAr ? c.titleAr : c.titleEn;
       const fallbackDesc = isAr ? c.descAr : c.descEn;
@@ -228,32 +218,21 @@ export default function GalleryClient({
     });
   }, [beforeAfterComparisons, galleryT, lang]);
 
-  // Localize /contact link to /[lang]/contact
   const pathname = usePathname();
   const contactHref = useMemo(() => {
     const clean = (pathname || "").split("?")[0];
     const parts = clean.split("/").filter(Boolean);
+    // Always keep language-prefixed links
     if (parts.length && (parts[0] === "en" || parts[0] === "ar")) return `/${lang}/contact`;
-    return "/contact";
+    return `/${lang}/contact`;
   }, [pathname, lang]);
 
-  // Motion / enhancements should re-init when lang changes
   const motionKey = `${lang}|gallery`;
 
   return (
-    <main
-      className={styles.galleryPage}
-      data-gallery-root
-      dir={dir}
-      lang={lang}
-      key={lang}
-    >
+    <main className={styles.galleryPage} data-gallery-root dir={dir} lang={lang} key={lang}>
       {/* VIDEO CAROUSEL */}
-      <section
-        className={styles.videoCarouselSection}
-        aria-label="Video carousel"
-        data-gallery-carousel
-      >
+      <section className={styles.videoCarouselSection} aria-label="Video carousel" data-gallery-carousel>
         <div className={styles.videoCarouselHeader} data-gallery-animate>
           <h2 className={styles.videoCarouselTitle}>{labels.videosTitle}</h2>
           <p className={styles.videoCarouselSubtitle}>{labels.videosSubtitle}</p>
@@ -261,13 +240,7 @@ export default function GalleryClient({
 
         <div className={styles.videoTrack} role="list" data-carousel-track>
           {videoItems.map((v) => (
-            <div
-              className={styles.videoSlide}
-              key={v.id}
-              role="listitem"
-              data-carousel-slide
-              data-gallery-card
-            >
+            <div className={styles.videoSlide} key={v.id} role="listitem" data-carousel-slide data-gallery-card>
               <div className={styles.videoFrame}>
                 <video
                   data-gallery-video
@@ -348,11 +321,7 @@ export default function GalleryClient({
 
           <div className={styles.comparisonsGrid}>
             {localizedBA.map((comparison) => (
-              <div
-                key={comparison.id}
-                className={styles.comparisonCard}
-                data-gallery-card
-              >
+              <div key={comparison.id} className={styles.comparisonCard} data-gallery-card>
                 <div className={styles.comparisonImages}>
                   <div className={styles.imageWrapper}>
                     <img
@@ -385,9 +354,7 @@ export default function GalleryClient({
 
                 <div className={styles.comparisonInfo}>
                   <h3 className={styles.comparisonTitle}>{comparison.title}</h3>
-                  <p className={styles.comparisonDescription}>
-                    {comparison.description}
-                  </p>
+                  <p className={styles.comparisonDescription}>{comparison.description}</p>
                 </div>
               </div>
             ))}
@@ -396,11 +363,7 @@ export default function GalleryClient({
       </section>
 
       {/* S3 VIDEOS */}
-      <section
-        className={styles.s3Section}
-        aria-label="Work showcase videos"
-        data-gallery-s3
-      >
+      <section className={styles.s3Section} aria-label="Work showcase videos" data-gallery-s3>
         <div className={styles.container}>
           <h2 className={styles.sectionTitle} data-gallery-animate>
             {labels.s3Title}
@@ -411,18 +374,14 @@ export default function GalleryClient({
 
           <div className={styles.s3Grid}>
             {localizedS3.map((v) => (
-              <article
-                key={v.id}
-                className={styles.s3Card}
-                data-gallery-s3card
-                data-gallery-card
-              >
+              <article key={v.id} className={styles.s3Card} data-gallery-s3card data-gallery-card>
                 <div className={styles.s3Top}>
-                  <span className={styles.s3Pill}>{v.label}</span>
+                  <span className={styles.s3Pill}>{(v as any).label}</span>
 
+                  {/* ✅ FIXED HERE */}
                   <a
                     className={styles.s3Link}
-                    href={buildWatchUrl(v.src)}
+                    href={buildWatchUrl(lang, v.src)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -462,7 +421,7 @@ export default function GalleryClient({
         </div>
       </section>
 
-      {/* Client-only behaviors (lazy + reduced motion guards) */}
+      {/* Client-only behaviors */}
       <GalleryEnhancements motionKey={motionKey} />
     </main>
   );

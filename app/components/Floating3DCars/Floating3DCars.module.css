@@ -152,7 +152,6 @@
 .carImage {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  -webkit-transform-style: preserve-3d;
 }
 
 /* Ensure cars don't interfere with text readability */
