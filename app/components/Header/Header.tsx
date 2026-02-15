@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { useI18n } from "../../lib/i18n";
 import Image from "next/image";
@@ -17,7 +17,25 @@ const HeaderMotion = dynamic(() => import("./HeaderMotion"), {
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { language, setLanguage, t } = useI18n();
+
+  const urlLang: "en" | "ar" = pathname?.split("/")[1] === "ar" ? "ar" : "en";
+  const withLang = (href: string) => {
+    const clean = href.startsWith("/") ? href : `/${href}`;
+    if (clean === "/") return `/${urlLang}`;
+    return `/${urlLang}${clean}`;
+  };
+
+  const switchLang = (next: "en" | "ar") => {
+    const current = urlLang;
+    if (next === current) return;
+
+    const rest = pathname.replace(/^\/(en|ar)(?=\/|$)/, "");
+    const nextPath = `/${next}${rest || ""}`;
+    setLanguage(next);
+    router.push(nextPath);
+  };
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -32,14 +50,14 @@ export default function Header() {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: t.nav.home, href: "/" },
-      { label: t.nav.services, href: "/services" },
-      { label: t.nav.gallery, href: "/gallery" },
-      { label: t.nav.about, href: "/about" },
-      { label: t.nav.faq, href: "/faq" },
-      { label: t.nav.contact, href: "/contact" },
+      { label: t.nav.home, href: withLang("/") },
+      { label: t.nav.services, href: withLang("/services") },
+      { label: t.nav.gallery, href: withLang("/gallery") },
+      { label: t.nav.about, href: withLang("/about") },
+      { label: t.nav.faq, href: withLang("/faq") },
+      { label: t.nav.contact, href: withLang("/contact") },
     ],
-    [t]
+    [t, urlLang]
   );
 
   // ✅ Optimized scroll listener (no extra state updates)
@@ -151,21 +169,21 @@ export default function Header() {
             <div className={styles.languageSwitch} aria-label="Language">
               <button
                 className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
-                onClick={() => setLanguage("en")}
+                onClick={() => switchLang("en")}
                 type="button"
               >
                 EN
               </button>
               <button
                 className={`${styles.langButton} ${language === "ar" ? styles.active : ""}`}
-                onClick={() => setLanguage("ar")}
+                onClick={() => switchLang("ar")}
                 type="button"
               >
                 AR
               </button>
             </div>
 
-            <Link className={styles.ctaButton} href="/book">
+            <Link className={styles.ctaButton} href={withLang("/book")}>
               {t.nav.bookNow}
             </Link>
 
@@ -232,7 +250,7 @@ export default function Header() {
           </ul>
 
           <div className={styles.mobileActions}>
-            <Link className={styles.mobileCta} href="/book" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link className={styles.mobileCta} href={withLang("/book")} onClick={() => setIsMobileMenuOpen(false)}>
               {t.nav.bookNow}
             </Link>
 
@@ -250,14 +268,14 @@ export default function Header() {
             <div className={styles.mobileLangRow}>
               <button
                 className={`${styles.langButton} ${language === "en" ? styles.active : ""}`}
-                onClick={() => setLanguage("en")}
+                onClick={() => switchLang("en")}
                 type="button"
               >
                 EN
               </button>
               <button
                 className={`${styles.langButton} ${language === "ar" ? styles.active : ""}`}
-                onClick={() => setLanguage("ar")}
+                onClick={() => switchLang("ar")}
                 type="button"
               >
                 AR

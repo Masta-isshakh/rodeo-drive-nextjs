@@ -8,8 +8,12 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import type { Language } from "./translations";
+
 import { getTranslation } from "./translations";
+import type { Language } from "./translations";
+
+// ✅ This makes: import { type Language } from "./lib/i18n" valid
+export type { Language };
 
 type I18nContextValue = {
   language: Language;
@@ -51,11 +55,26 @@ function applyHtml(lang: Language) {
   document.documentElement.setAttribute("lang", lang);
 }
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
+export function I18nProvider({
+  children,
+  initialLanguage,
+}: {
+  children: React.ReactNode;
+  initialLanguage?: Language;
+}) {
   const [language, _setLanguage] = useState<Language>(() => {
+    if (initialLanguage === "en" || initialLanguage === "ar") return initialLanguage;
     if (typeof window === "undefined") return "en";
     return readStorageLang() ?? readCookieLang() ?? "en";
   });
+
+  // Sync when route lang changes
+  useEffect(() => {
+    if (initialLanguage && initialLanguage !== language) {
+      _setLanguage(initialLanguage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialLanguage]);
 
   useEffect(() => {
     applyHtml(language);
@@ -63,7 +82,6 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   }, [language]);
 
   const setLanguage = useCallback((lang: Language) => {
-    // make persistence instant
     writeLang(lang);
     applyHtml(lang);
     _setLanguage(lang);

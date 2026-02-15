@@ -1,291 +1,178 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import styles from "./ServicesHighlight.module.css";
-import { useI18n } from "../../lib/i18n";
-import { useState } from "react";
+import Link from "next/link";
+import { useI18n } from "@/app/lib/i18n";
+import styles from "./ServicesHighlightHome.module.css";
 
-type Service = {
-  title: string;
-  description: string;
-  image: string;
-  tone?: "silver" | "burgundy";
+type Card = {
+  key: string;
+  slug: string;
+
+  // icon (small)
+  img: string;
+
+  // ✅ NEW: large background image for split card
+  bg: string;
+
+  titleEN: string;
+  titleAR: string;
+  descEN: string;
+  descAR: string;
 };
 
-function safeText(v: unknown, fallback: string) {
-  return typeof v === "string" && v.trim() ? v : fallback;
-}
-
-function getMotionFlags() {
-  if (typeof window === "undefined" || !window.matchMedia) {
-    return { reduced: false, lite: false };
-  }
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const lite =
-    window.matchMedia("(max-width: 768px)").matches ||
-    window.matchMedia("(pointer: coarse)").matches;
-
-  return { reduced, lite };
-}
+const CARDS: Card[] = [
+  {
+    key: "ppf",
+    slug: "full-protection-ppf",
+    img: "/ppf-icon.avif",
+    bg: "/ppf.avif", // ✅ use your real big image
+    titleEN: "PPF Protection",
+    titleAR: "حماية PPF",
+    descEN: "Shield paint from chips, sand abrasion, and daily wear — built for Doha roads.",
+    descAR: "حماية الطلاء من ضربات الحصى وخدوش الرمال والاستخدام اليومي — مناسبة لطرق الدوحة.",
+  },
+  {
+    key: "tint",
+    slug: "window-solar-film",
+    img: "/SolarWindowTint-icon.avif",
+    bg: "/solar.avif",
+    titleEN: "Nano-Ceramic Tint",
+    titleAR: "تظليل نانو سيراميك",
+    descEN: "Reduce heat and UV for comfort, clarity, and a premium look.",
+    descAR: "تقليل الحرارة وUV لراحة أفضل ورؤية أوضح ومظهر فاخر.",
+  },
+  {
+    key: "detailing",
+    slug: "detailing-coating",
+    img: "/Exteriordetailing-icon.avif",
+    bg: "/polish2.avif",
+    titleEN: "Detailing & Coating",
+    titleAR: "تفصيل + نانو",
+    descEN: "Restore gloss, correct paint, and lock in protection with nano coating.",
+    descAR: "استعادة اللمعة وتصحيح الطلاء وحمايته بطبقة نانو.",
+  },
+  {
+    key: "windshield",
+    slug: "windshield-services",
+    img: "/windsheild-icon.avif",
+    bg: "/windshield.avif", // ✅ put a real image in /public (or change to existing)
+    titleEN: "Windshield Protection",
+    titleAR: "حماية الزجاج",
+    descEN: "Reduce chips and improve durability with premium windshield protection.",
+    descAR: "تقليل ضربات الحصى وزيادة المتانة بحماية زجاج فاخرة.",
+  },
+];
 
 export default function ServicesHighlight() {
-  const { t } = useI18n();
-  const sectionRef = useRef<HTMLElement>(null);
+  const { language } = useI18n() as any;
+  const lang = String(language || "en").toLowerCase().startsWith("ar") ? "ar" : "en";
 
-  // ✅ Read highlight keys from translations (EN/AR)
-  const ui = useMemo(() => {
-    const s = (t as any)?.services ?? {};
-    const h = s?.highlight ?? {};
-    const meta = h?.meta ?? {};
-
-    return {
-      kicker: safeText(h.kicker, "Comprehensive automotive care solutions"),
-      title: safeText(h.title, "Premium Services"),
-      lead: safeText(
-        h.lead,
-        "Precision. Protection. Performance — engineered finishes for Qatar’s roads and sun."
-      ),
-
-      viewAll: safeText(h.viewAll, safeText(s?.viewAll, "View All Services")),
-      learnMore: safeText(h.learnMore, safeText(s?.learnMore, "Learn More")),
-
-      signatureBadge: safeText(h.signatureBadge, "Signature Service"),
-      dohaPill: safeText(h.dohaPill, "Doha • Qatar"),
-
-      bottomText: safeText(
-        h.bottomText,
-        "Need the right package for your vehicle? Explore services and book a consultation."
-      ),
-      contactCta: safeText(h.contactCta, "Contact"),
-
-      metaPremiumTop: safeText(meta.premiumTop, "Premium"),
-      metaPremiumBottom: safeText(meta.premiumBottom, "Materials"),
-
-      metaExpertTop: safeText(meta.expertTop, "Expert"),
-      metaExpertBottom: safeText(meta.expertBottom, "Technicians"),
-
-      metaLuxuryTop: safeText(meta.luxuryTop, "Luxury"),
-      metaLuxuryBottom: safeText(meta.luxuryBottom, "Finish"),
-    };
-  }, [t]);
-
-  const services: Service[] = useMemo(() => {
-    const s = (t as any)?.services ?? {};
-    const list = s?.list ?? {};
-    const desc = s?.descriptions ?? {};
-
-    return [
-      {
-        title: safeText(list.paintProtection, "Paint Protection"),
-        description: safeText(
-          desc.paintProtectionDesc ?? desc.paintProtection,
-          "Premium protection for your paint."
-        ),
-        image: "/ppf.avif",
-        tone: "silver",
-      },
-      {
-        title: safeText(list.ceramicCoating, "Ceramic Coating"),
-        description: safeText(
-          desc.ceramicCoatingDesc ?? desc.ceramicCoating,
-          "Long-lasting hydrophobic gloss."
-        ),
-        image: "/ceramic.avif",
-        tone: "burgundy",
-      },
-      {
-        title: safeText(list.polish, "Polish"),
-        description: safeText(desc.polishDesc ?? desc.polish, "Refined clarity and depth."),
-        image: "/polish2.avif",
-        tone: "silver",
-      },
-      {
-        title: safeText(list.blackEdition, "Black Edition"),
-        description: safeText(
-          desc.blackEditionDesc ?? desc.blackEdition,
-          "Deep, uniform, luxury finish."
-        ),
-        image: "/defenderchangedcolor.avif",
-        tone: "burgundy",
-      },
-      {
-        title: safeText(list.smartRepair, "Smart Repair"),
-        description: safeText(
-          desc.smartRepairDesc ?? desc.smartRepair,
-          "Targeted repair for minor defects."
-        ),
-        image: "/paintoriginal.avif",
-        tone: "silver",
-      },
-      {
-        title: safeText(list.nanoLeather, "Nano Leather"),
-        description: safeText(
-          desc.nanoLeatherDesc ?? desc.nanoLeather,
-          "Interior protection and care."
-        ),
-        image: "/solar.avif",
-        tone: "burgundy",
-      },
-    ];
-  }, [t]);
-
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (!root) return;
-
-    const { reduced, lite } = getMotionFlags();
-    root.classList.add(styles.ready);
-
-    if (reduced || lite) {
-      const items = root.querySelectorAll<HTMLElement>("[data-reveal]");
-      items.forEach((el) => el.classList.add(styles.in));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          (entry.target as HTMLElement).classList.add(styles.in);
-          io.unobserve(entry.target);
+  const ui =
+    lang === "ar"
+      ? {
+          kicker: "الخدمات الأساسية لحماية سيارتك في قطر",
+          title: "خدمات حماية فاخرة — بمعايير روديو درايف",
+          subtitle:
+            "اختر الخدمة المناسبة، وشاهد التفاصيل أو اطلع على دليل الحماية لمعرفة الفوائد وخطوات التنفيذ.",
+          ctaServices: "عرض كل الخدمات",
+          ctaGuide: "دليل الحماية",
+          ctaDetails: "عرض التفاصيل",
+          badge: "Premium Finish",
         }
-      },
-      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
-    );
+      : {
+          kicker: "Essential protection services for Qatar",
+          title: "Premium Protection Services — the Rodeo Drive standard",
+          subtitle:
+            "Pick a service and view details, or explore the protection guide to understand benefits and process.",
+          ctaServices: "View All Services",
+          ctaGuide: "Protection Guide",
+          ctaDetails: "View details",
+          badge: "Premium Finish",
+        };
 
-    const targets = root.querySelectorAll<HTMLElement>("[data-reveal]");
-    targets.forEach((el) => io.observe(el));
-
-    return () => io.disconnect();
-  }, []);
-
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  function openLightbox(i: number): void {
-    setLightboxIndex(i);
-  }
-
-  function closeLightbox(): void {
-    setLightboxIndex(null);
-  }
-
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeLightbox();
-    };
-    if (lightboxIndex !== null) {
-      document.addEventListener("keydown", handleEscape);
-      return () => document.removeEventListener("keydown", handleEscape);
-    }
-  }, [lightboxIndex]);
+  const base = `/${lang}`;
 
   return (
-    <section className={styles.section} ref={sectionRef}>
-      <div className={styles.container}>
-        <header className={styles.header} data-reveal>
-          <div className={styles.headerLeft}>
-            <p className={styles.kicker}>{ui.kicker}</p>
-            <h2 className={styles.title}>{ui.title}</h2>
-            <p className={styles.lead}>{ui.lead}</p>
-          </div>
+    <section className={styles.section} aria-label={lang === "ar" ? "خدمات الحماية" : "Protection services"}>
+      <div className={styles.wrap}>
+        <header className={styles.header}>
+          <p className={styles.kicker}>{ui.kicker}</p>
+          <h2 className={styles.h2}>{ui.title}</h2>
+          <p className={styles.subtitle}>{ui.subtitle}</p>
 
-          <div className={styles.headerRight}>
-            <Link href="/services" className={styles.primaryCta}>
-              {ui.viewAll}
-              <span className={styles.ctaArrow} aria-hidden="true">
-                →
-              </span>
+          <div className={styles.ctas}>
+            <Link className={styles.btnPrimary} href={`${base}/services`}>
+              {ui.ctaServices} <span aria-hidden="true">→</span>
             </Link>
-
-            <div className={styles.meta}>
-              <div className={styles.metaItem}>
-                <span className={styles.metaTop}>{ui.metaPremiumTop}</span>
-                <span className={styles.metaBottom}>{ui.metaPremiumBottom}</span>
-              </div>
-              <div className={styles.metaDivider} />
-              <div className={styles.metaItem}>
-                <span className={styles.metaTop}>{ui.metaExpertTop}</span>
-                <span className={styles.metaBottom}>{ui.metaExpertBottom}</span>
-              </div>
-              <div className={styles.metaDivider} />
-              <div className={styles.metaItem}>
-                <span className={styles.metaTop}>{ui.metaLuxuryTop}</span>
-                <span className={styles.metaBottom}>{ui.metaLuxuryBottom}</span>
-              </div>
-            </div>
+            <Link className={styles.btnGhost} href={`${base}/protection-guide`}>
+              {ui.ctaGuide} <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </header>
 
-        <div className={styles.grid} data-reveal>
-          {services.map((s, i) => (
-            <article
-              key={`${s.title}-${i}`}
-              className={`${styles.card} ${s.tone === "burgundy" ? styles.toneB : styles.toneS}`}
-            >
-              <div className={styles.media}>
-                <Image
-                  src={s.image}
-                  alt={s.title}
-                  fill
-                  sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 380px"
-                  className={styles.image}
-                  priority={false}
-                  loading="lazy"
-                  decoding="async"
-                />
+        <div className={styles.splitStack}>
+          {CARDS.map((c, idx) => {
+            const reverse = idx % 2 === 1;
+            const title = lang === "ar" ? c.titleAR : c.titleEN;
+            const desc = lang === "ar" ? c.descAR : c.descEN;
 
-                <div className={styles.mediaOverlay} aria-hidden="true" />
+            return (
+              <article key={c.key} className={`${styles.splitCard} ${reverse ? styles.reverse : ""}`}>
+                {/* IMAGE SIDE */}
+                <div className={styles.media}>
+                  <Image
+                    src={c.bg}
+                    alt={title}
+                    fill
+                    priority={idx === 0}
+                    sizes="(max-width: 980px) 98vw, 49vw"
+                    className={styles.bgImg}
+                  />
+                  <div className={styles.mediaShade} aria-hidden="true" />
 
-                <div className={styles.badge}>
-                  <span className={styles.badgeDot} />
-                  {ui.signatureBadge}
+                  <div className={styles.mediaBadge} aria-hidden="true">
+                    <span className={styles.badgeDot} />
+                    <span className={styles.badgeText}>{ui.badge}</span>
+                  </div>
                 </div>
 
-                {/* ✅ Invisible click layer (doesn't affect image rendering) */}
-                <button
-                  type="button"
-                  className={styles.mediaClickArea}
-                  onClick={() => openLightbox(i)}
-                  aria-label={`Open ${s.title}`}
-                />
-              </div>
+                {/* TEXT SIDE */}
+                <div className={styles.content}>
+                  <div className={styles.contentInner}>
+                    <div className={styles.topRow}>
+                      <div className={styles.icon}>
+                        <Image src={c.img} alt="" width={44} height={44} className={styles.iconImg} />
+                      </div>
+                      <span className={styles.place}>{lang === "ar" ? "الدوحة • قطر" : "Doha • Qatar"}</span>
+                    </div>
 
+                    <h3 className={styles.h3}>{title}</h3>
+                    <p className={styles.p}>{desc}</p>
 
-              <div className={styles.body}>
-                <h3 className={styles.cardTitle}>{s.title}</h3>
-                <p className={styles.desc}>{s.description}</p>
+                    <div className={styles.actions}>
+                      <Link className={styles.primary} href={`${base}/book`}>
+                        {lang === "ar" ? "احجز الآن" : "Book Now"} <span aria-hidden="true">→</span>
+                      </Link>
+                      <Link className={styles.secondary} href={`${base}/services/${c.slug}`}>
+                        {ui.ctaDetails} <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
 
-                <div className={styles.actions}>
-                  <Link href="/services" className={styles.link}>
-                    {ui.learnMore}
-                    <span className={styles.arrow} aria-hidden="true">
-                      →
-                    </span>
-                  </Link>
-
-                  <span className={styles.pill} aria-hidden="true">
-                    {ui.dohaPill}
-                  </span>
+                    <div className={styles.trustRow}>
+                      <span className={styles.trust}>{lang === "ar" ? "فحص" : "Inspection"}</span>
+                      <span className={styles.sep} />
+                      <span className={styles.trust}>{lang === "ar" ? "جودة" : "Premium Materials"}</span>
+                      <span className={styles.sep} />
+                      <span className={styles.trust}>{lang === "ar" ? "فحص نهائي" : "QC Finish"}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <div className={styles.bottomRow} data-reveal>
-          <div className={styles.bottomLine} />
-          <p className={styles.bottomText}>{ui.bottomText}</p>
-          <Link href="/contact" className={styles.secondaryCta}>
-            {ui.contactCta}
-            <span className={styles.ctaArrow} aria-hidden="true">
-              →
-            </span>
-          </Link>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
-

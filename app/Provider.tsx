@@ -4,16 +4,23 @@ import { useEffect } from "react";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 
-import { I18nProvider } from "./lib/i18n";
+import { I18nProvider, type Language } from "./lib/i18n";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import CookieBanner from "./components/CookieBanner/CookieBanner";
+import NoImageDownload from "./components/NoImageDownload";
 
 let isConfigured = false;
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+  initialLanguage,
+}: {
+  children: React.ReactNode;
+  initialLanguage: Language;
+}) {
   useEffect(() => {
-    // Configure Amplify une seule fois (évite reconfig en dev + HMR)
+    // Configure Amplify once (avoid reconfig on HMR)
     if (!isConfigured) {
       Amplify.configure(outputs, { ssr: false });
       isConfigured = true;
@@ -21,7 +28,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <I18nProvider>
+    <I18nProvider initialLanguage={initialLanguage}>
+      <NoImageDownload />
       <Header />
       {children}
       <Footer />

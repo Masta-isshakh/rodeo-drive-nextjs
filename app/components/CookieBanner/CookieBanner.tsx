@@ -112,7 +112,7 @@ export default function CookieBanner() {
       <div className={styles.card}>
         <div className={styles.header}>
           <div className={styles.title}>{copy.title}</div>
-          <a className={styles.link} href="/cookie-policy">
+          <a className={styles.link} href={`/${lang}/cookie-policy`}>
             {copy.policy}
           </a>
         </div>

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 import { SITE } from "@/app/config/site";
 
@@ -12,6 +15,14 @@ function toTelHref(phone: string) {
 }
 
 export default function Footer() {
+  const pathname = usePathname();
+  const lang: "en" | "ar" = pathname?.split("/")[1] === "ar" ? "ar" : "en";
+  const withLang = (href: string) => {
+    const clean = href.startsWith("/") ? href : `/${href}`;
+    if (clean === "/") return `/${lang}`;
+    return `/${lang}${clean}`;
+  };
+
   const ids = {
     root: "site-footer",
     content: "footer-content",
@@ -56,7 +67,7 @@ export default function Footer() {
   const email = "info@rodeodrive.me";
 
   return (
-    <footer className={styles.footer} id={ids.root} dir="ltr">
+    <footer className={styles.footer} id={ids.root} dir={lang === "ar" ? "rtl" : "ltr"}>
       {/* ✅ Client-only: set labels + RTL/LTR behavior (same translation concept) */}
       <FooterText ids={ids} phone={phone} year={year} />
 
@@ -145,12 +156,12 @@ export default function Footer() {
               Explore
             </h3>
             <ul className={styles.footerList}>
-              <li><Link href="/" className={styles.footerLink} id={ids.home}>Home</Link></li>
-              <li><Link href="/services" className={styles.footerLink} id={ids.services}>Services</Link></li>
-              <li><Link href="/gallery" className={styles.footerLink} id={ids.gallery}>Gallery</Link></li>
-              <li><Link href="/about" className={styles.footerLink} id={ids.about}>About</Link></li>
-              <li><Link href="/faq" className={styles.footerLink} id={ids.faq}>FAQ</Link></li>
-              <li><Link href="/contact" className={styles.footerLink} id={ids.contact}>Contact</Link></li>
+              <li><Link href={withLang("/")} className={styles.footerLink} id={ids.home}>Home</Link></li>
+              <li><Link href={withLang("/services")} className={styles.footerLink} id={ids.services}>Services</Link></li>
+              <li><Link href={withLang("/gallery")} className={styles.footerLink} id={ids.gallery}>Gallery</Link></li>
+              <li><Link href={withLang("/about")} className={styles.footerLink} id={ids.about}>About</Link></li>
+              <li><Link href={withLang("/faq")} className={styles.footerLink} id={ids.faq}>FAQ</Link></li>
+              <li><Link href={withLang("/contact")} className={styles.footerLink} id={ids.contact}>Contact</Link></li>
             </ul>
           </div>
 
@@ -160,11 +171,11 @@ export default function Footer() {
               Services
             </h3>
             <ul className={styles.footerList}>
-              <li><Link href="/services/full-protection-ppf" className={styles.footerLink} id={ids.paintProtection}>Paint Protection</Link></li>
-              <li><Link href="/services/detailing-coating" className={styles.footerLink} id={ids.detailing}>Detailing Services</Link></li>
-              <li><Link href="/services/window-solar-film" className={styles.footerLink} id={ids.nanoLeather}>Nano Leather</Link></li>
-              <li><Link href="/services/windshield-services" className={styles.footerLink} id={ids.windshield}>Windshield</Link></li>
-              <li><Link href="/services/paint-repair-services" className={styles.footerLink} id={ids.pdrandpaint}>Paintless Dent Repair and Paint</Link></li>
+              <li><Link href={withLang("/services/full-protection-ppf")} className={styles.footerLink} id={ids.paintProtection}>Paint Protection</Link></li>
+              <li><Link href={withLang("/services/detailing-coating")} className={styles.footerLink} id={ids.detailing}>Detailing Services</Link></li>
+              <li><Link href={withLang("/services/window-solar-film")} className={styles.footerLink} id={ids.nanoLeather}>Nano Leather</Link></li>
+              <li><Link href={withLang("/services/windshield-services")} className={styles.footerLink} id={ids.windshield}>Windshield</Link></li>
+              <li><Link href={withLang("/services/paint-repair-services")} className={styles.footerLink} id={ids.pdrandpaint}>Paintless Dent Repair and Paint</Link></li>
             </ul>
           </div>
 
@@ -210,9 +221,9 @@ export default function Footer() {
           </p>
 
           <div className={styles.footerBottomLinks}>
-            <Link href="/privacy" className={styles.footerBottomLink} id={ids.privacy}>Privacy Policy</Link>
-            <Link href="/terms" className={styles.footerBottomLink} id={ids.terms}>Terms of Service</Link>
-            <Link href="/cookie-policy" className={styles.footerBottomLink} id={ids.cookie}>Cookie Policy</Link>
+            <Link href={withLang("/privacy")} className={styles.footerBottomLink} id={ids.privacy}>Privacy Policy</Link>
+            <Link href={withLang("/terms")} className={styles.footerBottomLink} id={ids.terms}>Terms of Service</Link>
+            <Link href={withLang("/cookie-policy")} className={styles.footerBottomLink} id={ids.cookie}>Cookie Policy</Link>
           </div>
         </div>
       </div>

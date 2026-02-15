@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export type Lang = "en" | "ar";
 
-const SITE_URL = "https://www.rodeodrive.me"; // ✅ change to your domain
+const SITE_URL = "https://www.rodeodrive.me";
 
 const BRAND = {
   en: "Rodeo Drive Doha",
@@ -10,17 +10,28 @@ const BRAND = {
 };
 
 function pageTitle(lang: Lang, page: string) {
-  return lang === "ar"
-    ? `${page} | ${BRAND.ar}`
-    : `${page} | ${BRAND.en}`;
+  return lang === "ar" ? `${page} | ${BRAND.ar}` : `${page} | ${BRAND.en}`;
 }
 
-function alternates(path: string) {
+function normalizePath(path: string) {
+  // path is usually "/services" or "" for home
+  if (!path) return "";
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
+function alternates(lang: Lang, path: string) {
+  const p = normalizePath(path);
+  const suffix = p === "" ? "" : p;
+
   return {
-    canonical: path, // e.g. "/services"
+    canonical: `/${lang}${suffix}`,
+    languages: {
+      "en-QA": `/en${suffix}`,
+      "ar-QA": `/ar${suffix}`,
+      "x-default": `/en${suffix}`,
+    },
   } as const;
 }
-
 
 function ogImage(path: string) {
   return [
@@ -34,7 +45,7 @@ function ogImage(path: string) {
 
 export function buildPageMetadata(opts: {
   lang: Lang;
-  path: string; // "/services"
+  path: string; // "/services" or "" (home)
   titleEN: string;
   titleAR: string;
   descEN: string;
@@ -43,16 +54,15 @@ export function buildPageMetadata(opts: {
   keywordsAR?: string[];
   ogImagePath?: string; // "/og/services.jpg"
 }): Metadata {
-  const { lang, path } = opts;
+  const { lang } = opts;
+
+  const path = normalizePath(opts.path);
+  const suffix = path === "" ? "" : path;
 
   const title = lang === "ar" ? opts.titleAR : opts.titleEN;
   const description = lang === "ar" ? opts.descAR : opts.descEN;
 
-  const keywords =
-    lang === "ar"
-      ? (opts.keywordsAR ?? [])
-      : (opts.keywordsEN ?? []);
-
+  const keywords = lang === "ar" ? opts.keywordsAR ?? [] : opts.keywordsEN ?? [];
   const og = opts.ogImagePath ?? "/logo.avif";
 
   return {
@@ -62,14 +72,14 @@ export function buildPageMetadata(opts: {
     description,
     keywords,
 
-    alternates: alternates(path),
+    alternates: alternates(lang, suffix),
 
     openGraph: {
       type: "website",
       siteName: lang === "ar" ? BRAND.ar : BRAND.en,
       title: pageTitle(lang, title),
       description,
-      url: `/${lang}${path}`,
+      url: `${SITE_URL}/${lang}${suffix}`,
       locale: lang === "ar" ? "ar_QA" : "en_QA",
       alternateLocale: ["en_QA", "ar_QA"],
       images: ogImage(og),
