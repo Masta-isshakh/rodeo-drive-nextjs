@@ -56,7 +56,7 @@ const CARDS: Card[] = [
     key: "windshield",
     slug: "windshield-services",
     img: "/windsheild-icon.avif",
-    bg: "/windshield.avif", // ✅ put a real image in /public (or change to existing)
+    bg: "/windshield-clear.avif", // ✅ put a real image in /public (or change to existing)
     titleEN: "Windshield Protection",
     titleAR: "حماية الزجاج",
     descEN: "Reduce chips and improve durability with premium windshield protection.",
