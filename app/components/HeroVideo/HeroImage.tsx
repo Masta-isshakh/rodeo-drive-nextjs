@@ -28,7 +28,6 @@ export default function HeroImage() {
     },
   ];
 
-  // IDs so client can target (same idea as your old code)
   const ids = {
     root: "hero-root",
     overlay: "hero-overlay",
@@ -41,11 +40,8 @@ export default function HeroImage() {
 
   return (
     <section className={styles.hero} id={ids.root} aria-label="Rodeo Drive Hero">
-      {/* Pure CSS background ornaments (no JS) */}
       <div className={styles.bg} aria-hidden="true" />
       <div className={styles.grain} aria-hidden="true" />
-
-      {/* ✅ Carousel + translated content is client */}
       <HeroImageClient ids={ids} slides={slides} />
     </section>
   );

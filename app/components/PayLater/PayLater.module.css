@@ -4,7 +4,7 @@
   background:#ffffff;
 }
 
-/* 50% viewport height */
+/* Desktop: 50% viewport height */
 .hero{
   position:relative;
   width:100%;
@@ -21,10 +21,11 @@
 
 .bg{
   object-fit:cover;
+  object-position:center;
   transform: scale(1.02);
 }
 
-/* Light overlay so BLACK text stays readable */
+/* Light overlay (desktop/tablet only). On mobile we remove it. */
 .overlay{
   position:absolute;
   inset:0;
@@ -33,22 +34,28 @@
 /* Layout */
 .inner{
   position:relative;
-  text-align: center;
   z-index:2;
+
   height:100%;
   width:100%;
   max-width:1200px;
   margin:0 auto;
   padding: 22px 20px;
+
   display:flex;
   flex-direction:column;
+
+  /* ✅ this already pushes top and bottom apart */
   justify-content:space-between;
   gap: 18px;
+
+  text-align: center;
 }
 
 /* TOP BLOCK */
 .top{
   max-width: 860px;
+  margin: 0 auto;
 }
 
 /* ✅ No borders anywhere */
@@ -101,6 +108,7 @@
 /* BOTTOM BLOCK */
 .bottom{
   width: min(980px, 100%);
+  margin: 0 auto;
 }
 
 /* Bullets */
@@ -146,21 +154,61 @@
   text-shadow: 0 10px 22px rgba(255,255,255,.35);
 }
 
-/* Responsive */
+/* Responsive bullets */
 @media (max-width: 900px){
   .list{
     grid-template-columns: 1fr;
   }
 }
 
+/* ✅ MOBILE: full image visible + top cluster pinned top, bottom pinned bottom, BIG SPACE */
 @media (max-width: 640px){
   .hero{
-    height:auto;
-    min-height: 560px;
+    /* Use small viewport height to avoid URL bar jump */
+    height: 60svh;
+    min-height: 460px;
+    background:#ffffff; /* behind contain image */
   }
+
+  /* ✅ FULL image on phone */
+  .bg{
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  /* ✅ No overlay on mobile (so nothing hides the image) */
+  .overlay{
+    display:none;
+  }
+
   .inner{
+    height: 100%;
     padding: 18px 16px;
+
+    /* ✅ force the “big space” between clusters */
+    justify-content: space-between;
+    gap: 0;
+
+    /* optional: ensure top stays really at top and bottom at bottom */
   }
+
+  .top{
+    align-self: stretch;
+    margin-top: 6px;
+  }
+
+  .bottom{
+    align-self: stretch;
+    margin-bottom: 8px;
+  }
+
+  /* Make sure text never touches edges */
+  .top, .bottom{
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
   .title{
     letter-spacing: .06em;
   }

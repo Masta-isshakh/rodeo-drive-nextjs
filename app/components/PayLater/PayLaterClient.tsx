@@ -45,10 +45,12 @@ export default function PayLaterClient() {
 
   return (
     <main className={styles.page} dir={dir}>
-      <section className={styles.hero} aria-label="PayLater">
+      <section
+        className={styles.hero}
+        aria-label={lang === "ar" ? "PayLater لدى روديو درايف" : "PayLater at Rodeo Drive"}
+      >
         {/* Background image */}
         <div className={styles.media} aria-hidden="true">
-          {/* Put your image at: /public/paylater/paylater-bg.avif */}
           <Image
             src="/paylater.avif"
             alt=""

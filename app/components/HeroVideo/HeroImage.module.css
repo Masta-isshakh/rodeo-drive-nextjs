@@ -56,12 +56,14 @@
   transform: scale(1.00);
 }
 
+/* Desktop behavior: premium full bleed (can crop) */
 .img{
   object-fit: cover;
+  object-position: center;
   filter: saturate(1.05) contrast(1.03);
 }
 
-/* luxury overlay + readability */
+/* overlays */
 .overlay{
   position:absolute;
   inset:0;
@@ -78,33 +80,27 @@
   pointer-events:none;
 }
 
-/* CONTENT */
-.contentWrap{
+/* ✅ NEW: UI LAYER (top badge + bottom controls only) */
+.uiLayer{
   position:relative;
   height:100%;
   width:100%;
+  z-index:3;
+
   display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 88px 20px 28px;
+  flex-direction:column;
+  justify-content:space-between;
+
+  /* safe area padding */
+  padding: 18px 20px;
 }
 
-.content{
-  width: 100%;
-  max-width: 980px;
-  text-align:center;
-  display:grid;
-  place-items:center;
-  gap: 12px;
-}
-
-/* kicker */
-.kickerRow{
+.topBar{
+  width:100%;
   display:flex;
-  align-items:center;
   justify-content:center;
-  gap: 10px;
-  flex-wrap:wrap;
+  align-items:flex-start;
+  padding-top: 6px;
 }
 
 .kickerBadge{
@@ -120,110 +116,15 @@
   backdrop-filter: blur(10px);
 }
 
-.kickerDot{
-  width:4px;height:4px;border-radius:50%;
-  background: rgba(191,161,74,.95);
-}
-
-.kickerText{
-  color: rgba(255,255,255,.80);
-  font-weight: 800;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-
-.title{
-  margin: 10px 0 0;
-  line-height: 1.06;
-  font-weight: 900;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  text-shadow: 0 18px 50px rgba(0,0,0,.45);
-}
-
-.titleLine{
-  display:block;
-  font-size: clamp(1.85rem, 3.2vw, 3.55rem);
-  background: linear-gradient(135deg, #ffffff 0%, #d7d7d7 55%, #ffffff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.tagline{
-  display:inline-flex;
-  gap: 10px;
-  align-items:center;
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.20);
-  background: rgba(255,255,255,.06);
-  color: rgba(255,255,255,.90);
-  text-transform: uppercase;
-  letter-spacing: .18em;
-  font-weight: 850;
-  font-size: clamp(0.82rem, 1.05vw, 1rem);
-  backdrop-filter: blur(10px);
-}
-
-.desc{
-  max-width: 820px;
-  margin: 0 auto;
-  color: rgba(255,255,255,.86);
-  line-height: 1.75;
-  font-size: clamp(0.95rem, 1.2vw, 1.12rem);
-  text-shadow: 0 2px 16px rgba(0,0,0,.55);
-}
-
-.actions{
+.bottomBar{
+  width:100%;
   display:flex;
-  gap: 12px;
-  align-items:center;
   justify-content:center;
-  flex-wrap:wrap;
-  margin-top: 6px;
-}
-
-.ctaPrimary,.ctaSecondary{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap: 10px;
-  text-decoration:none;
-  border-radius: 999px;
-  padding: 12px 18px;
-  min-width: 190px;
-  font-weight: 900;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  font-size: 12px;
-  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
-}
-
-.ctaPrimary{
-  background: linear-gradient(135deg, #ffffff 0%, #cfcfcf 100%);
-  color: #0a1422;
-  box-shadow: 0 14px 40px rgba(0,0,0,.40);
-}
-
-.ctaSecondary{
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.22);
-  color: rgba(255,255,255,.94);
-  backdrop-filter: blur(10px);
-}
-
-@media (hover:hover) and (pointer:fine){
-  .ctaPrimary:hover,.ctaSecondary:hover{
-    transform: translateY(-2px);
-    filter: brightness(1.02);
-  }
+  padding-bottom: 10px;
 }
 
 /* CONTROLS */
 .controls{
-  margin-top: 10px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -271,66 +172,56 @@
   transform: scaleX(1.08);
 }
 
-/* SCROLL */
-.scroll{
-  position:absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap: 6px;
-  text-decoration:none;
-  color: rgba(255,255,255,.78);
-  z-index: 5;
-}
-
-.scrollText{
-  font-size: 0.86rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-weight: 850;
-}
-
-.scrollIcon{
-  font-size: 22px;
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce{
-  0%,20%,50%,80%,100%{ transform: translateY(0); }
-  40%{ transform: translateY(8px); }
-  60%{ transform: translateY(4px); }
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px){
-  .hero{ min-height: 600px; }
-}
-
+/* ✅ MOBILE FIX: show FULL image, remove overlays */
 @media (max-width: 768px){
-  .contentWrap{ padding-top: 86px; }
-  .actions{ flex-direction:column; }
-  .ctaPrimary,.ctaSecondary{ width:100%; max-width: 340px; }
+  /* Use small viewport height to avoid URL bar jump on mobile */
+  .hero{
+    height: 72svh;
+    min-height: 520px;
+    background: #070a10;
+  }
+
+  /* Full image visible */
+  .img{
+    object-fit: contain;
+    object-position: center;
+    filter: none;
+  }
+
+  /* Remove overlays/vignette so nothing hides the image */
+  .overlay,
+  .edgeVignette{
+    display: none;
+  }
+
+  .uiLayer{
+    padding: 14px 14px;
+  }
+
+  .kickerBadge{
+    letter-spacing: .10em;
+    font-size: 11px;
+  }
 }
 
 @media (max-width: 480px){
-  .hero{ min-height: 560px; }
+  .hero{
+    height: 70svh;
+    min-height: 500px;
+  }
   .controls{ gap: 10px; }
   .dot{ width: 22px; }
 }
 
 /* RTL tweaks */
-[dir="rtl"] .actions{
-  direction: rtl;
+[dir="rtl"] .kickerBadge{
+  letter-spacing: .04em;
 }
 
-/* Reduced motion: stop transitions/animations */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
   .slide{ transition:none !important; }
-  .scrollIcon{ animation:none !important; }
-  .ctaPrimary,.ctaSecondary,.ctrlBtn,.dot{ transition:none !important; }
+  .ctrlBtn,.dot{ transition:none !important; }
 }
 
 /* Helps GPU */
