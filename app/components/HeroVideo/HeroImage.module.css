@@ -198,6 +198,10 @@
     padding: 14px 14px;
   }
 
+  .topBar{
+    padding-top: 20px;
+  }
+
   .kickerBadge{
     letter-spacing: .10em;
     font-size: 11px;
