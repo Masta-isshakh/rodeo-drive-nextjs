@@ -40,5 +40,5 @@ export async function generateMetadata({
 }
 
 export default function PayLaterPage() {
-  return <PayLaterClient />;
+  return <PayLaterClient asPage={true} headingLevel={1} />;
 }

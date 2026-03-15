@@ -18,6 +18,188 @@ const ServiceRouteMotion = dynamic(() => import("./ServiceMotion"), {
 
 type Lang = "en" | "ar";
 
+type ServiceInsight = {
+  pricing: Record<Lang, string>;
+  compare: Record<Lang, string>;
+  blogHref: string;
+  faqs: Array<{ q: Record<Lang, string>; a: Record<Lang, string> }>;
+};
+
+const SERVICE_INSIGHTS: Record<string, ServiceInsight> = {
+  "full-protection-ppf": {
+    pricing: {
+      en: "Typical pricing depends on coverage (front-end, partial, or full-body) and vehicle size. Final quote is confirmed after inspection.",
+      ar: "السعر يختلف حسب مستوى التغطية (أمامي أو جزئي أو كامل) وحجم السيارة. السعر النهائي يتأكد بعد الفحص.",
+    },
+    compare: {
+      en: "If your goal is chip resistance, prioritize PPF on impact zones first, then expand to full-body for maximum long-term paint protection.",
+      ar: "إذا كان هدفك مقاومة ضربات الحصى، ابدأ بـ PPF في مناطق الصدمات ثم انتقل للتغطية الكاملة لأفضل حماية طويلة المدى.",
+    },
+    blogHref: "/blog/full-body-vs-front-end-ppf-qatar",
+    faqs: [
+      {
+        q: {
+          en: "Should I choose front-end or full-body PPF?",
+          ar: "هل أختار PPF أمامي أم كامل؟",
+        },
+        a: {
+          en: "Front-end is usually enough for daily city driving. Full-body is ideal for premium paint, frequent highway use, or long-term ownership.",
+          ar: "الـ PPF الأمامي غالبًا مناسب للاستخدام اليومي داخل المدينة. أما الكامل فهو أفضل للألوان الخاصة والطرق السريعة والملكية طويلة المدى.",
+        },
+      },
+      {
+        q: {
+          en: "How should I wash a car after PPF installation?",
+          ar: "كيف أغسل السيارة بعد تركيب PPF؟",
+        },
+        a: {
+          en: "Follow curing guidance first, then use pH-neutral shampoo and avoid abrasive brushes or aggressive chemicals.",
+          ar: "اتبع تعليمات التثبيت أولًا، ثم استخدم شامبو متعادل الحموضة وتجنب الفُرش الخشنة والمواد الكيميائية القوية.",
+        },
+      },
+      {
+        q: {
+          en: "Can PPF and ceramic coating be combined?",
+          ar: "هل يمكن الجمع بين PPF والسيراميك؟",
+        },
+        a: {
+          en: "Yes. Many owners protect impact zones with PPF and apply ceramic coating on the remaining painted panels.",
+          ar: "نعم. كثير من الملاك يحمون مناطق الصدمات بـ PPF ثم يطبقون السيراميك على باقي أجزاء الطلاء.",
+        },
+      },
+    ],
+  },
+  "detailing-coating": {
+    pricing: {
+      en: "Detailing and coating pricing depends on paint condition, correction stages, and coating type. We provide a scope-based estimate after assessment.",
+      ar: "سعر التفصيل والطلاء يعتمد على حالة الطلاء وعدد مراحل التصحيح ونوع الحماية. نقدم تقديرًا دقيقًا حسب نطاق العمل بعد الفحص.",
+    },
+    compare: {
+      en: "Ceramic coating improves gloss and washability, while paint correction addresses swirl marks and haze before coating is applied.",
+      ar: "السيراميك يحسن اللمعة وسهولة الغسيل، بينما تصحيح الطلاء يعالج الخدوش الدائرية والضبابية قبل تطبيق الحماية.",
+    },
+    blogHref: "/blog/does-ceramic-replace-ppf",
+    faqs: [
+      {
+        q: {
+          en: "Does ceramic coating remove scratches?",
+          ar: "هل السيراميك يزيل الخدوش؟",
+        },
+        a: {
+          en: "No. Scratch reduction comes from paint correction. Ceramic coating protects and preserves the corrected finish.",
+          ar: "لا. تقليل الخدوش يأتي من تصحيح الطلاء، بينما السيراميك يحافظ على النتيجة ويحميها.",
+        },
+      },
+      {
+        q: {
+          en: "How long does a detailing and coating session take?",
+          ar: "كم يستغرق التفصيل مع الحماية؟",
+        },
+        a: {
+          en: "Timeline varies by condition and scope. We confirm a realistic schedule after inspection.",
+          ar: "المدة تختلف حسب الحالة والنطاق، ويتم تأكيد الجدول الواقعي بعد الفحص.",
+        },
+      },
+      {
+        q: {
+          en: "Can I combine coating with PPF?",
+          ar: "هل يمكن الجمع بين السيراميك وPPF؟",
+        },
+        a: {
+          en: "Yes. It is common to apply coating alongside PPF strategy for complete protection and easier maintenance.",
+          ar: "نعم. من الشائع دمج السيراميك مع خطة PPF للحصول على حماية شاملة وصيانة أسهل.",
+        },
+      },
+    ],
+  },
+  "window-solar-film": {
+    pricing: {
+      en: "Tint pricing is based on vehicle size and selected film series. We recommend a legal and performance-balanced option before booking.",
+      ar: "سعر التظليل يعتمد على حجم السيارة وفئة الفيلم المختارة. نوصي بخيار متوازن بين الأداء والالتزام بالنظام قبل الحجز.",
+    },
+    compare: {
+      en: "Choose tint by real comfort outcomes: heat control, glare reduction, and clear visibility for day and night driving.",
+      ar: "اختر التظليل حسب النتيجة العملية: تقليل الحرارة والوهج مع وضوح رؤية ممتاز نهارًا وليلًا.",
+    },
+    blogHref: "/blog/how-to-choose-nano-ceramic-tint",
+    faqs: [
+      {
+        q: {
+          en: "What tint shade should I choose?",
+          ar: "ما نسبة التظليل المناسبة؟",
+        },
+        a: {
+          en: "Shade selection should balance privacy, visibility, and local legal compliance. We recommend based on your use case.",
+          ar: "اختيار النسبة يجب أن يوازن الخصوصية والرؤية والالتزام بالنظام المحلي. نوصي بالخيار الأنسب حسب استخدامك.",
+        },
+      },
+      {
+        q: {
+          en: "How can I avoid bubbling or haze?",
+          ar: "كيف أتجنب الفقاعات أو الضبابية؟",
+        },
+        a: {
+          en: "Professional glass preparation, controlled installation, and proper curing aftercare are essential for clean tint results.",
+          ar: "تحضير الزجاج بشكل احترافي وتركيب متحكم فيه واتباع تعليمات التثبيت عوامل أساسية للحصول على نتيجة نظيفة.",
+        },
+      },
+      {
+        q: {
+          en: "How soon can I wash windows after tint?",
+          ar: "متى يمكن تنظيف الزجاج بعد التظليل؟",
+        },
+        a: {
+          en: "Wait for curing completion and use soft materials only. We provide exact care guidance at delivery.",
+          ar: "انتظر اكتمال التثبيت واستخدم أدوات ناعمة فقط. نزوّدك بتعليمات دقيقة عند التسليم.",
+        },
+      },
+    ],
+  },
+  "windshield-services": {
+    pricing: {
+      en: "Windshield service pricing depends on damage type, protection option, and vehicle glass profile. Inspection determines the correct scope.",
+      ar: "سعر خدمات الزجاج الأمامي يعتمد على نوع الضرر وخيار الحماية ونوع الزجاج. الفحص يحدد نطاق العمل الصحيح.",
+    },
+    compare: {
+      en: "Preventive windshield protection usually costs less over time than repeated chip repairs or replacement in high-mileage driving.",
+      ar: "الحماية الوقائية للزجاج غالبًا أقل تكلفة على المدى الطويل مقارنة بإصلاحات متكررة أو استبدال كامل عند القيادة الكثيفة.",
+    },
+    blogHref: "/blog/common-tint-mistakes-bubbling-hazing",
+    faqs: [
+      {
+        q: {
+          en: "Can small chips become large cracks?",
+          ar: "هل يمكن أن تتحول الضربة الصغيرة إلى كسر كبير؟",
+        },
+        a: {
+          en: "Yes, especially with heat shifts and road vibration. Early action reduces the chance of full replacement.",
+          ar: "نعم، خصوصًا مع تغيّر الحرارة واهتزاز الطريق. التدخل المبكر يقلل احتمال الاستبدال الكامل.",
+        },
+      },
+      {
+        q: {
+          en: "Is windshield protection suitable for daily highways?",
+          ar: "هل حماية الزجاج مناسبة للقيادة اليومية على الطرق السريعة؟",
+        },
+        a: {
+          en: "It is designed exactly for high-impact driving patterns where debris and stone chips are frequent.",
+          ar: "هي مصممة أساسًا لأسلوب القيادة عالي التعرض للصدمات حيث تتكرر ضربات الحصى والشوائب.",
+        },
+      },
+      {
+        q: {
+          en: "How do I care for protected windshield glass?",
+          ar: "كيف أعتني بالزجاج بعد الحماية؟",
+        },
+        a: {
+          en: "Use safe glass cleaning methods and avoid aggressive blades or chemicals during the curing phase.",
+          ar: "استخدم تنظيفًا آمنًا للزجاج وتجنب الشفرات أو المواد القوية خلال فترة التثبيت.",
+        },
+      },
+    ],
+  },
+};
+
 function getText<T>(obj: Record<CatalogLang, T>, lang: CatalogLang): T {
   return obj?.[lang] ?? obj?.en;
 }
@@ -57,6 +239,7 @@ export default function ServiceRouteClient({
   const baseHome = `${prefix}`;
 
   const motionKey = `${lang}|${slugs.join("/") || "root"}`;
+  const serviceInsight = serviceSlug ? SERVICE_INSIGHTS[serviceSlug] ?? null : null;
 
   const ui = useMemo(() => {
     const isAr = lang === "ar";
@@ -233,6 +416,47 @@ export default function ServiceRouteClient({
             </div>
           </div>
         </section>
+
+        {/* SUBSERVICES */}
+        {serviceInsight ? (
+          <section className={styles.section} data-sr-reveal>
+            <div className={styles.container}>
+              <div className={styles.sectionHeader} data-sr-reveal-item>
+                <h2 className={styles.h2}>{lang === "ar" ? "دليل القرار" : "Buyer Guidance"}</h2>
+              </div>
+
+              <div className={styles.paragraph} data-sr-reveal-item>
+                {serviceInsight.compare[lang]}
+              </div>
+              <div className={styles.paragraph} data-sr-reveal-item>
+                {serviceInsight.pricing[lang]}
+              </div>
+
+              <p className={styles.paragraph} data-sr-reveal-item>
+                <Link href={`/${lang}${serviceInsight.blogHref}`} className={styles.cardBtn}>
+                  {lang === "ar" ? "اقرأ الدليل الكامل" : "Read the full guide"}
+                </Link>
+              </p>
+
+              <div className={styles.sectionHeader} data-sr-reveal-item>
+                <h2 className={styles.h2}>{ui.faqs}</h2>
+              </div>
+
+              <div className={styles.grid}>
+                {serviceInsight.faqs.map((faq) => (
+                  <article key={faq.q.en} className={styles.card} data-sr-reveal-item>
+                    <div className={styles.cardBody}>
+                      <div className={styles.cardHeader}>
+                        <h3 className={styles.h3}>{faq.q[lang]}</h3>
+                        <p className={styles.cardText}>{faq.a[lang]}</p>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {/* SUBSERVICES */}
         <section className={styles.sectionAlt} data-sr-reveal>

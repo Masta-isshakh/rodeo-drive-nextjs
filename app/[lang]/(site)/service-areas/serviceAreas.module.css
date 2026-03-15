@@ -1,0 +1,80 @@
+.page {
+  width: min(1080px, 92vw);
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.header {
+  border-radius: 20px;
+  padding: 1.35rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(150deg, #f8fafc, #ffffff);
+}
+
+.h1 {
+  margin: 0;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0.8rem 0 0;
+  line-height: 1.75;
+  color: #3d4653;
+}
+
+.grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.lead {
+  margin: 0.55rem 0 0;
+  color: #404a58;
+  line-height: 1.68;
+}
+
+.actions {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.linkPrimary,
+.linkGhost {
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.48rem 0.85rem;
+}
+
+.linkPrimary {
+  color: #ffffff;
+  background: #111827;
+}
+
+.linkGhost {
+  color: #111827;
+  border: 1px solid rgba(17, 24, 39, 0.22);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,189 @@
+.page {
+  width: min(1080px, 92vw);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.backLink {
+  text-decoration: none;
+  color: #0b3f8a;
+  font-weight: 700;
+}
+
+.hero {
+  margin-top: 0.8rem;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+}
+
+.heroMedia {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+}
+
+.heroBody {
+  padding: 1.1rem;
+}
+
+.h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 2.9vw, 2.25rem);
+  line-height: 1.2;
+  color: #101828;
+}
+
+.lead {
+  margin: 0.75rem 0 0;
+  color: #3f4755;
+  line-height: 1.75;
+}
+
+.heroActions {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.primaryBtn,
+.ghostBtn {
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.52rem 0.9rem;
+  font-weight: 700;
+}
+
+.primaryBtn {
+  background: #111827;
+  color: #ffffff;
+}
+
+.ghostBtn {
+  color: #111827;
+  border: 1px solid rgba(17, 24, 39, 0.22);
+}
+
+.mapHint {
+  margin: 0.85rem 0 0;
+  color: #364152;
+  line-height: 1.7;
+}
+
+.section {
+  margin-top: 1.25rem;
+}
+
+.h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.list {
+  margin: 0.7rem 0 0;
+  padding-inline-start: 1.2rem;
+  color: #1f2937;
+  line-height: 1.75;
+}
+
+.gallery {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.figure {
+  margin: 0;
+}
+
+.figureMedia {
+  position: relative;
+  width: 100%;
+  min-height: 210px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figureImage {
+  object-fit: cover;
+}
+
+.caption {
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  color: #445062;
+  line-height: 1.6;
+}
+
+.cards,
+.faqList {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.card,
+.faqCard {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: #ffffff;
+}
+
+.quote {
+  margin: 0;
+  color: #1f2a3a;
+  line-height: 1.72;
+}
+
+.source {
+  margin: 0.6rem 0 0;
+  font-weight: 700;
+  color: #435065;
+}
+
+.h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.answer {
+  margin: 0.55rem 0 0;
+  color: #334155;
+  line-height: 1.68;
+}
+
+.ctaBar {
+  margin-top: 1.4rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .cards,
+  .faqList {
+    grid-template-columns: 1fr;
+  }
+}

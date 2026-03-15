@@ -52,6 +52,7 @@ export default function Header() {
     () => [
       { label: t.nav.home, href: withLang("/") },
       { label: t.nav.services, href: withLang("/services") },
+      { label: (t.nav as any).blog ?? (urlLang === "ar" ? "المدونة" : "Blog"), href: withLang("/blog") },
       { label: t.nav.gallery, href: withLang("/gallery") },
       { label: t.nav.about, href: withLang("/about") },
       { label: t.nav.faq, href: withLang("/faq") },

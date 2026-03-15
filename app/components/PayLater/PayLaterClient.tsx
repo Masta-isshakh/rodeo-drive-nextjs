@@ -2,13 +2,23 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./PayLater.module.css";
 import { useI18n } from "@/app/lib/i18n";
 
-export default function PayLaterClient() {
+type PayLaterClientProps = {
+  asPage?: boolean;
+  headingLevel?: 1 | 2;
+};
+
+export default function PayLaterClient({
+  asPage = false,
+  headingLevel = asPage ? 1 : 2,
+}: PayLaterClientProps) {
   const { language } = useI18n() as any;
   const lang = language === "ar" ? "ar" : "en";
   const dir = lang === "ar" ? "rtl" : "ltr";
+  const HeadingTag = headingLevel === 1 ? "h1" : "h2";
 
   const copy =
     lang === "ar"
@@ -26,6 +36,7 @@ export default function PayLaterClient() {
           ],
           foot:
             "حسب موافقة PayLater والشروط. تواصل معنا لمعرفة التفاصيل وتأكيد الخدمة المناسبة لسيارتك.",
+          cta: "تفاصيل PayLater",
         }
       : {
           kicker: "Now available at Rodeo Drive",
@@ -41,10 +52,10 @@ export default function PayLaterClient() {
           ],
           foot:
             "Subject to PayLater approval & terms. Contact us for details and the best recommendation for your vehicle.",
+          cta: "PayLater details",
         };
 
-  return (
-    <main className={styles.page} dir={dir}>
+  const content = (
       <section
         className={styles.hero}
         aria-label={lang === "ar" ? "PayLater لدى روديو درايف" : "PayLater at Rodeo Drive"}
@@ -68,10 +79,10 @@ export default function PayLaterClient() {
           <div className={styles.top}>
             <p className={styles.kicker}>{copy.kicker}</p>
 
-            <h1 className={styles.titleRow}>
+            <HeadingTag className={styles.titleRow}>
               <span className={styles.title}>{copy.title}</span>
               <span className={styles.subtitle}>{copy.subtitle}</span>
-            </h1>
+            </HeadingTag>
 
             <p className={styles.descTop}>{copy.descTop}</p>
           </div>
@@ -88,9 +99,26 @@ export default function PayLaterClient() {
             </ul>
 
             <p className={styles.foot}>{copy.foot}</p>
+
+            <Link className={styles.cta} href={`/${lang}/paylater`}>
+              {copy.cta} <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
       </section>
+  );
+
+  if (!asPage) {
+    return (
+      <section className={styles.page} dir={dir} aria-label="PayLater section">
+        {content}
+      </section>
+    );
+  }
+
+  return (
+    <main className={styles.page} dir={dir}>
+      {content}
     </main>
   );
 }

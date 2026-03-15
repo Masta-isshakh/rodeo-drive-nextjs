@@ -1,0 +1,112 @@
+.page {
+  width: min(860px, 92vw);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.backLink {
+  text-decoration: none;
+  font-weight: 700;
+  color: #0b3f8a;
+}
+
+.header {
+  margin-top: 1rem;
+}
+
+.meta {
+  margin: 0;
+  color: #5a6270;
+  font-size: 0.86rem;
+}
+
+.title {
+  margin: 0.65rem 0 0;
+  line-height: 1.2;
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  color: #101723;
+}
+
+.description {
+  margin: 0.9rem 0 0;
+  line-height: 1.7;
+  color: #3f4a59;
+}
+
+.article {
+  margin-top: 1.4rem;
+}
+
+.section + .section {
+  margin-top: 1.3rem;
+}
+
+.h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #101827;
+}
+
+.p {
+  margin: 0.6rem 0 0;
+  line-height: 1.78;
+  color: #222b38;
+}
+
+.ul {
+  margin: 0.7rem 0 0;
+  padding-inline-start: 1.2rem;
+  line-height: 1.7;
+  color: #1f2937;
+}
+
+.ctaBar {
+  margin-top: 1.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.09);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.relatedBlock {
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+.relatedTitle {
+  margin: 0;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.relatedLinks {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.inlineLink {
+  text-decoration: none;
+  color: #0b3f8a;
+  font-weight: 600;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+}
+
+.ctaPrimary {
+  background: #111827;
+  color: #ffffff;
+}
+
+.ctaSecondary {
+  border: 1px solid rgba(17, 24, 39, 0.22);
+  color: #111827;
+}

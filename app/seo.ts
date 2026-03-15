@@ -62,7 +62,6 @@ export function buildPageMetadata(opts: {
   const title = lang === "ar" ? opts.titleAR : opts.titleEN;
   const description = lang === "ar" ? opts.descAR : opts.descEN;
 
-  const keywords = lang === "ar" ? opts.keywordsAR ?? [] : opts.keywordsEN ?? [];
   const og = opts.ogImagePath ?? "/logo.avif";
 
   return {
@@ -70,7 +69,6 @@ export function buildPageMetadata(opts: {
 
     title: pageTitle(lang, title),
     description,
-    keywords,
 
     alternates: alternates(lang, suffix),
 

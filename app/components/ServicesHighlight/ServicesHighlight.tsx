@@ -77,6 +77,8 @@ export default function ServicesHighlight() {
             "اختر الخدمة المناسبة، وشاهد التفاصيل أو اطلع على دليل الحماية لمعرفة الفوائد وخطوات التنفيذ.",
           ctaServices: "عرض كل الخدمات",
           ctaGuide: "دليل الحماية",
+          ctaBlog: "مركز التوعية",
+          ctaAreas: "مناطق الخدمة",
           ctaDetails: "عرض التفاصيل",
           badge: "Premium Finish",
         }
@@ -87,6 +89,8 @@ export default function ServicesHighlight() {
             "Pick a service and view details, or explore the protection guide to understand benefits and process.",
           ctaServices: "View All Services",
           ctaGuide: "Protection Guide",
+          ctaBlog: "Education Hub",
+          ctaAreas: "Service Areas",
           ctaDetails: "View details",
           badge: "Premium Finish",
         };
@@ -107,6 +111,12 @@ export default function ServicesHighlight() {
             </Link>
             <Link className={styles.btnGhost} href={`${base}/protection-guide`}>
               {ui.ctaGuide} <span aria-hidden="true">→</span>
+            </Link>
+            <Link className={styles.btnGhost} href={`${base}/blog`}>
+              {ui.ctaBlog} <span aria-hidden="true">→</span>
+            </Link>
+            <Link className={styles.btnGhost} href={`${base}/service-areas`}>
+              {ui.ctaAreas} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </header>

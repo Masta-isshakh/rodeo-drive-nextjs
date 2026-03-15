@@ -7,6 +7,7 @@ export const translations = {
     nav: {
       home: "Home",
       services: "Services",
+      blog: "Blog",
       gallery: "Gallery",
       about: "About",
       faq: "FAQ",
@@ -16,8 +17,8 @@ export const translations = {
 
     // Hero Section
     hero: {
-      title: "Luxury Car Care Center",
-      subtitle: "in Doha",
+      title: "Premium PPF, Detailing & Tint",
+      subtitle: "in Doha, Qatar",
       tagline: "Precision. Protection. Performance.",
       description:
         "Showroom-level detailing, protection, and finishing engineered for Qatar’s heat, sun, and sand.",
@@ -625,6 +626,7 @@ export const translations = {
     nav: {
       home: "الرئيسية",
       services: "الخدمات",
+      blog: "المدونة",
       gallery: "المعرض",
       about: "من نحن",
       faq: "الأسئلة الشائعة",
@@ -634,8 +636,8 @@ export const translations = {
 
     // Hero Section
     hero: {
-      title: "مركز العناية بالسيارات الفاخرة",
-      subtitle: "في الدوحة",
+      title: "خدمات PPF والتفصيل والتظليل الفاخرة",
+      subtitle: "في الدوحة، قطر",
       tagline: "دقة. حماية. أداء.",
       description:
         "تفصيل وحماية وتشطيب بمستوى صالات العرض مصمم ليتحمّل حرارة قطر وشمسها وأجواءها الرملية.",

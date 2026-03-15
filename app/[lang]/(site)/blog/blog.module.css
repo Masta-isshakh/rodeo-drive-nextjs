@@ -1,0 +1,109 @@
+.page {
+  width: min(1120px, 92vw);
+  margin: 0 auto;
+  padding: 3.5rem 0 4rem;
+}
+
+.hero {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 2rem;
+  background: linear-gradient(145deg, #f6f8fb 0%, #ffffff 62%);
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.11em;
+  color: #59606b;
+}
+
+.title {
+  margin: 0.65rem 0 0;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1.2;
+  color: #101319;
+}
+
+.subtitle {
+  margin: 0.9rem 0 0;
+  color: #414a57;
+  max-width: 70ch;
+  line-height: 1.7;
+}
+
+.heroCtas {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.58rem 1rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.primaryCta {
+  background: #111827;
+  color: #ffffff;
+}
+
+.secondaryCta {
+  border: 1px solid rgba(17, 24, 39, 0.22);
+  color: #111827;
+}
+
+.grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #5e6672;
+}
+
+.cardTitle {
+  margin: 0.55rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.35;
+  color: #0f172a;
+}
+
+.cardDesc {
+  margin: 0.65rem 0 0;
+  color: #3d4652;
+  line-height: 1.65;
+}
+
+.readMore {
+  margin-top: 0.85rem;
+  display: inline-flex;
+  font-weight: 700;
+  color: #0b3f8a;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -12,27 +12,55 @@ const BRAND_AR = "روديو درايف الدوحة";
 const BUSINESS = {
   phone: "+97433202409",
   email: "info@rodeodrive.me",
+  streetAddressEN: "Block 2, Shop No SYS 066, Block 21, Near Dragon Mart Al Sayer",
+  streetAddressAR: "البلوك 2، محل رقم SYS 066، بلوك 21، قرب دراغون مارت الساير",
   addressEN: "Doha, Qatar",
   addressAR: "الدوحة، قطر",
   geo: { lat: 25.2854, lng: 51.531 },
   instagram: "https://www.instagram.com/rodeo.drive.qtr/",
+  maps: "https://maps.app.goo.gl/ieCJzCSYdFnR946h6",
 };
 
 function jsonLdLocalBusiness(lang: Lang) {
   const name = lang === "ar" ? BRAND_AR : BRAND_EN;
-  const addressLocality = lang === "ar" ? BUSINESS.addressAR : BUSINESS.addressEN;
+  const addressLocality = lang === "ar" ? "الدوحة" : "Doha";
+  const streetAddress = lang === "ar" ? BUSINESS.streetAddressAR : BUSINESS.streetAddressEN;
 
   return {
     "@context": "https://schema.org",
     "@type": "AutoDetailing",
+    "@id": `${SITE_URL}/#autodetailing`,
     name,
     url: SITE_URL,
-    image: `${SITE_URL}/logo.avif`,
+    image: [
+      {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo.avif`,
+        width: 1200,
+        height: 1200,
+      },
+      {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/hero-poster.avif`,
+        width: 1200,
+        height: 900,
+      },
+      {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/about.avif`,
+        width: 1600,
+        height: 900,
+      },
+    ],
     telephone: BUSINESS.phone,
     email: BUSINESS.email,
+    hasMap: BUSINESS.maps,
+    priceRange: "QAR",
     address: {
       "@type": "PostalAddress",
+      streetAddress,
       addressLocality,
+      addressRegion: lang === "ar" ? "الدوحة" : "Doha",
       addressCountry: "QA",
     },
     geo: {
@@ -40,8 +68,26 @@ function jsonLdLocalBusiness(lang: Lang) {
       latitude: BUSINESS.geo.lat,
       longitude: BUSINESS.geo.lng,
     },
-    sameAs: [BUSINESS.instagram],
-    areaServed: { "@type": "City", name: "Doha" },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+        ],
+        opens: "09:00",
+        closes: "21:00",
+      },
+    ],
+    sameAs: [BUSINESS.instagram, BUSINESS.maps],
+    areaServed: [
+      { "@type": "City", name: "Doha" },
+      { "@type": "Country", name: "Qatar" },
+    ],
     makesOffer: [
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "Paint Protection Film (PPF)" } },
       { "@type": "Offer", itemOffered: { "@type": "Service", name: "Ceramic Coating" } },
