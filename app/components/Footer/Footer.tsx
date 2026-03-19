@@ -193,11 +193,18 @@ export default function Footer() {
                   dir="ltr"
                   id={ids.phone}
                   onClick={() =>
-                    trackContact({
-                      content_name: "Phone",
-                      content_category: "Footer",
-                      source: "footer",
-                    })
+                    trackContact(
+                      {
+                        source_section: "footer",
+                        cta_variant: "phone_link",
+                        intent_type: "contact",
+                        contact_channel: "phone",
+                      },
+                      {
+                        language: lang,
+                        pagePath: pathname || undefined,
+                      }
+                    )
                   }
                 >
                   {phone}
@@ -210,11 +217,18 @@ export default function Footer() {
                   dir="ltr"
                   id={ids.email}
                   onClick={() =>
-                    trackContact({
-                      content_name: "Email",
-                      content_category: "Footer",
-                      source: "footer",
-                    })
+                    trackContact(
+                      {
+                        source_section: "footer",
+                        cta_variant: "email_link",
+                        intent_type: "contact",
+                        contact_channel: "email",
+                      },
+                      {
+                        language: lang,
+                        pagePath: pathname || undefined,
+                      }
+                    )
                   }
                 >
                   {email}

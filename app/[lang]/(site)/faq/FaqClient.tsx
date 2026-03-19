@@ -413,11 +413,18 @@ export default function FAQClient({
                 className={styles.ctaButton}
                 href="tel:+97433202409"
                 onClick={() =>
-                  trackContact({
-                    content_name: "Phone",
-                    content_category: "FAQ CTA",
-                    source: "faq_page",
-                  })
+                  trackContact(
+                    {
+                      source_section: "faq_page",
+                      cta_variant: "phone_cta",
+                      intent_type: "contact",
+                      contact_channel: "phone",
+                    },
+                    {
+                      language: lang,
+                      pagePath: pathname || undefined,
+                    }
+                  )
                 }
               >
                 {copy.contactUs}
@@ -429,11 +436,18 @@ export default function FAQClient({
                 target="_blank"
                 rel="noreferrer"
                 onClick={() =>
-                  trackContact({
-                    content_name: "WhatsApp",
-                    content_category: "FAQ CTA",
-                    source: "faq_page",
-                  })
+                  trackContact(
+                    {
+                      source_section: "faq_page",
+                      cta_variant: "whatsapp_cta",
+                      intent_type: "contact",
+                      contact_channel: "whatsapp",
+                    },
+                    {
+                      language: lang,
+                      pagePath: pathname || undefined,
+                    }
+                  )
                 }
               >
                 <MessageCircle size={20} />

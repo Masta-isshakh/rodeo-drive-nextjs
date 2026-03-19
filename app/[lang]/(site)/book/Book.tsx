@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
+import { usePathname } from "next/navigation";
 import styles from "./book.module.css";
 import { useI18n } from "@/app/lib/i18n";
 import { trackCompleteRegistration, trackLead } from "@/app/lib/metaPixel";
@@ -199,6 +200,7 @@ function MultiSelectDropdown({
 export default function Book() {
   const client = useMemo(() => generateClient<Schema>(), []);
   const { language, t } = useI18n();
+  const pathname = usePathname();
 
   const isAr = language === "ar";
   const dir = isAr ? "rtl" : "ltr";
@@ -465,16 +467,41 @@ export default function Book() {
         console.error("Email API failed:", await res.text());
       }
 
-      trackLead({
-        content_name: "Appointment Booking",
-        content_category: "Booking Form",
-        status: "submitted",
-      });
-      trackCompleteRegistration({
-        content_name: "Appointment Booking",
-        content_category: "Booking Form",
-        method: "website_form",
-      });
+      trackLead(
+        {
+          source_section: "booking_form",
+          cta_variant: "form_submit",
+          conversion_stage: "lead",
+          form_status: "submitted",
+          service_group: form.services.length ? "multi_service" : "unspecified",
+          selected_services_count: form.services.length,
+          selected_services: form.services.length ? form.services.join(" | ") : "none",
+          appointment_date: form.date,
+          appointment_time: timeAmPm,
+        },
+        {
+          language,
+          pagePath: pathname || undefined,
+        }
+      );
+      trackCompleteRegistration(
+        {
+          source_section: "booking_form",
+          cta_variant: "form_submit",
+          conversion_stage: "completed_registration",
+          intent_type: "appointment_booking",
+          submission_method: "website_form",
+          service_group: form.services.length ? "multi_service" : "unspecified",
+          selected_services_count: form.services.length,
+          selected_services: form.services.length ? form.services.join(" | ") : "none",
+          appointment_date: form.date,
+          appointment_time: timeAmPm,
+        },
+        {
+          language,
+          pagePath: pathname || undefined,
+        }
+      );
 
       setSuccess(true);
       setForm({

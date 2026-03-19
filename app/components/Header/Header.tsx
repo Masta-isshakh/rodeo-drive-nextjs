@@ -189,11 +189,18 @@ export default function Header() {
               className={styles.ctaButton}
               href={withLang("/book")}
               onClick={() =>
-                trackLead({
-                  content_name: "Book Now",
-                  content_category: "Header CTA",
-                  source: "header",
-                })
+                trackLead(
+                  {
+                    source_section: "header",
+                    cta_variant: "book_now_desktop",
+                    intent_type: "appointment_booking",
+                    conversion_stage: "lead",
+                  },
+                  {
+                    language: urlLang,
+                    pagePath: pathname || undefined,
+                  }
+                )
               }
             >
               {t.nav.bookNow}
@@ -207,11 +214,18 @@ export default function Header() {
               aria-label="WhatsApp"
               title="WhatsApp"
               onClick={() =>
-                trackContact({
-                  content_name: "WhatsApp",
-                  content_category: "Header CTA",
-                  source: "header",
-                })
+                trackContact(
+                  {
+                    source_section: "header",
+                    cta_variant: "whatsapp_desktop",
+                    intent_type: "contact",
+                    contact_channel: "whatsapp",
+                  },
+                  {
+                    language: urlLang,
+                    pagePath: pathname || undefined,
+                  }
+                )
               }
             >
               <Image src="/whatsapp.avif" alt="" width={40} height={40} quality={100} priority={false} />
@@ -274,9 +288,13 @@ export default function Header() {
               href={withLang("/book")}
               onClick={() => {
                 trackLead({
-                  content_name: "Book Now",
-                  content_category: "Header Mobile CTA",
-                  source: "mobile_header",
+                  source_section: "header_mobile",
+                  cta_variant: "book_now_mobile",
+                  intent_type: "appointment_booking",
+                  conversion_stage: "lead",
+                }, {
+                  language: urlLang,
+                  pagePath: pathname || undefined,
                 });
                 setIsMobileMenuOpen(false);
               }}
@@ -292,11 +310,18 @@ export default function Header() {
               aria-label="WhatsApp"
               title="WhatsApp"
               onClick={() =>
-                trackContact({
-                  content_name: "WhatsApp",
-                  content_category: "Header Mobile CTA",
-                  source: "mobile_header",
-                })
+                trackContact(
+                  {
+                    source_section: "header_mobile",
+                    cta_variant: "whatsapp_mobile",
+                    intent_type: "contact",
+                    contact_channel: "whatsapp",
+                  },
+                  {
+                    language: urlLang,
+                    pagePath: pathname || undefined,
+                  }
+                )
               }
             >
               <Image src="/whatsapp.avif" alt="" width={40} height={40} quality={100} priority={false} />

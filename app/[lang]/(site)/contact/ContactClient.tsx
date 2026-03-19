@@ -211,11 +211,18 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
   const motionKey = `${lang}|contact`;
 
   const trackContactClick = (channel: string) => {
-    trackContact({
-      content_name: channel,
-      content_category: "Contact",
-      source: "contact_page",
-    });
+    trackContact(
+      {
+        source_section: "contact_page",
+        cta_variant: "contact_link_click",
+        intent_type: "contact",
+        contact_channel: channel.toLowerCase(),
+      },
+      {
+        language: lang,
+        pagePath: pathname || undefined,
+      }
+    );
   };
 
   // Optional: if you want link to be localized like /en/contact, /ar/contact
