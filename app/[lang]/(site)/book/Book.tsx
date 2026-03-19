@@ -5,6 +5,7 @@ import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import styles from "./book.module.css";
 import { useI18n } from "@/app/lib/i18n";
+import { trackCompleteRegistration, trackLead } from "@/app/lib/metaPixel";
 
 const MAX_BOOKINGS_PER_DAY = 10;
 
@@ -463,6 +464,17 @@ export default function Book() {
       if (!res.ok) {
         console.error("Email API failed:", await res.text());
       }
+
+      trackLead({
+        content_name: "Appointment Booking",
+        content_category: "Booking Form",
+        status: "submitted",
+      });
+      trackCompleteRegistration({
+        content_name: "Appointment Booking",
+        content_category: "Booking Form",
+        method: "website_form",
+      });
 
       setSuccess(true);
       setForm({

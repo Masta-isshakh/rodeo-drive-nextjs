@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 import { SITE } from "@/app/config/site";
+import { trackContact } from "@/app/lib/metaPixel";
 
 // client-only: translations injection + motion enhancer
 import FooterText from "./FooterText";
@@ -186,12 +187,36 @@ export default function Footer() {
             </h3>
             <ul className={styles.footerList}>
               <li>
-                <a href={toTelHref(phone)} className={styles.footerLink} dir="ltr" id={ids.phone}>
+                <a
+                  href={toTelHref(phone)}
+                  className={styles.footerLink}
+                  dir="ltr"
+                  id={ids.phone}
+                  onClick={() =>
+                    trackContact({
+                      content_name: "Phone",
+                      content_category: "Footer",
+                      source: "footer",
+                    })
+                  }
+                >
                   {phone}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${email}`} className={styles.footerLink} dir="ltr" id={ids.email}>
+                <a
+                  href={`mailto:${email}`}
+                  className={styles.footerLink}
+                  dir="ltr"
+                  id={ids.email}
+                  onClick={() =>
+                    trackContact({
+                      content_name: "Email",
+                      content_category: "Footer",
+                      source: "footer",
+                    })
+                  }
+                >
                   {email}
                 </a>
               </li>

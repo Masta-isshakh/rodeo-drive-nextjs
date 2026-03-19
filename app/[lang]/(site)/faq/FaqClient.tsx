@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import styles from "./faq.module.css";
+import { trackContact } from "@/app/lib/metaPixel";
 import { useI18n } from "@/app/lib/i18n";
 
 import {
@@ -408,7 +409,17 @@ export default function FAQClient({
             <p className={styles.ctaSubtitle}>{copy.ctaSubtitle}</p>
 
             <div className={styles.ctaButtons}>
-              <a className={styles.ctaButton} href="tel:+97433202409">
+              <a
+                className={styles.ctaButton}
+                href="tel:+97433202409"
+                onClick={() =>
+                  trackContact({
+                    content_name: "Phone",
+                    content_category: "FAQ CTA",
+                    source: "faq_page",
+                  })
+                }
+              >
                 {copy.contactUs}
               </a>
 
@@ -417,6 +428,13 @@ export default function FAQClient({
                 href="https://wa.me/97433202409"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() =>
+                  trackContact({
+                    content_name: "WhatsApp",
+                    content_category: "FAQ CTA",
+                    source: "faq_page",
+                  })
+                }
               >
                 <MessageCircle size={20} />
                 WhatsApp

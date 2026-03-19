@@ -8,6 +8,7 @@ import { useI18n } from "../../lib/i18n";
 import Image from "next/image";
 import GoogleReviewsBadge from "@/app/components/GoogleReviewsBadge/GoogleReviewsBadge";
 import { SITE } from "@/app/config/site";
+import { trackContact, trackLead } from "@/app/lib/metaPixel";
 import dynamic from "next/dynamic";
 
 const HeaderMotion = dynamic(() => import("./HeaderMotion"), {
@@ -184,7 +185,17 @@ export default function Header() {
               </button>
             </div>
 
-            <Link className={styles.ctaButton} href={withLang("/book")}>
+            <Link
+              className={styles.ctaButton}
+              href={withLang("/book")}
+              onClick={() =>
+                trackLead({
+                  content_name: "Book Now",
+                  content_category: "Header CTA",
+                  source: "header",
+                })
+              }
+            >
               {t.nav.bookNow}
             </Link>
 
@@ -195,6 +206,13 @@ export default function Header() {
               rel="noopener noreferrer"
               aria-label="WhatsApp"
               title="WhatsApp"
+              onClick={() =>
+                trackContact({
+                  content_name: "WhatsApp",
+                  content_category: "Header CTA",
+                  source: "header",
+                })
+              }
             >
               <Image src="/whatsapp.avif" alt="" width={40} height={40} quality={100} priority={false} />
             </a>
@@ -251,7 +269,18 @@ export default function Header() {
           </ul>
 
           <div className={styles.mobileActions}>
-            <Link className={styles.mobileCta} href={withLang("/book")} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link
+              className={styles.mobileCta}
+              href={withLang("/book")}
+              onClick={() => {
+                trackLead({
+                  content_name: "Book Now",
+                  content_category: "Header Mobile CTA",
+                  source: "mobile_header",
+                });
+                setIsMobileMenuOpen(false);
+              }}
+            >
               {t.nav.bookNow}
             </Link>
 
@@ -262,6 +291,13 @@ export default function Header() {
               rel="noopener noreferrer"
               aria-label="WhatsApp"
               title="WhatsApp"
+              onClick={() =>
+                trackContact({
+                  content_name: "WhatsApp",
+                  content_category: "Header Mobile CTA",
+                  source: "mobile_header",
+                })
+              }
             >
               <Image src="/whatsapp.avif" alt="" width={40} height={40} quality={100} priority={false} />
             </a>

@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import MetaPixel from "./components/MetaPixel";
 
 const SITE_URL = "https://www.rodeodrive.me"; // canonical domain (www)
 
@@ -65,7 +66,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        <MetaPixel />
+        {children}
+      </body>
     </html>
   );
 }

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import styles from "./contact.module.css";
 import Book from "../book/Book";
 import { useI18n } from "@/app/lib/i18n";
+import { trackContact } from "@/app/lib/metaPixel";
 
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -209,6 +210,14 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
   // Re-run motion when language changes (text length/layout changes)
   const motionKey = `${lang}|contact`;
 
+  const trackContactClick = (channel: string) => {
+    trackContact({
+      content_name: channel,
+      content_category: "Contact",
+      source: "contact_page",
+    });
+  };
+
   // Optional: if you want link to be localized like /en/contact, /ar/contact
   const pathname = usePathname();
   const rootHref = useMemo(() => {
@@ -276,6 +285,17 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
               );
 
               if (info.href) {
+                const lowerTitle = info.title.toLowerCase();
+                const channel = lowerTitle.includes("phone") || lowerTitle.includes("الهاتف")
+                  ? "Phone"
+                  : lowerTitle.includes("whatsapp") || lowerTitle.includes("واتساب")
+                    ? "WhatsApp"
+                    : lowerTitle.includes("email") || lowerTitle.includes("البريد")
+                      ? "Email"
+                      : lowerTitle.includes("location") || lowerTitle.includes("الموقع")
+                        ? "Location"
+                        : "Contact Link";
+
                 return (
                   <a
                     key={index}
@@ -285,6 +305,7 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
                     rel={info.rel}
                     aria-label={info.title}
                     data-contact-card
+                    onClick={() => trackContactClick(channel)}
                   >
                     {CardInner}
                   </a>
@@ -327,6 +348,7 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
                 href="https://maps.app.goo.gl/w1QEpGjy7UmE9LBs9?g_st=ipc"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContactClick("Directions")}
               >
                 {copy.directions}
               </a>
@@ -348,7 +370,11 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
             <p className={styles.quickContactText}>{copy.quickText}</p>
 
             <div className={styles.quickContactButtons}>
-              <a className={styles.phoneButton} href="tel:+97433202409">
+              <a
+                className={styles.phoneButton}
+                href="tel:+97433202409"
+                onClick={() => trackContactClick("Phone")}
+              >
                 <Phone size={20} />
                 {copy.callNow}
               </a>
@@ -358,6 +384,7 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
                 href="https://wa.me/97433202409"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContactClick("WhatsApp")}
               >
                 <MessageCircle size={20} />
                 {copy.whatsapp}
