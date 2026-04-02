@@ -52,6 +52,7 @@ export default function Header() {
   const navItems: NavItem[] = useMemo(
     () => [
       { label: t.nav.home, href: withLang("/") },
+      { label: urlLang === "ar" ? "SPF" : "SPF", href: withLang("/#surface-protection-film") },
       { label: t.nav.services, href: withLang("/services") },
       { label: (t.nav as any).blog ?? (urlLang === "ar" ? "المدونة" : "Blog"), href: withLang("/blog") },
       { label: t.nav.gallery, href: withLang("/gallery") },

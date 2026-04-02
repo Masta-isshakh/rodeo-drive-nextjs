@@ -66,7 +66,6 @@ export default function PayLaterClient({
             src="/paylater.avif"
             alt=""
             fill
-            priority
             sizes="100vw"
             className={styles.bg}
           />

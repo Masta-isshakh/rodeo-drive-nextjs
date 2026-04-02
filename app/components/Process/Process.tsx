@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./Process.module.css";
 import { Search, SprayCan, Sparkles, ShieldCheck } from "lucide-react";
 
@@ -47,12 +48,13 @@ export default function Process() {
         </div>
 
         <div className={styles.floatingProcessCar} id={ids.float} aria-hidden="true">
-          <img
-            src="https://images.unsplash.com/photo-1585601265915-f45bd0d42357?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
+            <Image
+              src="/defender.avif"
+              alt=""
+              fill
+              loading="lazy"
+              sizes="(max-width: 768px) 0px, (max-width: 1100px) 640px, 820px"
+            />
         </div>
 
         <div className={styles.timeline}>

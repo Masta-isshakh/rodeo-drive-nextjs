@@ -2,6 +2,12 @@
 const nextConfig = {
   reactStrictMode: false,
   output: "standalone",
+  poweredByHeader: false,
+
+  experimental: {
+    // Tree-shake large packages — only the used exports end up in the bundle
+    optimizePackageImports: ["gsap", "lucide-react", "framer-motion"],
+  },
 
   images: {
       minimumCacheTTL: 31536000, // 1 year
