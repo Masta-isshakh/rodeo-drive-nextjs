@@ -59,13 +59,13 @@ type HeroVideoSlide = {
 };
 
 const GALLERY: GalleryItem[] = [
-  { src: "/hero-poster.avif", altEN: "Luxury car detail finish", altAR: "تشطيب فاخر للسيارة" },
+  { src: "/nano.avif", altEN: "Luxury car detail finish", altAR: "تشطيب فاخر للسيارة" },
   { src: "/lamborghini.avif", altEN: "Premium detailing studio", altAR: "استوديو تفصيل فاخر" },
-  { src: "/range-rover-ppf-full-vehicle.avif", altEN: "Sport vehicle after detailing", altAR: "سيارة رياضية بعد التفصيل" },
-  { src: "/paint-correction.avif", altEN: "Automotive protection workflow", altAR: "خطوات حماية السيارة" },
+  { src: "/city.avif", altEN: "Sport vehicle after detailing", altAR: "سيارة رياضية بعد التفصيل" },
+  { src: "/nano-interior.avif", altEN: "Automotive protection workflow", altAR: "خطوات حماية السيارة" },
   { src: "/ceramic.avif", altEN: "Cinematic exterior treatment", altAR: "عناية سينمائية للهيكل" },
   { src: "/polish2.avif", altEN: "Detailed bodywork reflections", altAR: "انعكاسات دقيقة لهيكل السيارة" },
-  { src: "/frontend-ppf.avif", altEN: "Curated premium vehicle", altAR: "سيارة مختارة بعناية" },
+  { src: "/front-ppff.avif", altEN: "Curated premium vehicle", altAR: "سيارة مختارة بعناية" },
   { src: "/interior1.avif", altEN: "Luxury service result", altAR: "نتيجة خدمة فاخرة" },
   { src: "/defender.avif", altEN: "High-end automotive presentation", altAR: "عرض سيارات فاخر" },
 ];
