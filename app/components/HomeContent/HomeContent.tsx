@@ -61,7 +61,7 @@ type HeroVideoSlide = {
 const GALLERY: GalleryItem[] = [
   { src: "/nano.avif", altEN: "Luxury car detail finish", altAR: "تشطيب فاخر للسيارة" },
   { src: "/lamborghini.avif", altEN: "Premium detailing studio", altAR: "استوديو تفصيل فاخر" },
-  { src: "/city.avif", altEN: "Sport vehicle after detailing", altAR: "سيارة رياضية بعد التفصيل" },
+  { src: "/vitre.avif", altEN: "Sport vehicle after detailing", altAR: "سيارة رياضية بعد التفصيل" },
   { src: "/nano-interior.avif", altEN: "Automotive protection workflow", altAR: "خطوات حماية السيارة" },
   { src: "/ceramic.avif", altEN: "Cinematic exterior treatment", altAR: "عناية سينمائية للهيكل" },
   { src: "/polish2.avif", altEN: "Detailed bodywork reflections", altAR: "انعكاسات دقيقة لهيكل السيارة" },
