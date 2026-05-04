@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const COOKIE = "lang";
-const CANONICAL_HOST = "www.rodeodrive.me";
-const BARE_HOST = "rodeodrive.me";
+const CANONICAL_HOST = "www.rodeodrive.qa";
+const BARE_HOST = "rodeodrive.qa";
 
 /**
  * SEO middleware:
- * - Force www host (rodeodrive.me -> www.rodeodrive.me)
+ * - Force www host (rodeodrive.qa -> www.rodeodrive.qa)
  * - Force language prefix (/ -> /en, /services -> /en/services, etc.)
  * - Provide request header x-rd-lang for the root layout to set <html lang dir>
  */

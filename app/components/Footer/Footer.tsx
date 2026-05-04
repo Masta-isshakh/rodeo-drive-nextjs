@@ -65,7 +65,7 @@ export default function Footer() {
 
   const year = new Date().getFullYear();
   const phone = "+97433202409";
-  const email = "info@rodeodrive.me";
+  const email = "info@rodeodrive.qa";
 
   return (
     <footer className={styles.footer} id={ids.root} dir={lang === "ar" ? "rtl" : "ltr"}>
@@ -80,6 +80,10 @@ export default function Footer() {
           {/* LEFT: socials */}
           <div className={styles.footerIntro}>
             <div className={styles.footerMiniBrand}>RODEO DRIVE</div>
+            <p className={styles.footerLegalName}>RODEO DRIVE FOR TRADE AND SERVICES</p>
+            <address className={styles.footerAddress}>
+              Building 185, Street 965, Zone 56, Doha, Qatar
+            </address>
 
             <div className={styles.socialBlock}>
               <div className={styles.blockLabel} id={ids.followLabel}>

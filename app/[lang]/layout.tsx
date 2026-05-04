@@ -5,13 +5,13 @@ import { buildPageMetadata } from "../seo";
 
 type Lang = "en" | "ar";
 
-const SITE_URL = "https://www.rodeodrive.me";
+const SITE_URL = "https://www.rodeodrive.qa";
 const BRAND_EN = "Rodeo Drive Doha";
 const BRAND_AR = "روديو درايف الدوحة";
 
 const BUSINESS = {
   phone: "+97433202409",
-  email: "info@rodeodrive.me",
+  email: "info@rodeodrive.qa",
   streetAddressEN: "Block 2, Shop No SYS 066, Block 21, Near Dragon Mart Al Sayer",
   streetAddressAR: "البلوك 2، محل رقم SYS 066، بلوك 21، قرب دراغون مارت الساير",
   addressEN: "Doha, Qatar",

@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import MetaPixel from "./components/MetaPixel";
 
-const SITE_URL = "https://www.rodeodrive.me"; // canonical domain (www)
+const SITE_URL = "https://www.rodeodrive.qa"; // canonical domain (www)
 
 const BRAND_EN = "Rodeo Drive Doha";
 const BRAND_AR = "روديو درايف الدوحة";

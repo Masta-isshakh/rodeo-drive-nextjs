@@ -100,7 +100,7 @@ export default function FooterText({ ids, phone, year }: { ids: Ids; phone: stri
     }
 
     const emailEl = document.getElementById(ids.email);
-    if (emailEl) emailEl.textContent = "info@rodeodrive.me";
+    if (emailEl) emailEl.textContent = "info@rodeodrive.qa";
 
     // keep year stable (already rendered), but if you ever need it:
     void year;

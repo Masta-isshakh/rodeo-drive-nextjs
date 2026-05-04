@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export type Lang = "en" | "ar";
 
-const SITE_URL = "https://www.rodeodrive.me";
+const SITE_URL = "https://www.rodeodrive.qa";
 
 const BRAND = {
   en: "Rodeo Drive Doha",

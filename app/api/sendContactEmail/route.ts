@@ -114,7 +114,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "Missing required fields." }, { status: 400 });
     }
 
-    const from = process.env.SES_FROM; // ex: "Rodeo Drive <info@rodeodrive.me>" OU votre email vérifié
+    const from = process.env.SES_FROM; // ex: "Rodeo Drive <info@rodeodrive.qa>" OU votre email vérifié
     const to = process.env.SES_TO;
 
     if (!host || !user || !pass || !from || !to) {

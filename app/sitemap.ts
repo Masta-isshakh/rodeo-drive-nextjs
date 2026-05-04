@@ -3,7 +3,7 @@ import { BLOG_POSTS } from "@/app/content/blog";
 import { CATALOG } from "@/app/content/catalog2";
 import { SERVICE_AREAS } from "@/app/content/serviceAreas";
 
-const SITE_URL = "https://www.rodeodrive.me";
+const SITE_URL = "https://www.rodeodrive.qa";
 
 const STATIC_ROUTES = [
   "", // home

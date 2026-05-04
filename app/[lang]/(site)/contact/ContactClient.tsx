@@ -186,8 +186,8 @@ export default function ContactClient({ initialLang }: { initialLang: Lang }) {
       {
         icon: Mail,
         title: copy.email,
-        details: ["info@rodeodrive.me"],
-        href: "mailto:info@rodeodrive.me",
+        details: ["info@rodeodrive.qa"],
+        href: "mailto:info@rodeodrive.qa",
         target: "_self",
       },
       {
