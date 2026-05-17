@@ -5,6 +5,8 @@ export const SITE = {
   phoneTel: "+97433202409",
   whatsappNumber: "97433202409",
   whatsappUrl: "https://wa.me/97433202409",
+  // Header review button URL (update this when you share the final link)
+  reviewUrl: "https://g.page/r/CXy-4EOOnRCwEAI/review",
   // Your Google listing (supports reviews + directions)
   googleMapsUrl: "https://maps.app.goo.gl/ieCJzCSYdFnR946h6",
   instagramUrl: "https://www.instagram.com/rodeo.drive.qtr/",

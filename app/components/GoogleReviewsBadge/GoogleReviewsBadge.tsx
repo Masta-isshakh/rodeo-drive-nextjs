@@ -16,7 +16,7 @@ export default function GoogleReviewsBadge() {
   return (
     <a
       className={styles.badge}
-      href={SITE.googleMapsUrl}
+      href={SITE.reviewUrl}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Google Reviews"
