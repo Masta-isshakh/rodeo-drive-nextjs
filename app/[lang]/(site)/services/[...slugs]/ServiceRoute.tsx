@@ -279,6 +279,7 @@ export default function ServiceRouteClient({
       carWashVideoDesc: isAr
         ? "شاهد تجربة حقيقية من خدمات الغسيل داخل مركزنا."
         : "Watch a real sample from our car wash service in action.",
+      jumpToVideo: isAr ? "انتقل إلى الفيديو" : "Jump to Video",
     };
   }, [lang]);
 
@@ -380,6 +381,11 @@ export default function ServiceRouteClient({
                 <Link className={`${styles.btnPrimary} ${styles.ctaBtn}`} href={baseBook}>
                   {ui.bookNow}
                 </Link>
+                {isCarWashService ? (
+                  <a className={`${styles.btnGhost} ${styles.ctaBtn}`} href="#car-wash-video">
+                    {ui.jumpToVideo}
+                  </a>
+                ) : null}
                 <a
                   className={`${styles.btnGhost} ${styles.ctaBtn}`}
                   href={SITE.whatsappUrl}
@@ -423,7 +429,7 @@ export default function ServiceRouteClient({
         </section>
 
         {isCarWashService ? (
-          <section className={styles.sectionAlt} data-sr-reveal>
+          <section id="car-wash-video" className={styles.sectionAlt} data-sr-reveal>
             <div className={styles.container}>
               <div className={styles.sectionHeader} data-sr-reveal-item>
                 <h2 className={styles.h2}>{ui.carWashVideoTitle}</h2>
@@ -521,7 +527,7 @@ export default function ServiceRouteClient({
                       <p className={styles.cardText}>{getText(s.intro, lang)?.[0]}</p>
                     </div>
 
-                    <Link className={styles.cardBtn} href={`${baseServices}/${service.slug}/${s.slug}`}>
+                    <Link className={styles.cardBtn} href={`${baseServices}/${service.slug}/${s.slug}`} prefetch={false}>
                       {ui.viewDetails}
                     </Link>
                   </div>

@@ -170,6 +170,7 @@
     0 0 0 1px rgba(0,0,0,0.04) inset;
 
   transition: transform 220ms ease, box-shadow 220ms ease;
+  contain: layout paint;
 }
 
 .packageCard::before {
@@ -381,6 +382,7 @@
     0 0 0 1px rgba(0,0,0,0.04) inset;
 
   transition: transform 220ms ease, box-shadow 220ms ease;
+  contain: layout paint;
 }
 
 @media (hover:hover) and (pointer:fine) {

@@ -17,6 +17,13 @@
   pointer-events:none;
 }
 .top{ position:absolute; inset:0; }
+.placeholder{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(420px 180px at 20% 25%, rgba(255,255,255,0.20), transparent 68%),
+    linear-gradient(135deg, rgba(24,24,24,0.92), rgba(12,12,12,0.96));
+}
 .handle{
   position:absolute;
   top:0; bottom:0;

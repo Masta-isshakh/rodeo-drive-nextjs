@@ -9,10 +9,16 @@ function getMotionFlags() {
   if (typeof window === "undefined" || !window.matchMedia) {
     return { reduced: false, lite: false };
   }
+  const nav = navigator as Navigator & {
+    connection?: { saveData?: boolean };
+    hardwareConcurrency?: number;
+  };
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lowPower = Boolean(nav.connection?.saveData) || (nav.hardwareConcurrency ?? 8) <= 4;
   const lite =
     window.matchMedia("(max-width: 768px)").matches ||
-    window.matchMedia("(pointer: coarse)").matches;
+    window.matchMedia("(pointer: coarse)").matches ||
+    lowPower;
   return { reduced, lite };
 }
 
