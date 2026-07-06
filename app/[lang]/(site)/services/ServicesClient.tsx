@@ -248,7 +248,7 @@ const packageCards = useMemo(() => {
         .split("/")
         .filter(Boolean)
         .map((s) => encodeURIComponent(s));
-      return `/services/${segs.join("/")}`;
+      return `/${lang}/services/${segs.join("/")}`;
     },
     [lang]
   );

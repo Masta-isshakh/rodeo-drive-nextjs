@@ -275,6 +275,10 @@ export default function ServiceRouteClient({
       warranty: isAr ? "الضمان" : "Warranty",
       location: isAr ? "الموقع" : "Location",
       doha: isAr ? "الدوحة" : "Doha",
+      carWashVideoTitle: isAr ? "فيديو خدمة الغسيل" : "Car Wash Service Video",
+      carWashVideoDesc: isAr
+        ? "شاهد تجربة حقيقية من خدمات الغسيل داخل مركزنا."
+        : "Watch a real sample from our car wash service in action.",
     };
   }, [lang]);
 
@@ -342,6 +346,7 @@ export default function ServiceRouteClient({
     const title = getText(service.title, lang);
     const subtitle = getText(service.subtitle, lang);
     const overview = getText(service.overview, lang) ?? [];
+    const isCarWashService = service.slug === "car-wash-services";
 
     const proofKey = service.slug.replace(/\//g, "-");
     const beforeSrc = `/proof/${proofKey}-before.avif`;
@@ -416,6 +421,33 @@ export default function ServiceRouteClient({
             </div>
           </div>
         </section>
+
+        {isCarWashService ? (
+          <section className={styles.sectionAlt} data-sr-reveal>
+            <div className={styles.container}>
+              <div className={styles.sectionHeader} data-sr-reveal-item>
+                <h2 className={styles.h2}>{ui.carWashVideoTitle}</h2>
+              </div>
+
+              <p className={styles.paragraph} data-sr-reveal-item>
+                {ui.carWashVideoDesc}
+              </p>
+
+              <div className={styles.videoCard} data-sr-reveal-item>
+                <video
+                  className={styles.serviceVideo}
+                  controls
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src="/videos/Car%20Wash%20Video.mp4" type="video/mp4" />
+                  <source src="/videos/Car-Wash-Video.mp4" type="video/mp4" />
+                  <source src="/videos/IMG_1376.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {/* SUBSERVICES */}
         {serviceInsight ? (
