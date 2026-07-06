@@ -439,9 +439,13 @@ export default function ServiceRouteClient({
                   controls
                   playsInline
                   preload="metadata"
+                  poster="/car-wash.avif"
                 >
                   <source src="/videos/Car%20Wash%20Video.mp4" type="video/mp4" />
+                  <source src="/videos/Car Wash Video.mp4" type="video/mp4" />
                   <source src="/videos/Car-Wash-Video.mp4" type="video/mp4" />
+                  <source src="/videos/car-wash-video.mp4" type="video/mp4" />
+                  <source src="/videos/Car Wash Video.mov" type="video/quicktime" />
                   <source src="/videos/IMG_1376.mp4" type="video/mp4" />
                 </video>
               </div>
