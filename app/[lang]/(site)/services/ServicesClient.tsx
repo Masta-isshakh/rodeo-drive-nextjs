@@ -259,7 +259,7 @@ const packageCards = useMemo(() => {
   const motionKey = `${lang}|services`;
 
   return (
-    <main className={styles.servicesPage} dir={dir} data-services-root lang={lang} key={lang}>
+    <main className={styles.servicesPage} dir={dir} data-services-root lang={lang === 'ar' ? 'ar' : 'en'} key={lang}>
       <ServicesMotion motionKey={motionKey} />
 
       {/* HERO */}

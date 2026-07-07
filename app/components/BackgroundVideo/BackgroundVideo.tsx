@@ -1,19 +1,24 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './BackgroundVideo.module.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function BackgroundVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Animate overlay opacity based on scroll
-    if (overlayRef.current) {
-      gsap.to(overlayRef.current, {
+    let mounted = true;
+    
+    const initAnimations = async () => {
+      const { default: gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      if (!mounted) return;
+      
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // Animate overlay opacity based on scroll
+      if (overlayRef.current) {
+        gsap.to(overlayRef.current, {
         scrollTrigger: {
           trigger: 'body',
           start: 'top top',
@@ -25,17 +30,21 @@ export default function BackgroundVideo() {
     }
 
     // Subtle scale animation for video on scroll
-    if (videoRef.current) {
-      gsap.to(videoRef.current, {
-        scrollTrigger: {
-          trigger: 'body',
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1,
-        },
-        scale: 1.2,
-      });
-    }
+      if (videoRef.current) {
+        gsap.to(videoRef.current, {
+          scrollTrigger: {
+            trigger: 'body',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+          },
+          scale: 1.2,
+        });
+      }
+    };
+    
+    initAnimations().catch(() => {});
+    return () => { mounted = false; };
   }, []);
 
   return (

@@ -13,6 +13,7 @@
   height:100%;
   object-fit:cover;
   display:block;
+  -webkit-user-select:none;
   user-select:none;
   pointer-events:none;
 }
@@ -61,4 +62,21 @@
   border-radius:999px;
   background:rgba(0,0,0,.50);
   border:1px solid rgba(255,255,255,.12);
+}
+.sliderWrap{
+  width:100%;
+  min-width:0;
+  touch-action:pan-y;
+}
+.handleDynamic{
+  position:absolute;
+  top:0; bottom:0;
+  z-index:2;
+  width:2px;
+  background:rgba(201,161,74,.95);
+  transform: translateX(-1px);
+}
+.clipMask{
+  position:absolute;
+  inset:0;
 }

@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './AnimatedBackground.module.css';
 
-gsap.registerPlugin(ScrollTrigger);
+type GSAPType = typeof import('gsap').default;
+type ScrollTriggerType = typeof import('gsap/ScrollTrigger').ScrollTrigger;
 
 export default function AnimatedBackground() {
   const bg1Ref = useRef<HTMLDivElement>(null);
@@ -16,135 +15,148 @@ export default function AnimatedBackground() {
   const flowingLinesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Continuous rotation and scaling animation for backgrounds
-    gsap.to(bg1Ref.current, {
-      rotation: 360,
-      duration: 60,
-      repeat: -1,
-      ease: 'none'
-    });
-
-    gsap.to(bg2Ref.current, {
-      rotation: -360,
-      duration: 80,
-      repeat: -1,
-      ease: 'none'
-    });
-
-    gsap.to(bg3Ref.current, {
-      rotation: 360,
-      duration: 100,
-      repeat: -1,
-      ease: 'none'
-    });
-
-    gsap.to(bg4Ref.current, {
-      rotation: -360,
-      duration: 120,
-      repeat: -1,
-      ease: 'none'
-    });
-
-    // Parallax scroll effect
-    gsap.to(bg1Ref.current, {
-      y: 200,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1
-      }
-    });
-
-    gsap.to(bg2Ref.current, {
-      y: -150,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.5
-      }
-    });
-
-    gsap.to(bg3Ref.current, {
-      y: 250,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 2
-      }
-    });
-
-    gsap.to(bg4Ref.current, {
-      y: -200,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 2.5
-      }
-    });
-
-    // Pulse animation
-    gsap.to([bg1Ref.current, bg3Ref.current], {
-      scale: 1.1,
-      duration: 8,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut'
-    });
-
-    gsap.to([bg2Ref.current, bg4Ref.current], {
-      scale: 0.9,
-      duration: 10,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut'
-    });
-
-    // Animate particles
-    if (particlesRef.current) {
-      const particles = particlesRef.current.children;
-      Array.from(particles).forEach((particle, i) => {
-        gsap.to(particle, {
-          y: `random(-200, 200)`,
-          x: `random(-200, 200)`,
-          duration: `random(10, 20)`,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: i * 0.1
-        });
-
-        gsap.to(particle, {
-          opacity: `random(0.2, 0.8)`,
-          duration: `random(3, 6)`,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut'
-        });
+    let mounted = true;
+    
+    const initAnimations = async () => {
+      const { default: gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      if (!mounted) return;
+      
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // Continuous rotation and scaling animation for backgrounds
+      gsap.to(bg1Ref.current, {
+        rotation: 360,
+        duration: 60,
+        repeat: -1,
+        ease: 'none'
       });
-    }
 
-    // Animate flowing lines
-    if (flowingLinesRef.current) {
-      const lines = flowingLinesRef.current.children;
-      Array.from(lines).forEach((line, i) => {
-        gsap.to(line, {
-          x: `random(-100, 100)`,
-          duration: `random(8, 15)`,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: i * 0.2
-        });
+      gsap.to(bg2Ref.current, {
+        rotation: -360,
+        duration: 80,
+        repeat: -1,
+        ease: 'none'
       });
-    }
+
+      gsap.to(bg3Ref.current, {
+        rotation: 360,
+        duration: 100,
+        repeat: -1,
+        ease: 'none'
+      });
+
+      gsap.to(bg4Ref.current, {
+        rotation: -360,
+        duration: 120,
+        repeat: -1,
+        ease: 'none'
+      });
+
+      // Parallax scroll effect
+      gsap.to(bg1Ref.current, {
+        y: 200,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1
+        }
+      });
+
+      gsap.to(bg2Ref.current, {
+        y: -150,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5
+        }
+      });
+
+      gsap.to(bg3Ref.current, {
+        y: 250,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+
+      gsap.to(bg4Ref.current, {
+        y: -200,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 2.5
+        }
+      });
+
+      // Pulse animation
+      gsap.to([bg1Ref.current, bg3Ref.current], {
+        scale: 1.1,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      gsap.to([bg2Ref.current, bg4Ref.current], {
+        scale: 0.9,
+        duration: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Animate particles
+      if (particlesRef.current) {
+        const particles = particlesRef.current.children;
+        Array.from(particles).forEach((particle, i) => {
+          gsap.to(particle, {
+            y: `random(-200, 200)`,
+            x: `random(-200, 200)`,
+            duration: `random(10, 20)`,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: i * 0.1
+          });
+
+          gsap.to(particle, {
+            opacity: `random(0.2, 0.8)`,
+            duration: `random(3, 6)`,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+          });
+        });
+      }
+
+      // Animate flowing lines
+      if (flowingLinesRef.current) {
+        const lines = flowingLinesRef.current.children;
+        Array.from(lines).forEach((line, i) => {
+          gsap.to(line, {
+            x: `random(-100, 100)`,
+            duration: `random(8, 15)`,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: i * 0.2
+          });
+        });
+      }
+    };
+    
+    initAnimations().catch(() => {});
+    return () => { mounted = false; };
   }, []);
 
   // Generate particles

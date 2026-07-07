@@ -1,12 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./TrustStrip.module.css";
 import { useI18n } from "../../lib/i18n";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function TrustStrip() {
   const { t, language } = useI18n(); // language utile si tu veux gérer RTL styles
@@ -16,9 +12,17 @@ export default function TrustStrip() {
 
   useEffect(() => {
     if (!stripRef.current || !containerRef.current) return;
-
-    // IMPORTANT: scoper GSAP à ce composant (évite collisions + double effects en dev)
-    const ctx = gsap.context(() => {
+    let mounted = true;
+    
+    const initAnimations = async () => {
+      const { default: gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      if (!mounted) return;
+      
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // IMPORTANT: scoper GSAP à ce composant (évite collisions + double effects en dev)
+      const ctx = gsap.context(() => {
       // 1) Strip reveal
       gsap.fromTo(
         stripRef.current,
@@ -86,9 +90,13 @@ export default function TrustStrip() {
           }
         );
       }
-    }, stripRef);
+      }, stripRef);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    };
+    
+    initAnimations().catch(() => {});
+    return () => { mounted = false; };
   }, []);
 
   return (

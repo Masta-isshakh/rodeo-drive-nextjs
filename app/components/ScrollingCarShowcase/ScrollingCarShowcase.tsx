@@ -24,6 +24,12 @@ export default function ScrollingCarShowcase({ language }: ScrollingCarShowcaseP
   const t = getTranslation(language);
 
   useEffect(() => {
+    let mounted = true;
+    const initGsapAnimations = async () => {
+      const { default: gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      if (!mounted) return;
+      gsap.registerPlugin(ScrollTrigger);
     if (!sectionRef.current) return;
 
     // Animate title with dramatic entrance
@@ -180,7 +186,10 @@ export default function ScrollingCarShowcase({ language }: ScrollingCarShowcaseP
       ease: 'sine.inOut'
     });
 
-  }, []);
+    };
+    initGsapAnimations().catch(() => {});
+    return () => { mounted = false; };
+  }, [language, t]);
 
   return (
     <section className={styles.showcase} ref={sectionRef}>

@@ -37,17 +37,17 @@ export default function BeforeAfterSlider({ beforeSrc, afterSrc, alt, height = 3
   }, [pos]);
 
   return (
-    <div ref={wrapRef} className={styles.wrap} style={{ height }} aria-label={alt}>
+    <div ref={wrapRef} className={styles.wrap} style={{ height, aspectRatio: 'auto' }} aria-label={alt}>
       {isInView ? (
         <>
           <img className={styles.base} src={beforeSrc} alt={alt} loading="lazy" decoding="async" fetchPriority="low" />
-          <img className={styles.top} src={afterSrc} alt={alt} style={clip} loading="lazy" decoding="async" fetchPriority="low" />
+          <img className={`${styles.top} ${styles.clipMask}`} src={afterSrc} alt={alt} style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} loading="lazy" decoding="async" fetchPriority="low" />
         </>
       ) : (
         <div className={styles.placeholder} aria-hidden="true" />
       )}
 
-      <div className={styles.handle} style={{ left: `${pos}%` }} aria-hidden="true">
+      <div className={styles.handleDynamic} style={{ left: `${pos}%` }} aria-hidden="true">
         <span className={styles.knob} />
       </div>
 
