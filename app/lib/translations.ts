@@ -286,6 +286,8 @@ export const translations = {
       rights: "All rights reserved",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
+      cookiePolicy: "Cookie Policy",
+      dataDeletion: "Data Deletion",
     },
 
     // Rotating Car Gallery
@@ -905,6 +907,8 @@ export const translations = {
       rights: "جميع الحقوق محفوظة",
       privacy: "سياسة الخصوصية",
       terms: "شروط الخدمة",
+      cookiePolicy: "سياسة ملفات تعريف الارتباط",
+      dataDeletion: "حذف البيانات",
     },
 
     // Rotating Car Gallery

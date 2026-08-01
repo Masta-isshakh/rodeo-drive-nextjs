@@ -61,6 +61,7 @@ export default function Footer() {
     privacy: "footer-privacy",
     terms: "footer-terms",
     cookie: "footer-cookie",
+    dataDeletion: "footer-data-deletion",
   } as const;
 
   const year = new Date().getFullYear();
@@ -267,6 +268,7 @@ export default function Footer() {
             <Link href={withLang("/privacy")} className={styles.footerBottomLink} id={ids.privacy}>Privacy Policy</Link>
             <Link href={withLang("/terms")} className={styles.footerBottomLink} id={ids.terms}>Terms of Service</Link>
             <Link href={withLang("/cookie-policy")} className={styles.footerBottomLink} id={ids.cookie}>Cookie Policy</Link>
+            <Link href={withLang("/data-deletion")} className={styles.footerBottomLink} id={ids.dataDeletion}>Data Deletion</Link>
           </div>
         </div>
       </div>

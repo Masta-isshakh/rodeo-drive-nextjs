@@ -37,6 +37,7 @@ export default function FooterText({ ids, phone, year }: { ids: Ids; phone: stri
       privacy: safeText(footer.privacy, "Privacy Policy"),
       terms: safeText(footer.terms, "Terms of Service"),
       cookiePolicy: safeText((footer as any).cookiePolicy, "Cookie Policy"),
+      dataDeletion: safeText((footer as any).dataDeletion, "Data Deletion"),
       reviews: safeText((footer as any).reviews, "Google Reviews"),
 
       home: safeText(nav.home, "Home"),
@@ -90,6 +91,7 @@ export default function FooterText({ ids, phone, year }: { ids: Ids; phone: stri
     setText(ids.privacy, labels.privacy);
     setText(ids.terms, labels.terms);
     setText(ids.cookie, labels.cookiePolicy);
+    setText(ids.dataDeletion, labels.dataDeletion);
     setText(ids.reviews, labels.reviews);
 
     // phone display only (href stays tel:+...)

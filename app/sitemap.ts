@@ -21,6 +21,7 @@ const STATIC_ROUTES = [
   "/privacy",
   "/terms",
   "/cookie-policy",
+  "/data-deletion",
 ] as const;
 
 function buildAllRoutes(): string[] {

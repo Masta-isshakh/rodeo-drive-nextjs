@@ -20,6 +20,19 @@ const nextConfig = {
     ],
   },
 
+async redirects() {
+  return [
+    // Meta / Facebook "Data deletion instructions URL" is registered without a
+    // language prefix. Without this, /data-deletion is swallowed by the [lang]
+    // dynamic segment and renders the homepage.
+    {
+      source: "/data-deletion",
+      destination: "/en/data-deletion",
+      permanent: true,
+    },
+  ];
+},
+
 async headers() {
   return [
     // Static Next assets (JS/CSS) cache forever
