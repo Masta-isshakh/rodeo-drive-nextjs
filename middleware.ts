@@ -69,5 +69,10 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\..*).*)"],
+  // NOTE: this is a normal JS string, so the dot must be escaped as "\\." to
+  // reach the regex engine as "\.". With a single backslash it collapsed to
+  // ".*..*", which matched every path of 1+ characters and silently excluded
+  // the entire site from middleware — so non-prefixed URLs like /services fell
+  // through to the [lang] segment and served homepage content at HTTP 200.
+  matcher: ["/((?!_next|api|.*\\..*).*)"],
 };

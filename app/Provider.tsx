@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 
@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import CookieBanner from "./components/CookieBanner/CookieBanner";
 import NoImageDownload from "./components/NoImageDownload";
+import AttributionTracker from "./components/AttributionTracker";
 
 let isConfigured = false;
 
@@ -29,6 +30,11 @@ export default function Providers({
 
   return (
     <I18nProvider initialLanguage={initialLanguage}>
+      {/* useSearchParams needs a Suspense boundary to avoid opting the whole
+          tree into client-side rendering. */}
+      <Suspense fallback={null}>
+        <AttributionTracker />
+      </Suspense>
       <NoImageDownload />
       <Header />
       {children}

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import styles from "./book.module.css";
 import { useI18n } from "@/app/lib/i18n";
 import { trackCompleteRegistration, trackLead } from "@/app/lib/metaPixel";
+import { submitLead } from "@/app/lib/leadClient";
 
 const MAX_BOOKINGS_PER_DAY = 10;
 
@@ -452,19 +453,24 @@ export default function Book() {
         throw new Error(createRes.errors.map((er) => er.message).join(" | "));
       }
 
-      // Email (optional)
-      const res = await fetch("/api/sendAppointmentEmail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          time: timeAmPm,
-          servicesText: form.services.length ? form.services.join(", ") : copy.na,
-        }),
+      // Push the booking into the CRM as a SalesLead and notify by email.
+      // Best-effort: the appointment is already saved above, so a CRM or mail
+      // outage must not surface as a booking failure to the customer.
+      const leadRes = await submitLead({
+        channel: "booking",
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        services: form.services,
+        carModel: form.carModel,
+        preferredDate: form.date,
+        preferredTime: timeAmPm,
+        language,
+        pagePath: pathname || undefined,
       });
 
-      if (!res.ok) {
-        console.error("Email API failed:", await res.text());
+      if (!leadRes.ok || !leadRes.crm?.delivered) {
+        console.error("Lead sync issue:", leadRes.error || leadRes.crm?.reason);
       }
 
       trackLead(

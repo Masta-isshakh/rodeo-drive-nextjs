@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/app/lib/i18n";
 import { trackLead } from "@/app/lib/metaPixel";
+import { submitLeadKeepalive } from "@/app/lib/leadClient";
 import { SITE } from "@/app/config/site";
 import styles from "./surface-protection-film.module.css";
 
@@ -158,6 +159,19 @@ export default function SurfaceProtectionFilmClient({ initialLang }: { initialLa
         pagePath: pathname || undefined,
       }
     );
+
+    // Capture the lead server-side before handing off to WhatsApp. Without
+    // this the lead is lost whenever the customer does not actually press
+    // send in WhatsApp. keepalive lets the request finish after navigation.
+    submitLeadKeepalive({
+      channel: "whatsapp",
+      name,
+      phone,
+      service: [surface, finish].filter(Boolean).join(" — ") || "Surface Protection Film",
+      message: notes,
+      language: lang,
+      pagePath: pathname || undefined,
+    });
 
     const waNumber = SITE.whatsappUrl.replace("https://wa.me/", "");
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
