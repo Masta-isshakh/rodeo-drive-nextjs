@@ -74,13 +74,38 @@ the CRM database.
 | `CRM_APPSYNC_ENDPOINT` | *(endpoint above)* | Where to send leads |
 | `CRM_AWS_REGION` | `ap-south-1` | SigV4 signing region |
 | `CRM_LEAD_SOURCE` | `Website` | `SalesLead.source` |
-| `CRM_LEAD_STATUS` | `New` | `SalesLead.status` — **align with your pipeline's first stage** |
+| `CRM_LEAD_STATUS` | `New Lead` | `SalesLead.status` — the pipeline's first stage |
 | `CRM_LEAD_CREATED_BY` | `rodeodrive.qa` | `SalesLead.createdBy` |
 | `CRM_LEAD_CODE_PREFIX` | `WEB` | Lead code prefix |
 
-> **Check `CRM_LEAD_STATUS` and `CRM_LEAD_SOURCE`.** If the CRM pipeline's first
-> column is called something other than `New`, website leads will land outside
-> the board. Change the env var — no code deploy needed.
+Valid `status` values in the CRM's Lead Management board:
+`New Lead` | `Working on it` | `No Answer` | `Call-back` | `Closed`.
+A value outside that set still saves, but the lead renders outside the board.
+
+### ⚠️ Amplify does not pass console env vars to the SSR runtime
+
+Amplify Hosting exposes console environment variables to the **build**, not to
+the Next.js SSR Lambda. A route that reads `process.env.CRM_APPSYNC_ENDPOINT`
+at runtime gets `undefined` and silently skips CRM delivery.
+
+Two fixes are commonly suggested; only one is reliable here:
+
+| Approach | Works? |
+| --- | --- |
+| `env \| grep '^CRM_' >> .env.production` in `amplify.yml` | ❌ Unreliable — verified that `.next/standalone/` contains no `.env` file and the value is not inlined, so it depends on `.env.production` landing in the Lambda's working directory. The artifact `baseDirectory` is `.next`, but the file sits at the repo root. |
+| `env: {}` block in `next.config.js` | ✅ **Used here.** Substitutes values into the compiled output at build time, where Amplify console vars *are* available. |
+
+Verified by building with the variables present, then starting the server with
+them removed from the environment — the endpoint still resolved, and
+`.next/server/app/api/lead/route.js` contains the literal value.
+
+Only non-secret config goes in that block. The CRM endpoint is safe to inline
+because it is IAM-protected — it cannot be called without SigV4-signed
+credentials. AWS credentials are deliberately excluded so they stay resolved at
+runtime from the Amplify compute role.
+
+> Changing `CRM_LEAD_STATUS` now requires a **redeploy**, not just an env var
+> edit, because the value is baked in at build time.
 
 ---
 

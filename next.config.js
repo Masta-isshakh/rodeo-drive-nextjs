@@ -9,6 +9,26 @@ const nextConfig = {
     optimizePackageImports: ["gsap", "lucide-react", "framer-motion"],
   },
 
+  // Amplify Hosting exposes console environment variables to the BUILD, but not
+  // to the Next.js SSR Lambda runtime. Listing them here substitutes the values
+  // into the compiled output at build time, so /api/lead can read them at
+  // runtime regardless of what the Lambda's working directory contains.
+  //
+  // Only non-secret configuration belongs here — these values are inlined
+  // wherever they are referenced. The CRM endpoint is safe to inline because it
+  // is protected by IAM: it cannot be called without SigV4-signed credentials.
+  // AWS credentials are deliberately NOT listed, so they stay runtime-resolved
+  // from the Amplify compute role.
+  env: {
+    CRM_APPSYNC_ENDPOINT: process.env.CRM_APPSYNC_ENDPOINT ?? "",
+    CRM_AWS_REGION: process.env.CRM_AWS_REGION ?? "ap-south-1",
+    CRM_LEAD_SOURCE: process.env.CRM_LEAD_SOURCE ?? "Website",
+    CRM_LEAD_STATUS: process.env.CRM_LEAD_STATUS ?? "New Lead",
+    CRM_LEAD_CREATED_BY: process.env.CRM_LEAD_CREATED_BY ?? "rodeodrive.qa",
+    CRM_LEAD_CODE_PREFIX: process.env.CRM_LEAD_CODE_PREFIX ?? "WEB",
+    CRM_LEAD_ASSIGNEE: process.env.CRM_LEAD_ASSIGNEE ?? "",
+  },
+
   images: {
       minimumCacheTTL: 31536000, // 1 year
     remotePatterns: [
