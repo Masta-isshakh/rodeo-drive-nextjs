@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Script from 'next/script';
 import styles from './CookieBanner.module.css';
 import { useI18n } from '@/app/lib/i18n';
+import { isRodeoWebsiteOrigin, websiteTrackingScript } from '@/app/lib/websiteMarketing';
 
 type Consent = {
   necessary: true;
@@ -84,28 +86,31 @@ export default function CookieBanner() {
   const [manage, setManage] = useState(false);
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
+  const [trackingEnabled, setTrackingEnabled] = useState(false);
 
   useEffect(() => {
     const existing = getStored();
     if (!existing) setVisible(true);
+    setTrackingEnabled(
+      existing?.analytics === true && isRodeoWebsiteOrigin(window.location.origin)
+    );
   }, []);
 
-  if (!visible) return null;
+  if (!visible) {
+    return trackingEnabled ? (
+      <Script id="rodeo-website-tracker" src={websiteTrackingScript} strategy="afterInteractive" />
+    ) : null;
+  }
 
-  const acceptAll = () => {
-    store({ necessary: true, analytics: true, marketing: true });
+  const saveConsent = (consent: Consent) => {
+    store(consent);
+    setTrackingEnabled(consent.analytics && isRodeoWebsiteOrigin(window.location.origin));
     setVisible(false);
   };
 
-  const rejectNonEssential = () => {
-    store({ necessary: true, analytics: false, marketing: false });
-    setVisible(false);
-  };
-
-  const savePrefs = () => {
-    store({ necessary: true, analytics, marketing });
-    setVisible(false);
-  };
+  const acceptAll = () => saveConsent({ necessary: true, analytics: true, marketing: true });
+  const rejectNonEssential = () => saveConsent({ necessary: true, analytics: false, marketing: false });
+  const savePrefs = () => saveConsent({ necessary: true, analytics, marketing });
 
   return (
     <div className={styles.wrap} dir={dir} role="dialog" aria-label="Cookie consent">
