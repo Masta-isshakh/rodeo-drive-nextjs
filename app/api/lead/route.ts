@@ -11,6 +11,8 @@
 import { NextResponse } from "next/server";
 import { submitLeadToCrm, type LeadChannel, type LeadInput } from "@/app/lib/crm/leads";
 import { escapeHtml, sendNotification } from "@/app/lib/mailer";
+import { sendWebsiteBooking } from "@/app/lib/crm/websiteBooking";
+import { isRodeoWebsiteOrigin } from "@/app/lib/websiteMarketing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -151,7 +153,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const crm = await submitLeadToCrm(lead);
+    const origin = req.headers.get("origin");
+    const [crm] = await Promise.all([
+      submitLeadToCrm(lead),
+      channel === "booking" && origin && isRodeoWebsiteOrigin(origin)
+        ? sendWebsiteBooking(lead, origin)
+        : undefined,
+    ]);
 
     if (!crm.delivered) {
       // Loud on the server so a broken CRM link is visible in Amplify logs
