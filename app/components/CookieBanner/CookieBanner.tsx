@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 import styles from './CookieBanner.module.css';
 import { useI18n } from '@/app/lib/i18n';
@@ -12,7 +13,7 @@ type Consent = {
   marketing: boolean;
 };
 
-const STORAGE_KEY = 'rd_cookie_consent_v1';
+const STORAGE_KEY = 'rd_cookie_consent_v2';
 const COOKIE_KEY = 'rd_cookie_consent';
 
 function getStored(): Consent | null {
@@ -42,6 +43,54 @@ function store(consent: Consent) {
   setCookie(JSON.stringify({ analytics: consent.analytics, marketing: consent.marketing }));
 }
 
+const GA4_MEASUREMENT_ID = 'G-D2PWCF6WZH';
+
+function GoogleAnalytics() {
+  const pathname = usePathname();
+  const previousPathname = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!pathname || previousPathname.current === pathname) return;
+
+    const analyticsWindow = window as Window & { dataLayer?: unknown[] };
+    const dataLayer = (analyticsWindow.dataLayer ??= []);
+    function gtag(..._args: unknown[]) {
+      dataLayer.push(arguments);
+    }
+
+    const origin = window.location.origin;
+    const pageLocation = origin + pathname;
+    const initialReferrer = document.referrer ? new URL(document.referrer).origin : '';
+    const pageReferrer = previousPathname.current ? origin + previousPathname.current : initialReferrer;
+
+    if (previousPathname.current === null) {
+      gtag('js', new Date());
+      gtag('config', GA4_MEASUREMENT_ID, {
+        send_page_view: false,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false,
+        page_location: pageLocation,
+        page_referrer: pageReferrer,
+      });
+    }
+
+    gtag('event', 'page_view', {
+      send_to: GA4_MEASUREMENT_ID,
+      page_location: pageLocation,
+      page_referrer: pageReferrer,
+    });
+    previousPathname.current = pathname;
+  }, [pathname]);
+
+  return (
+    <Script
+      id="rodeo-google-analytics"
+      src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}
+      strategy="afterInteractive"
+    />
+  );
+}
+
 export default function CookieBanner() {
   const { language } = useI18n();
   const lang = language === 'ar' ? 'ar' : 'en';
@@ -52,7 +101,7 @@ export default function CookieBanner() {
       return {
         title: 'ملفات تعريف الارتباط والخصوصية',
         text:
-          'نستخدم ملفات تعريف الارتباط لتشغيل الموقع وتحسين الأداء وقياس نتائج التسويق. يمكنك قبول الكل أو رفض غير الضروري أو إدارة التفضيلات.',
+          'نستخدم ملفات تعريف الارتباط لتشغيل الموقع وتحسين الأداء وقياس الزيارات باستخدام Google Analytics بعد موافقتك. يمكنك قبول الكل أو رفض غير الضروري أو إدارة التفضيلات.',
         policy: 'سياسة الكوكيز',
         accept: 'قبول الكل',
         reject: 'رفض غير الضروري',
@@ -68,7 +117,7 @@ export default function CookieBanner() {
     return {
       title: 'Cookies & Privacy',
       text:
-        'We use cookies to run the website, improve performance, and measure marketing results. You can accept all, reject non-essential, or manage preferences.',
+        'We use cookies to run the website and improve performance. With your permission, we use Google Analytics to measure website visits. You can accept all, reject non-essential, or manage preferences.',
       policy: 'Cookie Policy',
       accept: 'Accept all',
       reject: 'Reject non-essential',
@@ -98,7 +147,10 @@ export default function CookieBanner() {
 
   if (!visible) {
     return trackingEnabled ? (
-      <Script id="rodeo-website-tracker" src={websiteTrackingScript} strategy="afterInteractive" />
+      <>
+        <Script id="rodeo-website-tracker" src={websiteTrackingScript} strategy="afterInteractive" />
+        <GoogleAnalytics />
+      </>
     ) : null;
   }
 
