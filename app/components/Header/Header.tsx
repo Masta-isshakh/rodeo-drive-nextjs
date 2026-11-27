@@ -128,17 +128,15 @@ export default function Header() {
           <div className={styles.logoo}>
             <a
               className={styles.whatsappButtonn}
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-              title="WhatsApp"
+              href={withLang("/")}
+              aria-label={`${SITE.name} - ${t.nav.home}`}
+              title={`${SITE.name} - ${t.nav.home}`}
             >
               <Image src="/logo.avif" alt="" width={54} height={54} quality={100} priority={false} />
             </a>
 
             {/* ✅ Keep same markup; only add ref here for GSAP */}
-            <a href="/" className={styles.logoLink} ref={logoRef}>
+            <a href={withLang("/")} className={styles.logoLink} ref={logoRef}>
               <h4>RODEO DRIVE</h4>
             </a>
           </div>
